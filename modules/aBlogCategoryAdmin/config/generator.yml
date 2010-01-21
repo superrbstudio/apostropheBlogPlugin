@@ -1,0 +1,34 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           aBlogCategory
+    theme:                 aAdmin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          a_blog_category_admin
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      list:
+        title: Blog Categories
+        display: [=name, description, slug, _posts, _events]
+        batch_actions:
+          _delete:    ~
+      filter:  ~
+      form:
+        display: [name, slug, description]
+        fields:
+          name:
+            help: |
+              The name is used to identify the category almost everywhere, for example under the post or in the category widget.
+          slug:
+            help: | 
+              The "slug" is the URL-friendly version of the name. It is usually all lowercase and contains only letters, numbers, and hyphens.
+          description:
+            help: |
+              The description is not prominent by default, however some themes may show it.
+      edit:    ~
+      new:     ~

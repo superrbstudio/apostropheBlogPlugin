@@ -1,0 +1,142 @@
+aBlogItem:
+  actAs:
+    Timestampable: ~
+    Taggable: ~
+    Sluggable: ~
+    Versionable:
+      versionColumn: version
+      className: %CLASS%Version
+      auditLog: true
+      deleteVersions: true
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    type:
+      type: enum
+      values: [post, event]
+      notnull: true
+    author_id:
+      type: integer(4)
+    category_id:
+      type: integer(4)
+    title:
+      type: string(255)
+      notnull: true
+    excerpt:
+      type: string
+    body:
+      type: clob
+    published:
+      type: boolean
+      notnull: true
+      default: 0
+    published_at:
+      type: timestamp
+    media:
+      type: string
+  relations:
+    Author:
+      class: sfGuardUser
+      local: author_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: aBlogItems
+    Category:
+      class: aBlogCategory
+      local: category_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: Items
+
+aBlogPost:
+  inheritance:
+    extends: aBlogItem
+    type: column_aggregation
+    keyField: type
+    keyValue: 'post'
+  relations:
+    Author:
+      class: sfGuardUser
+      local: author_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: aBlogPosts
+    Category:
+      class: aBlogCategory
+      local: category_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: Posts
+
+aBlogEvent:
+  inheritance:
+    extends: aBlogItem
+    type: column_aggregation
+    keyField: type
+    keyValue: 'event'
+  columns:
+    start_date:
+      type: date
+    start_time:
+      type: time
+    end_date:
+      type: date
+    end_time:
+      type: time
+  relations:
+    Author:
+      class: sfGuardUser
+      local: author_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: aBlogEvents
+    Category:
+      class: aBlogCategory
+      local: category_id
+      foreign: id
+      onDelete: SET NULL
+      foreignAlias: Events
+
+aBlogCategory:
+  actAs:
+    Timestampable: ~
+    Sluggable: ~
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+    description:
+      type: string
+
+aBlogSlotPostSlotSlot:
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aBlogSlotPostSlot'
+
+aBlogSlotSlot:
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aBlogSlot'
+
+aCalendarSlotSlot:
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aCalendarSlot'
+    
+aBlogSlotEventSlotSlot:
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aBlogSlotEventSlot'

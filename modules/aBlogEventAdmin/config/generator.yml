@@ -1,0 +1,52 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           aBlogEvent
+    theme:                 aAdmin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          a_blog_event_admin
+    with_doctrine_route:     1
+
+    config:
+      actions: 
+        _new:
+          label: Create New Event
+      fields:
+        start_date: { label: Start Date, date_format: MM/dd/yy}
+        end_date: { label: End Date, date_format: MM/dd/yy}
+      list:
+        title: Events
+        display: [_event, start_date, start_time, end_date, end_time, author, _tags, _media]
+        object_actions:
+          _edit:      ~
+          media:
+            label:  Manage media
+            action: media
+            params: class=a-btn icon icon-only a-media
+          _delete:    ~
+        batch_actions:
+          _delete:    ~
+          publish:
+            label:    Publish/Unpublish
+      filter:  ~
+      form:
+        display: [title, author_id, start_date, start_time, end_date,  end_time, body, excerpt, category_id, tags, ~tagList, published, published_at]
+      edit:
+        title: Editing Event "%%title%%"
+        actions:
+          _save:      ~
+          publish:
+            label:    Publish/Unpublish
+            action:   publish
+            params:   class=a-btn icon a-publish
+          _delete:    ~
+          _list:      ~
+      new:
+        title: New Event
+        actions:
+          _save:      ~
+          _list:      ~
+          _delete:    ~
