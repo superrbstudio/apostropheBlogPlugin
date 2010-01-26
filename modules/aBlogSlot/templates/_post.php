@@ -2,7 +2,7 @@
 
 <div class="a-blog-post">
   <?php if ($a_blog_post->userHasPrivilege('edit')): ?>
-    <?php echo link_to('Edit This Post', 'a_blog_post_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-blog')) ?>
+    <?php echo link_to('Edit This Post', 'a_blog_post_admin_edit', $a_blog_post, array('class' => 'a-btn  icon a-blog-btn')) ?>
   <?php endif ?>
   <h3 class="a-blog-post-title"><?php echo link_to($a_blog_post->getTitle(), 'a_blog_post', $a_blog_post) ?></h3>
 	<ul class="a-blog-post-meta">
