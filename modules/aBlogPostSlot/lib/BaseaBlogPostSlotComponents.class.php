@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Base actions for the apostropheBlogPlugin aBlogSlotPostSlot module.
+ * Base actions for the apostropheBlogPlugin aBlogPostSlot module.
  * 
  * @package     apostropheBlogPlugin
- * @subpackage  aBlogSlotPostSlot
+ * @subpackage  aBlogPostSlot
  * @author      Your name here
  * @version     SVN: $Id: BaseComponents.class.php 12628 2008-11-04 14:43:36Z Kris.Wallsmith $
  */
-abstract class BaseaBlogSlotPostSlotComponents extends aBaseComponents
+abstract class BaseaBlogPostSlotComponents extends aBaseComponents
 {
   public function executeEditView()
   {

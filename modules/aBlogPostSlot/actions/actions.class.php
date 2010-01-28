@@ -1,6 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BaseaBlogSlotPostSlotActions.class.php';
+require_once dirname(__FILE__).'/../lib/BaseaBlogPostSlotActions.class.php';
 
 /**
  * aBlogSlotPostSlot actions.
@@ -10,6 +10,6 @@ require_once dirname(__FILE__).'/../lib/BaseaBlogSlotPostSlotActions.class.php';
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12628 2008-11-04 14:43:36Z Kris.Wallsmith $
  */
-class aBlogSlotPostSlotActions extends BaseaBlogSlotPostSlotActions
+class aBlogPostSlotActions extends BaseaBlogPostSlotActions
 {
 }
