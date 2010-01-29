@@ -1,6 +1,6 @@
 <?php if ($a_blog_post->getAttachedMedia()): ?>
-	<?php if (in_array('aSlideshow', sfConfig::get('sf_enabled_modules'))): ?>
-		<?php include_component('aSlideshow', 'slideshow', array(
+	<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
+		<?php include_component('aSlideshowSlot', 'slideshow', array(
 			'items' => $a_blog_post->getAttachedMedia(),
 			'id' => $a_blog_post->getId(),
 			'options' => array('width' => 80, 'height' => 60, 'resizeType' => 'c', 'arrows' => false )

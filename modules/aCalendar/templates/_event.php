@@ -23,9 +23,9 @@
 		</div>
 		
   	<?php if ($a_blog_event->getAttachedMedia()): ?>
-			<?php if (in_array('aSlideshow', sfConfig::get('sf_enabled_modules'))): ?>
+			<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
 				<div class="a-blog-post-media">
-				  <?php include_component('aSlideshow', 'slideshow', array(
+				  <?php include_component('aSlideshowSlot', 'slideshow', array(
 						'items' => $a_blog_event->getAttachedMedia(),
 						'id' => $a_blog_event->getId(),
 						'options' => array('width' => 420, 'height' => 300, 'resizeType' => 'c'),

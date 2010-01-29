@@ -37,9 +37,9 @@
 </ul>
 
 <?php if ($a_blog_post->getAttachedMedia()): ?>
-	<?php if (in_array('aSlideshow', sfConfig::get('sf_enabled_modules'))): ?>
+	<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
 		<div class="a-blog-post-media">
-			<?php include_component('aSlideshow', 'slideshow', array(
+			<?php include_component('aSlideshowSlot', 'slideshow', array(
 				'items' => $a_blog_post->getAttachedMedia(),
 				'id' => $a_blog_post->getId(),
 				'options' => array('width' => 150, 'height' => 110, 'resizeType' => 'c', 'arrows' => false )
