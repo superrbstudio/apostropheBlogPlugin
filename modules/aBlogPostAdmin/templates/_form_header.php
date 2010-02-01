@@ -1,4 +1,4 @@
-<?php echo link_to('Edit Posts', '@a_blog_post_admin', array('class' => 'a-btn icon a-blog', )) ?>
+<?php echo link_to('Edit Posts', '@a_blog_post_admin', array('class' => 'a-btn  icon a-blog-btn', )) ?>
 
 <script src='/sfDoctrineActAsTaggablePlugin/js/aTagahead.js'></script>
 <script type="text/javascript" charset="utf-8">

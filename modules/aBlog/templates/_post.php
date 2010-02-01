@@ -9,15 +9,15 @@
 		<li class="author">Posted By: <?php echo $a_blog_post->getAuthor() ?></li>
 		<?php if ($a_blog_post->userHasPrivilege('edit')): ?>
 		<li class="edit">
-	    <?php echo link_to('Edit Post', 'a_blog_post_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-blog a-edit-post')) ?>
+	    <?php echo link_to('Edit Post', 'a_blog_post_admin_edit', $a_blog_post, array('class' => 'a-btn  icon a-blog-btn a-edit-post')) ?>
 	  </li>
 	  <?php endif ?>		
 	</ul>
   <div class="a-blog-post-body">
 			<?php if ($a_blog_post->getAttachedMedia()): ?>
-				<?php if (in_array('aSlideshow', sfConfig::get('sf_enabled_modules'))): ?>
+				<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
 					<div class="a-blog-post-media">
-					  <?php include_component('aSlideshow', 'slideshow', array(
+					  <?php include_component('aSlideshowSlot', 'slideshow', array(
 							'items' => $a_blog_post->getAttachedMedia(),
 							'id' => $a_blog_post->getId(),
 							'options' => array('width' => 420, 'height' => 300, 'resizeType' => 'c'),

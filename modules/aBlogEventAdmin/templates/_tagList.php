@@ -17,13 +17,13 @@ $(document).ready(function(){
 			
 	recommendedTag.click(function(){
 	
-	tagList = $('#a_blog_post_tags').attr('value');
+	tagList = $('#a_blog_event_tags').attr('value');
 	theTag = $(this).text();
 	
 		if (!$(this).hasClass('selected'))
 		{ //Only add it if it hasn't been added already
 			tagList += ", "+theTag;
-			$('#a_blog_post_tags').attr('value',tagList);
+			$('#a_blog_event_tags').attr('value',tagList);
 		}
 		else
 		{
@@ -36,7 +36,7 @@ $(document).ready(function(){
 			}
 
 			newTagList.splice(tagPosition,1);
-			$('#a_blog_post_tags').attr('value',newTagList.toString());
+			$('#a_blog_event_tags').attr('value',newTagList.toString());
 		}
 		
 		$(this).toggleClass('selected');
