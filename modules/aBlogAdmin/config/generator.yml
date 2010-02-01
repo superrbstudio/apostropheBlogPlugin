@@ -1,0 +1,27 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           aBlogPost
+    theme:                 aAdminAlt
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          a_blog_admin
+    with_doctrine_route:   1
+    
+    config:
+      list:
+        display: [ _title, _author, _editors, _tags, _categories, status, public, published_at ]
+        object_actions: []
+        actions: ~
+        
+      filter:
+        fields:  [ author_id, editors_list, categories_list, status, public, published_at ]
+        display: [ author_id, editors_list, categories_list, status, public, published_at ]
+        
+      form: ~
+      
+      fields:
+        author_id:  { label: By }
+        editors_list: { label: Edited By }

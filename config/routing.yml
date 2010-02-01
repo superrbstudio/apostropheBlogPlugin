@@ -1,262 +1,39 @@
-#################
-# aBlog routes #
-#################
+a_blog:
+  url:
+  param: { module: aBlog, action: index }
+  class: aRoute
 
 a_blog_post:
-  url:     /:year/:month/:day/:slug
-  param:   { module: aBlog, action: show }
-  options: { model: aBlog, type: object }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class:   aDoctrineRoute
-
-a_blog_cat_tag_year_month_day:
-  url:   /:cat/tag/:tag/:year/:month/:day
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_cat_tag_year_month:
-  url:   /:cat/tag/:tag/:year/:month
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_cat_tag_year:
-  url:   /:cat/tag/:tag/:year
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_blog_tag_year_month_day:
-  url:   /tag/:tag/:year/:month/:day
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_tag_year_month:
-  url:   /tag/:tag/:year/:month
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_tag_year:
-  url:   /tag/:tag/:year
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_blog_cat_year_month_day:
-  url:   /:cat/:year/:month/:day
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_cat_year_month:
-  url:   /:cat/:year/:month
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_cat_year:
-  url:   /:cat/:year
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
+  url:      /aBlog/show/:id
+  param:    { module: aBlog, action: show }
+  options:  { model: aBlogPost, type: object }
+  class:    sfDoctrineRoute
   
-a_blog_year_month_day:
-  url:   /:year/:month/:day
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_year_month:
-  url:   /:year/:month
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_blog_year:
-  url:   /:year
-  param: { module: aBlog, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_blog_cat_tag:
-  url:   /:cat/tag/:tag
-  param: { module: aBlog, action: index }
-  class: aRoute
-
-a_blog_tag:
-  url:   /tag/:tag
-  param: { module: aBlog, action: index }
-  class: aRoute
-
-a_blog_cat:
-  url:   /:cat
-  param: { module: aBlog, action: index }
-  class: aRoute
-
-a_blog:
-  url:   
-  param: { module: aBlog, action: index }
-  class: aRoute
-
-a_blog_today:
-  url:   
-  param: { module: aBlog, action: today }
-  class: aRoute
-
-a_blog_feed_cat_tag:
-  url:   /blog/feed/:cat/tag/:tag
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed_tag:
-  url:   /blog/feed/tag/:tag
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed_cat:
-  url:   /blog/feed/:cat
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed:
-  url:   /blog/feed
-  param: { module: aBlogFeed, action: posts }
-
-#####################
-# aCalendar routes #
-#####################
-
-a_calendar_post:
-  url:     /:year/:month/:day/:slug
-  param:   { module: aCalendar, action: show }
-  options: { model: aBlogEvent, type: object }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class:   aDoctrineRoute
-
-a_calendar_cat_tag_year_month_day:
-  url:   /:cat/tag/:tag/:year/:month/:day
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_cat_tag_year_month:
-  url:   /:cat/tag/:tag/:year/:month
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_cat_tag_year:
-  url:   /:cat/tag/:tag/:year
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_calendar_tag_year_month_day:
-  url:   /tag/:tag/:year/:month/:day
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_tag_year_month:
-  url:   /tag/:tag/:year/:month
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_tag_year:
-  url:   /tag/:tag/:year
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_calendar_cat_year_month_day:
-  url:   /:cat/:year/:month/:day
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_cat_year_month:
-  url:   /:cat/:year/:month
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_cat_year:
-  url:   /:cat/:year
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
   
-a_calendar_year_month_day:
-  url:   /:year/:month/:day
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_year_month:
-  url:   /:year/:month
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}', month: '\d|\d{2}' }
-  class: aRoute
-
-a_calendar_year:
-  url:   /:year
-  param: { module: aCalendar, action: index }
-  requirements: { year: '\d{4}' }
-  class: aRoute
-
-a_calendar_cat_tag:
-  url:   /:cat/tag/:tag
-  param: { module: aCalendar, action: index }
-  class: aRoute
-
-a_calendar_tag:
-  url:   /tag/:tag
-  param: { module: aCalendar, action: index }
-  class: aRoute
-
-a_calendar_cat:
-  url:   /:cat
-  param: { module: aCalendar, action: index }
-  class: aRoute
-
-a_calendar_today:
-  url:   
-  param: { module: aCalendar, action: upcoming }
-  class: aRoute
-
-a_calendar:
-  url:   
-  param: { module: aCalendar, action: index }
-  class: aRoute
-
 ################
 # admin routes #
 ################
 
-a_blog_post_admin:
+a_blog_admin:
   class: sfDoctrineRouteCollection
   options:
     model:               aBlogPost
-    module:              aBlogPostAdmin
-    prefix_path:         a_blog_post_admin
+    module:              aBlogAdmin
+    prefix_path:         admin/a_blog_admin
     column:              id
     with_wildcard_routes: true
-
-a_blog_event_admin:
-  class: sfDoctrineRouteCollection
-  options:
-    model:               aBlogEvent
-    module:              aBlogEventAdmin
-    prefix_path:         a_blog_event_admin
-    column:              id
-    with_wildcard_routes: true
-
+    collection_actions:
+      addFilter: [GET, POST]
+      removeFilter: [GET, POST]
+      
 a_blog_category_admin:
   class: sfDoctrineRouteCollection
   options:
     model:               aBlogCategory
     module:              aBlogCategoryAdmin
-    prefix_path:         a_blog_category_admin
+    prefix_path:         admin/a_blog_category_admin
     column:              id
     with_wildcard_routes: true
+    collection_actions:
+      addFilter: [GET, POST]
+      removeFilter: [GET, POST]

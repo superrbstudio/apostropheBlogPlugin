@@ -1,0 +1,1 @@
+<u><?php echo link_to($a_blog_post->title, '@a_blog_admin_edit?id='.$a_blog_post->id) ?></u>

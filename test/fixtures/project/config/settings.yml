@@ -1,2 +1,2 @@
 all:
-  enabled_modules: [aBlogPostAdmin, aBlog, aBlogSlotPostSlot, aBlogSlot, aCalendarSlot, aBlogFeed, aCalendar]
+  enabled_modules: [aBlog, aBlogAdmin]

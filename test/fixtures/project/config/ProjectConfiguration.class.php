@@ -12,7 +12,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-    $this->setPlugins(array('apostropheBlogPlugin'));
-    $this->setPluginPath('apostropheBlogPlugin', dirname(__FILE__).'/../../../..');
+    $this->setPlugins(array('aBlogPlugin'));
+    $this->setPluginPath('aBlogPlugin', dirname(__FILE__).'/../../../..');
   }
 }

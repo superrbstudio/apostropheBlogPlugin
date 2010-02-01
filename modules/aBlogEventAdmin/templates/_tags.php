@@ -1,1 +1,0 @@
-<?php echo implode(', ', $a_blog_event->getTags()) ?>

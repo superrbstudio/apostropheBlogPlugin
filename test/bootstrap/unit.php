@@ -8,8 +8,23 @@ if (!isset($_SERVER['SYMFONY']))
 require_once $_SERVER['SYMFONY'].'/autoload/sfCoreAutoload.class.php';
 sfCoreAutoload::register();
 
-$configuration = new sfProjectConfiguration(getcwd());
+$configuration = new sfProjectConfiguration(dirname(__FILE__).'/../fixtures/project');
 require_once $configuration->getSymfonyLibDir().'/vendor/lime/lime.php';
 
-require_once dirname(__FILE__).'/../../config/apostropheBlogPluginConfiguration.class.php';
-$plugin_configuration = new apostropheBlogPluginConfiguration($configuration, dirname(__FILE__).'/../..');
+function aBlogPlugin_autoload_again($class)
+{
+  $autoload = sfSimpleAutoload::getInstance();
+  $autoload->reload();
+  return $autoload->autoload($class);
+}
+spl_autoload_register('aBlogPlugin_autoload_again');
+
+if (file_exists($config = dirname(__FILE__).'/../../config/aBlogPluginConfiguration.class.php'))
+{
+  require_once $config;
+  $plugin_configuration = new aBlogPluginConfiguration($configuration, dirname(__FILE__).'/../..', 'aBlogPlugin');
+}
+else
+{
+  $plugin_configuration = new sfPluginConfigurationGeneric($configuration, dirname(__FILE__).'/../..', 'aBlogPlugin');
+}
