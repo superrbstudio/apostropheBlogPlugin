@@ -1,8 +1,8 @@
-<div class="a-blog-categories">
+<div class="a-subnav-section categories">
   <h4>Categories</h4>
-  <ul class="a-blog-filter-options">
+  <ul class="a-filter-options blog">
   <?php foreach ($categories as $category): ?>
-    <li class="a-blog-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getSlug()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getSlug(), $params['cat']), array(
+    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getSlug()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getSlug(), $params['cat']), array(
       'class' => ($category->getSlug() == $sf_params->get('cat')) ? 'selected' : '', 
     )) ?></li>
   <?php endforeach ?>
@@ -11,18 +11,18 @@
 
 <hr />
 
-<div class="a-blog-filter">
+<div class='a-subnav-section range'>
   <h4>Browse by</h4>
-  <ul class="a-blog-filter-options">
-    <li class="a-blog-filter-option"><?php echo link_to('Day', 'aBlog/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day']), array('class' => ($dateRange == 'day') ? 'selected' : '')) ?></li>
-    <li class="a-blog-filter-option"><?php echo link_to('Month', 'aBlog/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month']), array('class' => ($dateRange == 'month') ? 'selected' : '')) ?></li>
-    <li class="a-blog-filter-option"><?php echo link_to('Year', 'aBlog/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></li>
+  <ul class="a-filter-options blog">
+    <li class="a-filter-option"><?php echo link_to('Day', 'aBlog/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day']), array('class' => ($dateRange == 'day') ? 'selected' : '')) ?></li>
+    <li class="a-filter-option"><?php echo link_to('Month', 'aBlog/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month']), array('class' => ($dateRange == 'month') ? 'selected' : '')) ?></li>
+    <li class="a-filter-option"><?php echo link_to('Year', 'aBlog/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></li>
   </ul>
 </div>
 
 <hr />
 
-<div class="a-blog-tags">  
+<div class="a-subnav-section tags">  
 
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
