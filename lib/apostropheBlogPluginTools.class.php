@@ -11,7 +11,7 @@ class apostropheBlogPluginTools
     if ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'))
     {
       aTools::addGlobalButtons(array(
-        new aGlobalButton('Blog', 'aBlogPostAdmin/index', 'a-blog'),
+        new aGlobalButton('Blog', 'aBlogPostAdmin/index', 'a-blog-btn'),
   			new aGlobalButton('Events', 'aBlogEventAdmin/index', 'a-events day-'.date('j'))
   		));
   	}
