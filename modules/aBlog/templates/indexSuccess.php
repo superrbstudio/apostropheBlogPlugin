@@ -1,3 +1,5 @@
+<?php # BLOG POSTS ========================================================= ?>
+
 <?php slot('body_class') ?>a-blog a-blog-posts <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
@@ -23,11 +25,9 @@
   <?php echo include_partial('aBlog/pagination', array('pager' => $a_blog_posts, 'params' => $params['pagination'])); ?>
   <?php endif ?>
 
-  <div style="clear:both;">
   <?php foreach ($a_blog_posts->getResults() as $a_blog_post): ?>
   <?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post, 'excerpt' => 'true')); ?>
   <?php endforeach ?>
-  </div>
 
   <?php if ($a_blog_posts->haveToPaginate()): ?>
   <?php echo include_partial('aBlog/pagination', array('pager' => $a_blog_posts, 'params' => $params['pagination'])); ?>
