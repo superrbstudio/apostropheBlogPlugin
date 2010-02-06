@@ -140,15 +140,35 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     return aHtml::getImages($this->description, $format);
   }
-  
+
+  /**
+   * Cache for getAttachedMedia
+   */
+   
+  public $attachedMedia;
+
+  /**
+   * Convert an old-style array of stdclass objects serialized in $this->media to
+   * an array of actual aMediaItem objects. This avoids the need for a data migration.
+   * The performance is not as good as properly joining with aMediaItem would be, but 
+   * that's OK because we'll be retiring this soon in favor of using areas to represent the 
+   * entire blog item, which should mean no more need for this method. -Tom
+   */
+   
   public function getAttachedMedia()
   {
-    if (strlen($this->media))
+    if (!isset($this->attachedMedia))
     {
-      return unserialize($this->media);
+      if (strlen($this->media))
+      {
+        $this->attachedMedia = Doctrine::getTable('aMediaItem')->findByIdsInOrder(aArray::getIds(unserialize($this->media)));
+      }
+      else
+      {
+        $this->attachedMedia = array();
+      }
     }
-  
-    return array();
+    return $this->attachedMedia;
   }
 
   public function getAttachedImages()
@@ -185,13 +205,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   
   public function getAttachedMediaIds()
   {
-    $itemIds = array();
-    foreach ($this->getAttachedMedia() as $item)
-    {
-      $itemIds[] = $item->id;
-    }
-    
-    return $itemIds;
+    return aArray::getIds($this->getAttachedMedia());
   }
 
   public function userHasPrivilege($privilege, $user = false)

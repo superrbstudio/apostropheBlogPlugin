@@ -37,25 +37,15 @@
 </ul>
 
 <?php if ($a_blog_post->getAttachedMedia()): ?>
-	<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
-		<div class="a-blog-post-media">
-			<?php include_component('aSlideshowSlot', 'slideshow', array(
-				'items' => $a_blog_post->getAttachedMedia(),
-				'id' => $a_blog_post->getId(),
-				'options' => array('width' => 150, 'height' => 110, 'resizeType' => 'c', 'arrows' => false )
-			)) ?>
-		</div>
-	<?php else: ?>
-	  <ul class="a-blog-post-media">
-	  <?php foreach ($a_blog_post->getAttachedMedia() as $media): ?>
-	    <li><?php echo image_tag(str_replace(
-	      array("_WIDTH_", "_HEIGHT_", "_c-OR-s_", "_FORMAT_"),
-	      array('120', '90', 'c', 'jpg',),
-	      $media->image
-	    )) ?></li>
-	  <?php endforeach ?>
-	  </ul>
-  <?php endif ?>
+  <?php // There was alternate code here for use when the aSlideshowSlot module is not enabled ?>
+  <?php // in the application, but that slot is standard equipment in Apostrophe now. Tom ?>
+	<div class="a-blog-post-media">
+		<?php include_component('aSlideshowSlot', 'slideshow', array(
+			'items' => $a_blog_post->getAttachedMedia(),
+			'id' => $a_blog_post->getId(),
+			'options' => array('width' => 150, 'height' => 110, 'resizeType' => 'c', 'arrows' => false )
+		)) ?>
+	</div>
 <?php endif ?>
 
 	<div class="a-blog-post-excerpt-container">

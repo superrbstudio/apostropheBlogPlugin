@@ -17,26 +17,14 @@
   <div class="a-blog-post-body">
 	
 			<?php if ($a_blog_post->getAttachedMedia()): ?>
-				<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
-					<div class="a-blog-post-media">
-					  <?php include_component('aSlideshowSlot', 'slideshow', array(
-							'items' => $a_blog_post->getAttachedMedia(),
-							'id' => $a_blog_post->getId(),
-							'options' => array('width' => (sfConfig::get('app_aBlog_post_list_slideshow_width'))? sfConfig::get('app_aBlog_post_list_slideshow_width'):320, 'height' => (sfConfig::get('app_aBlog_post_list_slideshow_height'))? sfConfig::get('app_aBlog_post_list_slideshow_height'):240, 'resizeType' => 'c'),
-							'constraints' => array('minimum-width' => (sfConfig::get('app_aBlog_post_list_slideshow_width'))? sfConfig::get('app_aBlog_post_list_slideshow_width'):320,'minimum-height' => (sfConfig::get('app_aBlog_post_list_slideshow_height'))? sfConfig::get('app_aBlog_post_list_slideshow_height'):240 )
-						)) ?>
-					</div>
-				<?php else: ?>
-				  <ul class="a-blog-post-media a-tubes-attached-media">
-				  <?php foreach ($a_blog_post->getAttachedMedia() as $media): ?>
-				    <li><?php echo image_tag(str_replace(
-				      array("_WIDTH_", "_HEIGHT_", "_c-OR-s_", "_FORMAT_"),
-				      array('240', '180', 'c', 'jpg',),
-				      $media->image
-				    )) ?></li>
-				  <?php endforeach ?>
-				  </ul>
-			  <?php endif ?>
+				<div class="a-blog-post-media">
+				  <?php include_component('aSlideshowSlot', 'slideshow', array(
+						'items' => $a_blog_post->getAttachedMedia(),
+						'id' => $a_blog_post->getId(),
+						'options' => array('width' => (sfConfig::get('app_aBlog_post_list_slideshow_width'))? sfConfig::get('app_aBlog_post_list_slideshow_width'):320, 'height' => (sfConfig::get('app_aBlog_post_list_slideshow_height'))? sfConfig::get('app_aBlog_post_list_slideshow_height'):240, 'resizeType' => 'c'),
+						'constraints' => array('minimum-width' => (sfConfig::get('app_aBlog_post_list_slideshow_width'))? sfConfig::get('app_aBlog_post_list_slideshow_width'):320,'minimum-height' => (sfConfig::get('app_aBlog_post_list_slideshow_height'))? sfConfig::get('app_aBlog_post_list_slideshow_height'):240 )
+					)) ?>
+				</div>
 			<?php endif ?>
 			
 		<div class="a-blog-post-excerpt">

@@ -32,9 +32,8 @@ class BaseaBlogPostAdminActions extends autoABlogPostAdminActions
   {
     $post = Doctrine::getTable('aBlogPost')->find($request->getParameter('id'));
     
-    $url = sfConfig::get('app_aMedia_client_site', false)
-         . "/media/select?"
-         . http_build_query(array(
+    $url = 'aMedia/select?' .
+         http_build_query(array(
              'multiple' => true,
              'aMediaIds' => implode(',', $post->getAttachedMediaIds()),
              'after' => 'aBlogPostAdmin/attach?id='.$post->getId()
@@ -46,10 +45,21 @@ class BaseaBlogPostAdminActions extends autoABlogPostAdminActions
 	public function executeAttach(sfWebRequest $request)
 	{
 	  $this->post = $this->getRoute()->getObject();
-    $items = aMediaAPI::getSelectedItems($request, false, false);
+	  $ids = preg_split('/,/', $request->getParameter('aMediaIds'));
+
+    // Note that this serves as validation that they are real media ids
+    $items = Doctrine::getTable('aMediaItem')->findByIdsInOrder($ids);
     
     if (!$items === false)
     {
+      // We're keeping a format similar to the old media plugin format until the change to using areas.
+      // If we weren't retiring this fork I'd do a real migration and join with a refClass etc.
+      $nitems = array();
+      foreach ($items as $item)
+      {
+        // Serialize fake objects instead of expensive Doctrine objects
+        $nitems[] = (object) array('id' => $item->id);
+      }
       $this->post->setMedia(serialize($items));
       $count = count($items);
     }
