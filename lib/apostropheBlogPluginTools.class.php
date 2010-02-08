@@ -12,7 +12,7 @@ class apostropheBlogPluginTools
     {
       aTools::addGlobalButtons(array(
         new aGlobalButton('Blog', 'aBlogPostAdmin/index', 'a-blog-btn'),
-  			new aGlobalButton('Events', 'aBlogEventAdmin/index', 'a-events day-'.date('j'))
+  			new aGlobalButton('<span class="day"></span> Events', 'aBlogEventAdmin/index', 'a-events day-'.date('j'))
   		));
   	}
   }
