@@ -1,4 +1,4 @@
-<?php slot("a-slot-controls-$name-$permid") ?>
+<?php slot("a-slot-controls-$pageid-$name-$permid") ?>
 	<li class="a-controls-item edit">
     <?php echo jq_link_to_function('edit', '', array(
   		'id' => 'a-slot-edit-'.$name.'-'.$permid, 
@@ -8,8 +8,8 @@
 
   	<script type="text/javascript">
   	$(document).ready(function(){
-  		var editBtn = $('#a-slot-edit-<?php echo $name ?>-<?php echo $permid ?>');
-  		var editSlot = $('#a-slot-<?php echo $name ?>-<?php echo $permid ?>');
+  		var editBtn = $('#a-slot-edit-<?php echo "$pageid-$name-$permid" ?>');
+  		var editSlot = $('#a-slot-<?php echo "$pageid-$name-$permid" ?>');
 		
   		editBtn.click(function(event){
   			$(this).parent().addClass('editing-now');

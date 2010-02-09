@@ -7,7 +7,7 @@
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-    $('#a_blog_event_id-<?php echo $id ?>').addClass('aBlogSloteventSelect');
+    $('#a_blog_event_id-<?php echo $id ?>').addClass('aBlogEventSlotSelect');
   });
 </script>
 <?php else:?>
