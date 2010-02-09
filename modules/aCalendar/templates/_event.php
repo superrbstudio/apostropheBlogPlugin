@@ -12,7 +12,7 @@
     <?php endif ?>
 	  <?php if ($a_blog_event->userHasPrivilege('edit')): ?>
 		<li class="edit">
-		    <?php echo link_to('Edit Event', 'a_blog_event_admin_edit', $a_blog_event, array('class' => 'a-btn  icon a-blog-btn')) ?>
+		    <?php echo link_to('<span class="day"></span>Edit Event', 'a_blog_event_admin_edit', $a_blog_event, array('class' => 'a-btn icon a-events day-'.date('j', strtotime($a_blog_event->getStartDate())))) ?>
 	  </li>
 	  <?php endif ?>		
 	</ul>
