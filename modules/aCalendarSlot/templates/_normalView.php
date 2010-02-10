@@ -89,7 +89,7 @@
 	<?php endif ?>
 <script type="text/javascript">
 	$('#day-events-<?php echo date('j', strtotime($today)) ?>').show();
-	$("#a-blog-calendar .title h3").append(' <img src="/apostrophePlugin/images/a-icon-loader-ani.gif" title="loading..." alt="loading..." class="a-loading-ani calendar" style="display:none;"/>');
+	$("#a-blog-calendar .title h3").append(' <img src="/apostrophePlugin/images/a-icon-loader.gif" title="loading..." alt="loading..." class="a-loading-ani calendar" style="display:none;"/>');
 </script>
 <?php if ($sf_params->get('action') != 'day'): ?>
 </div>
