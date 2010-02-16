@@ -12,11 +12,16 @@ abstract class BaseaBlogComponents extends sfComponents
 {
   public function executeRecentPosts()
   {
+    if (!$this->limit)
+    {
+      $this->limit = 5;
+    }
+    
     $q = Doctrine::getTable('aBlogPost')
       ->createQuery('p')
       ->addWhere('p.published = ?', true)
       ->orderBy('p.published_at')
-      ->limit(5);
+      ->limit($this->limit);
     
     $this->a_blog_posts = $q->execute();
   }
