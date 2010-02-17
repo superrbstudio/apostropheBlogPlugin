@@ -37,15 +37,20 @@
 </ul>
 
 <?php if ($a_blog_post->getAttachedMedia()): ?>
-  <?php // There was alternate code here for use when the aSlideshowSlot module is not enabled ?>
-  <?php // in the application, but that slot is standard equipment in Apostrophe now. Tom ?>
-	<div class="a-blog-post-media">
-		<?php include_component('aSlideshowSlot', 'slideshow', array(
-			'items' => $a_blog_post->getAttachedMedia(),
-			'id' => $a_blog_post->getId(),
-			'options' => array('width' => 150, 'height' => 110, 'resizeType' => 'c', 'arrows' => false )
-		)) ?>
-	</div>
+	<?php if (in_array('aSlideshowSlot', sfConfig::get('sf_enabled_modules'))): ?>
+		<div class="a-blog-post-media">
+			<?php include_component('aSlideshowSlot', 'slideshow', array(
+				'items' => $a_blog_post->getAttachedMedia(),
+				'id' => $a_blog_post->getId(),
+				'options' => array(
+					'width' => isset($options['aSlideshow']['width'])? $options['aSlideshow']['width'] : 290, 
+					'height' => isset($options['aSlideshow']['height'])? $options['aSlideshow']['height'] : 210, 
+					'resizeType' => isset($options['aSlideshow']['resizeType'])? $options['aSlideshow']['resizeType'] : 'c',
+					'flexheight' => isset($options['aSlideshow']['flexheight'])? $options['aSlideshow']['flexheight'] : false, 
+					'arrows' => isset($options['aSlideshow']['arrows'])? $options['aSlideshow']['arrows'] : false )
+			)) ?>
+		</div>
+	<?php endif ?>
 <?php endif ?>
 
 	<div class="a-blog-post-excerpt-container">
