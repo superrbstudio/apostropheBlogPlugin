@@ -29,10 +29,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $this->a_blog_post->Author = $this->getUser()->getGuardUser();
     $this->a_blog_post->save();
     
-    //Get global page
-    $this->page = aPageTable::retrieveBySlugWithSlots('global');
-    //$this->body = $this->page->createSlot($this->type);
-    
     
     $this->form = $this->configuration->getForm($this->a_blog_post);
     $this->a_blog_post = $this->form->getObject();

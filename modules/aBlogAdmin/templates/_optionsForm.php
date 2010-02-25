@@ -1,6 +1,4 @@
-<?php if(!$form->isNew()): ?>
-<?php echo $form['id'] ?>
-<?php endif ?>
+<?php echo $form->renderHiddenFields() ?>
 <h2>Title</h2>
 <p><?php echo $form['title']->renderRow() ?></p>
 <hr>

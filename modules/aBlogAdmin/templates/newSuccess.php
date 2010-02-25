@@ -16,9 +16,8 @@
   <?php include_partial('aBlogAdmin/flashes') ?>
   
   <div id="a-admin-content" style="float:left" class="main">
-  <?php a_area('aBlog_body_'.$a_blog_post['id'], array(
-  'editable' => false,
-  'global' => true,
+  <?php a_area('aBlogPost-$id-body', array(
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-$id',
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
@@ -26,7 +25,8 @@
     'aButton' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),
     'aSlideshow' => array("width" => 400, "flexHeight" => true, 'resizeType' => 's', ),
     'aPDF' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),   
-  ))) ?>
+  ))
+  ) ?>
   </div>
   
   
@@ -35,10 +35,12 @@
     
     <?php include_partial('aBlogAdmin/optionsForm', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
     <?php include_partial('aBlogAdmin/form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+    
+    </form>
   </div>
   
 
   <div id="a-admin-footer">
-    <?php include_partial('aBlogAdmin/form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
+    <?php //include_partial('aBlogAdmin/form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
 </div>

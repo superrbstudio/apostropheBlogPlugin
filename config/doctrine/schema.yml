@@ -1,22 +1,12 @@
 options:
   type: INNODB
 
-aBlogEngine:
-  columns:
-    page_id: integer(4)
-    options: string
-  relations:
-    Page:
-      class: aPage
-      local: page_id
-      foreign: id
-      onDelete: cascade
-
 aBlogItem:
   actAs:
     Timestampable: ~
     Taggable: ~
     Sluggable: ~
+    Commentable: ~
   columns:
     id:
       type: integer
@@ -90,7 +80,7 @@ aBlogItemCategory:
       type: integer
       primary: true
     blog_category_id:
-      type: integer
+      type: integer(4)
       primary: true
   relations:
     BlogItem:
@@ -104,7 +94,15 @@ aBlogItemCategory:
       
 aBlogCategory:
   columns:
-    name: string(128)
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+      unique: true
+    description:
+      type: string
   relations:
     Users:
       foreignAlias: BlogCategories
@@ -118,11 +116,38 @@ aBlogCategory:
       refClass: aBlogItemCategory
       local: blog_category_id
       foreign: blog_item_id
-    
+    Pages:
+      class: aPage
+      local: blog_category_id
+      foreign: page_id
+      foreignAlias: BlogCategories
+      refClass: aBlogPageCategory
+      
+aBlogPageCategory:
+  tableName: a_blog_page_category
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    page_id:
+      type: integer(4)
+      primary: true
+    blog_category_id:
+      type: integer(4)
+      primary: true
+  relations:
+    aBlogCategory:
+      local: blog_category_id
+      onDelete: CASCADE
+    aPage:
+      local: page_id
+      onDelete: CASCADE
+          
 aBlogCategoryUser:
   columns:
     blog_category_id:
-      type: integer
+      type: integer(4)
       primary: true
     user_id:
       type: integer(4)
