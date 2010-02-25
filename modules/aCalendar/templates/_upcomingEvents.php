@@ -5,9 +5,10 @@
 	    <h3 class="a-blog-post-title"><?php echo link_to($a_blog_event->getTitle(), 'a_calendar_post', $a_blog_event) ?></h3>
       <div class="a-calendar-meta">
         <ul>
-	        <li class="a-calendar-date"><?php echo date('l, F jS Y', strtotime($a_blog_event->getStartDate())) ?></li>
+	
+	        <li class="a-calendar-date"><?php echo date((sfConfig::get('app_aCalendar_event_date_format'))? sfConfig::get('app_aCalendar_event_date_format'):'l, F jS Y', strtotime($a_blog_event->getStartDate())) ?></li>
           <?php if($a_blog_event->getStartTime()): ?>
-          <li><?php echo date('g:iA', strtotime($a_blog_event->getStartTime())) ?> 
+          <li><?php echo date((sfConfig::get('app_aCalendar_event_time_format'))? sfConfig::get('app_aCalendar_event_time_format'):'g:iA', strtotime($a_blog_event->getStartTime())) ?> 
           <?php if($a_blog_event->getEndTime()): ?>- <?php echo date('g:iA', strtotime($a_blog_event->getEndTime())) ?></li>
           <?php endif ?>
           <?php endif ?>
