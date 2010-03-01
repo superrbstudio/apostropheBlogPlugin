@@ -10,6 +10,6 @@
 </div>
 <?php end_slot() ?>
 
-<div class="a-blog-main">
+<div id="a-blog-main" class="a-blog-main">
   <?php echo include_partial('aCalendar/event', array('a_blog_event' => $a_blog_event)); ?>
 </div>
