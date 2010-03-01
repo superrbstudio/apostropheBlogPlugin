@@ -30,5 +30,7 @@ generator:
           description:
             help: |
               The description is not prominent by default, however some themes may show it.
-      edit:    ~
-      new:     ~
+      edit:
+        title: Editing Blog Category
+      new:
+        title: New Blog Category
