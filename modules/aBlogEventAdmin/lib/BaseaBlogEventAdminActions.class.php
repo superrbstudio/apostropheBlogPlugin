@@ -32,9 +32,8 @@ class BaseaBlogEventAdminActions extends autoABlogEventAdminActions
   {
     $event = Doctrine::getTable('aBlogEvent')->find($request->getParameter('id'));
     
-    $url = sfConfig::get('app_a_media_site', false)
-         . "/media/select?"
-         . http_build_query(array(
+    $url = 'aMedia/select?' .
+         http_build_query(array(
              'multiple' => true,
              'aMediaIds' => implode(',', $event->getAttachedMediaIds()),
              'after' => 'aBlogEventAdmin/attach?id='.$event->getId()
@@ -46,21 +45,34 @@ class BaseaBlogEventAdminActions extends autoABlogEventAdminActions
 	public function executeAttach(sfWebRequest $request)
 	{
 	  $this->event = $this->getRoute()->getObject();
-    $items = aMediaAPI::getSelectedItems($request, false, false);
+	  $ids = preg_split('/,/', $request->getParameter('aMediaIds'));
+
+    // Note that this serves as validation that they are real media ids
+    $items = Doctrine::getTable('aMediaItem')->findByIdsInOrder($ids);
     
     if (!$items === false)
     {
+      // We're keeping a format similar to the old media plugin format until the change to using areas.
+      // If we weren't retiring this fork I'd do a real migration and join with a refClass etc.
+      $nitems = array();
+      foreach ($items as $item)
+      {
+        // Serialize fake objects instead of expensive Doctrine objects
+        $nitems[] = (object) array('id' => $item->id);
+      }
       $this->event->setMedia(serialize($items));
+      $count = count($items);
     }
     else
     {
       $this->event->setMedia('');
+      $count = 0;
     }
     
     $this->event->save();
     
-    $notice = count($items) .' media ';
-    $notice .= (count($items) > 1) ? 'items were' : 'item was';
+    $notice = $count .' media ';
+    $notice .= ($count > 1 || $count == 0) ? 'items were' : 'item was';
     $notice .= ' attached to your event.';
     
     $this->getUser()->setFlash('notice', $notice);
