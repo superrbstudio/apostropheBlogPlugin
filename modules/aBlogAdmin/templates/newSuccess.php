@@ -16,8 +16,8 @@
   <?php include_partial('aBlogAdmin/flashes') ?>
   
   <div id="a-admin-content" style="float:left" class="main">
-  <?php a_area('aBlogPost-$id-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-$id',
+  <?php a_area('body', array(
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   

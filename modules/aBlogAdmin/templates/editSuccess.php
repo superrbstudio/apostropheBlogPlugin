@@ -11,9 +11,8 @@
   <?php include_partial('aBlogAdmin/flashes') ?>
   
   <div id="a-admin-content" style="float:left" class="main">
-  <?php a_area('aBlog_body_'.$a_blog_post['id'], array(
-  'editable' => false,
-  'global' => true,
+  <?php a_area('body', array(
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
@@ -21,7 +20,8 @@
     'aButton' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),
     'aSlideshow' => array("width" => 400, "flexHeight" => true, 'resizeType' => 's', ),
     'aPDF' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),   
-  ))) ?>
+  ))
+  ) ?>
   </div>
   
   <?php echo form_tag_for($form, '@a_blog_admin', array('id'=>'a-admin-form')) ?>

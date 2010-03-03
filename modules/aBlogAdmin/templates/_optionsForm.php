@@ -12,6 +12,7 @@
 <p><?php echo $form['categories_list']->renderRow() ?></p>
 <hr>
 <h3>Tags</h3>
+<p><?php echo $form['tags']->renderRow() ?></p>
 <hr>
 <h3>Post Permissions</h3>
 <p><?php echo $form['status']->renderRow() ?></p>

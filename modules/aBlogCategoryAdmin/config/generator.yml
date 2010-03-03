@@ -20,6 +20,10 @@ generator:
         fields:   [ name, users_list ]
         display:  [ name, users_list ]
         
+      filter:
+        fields:  [ name, users_list ]
+        display: [ name, users_list ]
+        
       fields:
         numBlogItems: { label: Blog Items Count }
         numUsers: { label: Active Users }
