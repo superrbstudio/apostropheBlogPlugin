@@ -16,8 +16,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     // Register an event so we can add our buttons to the set of global CMS back end admin buttons
-    // that appear when the apostrophe is clicked. 
-    $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginTools', 
-      'getGlobalButtons'));
+    // that appear when the apostrophe is clicked.
+    $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginTools', 'getGlobalButtons'));
   }
 }
