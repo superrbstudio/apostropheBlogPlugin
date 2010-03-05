@@ -18,7 +18,7 @@
       <div class="a-calendar-event-body">
         <?php if (str_word_count(strip_tags($a_blog_event->getBody())) > 30): ?>
           <?php echo ($a_blog_event->getExcerpt()) ? $a_blog_event->getExcerpt() : $a_blog_event->getPreview(30) ?>
-          <span class='a-blog-read-more'><?php echo link_to('Read More', 'a_calendar_post', $a_blog_event, array('class' => 'a-blog-more')) ?></span>
+          <div class='a-blog-read-more'><?php echo link_to('Read More', 'a_calendar_post', $a_blog_event, array('class' => 'a-blog-more')) ?></div>
         <?php else: ?>
           <?php echo ($a_blog_event->getBody()) ?>
         <?php endif ?>

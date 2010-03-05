@@ -30,7 +30,7 @@
 		<div class="a-blog-post-excerpt">
 			<?php echo (isset($excerpt) && $a_blog_post->getExcerpt()) ? $a_blog_post->getExcerpt() : $a_blog_post->getBody() ?>			
 			<?php if ((isset($excerpt) && $a_blog_post->getExcerpt())): ?>
-				<span class="a-blog-read-more"><?php echo link_to('Read More', 'a_blog_post', $a_blog_post, array('class' => 'a-blog-more')) ?></span>
+				<div class="a-blog-read-more"><?php echo link_to('Read More', 'a_blog_post', $a_blog_post, array('class' => 'a-blog-more')) ?></div>
 			<?php endif ?>		
 		</div>
 		
