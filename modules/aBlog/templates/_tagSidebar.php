@@ -1,12 +1,14 @@
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
-  <ul class="a-filter-options blog">
-  <?php foreach ($categories as $category): ?>
-    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getSlug()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getSlug(), $params['cat']), array(
-      'class' => ($category->getSlug() == $sf_params->get('cat')) ? 'selected' : '', 
-    )) ?></li>
-  <?php endforeach ?>
-  </ul>	
+	<?php if (count($categories)): ?>
+	  <ul class="a-filter-options blog">
+	  <?php foreach ($categories as $category): ?>
+	    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getSlug()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getSlug(), $params['cat']), array(
+	      'class' => ($category->getSlug() == $sf_params->get('cat')) ? 'selected' : '', 
+	    )) ?></li>
+	  <?php endforeach ?>
+	  </ul>	
+	<?php endif ?>
 </div>
 
 <hr />
@@ -33,26 +35,29 @@
 
 
 	<h4 class="a-tag-sidebar-title popular">Popular Tags</h4>  			
-	<ul class="a-tag-sidebar-list popular">
-		<?php $n=1; foreach ($popular as $tag => $count): ?>
-	  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aBlog/index?tag='.$tag, $params['tag'])) ?></span>
-			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
-		</li>
-		<?php $n++; endforeach ?>
-	</ul>
-
+	<?php if (count($popular)): ?>
+		<ul class="a-tag-sidebar-list popular">
+			<?php $n=1; foreach ($popular as $tag => $count): ?>
+		  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
+				<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aBlog/index?tag='.$tag, $params['tag'])) ?></span>
+				<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
+			</li>
+			<?php $n++; endforeach ?>
+		</ul>
+	<?php endif ?>
+	
 	<br class="c"/>
 	<h4 class="a-tag-sidebar-title all-tags">All Tags <span class="a-tag-sidebar-tag-count"><?php echo count($tags) ?></span></h4>
-	<ul class="a-tag-sidebar-list all-tags">
-		<?php $n=1; foreach ($tags as $tag => $count): ?>
-	  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aBlog/index?tag='.$tag, $params['tag'])) ?></span>
-			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
-		</li>
-		<?php $n++; endforeach ?>
-	</ul>
-	
+	<?php if (count($tags)): ?>
+		<ul class="a-tag-sidebar-list all-tags">
+			<?php $n=1; foreach ($tags as $tag => $count): ?>
+		  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
+				<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aBlog/index?tag='.$tag, $params['tag'])) ?></span>
+				<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
+			</li>
+			<?php $n++; endforeach ?>
+		</ul>
+	<?php endif ?>
 </div>
 
 <hr />
@@ -62,6 +67,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+/* <![CDATA[ */	
 	$('.a-tag-sidebar-title.all-tags').click(function(){
 		$('.a-tag-sidebar-list.all-tags').slideToggle();
 		$(this).toggleClass('open');
@@ -76,4 +82,5 @@ $(document).ready(function() {
 	
 	$('a.selected').prepend('<span class="close"></span>')
 });	
+/* ]]> */
 </script>
