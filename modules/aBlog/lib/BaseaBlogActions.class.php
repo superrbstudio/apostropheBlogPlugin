@@ -64,7 +64,7 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
     
     $this->articles = $pager->getResults();
     
-    $this->feed = sfFeedPeer::createFromObjects(
+    $feed = sfFeedPeer::createFromObjects(
 	    $this->articles,
 	    array(
 	      'format'      => 'rss',
