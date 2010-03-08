@@ -50,7 +50,7 @@ class BaseaBlogPostAdminActions extends autoABlogPostAdminActions
     // Note that this serves as validation that they are real media ids
     $items = Doctrine::getTable('aMediaItem')->findByIdsInOrder($ids);
     
-    if (!$items === false)
+    if (!empty($items))
     {
       // We're keeping a format similar to the old media plugin format until the change to using areas.
       // If we weren't retiring this fork I'd do a real migration and join with a refClass etc.
@@ -64,7 +64,7 @@ class BaseaBlogPostAdminActions extends autoABlogPostAdminActions
       $count = count($items);
     }
     else
-    {
+    {      
       $this->post->setMedia('');
       $count = 0;
     }
