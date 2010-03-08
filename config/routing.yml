@@ -2,6 +2,26 @@
 # aBlog routes #
 #################
 
+a_blog_feed_cat_tag:
+  url:   /feed/:cat/tag/:tag
+  param: { module: aBlog, action: feed }
+  class: aRoute
+
+a_blog_feed_tag:
+  url:   /feed/tag/:tag
+  param: { module: aBlog, action: feed }
+  class: aRoute
+
+a_blog_feed_cat:
+  url:   /feed/:cat
+  param: { module: aBlog, action: feed }
+  class: aRoute
+
+a_blog_feed:
+  url:   /feed
+  param: { module: aBlog, action: feed }
+  class: aRoute
+
 a_blog_post:
   url:     /:year/:month/:day/:slug
   param:   { module: aBlog, action: show }
@@ -105,22 +125,6 @@ a_blog_today:
   url:   
   param: { module: aBlog, action: today }
   class: aRoute
-
-a_blog_feed_cat_tag:
-  url:   /blog/feed/:cat/tag/:tag
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed_tag:
-  url:   /blog/feed/tag/:tag
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed_cat:
-  url:   /blog/feed/:cat
-  param: { module: aBlogFeed, action: posts }
-
-a_blog_feed:
-  url:   /blog/feed
-  param: { module: aBlogFeed, action: posts }
 
 #####################
 # aCalendar routes #

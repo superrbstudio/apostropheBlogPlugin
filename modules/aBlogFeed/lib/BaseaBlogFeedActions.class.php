@@ -12,6 +12,14 @@ abstract class BaseaBlogFeedActions extends sfActions
 {
   public function executePosts(sfWebRequest $request)
   {
+    $q = Doctrine_Query::create()->from('aBlogPost'.' a');
+    $categories = aTools::getCurrentPage()->BlogCategories->toArray();
+    if(count($categories) > 0)
+    {
+      $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $categories);
+      $q->whereIn('a.Category.id', $categoryIds);
+    }
+    
     $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
     $pager->setQuery(Doctrine::getTable('aBlogPost')->buildQuery($request));
     $pager->setPage($this->getRequestParameter('page', 1));

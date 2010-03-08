@@ -1,6 +1,6 @@
+<?php if(count($categories) > 1): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
-	<?php if (count($categories)): ?>
 	  <ul class="a-filter-options blog">
 	  <?php foreach ($categories as $category): ?>
 	    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getSlug()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getSlug(), $params['cat']), array(
@@ -8,10 +8,11 @@
 	    )) ?></li>
 	  <?php endforeach ?>
 	  </ul>	
-	<?php endif ?>
+
 </div>
 
 <hr />
+<?php endif ?>
 
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>

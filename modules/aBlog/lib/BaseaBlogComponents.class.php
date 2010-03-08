@@ -37,9 +37,13 @@ abstract class BaseaBlogComponents extends sfComponents
 
     $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost'));
     
-    $this->categories = Doctrine::getTable('aBlogCategory')
-      ->createQuery('c')
-      ->orderBy('c.name')
-      ->execute();
+    $this->categories =  aTools::getCurrentPage()->BlogCategories;
+    if(count($this->categories) == 0)
+    {
+      $this->categories = Doctrine::getTable('aBlogCategory')
+        ->createQuery('c')
+        ->orderBy('c.name')
+        ->execute();
+    }
   }
 }
