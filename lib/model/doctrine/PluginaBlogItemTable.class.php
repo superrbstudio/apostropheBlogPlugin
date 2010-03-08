@@ -11,15 +11,14 @@ class PluginaBlogItemTable extends Doctrine_Table
    * @param string $tableName This is going to be either aBlogPost or aBlogEvent
    * @return Doctrrin_Query $q
    */
-  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogItem')
+  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogItem', Doctrine_Query $q = null)
   {
+    if(is_null($q))
+      $q = Doctrine_Query::create()->from($tableName.' a');
+  
     if ($request->getParameter('tag'))
     {
       $q = PluginTagTable::getObjectTaggedWithQuery($tableName, $request->getParameter('tag'), null, array('nb_common_tag' => 1));
-    }
-    else
-    {
-      $q = Doctrine_Query::create()->from($tableName.' a');
     }
     
     if ($request->getParameter('search'))
@@ -38,8 +37,6 @@ class PluginaBlogItemTable extends Doctrine_Table
     
     $q->addWhere($q->getRootAlias().'.published = ?', true);
 
-    $q->orderBy($rootAlias.'.published_at desc');
-    
     return $q;
   }
   

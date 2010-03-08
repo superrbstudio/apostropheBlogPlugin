@@ -112,6 +112,34 @@ aBlogCategory:
       type: string(255)
     description:
       type: string
+  relations:
+    Pages:
+      class: aPage
+      local: blog_category_id
+      foreign: page_id
+      foreignAlias: BlogCategories
+      refClass: aBlogPageCategory
+      
+aBlogPageCategory:
+  tableName: a_blog_page_category
+  options:
+    symfony:
+      form:   false
+      filter: false
+  columns:
+    page_id:
+      type: integer(4)
+      primary: true
+    blog_category_id:
+      type: integer(4)
+      primary: true
+  relations:
+    aBlogCategory:
+      local: blog_category_id
+      onDelete: CASCADE
+    aPage:
+      local: page_id
+      onDelete: CASCADE
 
 aBlogPostSlot:
   inheritance:

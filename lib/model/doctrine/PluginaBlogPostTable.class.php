@@ -4,9 +4,12 @@
  */
 class PluginaBlogPostTable extends Doctrine_Table
 {
-  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogPost')
+  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogPost', $q)
   {    
-    return Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName);
+    Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName, $q);
+    $rootAlias = $q->getRootAlias();
+    $q->orderBy($rootAlias.'.published_at desc');
+    return $q;
   }
   
   public function addDateRangeQuery(sfWebRequest $request, Doctrine_Query $q = null)

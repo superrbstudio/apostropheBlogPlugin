@@ -1,8 +1,0 @@
-I still have more double-slot-in-the-name problems here to clean up
-
---This line, and those below, will be ignored--
-
-A  + modules/aBlogEventSlot
-D    modules/aBlogSlotEventSlot
-A  + modules/aBlogPostSlot
-D    modules/aBlogSlotPostSlot

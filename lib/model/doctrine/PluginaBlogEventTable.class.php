@@ -11,35 +11,11 @@ class PluginaBlogEventTable extends aBlogItemTable
    * @param string $tableName This is going to be either aBlogPost or aBlogEvent
    * @return Doctrrin_Query $q
    */
-  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogEvent')
+  public function buildQuery(sfWebRequest $request, $tableName = 'aBlogEvent', Doctrine_Query $q = null)
   {
-    if ($request->getParameter('tag'))
-    {
-      $q = PluginTagTable::getObjectTaggedWithQuery($tableName, $request->getParameter('tag'), null, array('nb_common_tag' => 1));
-    }
-    else
-    {
-      $q = Doctrine_Query::create()->from($tableName.' a');
-    }
-    
-    if ($request->getParameter('search'))
-    {
-      $q = Doctrine::getTable($tableName)->addSearchQuery($q, $request->getParameter('search'));
-    }
-        
-    $q = Doctrine::getTable($tableName)->addDateRangeQuery($request, $q);
-        
+    Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName, $q);
     $rootAlias = $q->getRootAlias();
-
-    if ($request->getParameter('cat'))
-    {
-      $q->innerJoin($rootAlias.'.Category c WITH c.slug = ? ', $request->getParameter('cat'));
-    }
-    
-    $q->addWhere($q->getRootAlias().'.published = ?', true);
-
-    $q->orderBy($rootAlias.'.start_date asc');
-    
+    $q->orderBy($rootAlias.'.start_date desc');
     return $q;
   }
   
