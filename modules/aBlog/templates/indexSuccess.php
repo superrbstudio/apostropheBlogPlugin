@@ -22,7 +22,7 @@
   <?php endif ?>
 
   <?php if ($a_blog_posts->haveToPaginate()): ?>
-  <?php echo include_partial('aBlog/pagination', array('pager' => $a_blog_posts, 'params' => $params['pagination'])); ?>
+ 		<?php echo include_partial('aPager/pager', array('pager' => $a_blog_posts, 'pagerUrl' => url_for('aBlog/index?'. http_build_query($params['pagination'])))); ?>
   <?php endif ?>
 
   <?php foreach ($a_blog_posts->getResults() as $a_blog_post): ?>
@@ -30,6 +30,6 @@
   <?php endforeach ?>
 
   <?php if ($a_blog_posts->haveToPaginate()): ?>
-  <?php echo include_partial('aBlog/pagination', array('pager' => $a_blog_posts, 'params' => $params['pagination'])); ?>
+ 		<?php echo include_partial('aPager/pager', array('pager' => $a_blog_posts, 'pagerUrl' => url_for('aBlog/index?'. http_build_query($params['pagination'])))); ?>
   <?php endif ?>
 </div>

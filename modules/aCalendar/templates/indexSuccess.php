@@ -21,7 +21,9 @@
   </ul>
   <?php endif ?>
 
-  <?php echo include_partial('aPager/pager', array('pager' => $a_blog_events, 'pagerUrl' => url_for('aCalendar/index?'. http_build_query($params['pagination'])))); ?>
+  <?php if ($a_blog_events->haveToPaginate()): ?>
+  	<?php echo include_partial('aPager/pager', array('pager' => $a_blog_events, 'pagerUrl' => url_for('aCalendar/index?'. http_build_query($params['pagination'])))); ?>
+	<?php endif ?>
 
   <?php foreach ($a_blog_events->getResults() as $a_blog_event): ?>
   <?php echo include_partial('aCalendar/event', array('a_blog_event' => $a_blog_event, 'excerpt' => 'true')); ?>
@@ -31,5 +33,7 @@
   <?php include_partial('aCalendar/noresults') ?>
   <?php endif ?>
 
-  <?php echo include_partial('aPager/pager', array('pager' => $a_blog_events, 'pagerUrl' => url_for('aCalendar/index?'. http_build_query($params['pagination'])))); ?>
+  <?php if ($a_blog_events->haveToPaginate()): ?>
+  	<?php echo include_partial('aPager/pager', array('pager' => $a_blog_events, 'pagerUrl' => url_for('aCalendar/index?'. http_build_query($params['pagination'])))); ?>
+	<?php endif ?>
 </div>
