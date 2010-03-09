@@ -10,5 +10,5 @@
  */
 class aBlogAdminGeneratorConfiguration extends BaseaBlogAdminGeneratorConfiguration
 {
-  
+
 }

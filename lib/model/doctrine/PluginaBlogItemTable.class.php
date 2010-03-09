@@ -28,6 +28,6 @@ class PluginaBlogItemTable extends Doctrine_Table
   
   public function filterByTag(Doctrine_Query $q, sfWebRequest $request)
   {
-    
+    PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $request->getParameter('tag'), $q, array('nb_common_tag' => 1));
   }
 }

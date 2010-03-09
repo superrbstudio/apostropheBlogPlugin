@@ -14,7 +14,7 @@ aBlogItem:
       autoincrement: true
     author_id:
       type: integer(4)
-    body_id:
+    page_id:
       type: integer(4)
     title:
       type: string(255)
@@ -43,9 +43,9 @@ aBlogItem:
       refClass: aBlogEditor
       local: blog_item_id
       foreign: user_id
-    Body:
-      class: aArea
-      local: body_id
+    Page:
+      class: aPage
+      local: page_id
       foreign: id
       onDelete: CASCADE
     Categories:
@@ -171,28 +171,4 @@ aBlogPost:
   columns:
     published_at:
       type: timestamp
-  relations:
-    Author:
-      foreignAlias: BlogAuthorPosts
-      class: sfGuardUser
-      local: author_id
-      foreign: id
-      onDelete: SET NULL
-    Editors:
-      foreignAlias: BlogEditorPosts
-      class: sfGuardUser
-      refClass: aBlogEditor
-      local: blog_item_id
-      foreign: user_id
-    Body:
-      class: aArea
-      local: body_id
-      foreign: id
-      onDelete: CASCADE
-    Categories:
-      foreignAlias: BlogPosts
-      class: aBlogCategory
-      refClass: aBlogItemCategory
-      local: blog_item_id
-      foreign: blog_category_id
       

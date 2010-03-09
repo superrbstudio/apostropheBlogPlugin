@@ -27,11 +27,11 @@
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
 	<ul class="a-blog-selected-tag">
-		<li><?php #echo $tag ?><?php echo link_to($tag, aUrl::addParams('aBlog/index', $params['tag']), array('class' => 'selected', )) ?></li>
-	</ul>
+		<li><?php echo link_to($tag, aUrl::addParams('aBlog/index', $params['tag']), array('class' => 'selected', )) ?></li>
+  </ul>
 	<?php endif ?>
-
-
+  
+  
 	<h4 class="a-tag-sidebar-title popular">Popular Tags</h4>  			
 	<ul class="a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>

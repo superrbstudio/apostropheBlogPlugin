@@ -10,22 +10,24 @@
  */
 abstract class BaseaBlogActions extends aEngineActions
 {
+  protected $modelClass = 'aBlogPost';
+  
   public function preExecute()
   {
     parent::preExecute();
-    $this->blogCategories = aTools::getCurrentPage()->BlogCategories;
+    $this->blogCategories = aTools::getCurrentPage()->BlogCategories->toArray();
     if(count($this->blogCategories) == 0)
     {
-      $this->blogCategories = Doctrine::getTable('aBlogCategory')->findAll();
+      $this->blogCategories = array();
     }
   }
 
   protected function buildQuery($request)
   {
-    $q = Doctrine::getTable('aBlogPost')->createQuery('b')
-      ->leftJoin('b.Author a')
-      ->leftJoin('b.Categories c');
-    $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $this->blogCategories->toArray());
+    $q = Doctrine::getTable($this->modelClass)->createQuery()
+      ->leftJoin($this->modelClass.'.Author a')
+      ->leftJoin($this->modelClass.'.Categories c');
+    $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $this->blogCategories);
     $q->whereIn('c.id', $categoryIds);
 
     $routingOptions = $this->getRoute()->getOptions();    
@@ -33,7 +35,7 @@ abstract class BaseaBlogActions extends aEngineActions
     {
       foreach($routingOptions['filters'] as $method)
       {
-        Doctrine::getTable('aBlogPost')->$method($q, $request);
+        Doctrine::getTable($this->modelClass)->$method($q, $request);
       }
     }
     
@@ -43,7 +45,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    $pager = new sfDoctrinePager('aBlogPost', 10);
+    $pager = new sfDoctrinePager($this->modelClass, 10);
     $pager->setQuery($this->buildQuery($request));
     $pager->setPage($this->getRequestParameter('page', 1));
     $pager->init();
@@ -150,6 +152,7 @@ abstract class BaseaBlogActions extends aEngineActions
         'authorEmail' => sfConfig::get('app_aBlog_feed_author_email'),
         'authorName'  => sfConfig::get('app_aBlog_feed_author_name'),
         'routeName'   => '@a_blog_post',
+        'methods'     => array('description' => 'getFeedText')
       )
     );
     

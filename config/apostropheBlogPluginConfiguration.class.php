@@ -17,5 +17,19 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
+    $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
+      'getGlobalButtons'));
+  }
+  
+  static public function getGlobalButtons()
+  {
+    $user = sfContext::getInstance()->getUser();
+    if ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'))
+    {
+      aTools::addGlobalButtons(array(
+        new aGlobalButton('<span class="day"></span> Events', 'event/index', 'a-events day-'.date('j')),
+        new aGlobalButton('Blog', '@a_blog_admin', 'a-blog-btn')
+      ));
+    }
   }
 }

@@ -11,7 +11,7 @@
  * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class PluginaBlogItem extends BaseaBlogItem
-{
+{  
   /**
    * These date methods are use in the routing of the permalink
    */
@@ -34,6 +34,31 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     return $this->slug;
   }
-
-
+  
+  public function postInsert($event)
+  {
+    $page = new aPage();
+    $page['slug'] = 'aBlogPost-'.$this['id'];
+    $page->save();
+    $this->Page = $page;
+    $this->save();
+  }
+  
+  public function postDelete($event)
+  {
+    $this->Page->delete();
+  }
+  
+  public function getFeedText()
+  {
+    $text = '';
+    foreach($this->Page->getArea('body') as $slot)
+    {
+      if(method_exists($slot, 'getSearchText'))
+      {
+        $text .= $slot->getSearchText();
+      }
+    }
+    return $text;
+  }  
 }

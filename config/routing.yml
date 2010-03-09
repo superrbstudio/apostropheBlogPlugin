@@ -20,7 +20,7 @@ a_blog_cat_tag_year_month:
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   options: 
-    filters: [ filterByYMD, filterByCategory ] 
+    filters: [ filterByYMD, filterByCategory, filterByTag ] 
   class: aRoute
 
 a_blog_cat_tag_year:
@@ -113,6 +113,8 @@ a_blog_cat_tag:
 a_blog_tag:
   url:   /tag/:tag
   param: { module: aBlog, action: index }
+  options: 
+    filters: [ filterByTag ] 
   class: aRoute
 
 a_blog_cat:
@@ -142,19 +144,23 @@ a_blog_admin:
   options:
     model:               aBlogPost
     module:              aBlogAdmin
-    prefix_path:         admin/a_blog_admin
+    prefix_path:         admin/blog
     column:              id
     with_wildcard_routes: true
-    collection_actions:
-      addFilter: [GET, POST]
-      removeFilter: [GET, POST]
+      
+a_blog_admin_remove_filter:
+  url:   /admin/aBlogAdmin/remove_filter/:name/:value
+  param: { module: aBlogAdmin, action: removeFilter }
+  class: sfRoute
+  
+  
       
 a_blog_category_admin:
   class: sfDoctrineRouteCollection
   options:
     model:               aBlogCategory
     module:              aBlogCategoryAdmin
-    prefix_path:         admin/a_blog_category_admin
+    prefix_path:         admin/blog_categories
     column:              id
     with_wildcard_routes: true
     collection_actions:

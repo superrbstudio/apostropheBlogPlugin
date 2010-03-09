@@ -17,6 +17,12 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     //$this->widgetSchema->setLabel('user_id', 'By');
   }
   
+  public function setup()
+  {
+    $this->fields = $this->getFields();
+    parent::setup();
+  }
+  
   public function filterSet($name)
   {
     if($this[$name]->getValue() === null || $this[$name]->getValue() === '')
@@ -33,19 +39,79 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
   
   public function getAppliedFilters()
   {
+    $values = $this->processValues($this->getDefaults());
     $fields = $this->getFields();
-    $filters = array();
-    foreach($this as $field)
+    
+    $names = array_merge($fields, array_diff(array_keys($this->validatorSchema->getFields()), array_keys($fields)));
+    $fields = array_merge($fields, array_combine($names, array_fill(0, count($names), null)));
+    
+    $appliedValues = array();
+    
+    foreach ($fields as $field => $type)
     {
-      $value = $this->getFilterValue($field);
-      if(!is_null($value) && $value != '')
+      if (!isset($values[$field]) || null === $values[$field] || '' === $values[$field])
       {
-        $filters[$field->getName()] = $value;
+        continue;
+      }
+
+      if($this->getTable()->hasField($field))
+      {
+        $method = sprintf('get%sValue', self::camelize($this->getFieldName($field)));
+      }
+
+      if (method_exists($this, $method))
+      {
+        $value = $this->$method($field, $values[$field]);
+        if($value) $appliedValues[$field] = $value; 
+      }
+      else if (null != $type)
+      {
+        $method = sprintf('get%sValue', $type);
+        if (method_exists($this, $method = sprintf('get%sValue', $type)))
+        {
+          $value = $this->$method($field, $values[$field]);
+          if($value) $appliedValues[$field] = $value; 
+        }
+        
       }
     }
-    return $filters;
+    return $appliedValues; 
   }
   
+  protected function getForeignKeyValue($field, $values)
+  {
+    $appliedValues = array();
+    $choices = $this[$field]->getWidget()->getChoices();
+    if(is_array($values))
+    {
+      foreach($values as $value)
+      {
+        $appliedValues[] = $choices[$value]; 
+      }
+    }
+    else
+    {
+      $appliedValues[] = $choices[$values];
+    }
+    return $appliedValues;
+  }
   
+  protected function getNumberValue($field, $values)
+  {
+    if(is_array($values) && isset($values['text']) && '' !== $values['text'])
+    {
+      return $values['text'];
+    }
+  }
   
+  protected function getEnumValue($field, $value)
+  {
+    return array($value);
+  }
+  
+  protected function getBooleanValue($field, $value)
+  {
+    $choices = $this->getWidget($field)->getChoices();
+    return array($choices[$value]);
+  }
 }

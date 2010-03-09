@@ -15,7 +15,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     parent::setup();
 
     unset(
-      $this['type'], $this['body_id'], $this['created_at'], $this['updated_at']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
     );
     
     //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
