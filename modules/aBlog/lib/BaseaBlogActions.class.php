@@ -13,11 +13,17 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
   public function executeIndex(sfWebRequest $request)
   {
     $q = Doctrine_Query::create()->from('aBlogPost'.' a');
-    $categories = aTools::getCurrentPage()->BlogCategories->toArray();
+    $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
+    $q->leftJoin('a.Category c ON 1=1 ');
+    $q->leftJoin('c.aBlogPageCategory apc on apc.page_id=' . aTools::getCurrentPage()->getId());
     if(count($categories) > 0)
     {
-      $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $categories);
-      $q->whereIn('a.Category.id', $categoryIds);
+      $categoryIds = array_map(create_function('$a', 'return $a["blog_category_id"];'),  $categories);
+      $q->whereIn('a.category_id', $categoryIds);
+      if(in_array(null, $categoryIds)) 
+      {
+        $q->orWhere('a.category_id IS NULL');
+      }   
     }
     
     $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));

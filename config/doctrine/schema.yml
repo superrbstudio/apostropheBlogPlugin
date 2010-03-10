@@ -127,12 +127,15 @@ aBlogPageCategory:
       form:   false
       filter: false
   columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      primary: true
     page_id:
       type: integer(4)
       primary: true
     blog_category_id:
       type: integer(4)
-      primary: true
   relations:
     aBlogCategory:
       local: blog_category_id
