@@ -39,5 +39,7 @@
   <div id="a-admin-footer">
     [?php include_partial('<?php echo $this->getModuleName() ?>/list_footer', array('pager' => $pager)) ?]
   </div>
+  
+  [?php include_partial('<?php echo $this->getModuleName() ?>/list_th_categories_list', array('filters' => $filters)) ?]
 
 </div>

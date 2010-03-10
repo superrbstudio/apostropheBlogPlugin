@@ -8,7 +8,7 @@
 					<?php if ($this->configuration->getValue('list.batch_actions')): ?>
           	<th id="a-admin-list-batch-actions"><input id="a-admin-list-batch-checkbox-toggle" class="a-admin-list-batch-checkbox-toggle a-checkbox" type="checkbox"/></th>
 					<?php endif; ?>
-          	[?php include_partial('<?php echo $this->getModuleName() ?>/list_th_<?php echo $this->configuration->getValue('list.layout') ?>', array('sort' => $sort, 'form' => $form)) ?]
+          	[?php include_partial('<?php echo $this->getModuleName() ?>/list_th_<?php echo $this->configuration->getValue('list.layout') ?>', array('sort' => $sort, 'form' => $form, 'filters' => $form)) ?]
 					<?php if ($this->configuration->getValue('list.object_actions')): ?>
           	<th id="a-admin-list-th-actions">[?php echo __('Actions', array(), 'a-admin') ?]</th>
 					<?php endif; ?>

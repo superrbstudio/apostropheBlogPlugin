@@ -49,16 +49,12 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     
     foreach ($fields as $field => $type)
     {
-      if (!isset($values[$field]) || null === $values[$field] || '' === $values[$field])
+      if (!isset($values[$field]) || null === $values[$field] || '' === $values[$field] || $field == $this->getCSRFFieldName())
       {
         continue;
       }
-
-      if($this->getTable()->hasField($field))
-      {
-        $method = sprintf('get%sValue', self::camelize($this->getFieldName($field)));
-      }
-
+      
+      $method = sprintf('get%sValue', self::camelize($this->getFieldName($field)));
       if (method_exists($this, $method))
       {
         $value = $this->$method($field, $values[$field]);
@@ -76,6 +72,11 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
       }
     }
     return $appliedValues; 
+  }
+  
+  protected function getManyKeyValue($field, $values)
+  {
+    return $this->getForeignKeyValue($field, $values);
   }
   
   protected function getForeignKeyValue($field, $values)

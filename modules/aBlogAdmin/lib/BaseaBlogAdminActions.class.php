@@ -35,7 +35,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     
     $filters = $this->getUser()->getAttribute('aBlogAdmin.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     //$filters = $this->configuration->getFilterDefaults();
-    $filters[$filter_field] = $filter_value;
+    $filters[$filter_field][$filter_value] = $filter_value;
     $this->getUser()->setAttribute('aBlogAdmin.filters', $filters, 'admin_module');
     
     $this->redirect('@a_blog_admin');    
