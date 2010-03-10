@@ -28,10 +28,12 @@
 			<?php endif ?>
 			
 		<div class="a-blog-post-excerpt">
-			<?php echo (isset($excerpt) && $a_blog_post->getExcerpt()) ? $a_blog_post->getExcerpt() : $a_blog_post->getBody() ?>			
+			<?php echo (isset($excerpt) && $a_blog_post->getExcerpt()) ? $a_blog_post->getExcerpt() : $a_blog_post->getPreview(250) ?>			
 			<?php if ((isset($excerpt) && $a_blog_post->getExcerpt())): ?>
 				<div class="a-blog-read-more"><?php echo link_to('Read More', 'a_blog_post', $a_blog_post, array('class' => 'a-blog-more')) ?></div>
-			<?php endif ?>		
+			<?php elseif (count(explode(" ",$a_blog_post->getBody())) > 250): ?>
+				<div class="a-blog-read-more"><?php echo link_to('Read More', 'a_blog_post', $a_blog_post, array('class' => 'a-blog-more')) ?></div>
+			<?php endif ?>
 		</div>
 		
 	</div>

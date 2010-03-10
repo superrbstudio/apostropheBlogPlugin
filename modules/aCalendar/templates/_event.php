@@ -45,9 +45,11 @@
 		<?php endif ?>
 	
 		<div class="a-blog-post-excerpt">
-			<?php echo (isset($excerpt) && $a_blog_event->getExcerpt()) ? $a_blog_event->getExcerpt() : $a_blog_event->getBody() ?>			
+			<?php echo (isset($excerpt) && $a_blog_event->getExcerpt()) ? $a_blog_event->getExcerpt() : $a_blog_event->getPreview(250) ?>			
 			<?php if ((isset($excerpt) && $a_blog_event->getExcerpt())): ?>
-				<span class="a-blog-read-more"><?php echo link_to('Read More', 'a_calendar_post', $a_blog_event, array('class' => 'a-blog-more')) ?></span>
+				<div class="a-blog-read-more"><?php echo link_to('Read More', 'a_calendar_post', $a_blog_event, array('class' => 'a-blog-more')) ?></div>
+			<?php elseif (count(explode(" ",$a_blog_event->getBody())) > 250): ?>
+				<div class="a-blog-read-more"><?php echo link_to('Read More', 'a_calendar_post', $a_blog_event, array('class' => 'a-blog-more')) ?></div>
 			<?php endif ?>
 		</div>
 		
