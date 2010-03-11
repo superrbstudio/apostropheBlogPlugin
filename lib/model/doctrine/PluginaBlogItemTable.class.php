@@ -25,7 +25,6 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $q = Doctrine::getTable($tableName)->addSearchQuery($q, $request->getParameter('search'));
     }
-        
     $q = Doctrine::getTable($tableName)->addDateRangeQuery($request, $q);
         
     $rootAlias = $q->getRootAlias();

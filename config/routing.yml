@@ -226,7 +226,7 @@ a_calendar_cat:
 
 a_calendar_today:
   url:   
-  param: { module: aCalendar, action: upcoming }
+  param: { module: aCalendar, action: index }
   class: aRoute
 
 a_calendar:

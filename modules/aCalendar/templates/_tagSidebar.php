@@ -1,3 +1,4 @@
+<?php if(count($categories) > 1): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
 	<?php if (count($categories)): ?>
@@ -12,6 +13,7 @@
 </div>
 
 <hr />
+<?php endif ?>
 
 <div class="a-subnav-section range">
   <h4>Browse by</h4>

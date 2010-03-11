@@ -13,7 +13,7 @@ class PluginaBlogEventTable extends aBlogItemTable
    */
   public function buildQuery(sfWebRequest $request, $tableName = 'aBlogEvent', Doctrine_Query $q = null)
   {
-    Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName, $q);
+    Doctrine::getTable('aBlogItem')->buildQuery($request, 'aBlogEvent', $q);
     $rootAlias = $q->getRootAlias();
     $q->orderBy($rootAlias.'.start_date desc');
     return $q;
@@ -27,9 +27,11 @@ class PluginaBlogEventTable extends aBlogItemTable
     }
 
     $rootAlias = $q->getRootAlias();
-
-    $q->addWhere($rootAlias.'.start_date > ?', $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', 1).'-'.$request->getParameter('day', 1).' 0:00:00')
-      ->addWhere($rootAlias.'.start_date < ?', $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', 12).'-'.$request->getParameter('day', 31).' 23:59:59');
+    $startDate = $request->getParameter('year', 0).'-'.$request->getParameter('month', 1).'-'.$request->getParameter('day', 1).' 0:00:00';
+    $endDate = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', 12).'-'.$request->getParameter('day', 31).' 23:59:59';
+    
+    $q->addWhere($rootAlias.'.start_date > ?', $startDate)
+      ->andWhere($rootAlias.'.end_date < ?', $endDate);
     
     return $q;
   }

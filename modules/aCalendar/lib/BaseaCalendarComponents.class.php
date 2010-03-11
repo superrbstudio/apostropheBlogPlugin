@@ -32,9 +32,14 @@ abstract class BaseaCalendarComponents extends sfComponents
 
     $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogEvent'));
     
-    $this->categories = Doctrine::getTable('aBlogCategory')
-      ->createQuery('c')
-      ->orderBy('c.name')
-      ->execute();
+    $this->categories =  aTools::getCurrentPage()->BlogCategories;
+    $aPageCategories = aTools::getCurrentPage()->aBlogPageCategory;
+    if(count($aPageCategories) == 0)
+    {
+      $this->categories = Doctrine::getTable('aBlogCategory')
+        ->createQuery('c')
+        ->orderBy('c.name')
+        ->execute();
+    }
   }
 }
