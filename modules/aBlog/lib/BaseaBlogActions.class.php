@@ -14,14 +14,15 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
   {
     $q = Doctrine_Query::create()->from('aBlogPost'.' a');
     $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
-    $q->leftJoin('a.Category c ON 1=1 ');
-    $q->leftJoin('c.aBlogPageCategory apc on apc.page_id=' . aTools::getCurrentPage()->getId());
+    $q->leftJoin('a.Category r ON 1=1');
+    $q->leftJoin('r.aBlogPageCategory apc on apc.page_id=' . aTools::getCurrentPage()->getId());
     if(count($categories) > 0)
     {
       $categoryIds = array_map(create_function('$a', 'return $a["blog_category_id"];'),  $categories);
       $q->whereIn('a.category_id', $categoryIds);
       if(in_array(null, $categoryIds)) 
       {
+        if(count($categories) == 1) $uncat = true;
         $q->orWhere('a.category_id IS NULL');
       }   
     }
