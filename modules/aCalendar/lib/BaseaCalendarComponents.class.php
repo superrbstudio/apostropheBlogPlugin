@@ -12,7 +12,7 @@ abstract class BaseaCalendarComponents extends sfComponents
 {
   public function executeUpcomingEvents(sfWebRequest $request)
   {
-    $limit = ($this->limit) ? $this->limit : 5;
+    $limit = (isset($this->limit)) ? $this->limit : 5;
     
     $q = Doctrine::getTable('aBlogEvent')
       ->addUpcomingEventsQuery()
