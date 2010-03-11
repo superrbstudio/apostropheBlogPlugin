@@ -20,7 +20,7 @@ abstract class BaseaBlogComponents extends sfComponents
     $q = Doctrine::getTable('aBlogPost')
       ->createQuery('p')
       ->addWhere('p.published = ?', true)
-      ->orderBy('p.published_at')
+      ->orderBy('p.published_at desc')
       ->limit($this->limit);
     
     $this->a_blog_posts = $q->execute();
