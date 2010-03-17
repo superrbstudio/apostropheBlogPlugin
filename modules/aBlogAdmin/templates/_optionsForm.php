@@ -1,7 +1,4 @@
 <?php echo $form->renderHiddenFields() ?>
-<h2>Title</h2>
-<p><?php echo $form['title']->renderRow() ?></p>
-<hr>
 <h2>Post Options</h2>
 <p><?php echo $form['author_id']->renderRow() ?></p>
 <hr>

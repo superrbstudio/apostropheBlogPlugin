@@ -1,7 +1,6 @@
 [?php use_helper('I18N', 'Date', 'jQuery') ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
-
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -18,19 +17,31 @@ $(document).ready(function(){
 	
 });	
 </script>
+
+[?php slot('a-subnav') ?]
+<div id="a-subnav" class="blog">
+  <div id="a-subnav-top" class="a-subnav-top"></div>
+  <div class="a-subnav-wrapper">
+    <ul class="a-admin-action-controls">
+      <?php if ($this->configuration->hasFilterForm()): ?>
+        <li class="filters">[?php echo jq_link_to_function("Filters", "$('#a-admin-filters-container').slideToggle()") ?]</li>
+      <?php endif; ?>
+        <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
+				<li>[?php echo link_to('Edit Posts', '@a_blog_admin') ?]</li>
+        <li>[?php echo link_to('New  Posts', '@a_blog_admin_new') ?]</li>
+        <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
+        <li>[?php echo link_to('Edit Comments', '@a_comment_admin') ?]</li>
+    </ul>
+  </div> 
+  <div id="a-subnav-bottom" class="a-subnav-bottom"></div>
+</div>
+[?php end_slot() ?]
+
 <div id="a-admin-container" class="[?php echo $sf_params->get('module') ?]">
 
   [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
-  	
-	<div id="a-admin-subnav" class="subnav">
-		
-		<ul class="a-controls a-admin-action-controls">
-			<?php if ($this->configuration->hasFilterForm()): ?>
-  			<li class="filters">[?php echo jq_link_to_function("Filters", "$('#a-admin-filters-container').slideToggle()" ,array('class' => 'a-btn icon a-settings', 'title'=>'Filter Data')) ?]</li>
-			<?php endif; ?>
-				<li>[?php include_partial('<?php echo $this->getModuleName() ?>/list_header', array('pager' => $pager)) ?]</li>
-		</ul>
-  </div>
+ 
+
 
 	<div id="a-admin-content" class="main">
 		<ul id="a-admin-list-actions" class="a-controls a-admin-action-controls">

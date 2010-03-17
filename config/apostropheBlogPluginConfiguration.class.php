@@ -27,8 +27,8 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     if ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'))
     {
       aTools::addGlobalButtons(array(
-        new aGlobalButton('<span class="day"></span> Events', 'event/index', 'a-events day-'.date('j')),
-        new aGlobalButton('Blog', '@a_blog_admin', 'a-blog-btn')
+        new aGlobalButton('blog', 'Blog', '@a_blog_admin', 'a-blog-btn'),
+        new aGlobalButton('events', '<span class="day"></span> Events', 'aBlogEventAdmin/index', 'a-events day-'.date('j'))
       ));
     }
   }

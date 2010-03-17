@@ -8,6 +8,7 @@
     <?php include_partial('aBlogAdmin/form_header', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
 
+  
   <div id="a-admin-left-subnav" style="float:left" class="left-subnav">
     <?php //Left subnav admin actions will go here ?>
     Left actions

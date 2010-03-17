@@ -2,7 +2,6 @@
   <h2 class="a-admin-title you-are-here"><?php echo __('ABlogAdmin List', array(), 'messages') ?></h2>
 </div>
 
-Posts 
 <?php $appliedFilters = $filters->getAppliedFilters(); ?>
 <?php foreach($configuration->getFormFields($filters, 'filter') as $fields): ?>
   <?php foreach ($fields as $name => $field): ?>
