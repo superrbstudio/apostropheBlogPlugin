@@ -1,6 +1,23 @@
 [?php use_helper('I18N', 'Date', 'jQuery') ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+  $("ul.topnav").click(function() {
+		
+    $(this).find("ul.subnav").slideDown('fast').show();
+
+    $(this).parent().hover(function() {
+    }, function(){
+      $(this).parent().find("ul.subnav").slideUp('slow');
+    });
+
+  });
+	
+});	
+</script>
 <div id="a-admin-container" class="[?php echo $sf_params->get('module') ?]">
 
   [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
@@ -40,6 +57,5 @@
     [?php include_partial('<?php echo $this->getModuleName() ?>/list_footer', array('pager' => $pager)) ?]
   </div>
   
-  [?php include_partial('<?php echo $this->getModuleName() ?>/list_th_categories_list', array('filters' => $filters)) ?]
 
 </div>

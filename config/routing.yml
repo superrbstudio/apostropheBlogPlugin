@@ -148,12 +148,15 @@ a_blog_admin:
     column:              id
     with_wildcard_routes: true
       
-a_blog_admin_remove_filter:
+a_blog_admin_removeFilter:
   url:   /admin/aBlogAdmin/remove_filter/:name/:value
   param: { module: aBlogAdmin, action: removeFilter }
   class: sfRoute
   
-  
+a_blog_admin_addFilter:
+  url:   /admin/aBlogAdmin/add_filter/:name/:value
+  param: { module: aBlogAdmin, action: addFilter }
+  class: sfRoute  
       
 a_blog_category_admin:
   class: sfDoctrineRouteCollection

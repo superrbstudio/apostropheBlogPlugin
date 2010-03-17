@@ -30,12 +30,12 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeAddFilter(sfWebRequest $request)
   {
-    $filter_field = $request->getParameter('filter_field');
-    $filter_value = $request->getParameter('filter_value');
+    $name = $request->getParameter('name');
+    $value = $request->getParameter('value');
     
     $filters = $this->getUser()->getAttribute('aBlogAdmin.filters', $this->configuration->getFilterDefaults(), 'admin_module');
     //$filters = $this->configuration->getFilterDefaults();
-    $filters[$filter_field][$filter_value] = $filter_value;
+    $filters[$name][$value] = $value;
     $this->getUser()->setAttribute('aBlogAdmin.filters', $filters, 'admin_module');
     
     $this->redirect('@a_blog_admin');    

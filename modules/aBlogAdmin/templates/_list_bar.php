@@ -9,7 +9,7 @@ Posts
     <?php if(isset($appliedFilters[$name])): ?>
       <?php echo $field->getConfig('label', $name) ?>
       <?php foreach($appliedFilters[$name] as $value): ?>
-        <?php echo link_to($value, "@a_blog_admin_remove_filter?name=$name&value=$value", array('class' => 'selected')) ?>
+        <?php echo link_to($value, "@a_blog_admin_removeFilter?name=$name&value=$value", array('class' => 'selected')) ?>
       <?php endforeach ?>
     <?php endif ?>
 <?php endforeach ?>
