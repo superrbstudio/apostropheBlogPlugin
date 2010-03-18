@@ -17,10 +17,38 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     //$this->widgetSchema->setLabel('user_id', 'By');
   }
   
+	public function getTagChoices()
+	{
+		if(isset($this->tags))
+		  return $this->tags;
+		$this->tags = TagTable::getAllTagNameWithCount(null, array('model' => $this->getModelName()));
+		foreach($this->tags as $key => &$tag)
+		{
+			$tag = $key;
+		}
+		return $this->tags;
+	}
+	
   public function setup()
   {
     $this->fields = $this->getFields();
-    parent::setup();
+		parent::setup();
+		
+		$this->setWidget('tags_list', new sfWidgetFormChoice(
+		  array(
+			  'choices' => $this->getTagChoices(),
+				'multiple' => true,
+				'expanded' => false
+			)
+		));
+		
+		$this->setValidator('tags_list', new sfValidatorChoice(
+		  array(
+			  'choices' => $this->getTagChoices(),
+				'multiple' => true,
+				'required' => false
+			)
+		));    
   }
   
   public function filterSet($name)
@@ -104,6 +132,14 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
       return $values['text'];
     }
   }
+	
+	protected function getTextValue($field, $values)
+  {
+    if(is_array($values) && isset($values['text']) && '' !== $values['text'])
+    {
+      return $values['text'];
+    }
+  }
   
   protected function getEnumValue($field, $value)
   {
@@ -114,5 +150,37 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
   {
     $choices = $this->getWidget($field)->getChoices();
     return array($choices[$value]);
+  }
+	
+	public function addTagsListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+		
+    $ids = Doctrine::getTable('tagging')->createQuery()
+		  ->select('taggable_id')
+			->leftJoin('tagging.Tag tag')
+		  ->where('taggable_model = ?', $this->getModelName())
+			->whereIn('tag.name', $values)
+			->groupBy('taggable_id')
+			->execute(array(), Doctrine::HYDRATE_SCALAR);
+    
+		$ids = array_map(create_function('$i', 'return $i["tagging_taggable_id"];'), $ids);
+
+		if (empty($ids))
+    {
+      $query->where('false');
+    }
+    else
+    {
+      $query->whereIn($query->getRootAlias() . '.id', $ids);
+    }
   }
 }

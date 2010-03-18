@@ -26,7 +26,11 @@
   </th>
 
   <th class="a-admin-text a-admin-list-th-tags">
-      <?php echo jq_link_to_function(__('Tags', array(), 'messages'), 'getFilters("tags")') ?>
+  	<ul class="topnav a-blog-tags-sort">
+		  <li><a href="#"><?php echo __('Tags', array(), 'messages') ?></a>
+        <ul class="subnav"><?php include_partial('aBlogAdmin/list_th_tags', array('filters' => $filters)) ?></ul>
+      </li>
+    </ul>
   </th>
 
   <th class="a-admin-text a-admin-list-th-categories">
