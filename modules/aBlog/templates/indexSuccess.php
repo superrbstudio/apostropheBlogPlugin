@@ -1,3 +1,5 @@
+<?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
+
 <?php slot('a-subnav') ?>
 <div id="a-subnav" class="blog">
   <div id="a-subnav-top" class="a-subnav-top"></div>

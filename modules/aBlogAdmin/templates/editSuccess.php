@@ -1,3 +1,5 @@
+<?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
+
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
 <?php include_partial('aBlogAdmin/assets') ?>
 
