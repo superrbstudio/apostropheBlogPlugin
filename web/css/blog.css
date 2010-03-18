@@ -1,24 +1,56 @@
-ul.topnav {
+.topnav {
   list-style: none;
   padding: 0 20px;
   margin: 0;
   float: left;
 }
-ul.topnav li {
+.topnav li {
   float: left;
   margin: 0;
   position: relative;
 }
 
-ul.topnav li ul.subnav {
-  list-style: none;
-  position: absolute;
-  left: 0; top: 35px;
-  display: none;
-  float: left;
+.topnav a.a-blog-sort-label
+{
+	position: relative;
+	z-index: 200;
 }
 
-ul.topnav li ul.subnav li a {
+.topnav .subnav {
+  list-style: none;
+  position: absolute;
+  left: -10px; top: -5px;
+  display: none;
+  float: left;
+	padding: 40px 10px 10px 10px;
+	border: 1px solid #ccc;
+	background: #fff;
+	font-size: 12px;
+	min-width: 120px;
+	width: auto !important;
+	width: 120px;
+	z-index: 100;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;	
+	border-radius: 12px;	
+	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-opera-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-khtml-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);	
+	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);		
+}
+
+ul.topnav.show-filters li a.a-blog-sort-label
+{
+	z-index: 400;
+}
+
+ul.topnav.show-filters .subnav
+{
+	z-index: 300;
+}
+
+ul.topnav li .subnav li a {
   float: left;
   width: 145px;
 }
@@ -28,6 +60,8 @@ ul.topnav li ul.subnav li a {
 	width: 500px;
 	margin-right: 220px;
 }
+
+/* Right Sidebar */
 
 .aBlogAdmin .right-subnav
 {
@@ -53,4 +87,47 @@ ul.topnav li ul.subnav li a {
 	border: 0;
 	background: rgba(0,0,0,0.5);
 	margin: 15px 0;
+}
+
+/* Tags Sort Box */
+
+.topnav.a-blog-tags-sort .subnav
+{
+	width: 240px;
+}
+
+.a-blog-tags-sort .subnav *
+{
+	float: none !important;
+	line-height: 1.1 !important;
+	display: inline !important;
+}
+
+.a-blog-tags-sort .subnav span
+{
+	padding-left: 5px;
+}
+
+.a-blog-tags-sort .subnav span.first
+{
+	padding-left: 0;
+}
+
+.a-blog-tags-sort .subnav b
+{
+	font-size: 14px;
+	color: #ccc;
+}
+
+.a-blog-tags-sort .subnav a
+{
+	color: #333;
+	font-size: 12px;
+	padding: 0 0 0 5px;
+}
+
+.a-blog-tags-sort .subnav a:hover
+{
+	color: #888;
+	text-decoration: underline !important;
 }

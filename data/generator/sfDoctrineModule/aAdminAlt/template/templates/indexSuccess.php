@@ -6,11 +6,12 @@ $(document).ready(function(){
 
   $("ul.topnav").click(function() {
 		
-    $(this).find("ul.subnav").slideDown('fast').show();
+    $(this).addClass('show-filters').find(".subnav").show().show();
 
     $(this).parent().hover(function() {
     }, function(){
-      $(this).parent().find("ul.subnav").slideUp('slow');
+			$(this).find('ul.topnav').removeClass('show-filters');
+      $(this).find(".subnav").fadeOut();
     });
 
   });

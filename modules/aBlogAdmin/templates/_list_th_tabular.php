@@ -11,15 +11,15 @@
 
   <th class="a-admin-text a-admin-list-th-author">
   	<ul class="topnav">
-  		<li><a href="#"><?php echo __('Author', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Author', array(), 'messages') ?></a>
         <ul class="subnav"><?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'author_id')) ?></ul>
       </li>
 		</ul>
   </th>
 
   <th class="a-admin-text a-admin-list-th-editors">
-    <ul class="topnav">
-      <li><a href="#"><?php echo __('Editors', array(), 'messages') ?></a>
+  	<ul class="topnav">
+  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Editors', array(), 'messages') ?></a>
         <ul class="subnav"><?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'editors_list')) ?></ul>
 			</li>
 		</ul>
@@ -27,15 +27,15 @@
 
   <th class="a-admin-text a-admin-list-th-tags">
   	<ul class="topnav a-blog-tags-sort">
-		  <li><a href="#"><?php echo __('Tags', array(), 'messages') ?></a>
-        <ul class="subnav"><?php include_partial('aBlogAdmin/list_th_tags', array('filters' => $filters)) ?></ul>
+  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Tags', array(), 'messages') ?></a>
+        <div class="subnav"><?php include_partial('aBlogAdmin/list_th_tags', array('filters' => $filters)) ?></div>
       </li>
     </ul>
   </th>
 
   <th class="a-admin-text a-admin-list-th-categories">
     <ul class="topnav">
-      <li><a href="#"><?php echo __('Categories', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Categories', array(), 'messages') ?></a>
         <ul class="subnav"><?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'categories_list')) ?></ul>
       </li>
 		</ul>
