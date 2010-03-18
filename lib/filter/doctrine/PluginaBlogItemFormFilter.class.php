@@ -158,17 +158,21 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     {
       $values = array($values);
     }
+    else
+    {
+      $values = array_keys($values);
+    }
 
     if (!count($values))
     {
       return;
     }
-		
+
     $ids = Doctrine::getTable('tagging')->createQuery()
 		  ->select('taggable_id')
 			->leftJoin('tagging.Tag tag')
 		  ->where('taggable_model = ?', $this->getModelName())
-			->whereIn('tag.name', $values)
+			->andWhereIn('tag.name', $values)
 			->groupBy('taggable_id')
 			->execute(array(), Doctrine::HYDRATE_SCALAR);
     
