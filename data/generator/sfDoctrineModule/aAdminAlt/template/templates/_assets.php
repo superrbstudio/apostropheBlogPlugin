@@ -6,9 +6,7 @@
 
 <?php else: ?> 
 
-	[?php use_stylesheet('/apostrophePlugin/css/aToolkit.css', 'first') ?]
 	[?php use_stylesheet('/apostrophePlugin/css/a.css', 'first') ?]
-	[?php use_stylesheet('/apostrophePlugin/css/aAdmin.css', 'first') #Admin Styles ?]
 
 	[?php use_javascript('/apostrophePlugin/js/aControls.js') ?]
 	[?php use_javascript('/apostrophePlugin/js/aUI.js') ?]

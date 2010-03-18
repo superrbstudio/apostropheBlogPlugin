@@ -22,3 +22,10 @@ ul.topnav li ul.subnav li a {
   float: left;
   width: 145px;
 }
+
+#a-admin-right-subnav
+{
+	float: left;
+	color: #f00;
+	width: 200px;
+}
