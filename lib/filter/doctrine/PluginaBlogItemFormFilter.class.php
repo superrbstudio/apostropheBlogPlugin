@@ -148,6 +148,10 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
   
   protected function getBooleanValue($field, $value)
   {
+    if(is_array($value))
+    {
+      $value = current($value);
+    }
     $choices = $this->getWidget($field)->getChoices();
     return array($choices[$value]);
   }
@@ -186,5 +190,13 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     {
       $query->whereIn($query->getRootAlias() . '.id', $ids);
     }
+  }
+  
+  public function getFields()
+  {
+    $fields = parent::getFields();
+    $fields['tags_list'] = 'ManyKey';
+    
+    return $fields;
   }
 }

@@ -32,6 +32,7 @@ $(document).ready(function(){
         <li>[?php echo link_to('New  Posts', '@a_blog_admin_new') ?]</li>
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
         <li>[?php echo link_to('Edit Comments', '@a_comment_admin') ?]</li>
+        [?php //include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
   </div> 
   <div id="a-subnav-bottom" class="a-subnav-bottom"></div>
@@ -45,9 +46,6 @@ $(document).ready(function(){
 
 
 	<div id="a-admin-content" class="main">
-		<ul id="a-admin-list-actions" class="a-controls a-admin-action-controls">
-  		[?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]		
-		</ul>
 		<?php if ($this->configuration->hasFilterForm()): ?>
 		  [?php include_partial('<?php echo $this->getModuleName() ?>/filters', array('form' => $filters, 'configuration' => $configuration)) ?]
 		<?php endif; ?>
