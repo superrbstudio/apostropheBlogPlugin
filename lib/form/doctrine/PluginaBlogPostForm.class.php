@@ -10,6 +10,11 @@
  */
 abstract class PluginaBlogPostForm extends BaseaBlogPostForm
 {
-  
+  public function setup()
+  {
+    parent::setup();
+    
+    $this->setWidget('published_at', new sfWidgetFormJQueryDateTime());
+  }  
 
 }
