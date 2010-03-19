@@ -15,7 +15,7 @@ class PluginaBlogEventTable extends aBlogItemTable
   {
     Doctrine::getTable('aBlogItem')->buildQuery($request, 'aBlogEvent', $q);
     $rootAlias = $q->getRootAlias();
-    $q->orderBy($rootAlias.'.start_date desc');
+    $q->orderBy($rootAlias.'.start_date asc');
     return $q;
   }
   
@@ -28,11 +28,11 @@ class PluginaBlogEventTable extends aBlogItemTable
 
     $rootAlias = $q->getRootAlias();
     $startDate = $request->getParameter('year', 0).'-'.$request->getParameter('month', 1).'-'.$request->getParameter('day', 1).' 0:00:00';
-    $endDate = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', 12).'-'.$request->getParameter('day', 31).' 23:59:59';
+    $endDate = $request->getParameter('year', 9999).'-'.$request->getParameter('month', 12).'-'.$request->getParameter('day', 31).' 23:59:59';
     
     $q->addWhere($rootAlias.'.start_date > ?', $startDate)
       ->andWhere($rootAlias.'.end_date < ?', $endDate);
-    
+      
     return $q;
   }
   
@@ -46,9 +46,9 @@ class PluginaBlogEventTable extends aBlogItemTable
     $rootAlias = $q->getRootAlias();
     
     $q->addWhere($rootAlias.'.published = ?', true)
-      ->addWhere($rootAlias.'.start_date > ?', date('Y-m-d'))
+      ->addWhere($rootAlias.'.start_date >= ?', date('Y-m-d'))
       ->orderBy($rootAlias.'.start_date, '. $rootAlias .'.start_time');
-    
+
     return $q;
   }
 

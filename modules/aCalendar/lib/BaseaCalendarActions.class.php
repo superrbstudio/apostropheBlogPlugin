@@ -43,8 +43,12 @@ abstract class BaseaCalendarActions extends apostropheBlogPluginEngineActions
     }  
      
     $pager = new sfDoctrinePager('aBlogEvent', sfConfig::get('app_aCalendar_max_per_page', 10));
-
-    $pager->setQuery(Doctrine::getTable('aBlogEvent')->buildQuery($request, 'aBlogEvent', $q));
+    Doctrine::getTable('aBlogEvent')->buildQuery($request, 'aBlogEvent', $q);
+    if($request->getParameter('upcoming', false))
+    {
+      Doctrine::getTable('aBlogEvent')->addUpcomingEventsQuery($q);
+    }
+    $pager->setQuery($q);
     $pager->setPage($this->getRequestParameter('page', 1));
     $pager->init();
     

@@ -224,14 +224,9 @@ a_calendar_cat:
   param: { module: aCalendar, action: index }
   class: aRoute
 
-a_calendar_today:
-  url:   
-  param: { module: aCalendar, action: index }
-  class: aRoute
-
 a_calendar:
   url:   
-  param: { module: aCalendar, action: index }
+  param: { module: aCalendar, action: index, upcoming: true }
   class: aRoute
 
 ################
