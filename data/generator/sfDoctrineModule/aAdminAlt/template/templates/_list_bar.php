@@ -2,8 +2,6 @@
 	<h2 class="a-admin-title you-are-here">[?php echo <?php echo $this->getI18NString('list.title') ?> ?]</h2>
 </div>
 
-
-
 [?php foreach ($configuration->getFormFields($filters, 'filter') as  $fields): ?]
   [?php foreach ($fields as $name => $field): ?]
     [?php if (aBlogToolkit::isFilterSet($filters, $name)): ?]

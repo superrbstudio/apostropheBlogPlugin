@@ -14,15 +14,16 @@
 {
 	position: relative;
 	z-index: 200;
+	color: #333;
 }
 
-.topnav .subnav {
+.topnav .filternav {
   list-style: none;
   position: absolute;
   left: -10px; top: -5px;
   display: none;
   float: left;
-	padding: 40px 10px 10px 10px;
+	padding: 30px 10px 10px 10px;
 	border: 1px solid #ccc;
 	background: #fff;
 	font-size: 12px;
@@ -40,17 +41,41 @@
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);		
 }
 
-ul.topnav.show-filters li a.a-blog-sort-label
+.topnav.show-filters li a.a-blog-sort-label
 {
 	z-index: 400;
+	color: #FFCC00;
 }
 
-ul.topnav.show-filters .subnav
+.topnav.show-filters .filternav
 {
 	z-index: 300;
 }
 
-ul.topnav li .subnav li a {
+.topnav .filternav a
+{
+	color: #444 !important;
+}
+
+.topnav .filternav a:hover
+{
+	color:#000 !important;
+	text-decoration: underline !important;
+}
+
+.topnav .filternav hr
+{
+	float: left;
+	clear: both;
+	margin: 0 0 5px 0;
+	padding: 0;
+	height: 1px;
+	background: #e5e5e5;
+	border: 0;
+	width: 100%;
+}
+
+ul.topnav li .filternav li a {
   float: left;
   width: 145px;
 }
@@ -91,43 +116,75 @@ ul.topnav li .subnav li a {
 
 /* Tags Sort Box */
 
-.topnav.a-blog-tags-sort .subnav
+.topnav.a-blog-tags-sort .filternav
 {
 	width: 240px;
 }
 
-.a-blog-tags-sort .subnav *
+.a-blog-tags-sort .filternav span,
+.a-blog-tags-sort .filternav b,
+.a-blog-tags-sort .filternav a
 {
 	float: none !important;
 	line-height: 1.1 !important;
 	display: inline !important;
 }
 
-.a-blog-tags-sort .subnav span
+.a-blog-tags-sort .filternav span
 {
 	padding-left: 5px;
 }
 
-.a-blog-tags-sort .subnav span.first
+.a-blog-tags-sort .filternav span.first
 {
 	padding-left: 0;
 }
 
-.a-blog-tags-sort .subnav b
+.a-blog-tags-sort .filternav b
 {
 	font-size: 14px;
 	color: #ccc;
 }
 
-.a-blog-tags-sort .subnav a
+.a-blog-tags-sort .filternav a
 {
 	color: #333;
 	font-size: 12px;
 	padding: 0 0 0 5px;
 }
 
-.a-blog-tags-sort .subnav a:hover
+.a-admin-filter-sentence
 {
-	color: #888;
-	text-decoration: underline !important;
+	float: left;
+	width: 100%;
+	clear: both;
+}
+
+.a-admin-filter-sentence a.selected
+{
+position: relative;
+padding-right: 20px;
+}
+
+.a-admin-filter-sentence a.selected span.close
+{
+position: absolute;
+display: block;
+height: 20px;
+width: 20px;
+background: url(/apostrophePlugin/images/a-icon-close.png) 100% 0 no-repeat;
+top: 50%;
+right: 0;
+margin-top: -10px;
+}
+
+.a-admin-filter-sentence a.selected:hover
+{
+	color: #333;
+	text-decoration: underline;
+}
+
+.a-admin-filter-sentence a.selected:hover span.close
+{
+background-position: 100% -20px;
 }

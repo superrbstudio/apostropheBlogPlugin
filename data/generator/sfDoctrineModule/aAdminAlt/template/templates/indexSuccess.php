@@ -6,12 +6,12 @@ $(document).ready(function(){
 
   $("ul.topnav").click(function() {
 		
-    $(this).addClass('show-filters').find(".subnav").show().show();
+    $(this).addClass('show-filters').find(".filternav").show().show();
 
     $(this).parent().hover(function() {
     }, function(){
 			$(this).find('ul.topnav').removeClass('show-filters');
-      $(this).find(".subnav").fadeOut();
+      $(this).find(".filternav").fadeOut();
     });
 
   });
@@ -43,8 +43,6 @@ $(document).ready(function(){
 
   [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
  
-
-
 	<div id="a-admin-content" class="main">
 		<?php if ($this->configuration->hasFilterForm()): ?>
 		  [?php include_partial('<?php echo $this->getModuleName() ?>/filters', array('form' => $filters, 'configuration' => $configuration)) ?]

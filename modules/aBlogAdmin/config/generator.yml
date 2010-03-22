@@ -11,8 +11,10 @@ generator:
     with_doctrine_route:   1
     
     config:
+          
       list:
-        display: [ _title, _author, _editors, _tags, _categories, status, public, published_at ]
+        title:    'Blog Post Admin'          
+        display:  [ _title, _author, _editors, _tags, _categories, status, public, published_at ]
         object_actions: []
         actions: ~
         
@@ -25,9 +27,10 @@ generator:
         display: [ author_id ]
       
       fields:
-        author_id:  { label: By }
-        editors_list: { label: Edited By }
-        categories_list: { label: Categories }
+        author_id:  { label: created by }
+        editors_list: { label: edited by }
+        categories_list: { label: categories }
+        tags_list: { label: tagged }        
         
       edit:
         fields: [ author_id ]

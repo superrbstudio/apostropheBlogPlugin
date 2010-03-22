@@ -8,7 +8,6 @@
 <?php   $letter = strtoupper($choice[0]) ?>
 <span<?php echo ($n == 0)? ' class="first"':'' ?><?php echo ($n == count($choices))? ' class="last"':'' ?>>
   <b><?php echo $letter ?></b>
-<?php   endif ?>
+<?php endif ?>
 <?php echo link_to($choice, 'aBlogAdmin/addFilter?name=tags_list&value='.$id, 'post=true') ?>
 <?php $n++; endforeach ?>
-
