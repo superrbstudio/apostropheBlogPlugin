@@ -4,7 +4,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-  $("ul.topnav").click(function() {
+  $("ul.topnav").click(function(event) {
+		
+		event.preventDefault();
 		
     $(this).addClass('show-filters').find(".filternav").show().show();
 

@@ -14,7 +14,9 @@ abstract class PluginaBlogPostForm extends BaseaBlogPostForm
   {
     parent::setup();
     
-    $this->setWidget('published_at', new sfWidgetFormJQueryDateTime());
+    $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
+			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
+		));
   }  
 
 }

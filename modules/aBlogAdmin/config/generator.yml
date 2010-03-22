@@ -13,11 +13,11 @@ generator:
     config:
           
       list:
-        title:    'Blog Post Admin'          
+        title:    "Blog Post Admin"
         display:  [ _title, _author, _editors, _tags, _categories, status, public, published_at ]
         object_actions: []
         actions: ~
-        
+                
       filter:
         fields:  [ author_id, editors_list, categories_list, status, public, published_at, tags_list ]
         display: [ author_id, editors_list, categories_list, status, public, published_at, tags_list ]

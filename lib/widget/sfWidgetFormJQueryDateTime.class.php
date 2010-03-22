@@ -6,11 +6,17 @@ class sfWidgetFormJQueryDateTime extends sfWidgetForm
   
   protected $dateWidget;
   protected $timeWidget;
+
     
-  protected function configure($dateOptions = array(), $dateAttributes = array(), $timeOptions = array(), $timeAttributes = array())
+  protected function configure($options = array(), $attributes = array())
   {    
-    $this->dateWidget = new sfWidgetFormJQueryDate($dateOptions, $dateAttributes);
-    $this->timeWidget = new sfWidgetFormJQueryTime($timeOptions, $timeAttributes);
+
+    $this->addOption('image', false);
+    $this->addOption('config', '{}');
+    $this->addOption('culture', '');
+
+    $this->dateWidget = new sfWidgetFormJQueryDate($options, $attributes);
+    $this->timeWidget = new sfWidgetFormJQueryTime($options, $attributes);
   }
   
   public function render($name, $value = null, $attributes = array(), $errors = array())
