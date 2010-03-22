@@ -7,10 +7,10 @@ class sfWidgetFormJQueryDateTime extends sfWidgetForm
   protected $dateWidget;
   protected $timeWidget;
     
-  protected function configure($options = array(), $attributes = array())
+  protected function configure($dateOptions = array(), $dateAttributes = array(), $timeOptions = array(), $timeAttributes = array())
   {    
-    $this->dateWidget = new sfWidgetFormJQueryDate($options, $attributes);
-    $this->timeWidget = new sfWidgetFormJQueryTime($options, $attributes);
+    $this->dateWidget = new sfWidgetFormJQueryDate($dateOptions, $dateAttributes);
+    $this->timeWidget = new sfWidgetFormJQueryTime($timeOptions, $timeAttributes);
   }
   
   public function render($name, $value = null, $attributes = array(), $errors = array())
