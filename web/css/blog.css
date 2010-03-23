@@ -234,6 +234,17 @@ ul.topnav li .filternav li a {
 	
 }
 
+.a-admin-action-controls,
+.a-admin-action-controls li
+{
+	overflow: auto;
+}
+
+.a-admin-action-controls li
+{
+	margin: 0 0 5px 0;
+}
+
 .a-blog-post-title
 {
 	position: absolute;
@@ -286,4 +297,3 @@ margin-top: -10px;
 {
 background-position: 100% -20px;
 }
-

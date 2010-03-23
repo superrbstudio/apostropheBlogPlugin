@@ -26,10 +26,9 @@ $(document).ready(function(){
   <div id="a-subnav-top" class="a-subnav-top"></div>
   <div class="a-subnav-wrapper">
     <ul class="a-admin-action-controls">
+      	<li>[?php echo link_to('New  Post', '@a_blog_admin_new', array('class'=>'a-btn icon a-add')) ?]</li>
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
 				<li>[?php echo link_to('Edit Posts', '@a_blog_admin') ?]</li>
-        <li>[?php echo link_to('New  Post', '@a_blog_admin_new') ?]</li>
-        <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
         <li>[?php echo link_to('Edit Comments', '@a_comment_admin') ?]</li>
         [?php //include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
