@@ -13,20 +13,23 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   public function setup()
   {
     parent::setup();
-
+    
     unset(
       $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
     );
     
     //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
-    
     $q = Doctrine_Query::create()
-      ->from('aBlogCategory c')
-      ->innerJoin('c.Users u')
-      ->where('u.id = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId());
-    
+      ->from('aBlogCategory c');
+    if(!sfContext::getInstance()->getUser()->hasCredential('admin'))
+    {
+      $q->innerJoin('c.Users u')
+        ->where('u.id = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+    }
     $this->setWidget('categories_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q)));
+    $this->setValidator('categories_list',
+      new sfValidatorDoctrineChoice(array('model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
       
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
