@@ -8,7 +8,7 @@
     <li class="author">Posted By: <?php echo $a_blog_post->getAuthor() ?></li>   
   </ul>
 
-<?php a_area('body', array(
+<?php a_area('blog-post-body', array(
   'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(

@@ -13,6 +13,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   public function setup()
   {
     parent::setup();
+    $user = sfContext::getInstance()->getUser();
+    
     
     unset(
       $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
@@ -21,15 +23,30 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
     $q = Doctrine_Query::create()
       ->from('aBlogCategory c');
-    if(!sfContext::getInstance()->getUser()->hasCredential('admin'))
+    if(!$user->hasCredential('admin'))
     {
       $q->innerJoin('c.Users u')
-        ->where('u.id = ?', sfContext::getInstance()->getUser()->getGuardUser()->getId());
+        ->where('u.id = ?', $user->getGuardUser()->getId());
     }
     $this->setWidget('categories_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q)));
     $this->setValidator('categories_list',
       new sfValidatorDoctrineChoice(array('model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
+    
+    $q = Doctrine::getTable('sfGuardUser')->createQuery();
+    if(!$user->hasCredential('admin'))
+    {
+      $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
+    }
+    $this->setWidget('author_id',
+      new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'query' => $q)));
+    $this->setValidator('author_id',
+      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => true)));
+      
+    $this->setWidget('editors_list',
+      new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
+    $this->setValidator('editors_list',
+      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
       
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
