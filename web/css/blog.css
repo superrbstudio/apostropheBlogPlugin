@@ -209,12 +209,6 @@ ul.topnav li .filternav li a {
 	width: 192px !important;
 }
 
-.aBlogAdmin .right-subnav .hasDatepicker,
-.aBlogAdmin .right-subnav .ac_input
-{
-	width: 60px !important;
-}
-
 .aBlogAdmin .right-subnav p
 {
 }
@@ -228,6 +222,30 @@ ul.topnav li .filternav li a {
 	background: rgba(0,0,0,0.5);
 	margin: 15px 0;
 }
+
+.aBlogAdmin .right-subnav .a-time-wrapper input,
+.aBlogAdmin .right-subnav .a-date-wrapper input
+{
+	width: 75px;
+}
+
+.aBlogAdmin .right-subnav .a-time-wrapper select
+{
+	
+}
+
+.a-blog-post-title
+{
+	position: absolute;
+	top: 55px;
+	left: 0;
+}
+
+.a-area-blog-post-body
+{
+	margin-top: 65px;
+}
+
 
 
 /* Admin Filter Sentence */

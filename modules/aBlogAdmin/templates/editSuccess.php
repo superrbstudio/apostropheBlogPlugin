@@ -25,15 +25,8 @@
   
   <?php include_partial('aBlogAdmin/flashes') ?>
 	
-	<?php echo form_tag_for($form, '@a_blog_admin', array('id'=>'a-admin-form')) ?>  
 
 	<div id="a-admin-content" style="float:left" class="main">
-	
-	<div class="a-blog-post-title">
-		<h2>Title</h2>
-		<?php echo $form['title']->render() ?>
-		<?php echo $form['title']->renderError() ?>
-	</div>
 	
   <?php a_area('blog-post-body', array(
   'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
@@ -48,6 +41,15 @@
   </div> 
   
   <div id="a-admin-right-subnav" class="right-subnav">
+
+		<?php echo form_tag_for($form, '@a_blog_admin', array('id'=>'a-admin-form')) ?>  
+
+		<div class="a-blog-post-title">
+			<h2>Title</h2>
+			<?php echo $form['title']->render() ?>
+			<?php echo $form['title']->renderError() ?>
+		</div>
+
     <?php include_partial('aBlogAdmin/optionsForm', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
   </div>
   
