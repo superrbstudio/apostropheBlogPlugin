@@ -32,10 +32,10 @@
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
-    'aImage' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'),
-    'aButton' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'),
-    'aSlideshow' => array("width" => 480, "flexHeight" => true, 'resizeType' => 's', ),
-    'aPDF' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'),
+    'aImage' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
+    'aButton' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
+    'aSlideshow' => array("width" => 460, "flexHeight" => true, 'resizeType' => 's', ),
+    'aPDF' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
 		)))?>
   </div> 
   

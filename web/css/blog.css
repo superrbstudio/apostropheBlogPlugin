@@ -3,8 +3,7 @@
 .aBlogAdmin.edit .a-admin-actions
 {
 	clear: both;
-	width: 480px;
-	margin-right: 240px;
+	width: 460px;
 }
 
 .aBlogAdmin .a-admin-list-table
@@ -199,18 +198,25 @@ ul.topnav li .filternav li a {
 
 .aBlogAdmin .right-subnav
 {
-	margin-left: -220px;
 	float: left;
 	width: 200px;
+	padding: 10px;
+	margin: 10px 10px 10px 20px;
+	background-color: #e0e0e0;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;	
+	border-radius: 12px;
+	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-opera-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+	-khtml-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);	
+	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);			
+	border: 1px solid #ccc;
 }
 
 .aBlogAdmin .right-subnav .tag-input
 {
 	width: 192px !important;
-}
-
-.aBlogAdmin .right-subnav p
-{
 }
 
 .aBlogAdmin .right-subnav hr
@@ -219,7 +225,7 @@ ul.topnav li .filternav li a {
 	width: 100%;
 	height: 1px;
 	border: 0;
-	background: rgba(0,0,0,0.5);
+	background: #efefef;
 	margin: 15px 0;
 }
 
@@ -232,6 +238,20 @@ ul.topnav li .filternav li a {
 .aBlogAdmin .right-subnav .a-time-wrapper select
 {
 	
+}
+
+.aBlogAdmin .right-subnav hr,
+.aBlogAdmin .right-subnav .section,
+.aBlogAdmin .right-subnav .option
+{
+float: left;
+clear: both;
+width: 100%;
+}
+
+.aBlogAdmin .right-subnav .option
+{
+	margin-bottom: 5px;
 }
 
 .a-admin-action-controls,
