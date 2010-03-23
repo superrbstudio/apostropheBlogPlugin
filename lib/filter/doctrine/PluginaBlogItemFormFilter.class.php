@@ -51,20 +51,6 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
 		));    
   }
   
-  public function filterSet($name)
-  {
-    if($this[$name]->getValue() === null || $this[$name]->getValue() === '')
-    {
-      return false;
-    }
-    if(is_array($name) && !count($name))
-    {
-      return false;
-    }
-   
-    return true;
-  }
-  
   public function getAppliedFilters()
   {
     $values = $this->processValues($this->getDefaults());

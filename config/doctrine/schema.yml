@@ -26,10 +26,12 @@ aBlogItem:
       values: [draft, pending review, published ]
       notnull: true
       default: draft
-    public:
+    allow_comments:
       type: boolean
       notnull: true
       default: 0
+    template:
+      type: string(255)
   relations:
     Author:
       class: sfGuardUser

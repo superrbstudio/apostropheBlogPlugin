@@ -26,12 +26,9 @@ $(document).ready(function(){
   <div id="a-subnav-top" class="a-subnav-top"></div>
   <div class="a-subnav-wrapper">
     <ul class="a-admin-action-controls">
-      <?php if ($this->configuration->hasFilterForm()): ?>
-        <li class="filters">[?php echo jq_link_to_function("Filters", "$('#a-admin-filters-container').slideToggle()") ?]</li>
-      <?php endif; ?>
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
 				<li>[?php echo link_to('Edit Posts', '@a_blog_admin') ?]</li>
-        <li>[?php echo link_to('New  Posts', '@a_blog_admin_new') ?]</li>
+        <li>[?php echo link_to('New  Post', '@a_blog_admin_new') ?]</li>
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
         <li>[?php echo link_to('Edit Comments', '@a_comment_admin') ?]</li>
         [?php //include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
@@ -46,9 +43,7 @@ $(document).ready(function(){
   [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
  
 	<div id="a-admin-content" class="main">
-		<?php if ($this->configuration->hasFilterForm()): ?>
-		  [?php include_partial('<?php echo $this->getModuleName() ?>/filters', array('form' => $filters, 'configuration' => $configuration)) ?]
-		<?php endif; ?>
+
 
 		[?php include_partial('<?php echo $this->getModuleName() ?>/flashes') ?]
 		<?php if ($this->configuration->getValue('list.batch_actions')): ?>

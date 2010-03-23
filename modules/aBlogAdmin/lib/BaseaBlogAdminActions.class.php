@@ -15,7 +15,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   {
     $query = parent::buildQuery();
      
-    $query->andWhere("author_id = ?", $this->getUser()->getGuardUser()->getId());
+    //$query->andWhere("author_id = ?", $this->getUser()->getGuardUser()->getId());
     $filters = $this->getUser()->getAttribute('aBlogAdmin.filters', $this->configuration->getFilterDefaults(), 'admin_module');
 
     return $query;

@@ -64,17 +64,6 @@
     </ul>
   </th>
 
-  <th class="a-admin-boolean a-admin-list-th-public">
-    <ul class="topnav">
-      <li><a href="#" class="a-blog-sort-label"><?php echo __('Public', array(), 'messages') ?></a>
-        <div class="filternav">
-					<hr/>
-					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'public')) ?>
-				</div>
-      </li>
-    </ul>
-  </th>
-
   <th class="a-admin-date a-admin-list-th-published_at">
       <?php if ('published_at' == $sort[0]): ?>
       <?php echo jq_link_to_function(__('Date', array(), 'messages'), 'getFilters("published_at")') ?>

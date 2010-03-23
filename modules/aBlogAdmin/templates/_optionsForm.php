@@ -33,7 +33,7 @@
 <div class="permissions">
 	<h2>Post Permissions</h2>
 	<?php echo $form['status']->renderRow() ?>
-	<?php echo $form['public']->renderRow() ?>
+	<?php echo $form['allow_comments']->renderRow() ?>
 </div>
 
 <hr />

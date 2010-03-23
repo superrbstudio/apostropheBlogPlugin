@@ -29,7 +29,7 @@
 	<div id="a-admin-content" style="float:left" class="main">
 	
   <?php a_area('blog-post-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
+  'edit' => true, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
@@ -56,6 +56,6 @@
   <div id="a-admin-footer">
     <?php include_partial('aBlogAdmin/form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
-  
+  </form>
 <?php include_partial('aBlogAdmin/form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>
