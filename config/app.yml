@@ -5,3 +5,8 @@ all:
       max_depth: 0
       layout:
         title: optional
+        
+  aBlog:
+    templates: 
+      singleColumnTemplate: Single Column
+      twoColumnTemplate: Two Column

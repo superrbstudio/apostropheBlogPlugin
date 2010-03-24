@@ -14,6 +14,10 @@
 	<div class="option">
 		<?php echo $form['allow_comments']->renderRow() ?>
 	</div>
+  
+  <div class="option">
+    <?php echo $form['template']->renderRow() ?>
+  </div>
 	
 </div>
 

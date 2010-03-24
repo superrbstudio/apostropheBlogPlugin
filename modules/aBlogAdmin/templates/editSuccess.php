@@ -25,19 +25,9 @@
   <?php include_partial('aBlogAdmin/flashes') ?>
 	
 
-	<div id="a-admin-content" style="float:left" class="main">
+	<div id="a-admin-content" style="float:left;width:800px" class="main">
 	
-  <?php a_area('blog-post-body', array(
-  'edit' => true, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
-  'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
-  'type_options' => array(
-    'aRichText' => array('tool' => 'Main'),   
-    'aImage' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
-    'aButton' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
-    'aSlideshow' => array("width" => 460, "flexHeight" => true, 'resizeType' => 's', ),
-    'aPDF' => array('width' => 460, 'flexHeight' => true, 'resizeType' => 's'),
-		)))?>
-  </div> 
+  <?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
   
   <div id="a-admin-right-subnav" class="right-subnav">
 

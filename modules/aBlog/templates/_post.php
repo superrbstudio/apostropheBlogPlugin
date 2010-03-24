@@ -8,17 +8,8 @@
     <li class="author">Posted By: <?php echo $a_blog_post->getAuthor() ?></li>   
   </ul>
 
-<?php a_area('blog-post-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
-  'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo', 'aPDF'),
-  'type_options' => array(
-    'aRichText' => array('tool' => 'Main'),   
-    'aImage' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),
-    'aButton' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),
-    'aSlideshow' => array("width" => 400, "flexHeight" => true, 'resizeType' => 's', ),
-    'aPDF' => array('width' => 400, 'flexHeight' => true, 'resizeType' => 's'),   
-  ))
-) ?>
+<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
+
 </div>
 
 
