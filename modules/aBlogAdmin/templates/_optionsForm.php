@@ -42,6 +42,7 @@
 	<h2>Tags</h2>
 	<?php echo $form['tags']->render() ?>
 	<?php echo $form['tags']->renderError() ?>
+  <?php include_component('aBlogAdmin','tagList', array('a_blog_post' => $form->getObject())) ?>
 </div>
 
 <hr />
