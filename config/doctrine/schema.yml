@@ -32,6 +32,7 @@ aBlogItem:
       default: 0
     template:
       type: string(255)
+      default: singleColumnTemplate
   relations:
     Author:
       class: sfGuardUser
