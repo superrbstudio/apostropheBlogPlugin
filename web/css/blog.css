@@ -14,7 +14,8 @@
 .aBlogAdmin .a-admin-list thead th
 {
 	padding: 2px;
-	background: -moz-linear-gradient(
+	background: #e5e5e5;
+/*	background: -moz-linear-gradient(
 	    center bottom,
 	    rgb(224,224,224) 42%,
 	    rgb(235,235,235) 71%
@@ -25,7 +26,7 @@
 	    left top,
 	    color-stop(0.42, rgb(228,228,228)),
 	    color-stop(0.80, rgb(235,235,235))
-	) !important;
+	) !important;*/
 }
 
 
