@@ -41,6 +41,8 @@ abstract class PluginaBlogPostForm extends BaseaBlogPostForm
     
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
 		$this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
+    
+    $this->widgetSchema['published_at'] = new sfWidgetFormJQueryDateTime();
   }
 
 	public function doSave($con = null)
