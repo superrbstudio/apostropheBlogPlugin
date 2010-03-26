@@ -31,10 +31,11 @@
 
 <hr />
 
-<div class="categories section">
+<div class="categories section" id="categories-section">
 	<h2>Categories</h2>
 	<?php echo $form['categories_list']->renderRow() ?>
 </div>
+
 
 <hr />
 
@@ -47,7 +48,14 @@
 
 <hr />
 
-<div class="editors section">
+<div class="editors section" id="editors-section">
 	<h2>Editors</h2>
 	<?php echo $form['editors_list']->renderRow()?>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', })
+    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', })
+  });
+</script>
