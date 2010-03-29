@@ -156,6 +156,11 @@ a_blog_admin_removeFilter:
 a_blog_admin_addFilter:
   url:   /admin/aBlogAdmin/add_filter/:name/:value
   param: { module: aBlogAdmin, action: addFilter }
+  class: sfRoute
+  
+a_blog_admin_autocomplete:
+  url:   /admin/aBlogAdmin/autocomplete
+  param: { module: aBlogAdmin, action: autocomplete }
   class: sfRoute  
       
 a_blog_category_admin:

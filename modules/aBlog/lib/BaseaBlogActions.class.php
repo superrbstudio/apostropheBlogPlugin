@@ -65,6 +65,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->aBlogPost = $this->getRoute()->getObject();
   }
   
+  
   public function buildParams()
   {
     $this->params = array();
@@ -158,5 +159,4 @@ abstract class BaseaBlogActions extends aEngineActions
     
     $this->getResponse()->setContent($this->feed->asXml());
   }
-  
 }
