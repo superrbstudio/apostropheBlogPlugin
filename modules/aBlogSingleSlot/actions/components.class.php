@@ -17,6 +17,7 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-    $this->aBlogPost = Doctrine::getTable('aBlogPost')->findOneBy('id', $this->values['blog_post']);
+    if(isset($this->values['blog_post']))
+      $this->aBlogPost = Doctrine::getTable('aBlogPost')->findOneBy('id', $this->values['blog_post']);
   }
 }

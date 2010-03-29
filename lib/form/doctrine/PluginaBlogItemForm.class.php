@@ -31,7 +31,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->setWidget('categories_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q)));
     $this->setValidator('categories_list',
-      new sfValidatorDoctrineChoice(array('model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
+      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
     
     $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))
@@ -46,7 +46,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->setWidget('editors_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
     $this->setValidator('editors_list',
-      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
     
     $this->setWidget('template', 
       new sfWidgetFormChoice(array('multiple' => false, 'choices' => sfConfig::get('app_aBlog_templates'))));
