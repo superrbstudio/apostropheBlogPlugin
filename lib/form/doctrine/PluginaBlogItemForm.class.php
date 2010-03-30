@@ -17,7 +17,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     
     
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug']
     );
     
     //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
@@ -32,12 +32,22 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q)));
     $this->setValidator('categories_list',
       new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
-    
+         
     $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))
     {
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
     }
+    
+    if($user->hasCredential('admin'))
+    {
+      $this->setWidget('categories_list_add',
+        new sfWidgetFormInputHidden());
+
+      $this->setValidator('categories_list_add',
+        new sfValidatorPass());
+    }
+    
     $this->setWidget('author_id',
       new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'query' => $q)));
     $this->setValidator('author_id',
@@ -65,7 +75,52 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     $this->object->setTags($tags);
     
+    $this->saveCategoriesList($con);
+    unset($this['categories_list']);
+    $this->saveCategoriesListAdd($con);
+    
+    
     parent::doSave($con);
   }
+  
+  public function saveCategoriesListAdd($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['categories_list_add']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+    
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+    
+    $values = $this->getValue('categories_list_add');
+    if (!is_array($values))
+    {
+      $values = array();
+    }
+    
+    $link = array();
+    foreach ($values as $value)
+    {
+      $aBlogCategory = new aBlogCategory();
+      $aBlogCategory['name'] = $value;
+      $aBlogCategory->save();
+      $link[] = $aBlogCategory['id'];
+    }
+    
+    if (count($link))
+    {
+      $this->object->link('Categories', array_values($link));
+    }
+  }
+  
   
 }

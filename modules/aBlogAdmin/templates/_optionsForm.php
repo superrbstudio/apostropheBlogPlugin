@@ -33,21 +33,7 @@
 
 <div class="categories section" id="categories-section">
 	<h2>Categories</h2>
-	<?php echo $form['categories_list']->renderRow(array('id' => 'blah')) ?>
-  <script type="text/javascript">
-    $(function(){
-      aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'new': 'New Category' });
-      $('#categories-section select').append('<option value="new">Add new category</option>');
-      $('#categories-section select').change()(function(event){
-        $('#categories-section select').append('<option value="new">Add new category</option>');
-        var index = event.target.selectedIndex;
-        if(index == event.target.length-1)
-        {
-          alert(index);
-        }
-      });
-    });
-  </script>
+	<?php echo $form['categories_list']->renderRow() ?>
 </div>
 
 
@@ -68,6 +54,7 @@
 </div>
 <script type="text/javascript">
   $(function() {
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category' });
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', })
   });
 </script>
