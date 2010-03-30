@@ -12,5 +12,5 @@
  */
 abstract class PluginaBlogSingleSlot extends BaseaBlogSingleSlot
 {
-
+  protected $editDefault = true;
 }
