@@ -1,30 +1,23 @@
 [?php use_helper('I18N', 'Date', 'jQuery') ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-
   $("ul.topnav").click(function(event) {
-		
-		event.preventDefault();
-		
+		event.preventDefault();		
     $(this).addClass('show-filters').find(".filternav").show().show();
-
     $(this).parent().hover(function() {
     }, function(){
 			$(this).find('ul.topnav').removeClass('show-filters');
       $(this).find(".filternav").fadeOut();
     });
-
   });
-	
 });	
 </script>
 
 [?php slot('a-subnav') ?]
-<div id="a-subnav" class="blog">
-  <div id="a-subnav-top" class="a-subnav-top"></div>
-  <div class="a-subnav-wrapper">
+<div class="a-subnav-wrapper blog">
+  <div class="a-subnav-inner">
     <ul class="a-admin-action-controls">
       	<li>[?php echo link_to('New  Post', '@a_blog_admin_new', array('class'=>'a-btn icon a-add')) ?]</li>
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
@@ -33,15 +26,14 @@ $(document).ready(function(){
         [?php //include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
   </div> 
-  <div id="a-subnav-bottom" class="a-subnav-bottom"></div>
 </div>
 [?php end_slot() ?]
 
-<div id="a-admin-container" class="[?php echo $sf_params->get('module') ?]">
+<div class="a-admin-container [?php echo $sf_params->get('module') ?]">
 
   [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
  
-	<div id="a-admin-content" class="main">
+	<div class="a-admin-content main">
 
 
 		[?php include_partial('<?php echo $this->getModuleName() ?>/flashes') ?]
@@ -57,9 +49,8 @@ $(document).ready(function(){
 		<?php endif; ?>
 	</div>
 
-  <div id="a-admin-footer">
+  <div class="a-admin-footer">
     [?php include_partial('<?php echo $this->getModuleName() ?>/list_footer', array('pager' => $pager)) ?]
   </div>
-  
 
 </div>

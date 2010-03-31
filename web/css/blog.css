@@ -1,5 +1,5 @@
-.aBlogAdmin.edit #a-admin-content,
-.aBlogAdmin.edit #a-admin-footer,
+.aBlogAdmin.edit .a-admin-content,
+.aBlogAdmin.edit .a-admin-footer,
 .aBlogAdmin.edit .a-admin-actions
 {
 	clear: both;
@@ -15,24 +15,12 @@
 {
 	padding: 2px;
 	background: #e5e5e5;
-/*	background: -moz-linear-gradient(
-	    center bottom,
-	    rgb(224,224,224) 42%,
-	    rgb(235,235,235) 71%
-	);	
-	background: -webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(0.42, rgb(228,228,228)),
-	    color-stop(0.80, rgb(235,235,235))
-	) !important;*/
 }
 
 
 
 #a-admin-list-batch-actions
-{
+{./
 	-webkit-border-top-left-radius: 12px;
 	-webkit-border-top-right-radius: 0px;
 	-webkit-border-bottom-right-radius: 0px;

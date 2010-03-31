@@ -3,7 +3,7 @@
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
 <?php include_partial('aBlogAdmin/assets') ?>
 
-<div id="a-admin-container" class="<?php echo $sf_params->get('module') ?>">
+<div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 	
   <?php include_partial('aBlogAdmin/form_bar', array('title' => __('Edit Blog Post', array(), 'messages'))) ?>
 
