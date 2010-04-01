@@ -1,6 +1,6 @@
-<div id="a-subnav" class="blog">
+<div class="a-subnav-wrapper blog">
 	
-	<div class="a-subnav-wrapper">
+	<div class="a-subnav-inner">
 		<?php include_component('aBlogSlot', 'tagSidebar', array('params' => $params, 'dateRange' => $dateRange)) ?>
 	</div>		
 	

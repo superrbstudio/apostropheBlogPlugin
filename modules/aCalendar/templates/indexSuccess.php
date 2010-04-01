@@ -3,9 +3,9 @@
 <?php slot('body_class') ?>a-blog a-blog-events <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-<div id="a-subnav" class="blog">
+<div class="a-subnav-wrapper blog">
 	
-	<div class="a-subnav-wrapper">
+	<div class="a-subnav-inner">
 		<?php include_component('aCalendar', 'tagSidebar', array('params' => $params, 'dateRange' => $dateRange)) ?>
 	</div>		
 	
