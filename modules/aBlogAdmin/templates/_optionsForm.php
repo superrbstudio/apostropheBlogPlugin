@@ -61,7 +61,7 @@
 </div>
 <script type="text/javascript">
   $(function() {
-    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category' });
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories',});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', })
   });
 </script>

@@ -28,21 +28,19 @@
   <?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
   
   <div class="a-admin-sidebar">
+    
+    <div id='a-admin-blog-post-form'>
 
-		<?php echo form_tag_for($form, '@a_blog_admin', array('id'=>'a-admin-form')) ?>  
-
-		<div class="a-blog-post-title">
-			<h2>Title</h2>
-			<?php echo $form['title']->render() ?>
-			<?php echo $form['title']->renderError() ?>
-		</div>
-
-    <?php include_partial('aBlogAdmin/optionsForm', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
+    <?php include_partial('aBlogAdmin/form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
+    
+    </div>
+    
+		
   </div>
   
   <div class="a-admin-footer">
     <?php include_partial('aBlogAdmin/form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
   </form>
-<?php include_partial('aBlogAdmin/form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+<?php //include_partial('aBlogAdmin/form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>

@@ -15,9 +15,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     parent::setup();
     $user = sfContext::getInstance()->getUser();
     
-    
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
     );
     
     //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
@@ -39,7 +38,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
     }
     
-    if($user->hasCredential('admin'))
+    if(false)
     {
       $this->setWidget('categories_list_add',
         new sfWidgetFormInputHidden());
@@ -67,6 +66,27 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
   }
   
+  public function updateSlugColumn($value)
+  {
+    if($this->getObject()->getSlug() == $value && $this->getObject()->getStatus() != 'published')
+    {
+      return $this->getValue('title'); 
+    }
+    return $value;
+  }
+  
+  public function updateCategoriesList($values)
+  {
+    foreach ($values as $value)
+    {
+      $aBlogCategory = new aBlogCategory();
+      $aBlogCategory['name'] = $value;
+      $aBlogCategory->save();
+      $link[] = $aBlogCategory['id'];
+    }
+    $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
+  }
+  
   public function doSave($con = null)
   {
     $tags = $this->values['tags'];
@@ -74,11 +94,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $tags = str_replace(', ', ',', $tags);
 
     $this->object->setTags($tags);
-    
-    $this->saveCategoriesList($con);
-    unset($this['categories_list']);
-    $this->saveCategoriesListAdd($con);
-    
     
     parent::doSave($con);
   }
@@ -121,6 +136,4 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $this->object->link('Categories', array_values($link));
     }
   }
-  
-  
 }

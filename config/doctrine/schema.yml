@@ -5,8 +5,8 @@ aBlogItem:
   actAs:
     Timestampable: ~
     Taggable: ~
-    Sluggable: ~
-    Commentable: ~
+    Sluggable:
+      canUpdate: true
   columns:
     id:
       type: integer

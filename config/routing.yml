@@ -145,7 +145,7 @@ a_blog_admin:
     model:               aBlogPost
     module:              aBlogAdmin
     prefix_path:         admin/blog
-    column:              id
+    column:              slug
     with_wildcard_routes: true
       
 a_blog_admin_removeFilter:

@@ -63,4 +63,32 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $this->setLayout(false);
   }
   
+  public function executeUpdate(sfWebRequest $request)
+  {
+    $this->a_blog_post = $this->getRoute()->getObject();
+    $this->form = $this->configuration->getForm($this->a_blog_post);
+
+    if($request->isXmlHttpRequest())
+    {
+      $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
+      if ($this->form->isValid())
+      {
+        $this->a_blog_post = $this->form->save();
+        $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
+      }
+      $this->setLayout(false);
+      return $this->renderPartial('aBlogAdmin/form', array('a_blog_post' => $this->a_blog_post, 'form' => $this->form, 'dog' => '1'));
+    }
+    else
+    {
+      $this->processForm($request, $this->form);
+    }
+    $this->setTemplate('edit');
+  }
+  
+  private function processFormAjax(sfWebRequest $request, sfForm $form)
+  {
+    
+  }
+  
 }
