@@ -10,8 +10,8 @@
   </th>
 
   <th class="a-admin-text a-admin-list-th-author">
-  	<ul class="topnav">
-  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Author', array(), 'messages') ?></a>
+  	<ul>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Author', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'author_id')) ?>
@@ -21,8 +21,8 @@
   </th>
 
   <th class="a-admin-text a-admin-list-th-editors">
-  	<ul class="topnav">
-  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Editors', array(), 'messages') ?></a>
+  	<ul>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Editors', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'editors_list')) ?>
@@ -32,8 +32,8 @@
   </th>
 
   <th class="a-admin-text a-admin-list-th-tags">
-  	<ul class="topnav a-blog-tags-sort">
-  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Tags', array(), 'messages') ?></a>
+  	<ul class="a-tags-sort">
+  		<li><a href="#" class="a-sort-label"><?php echo __('Tags', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_tags', array('filters' => $filters)) ?>
@@ -43,8 +43,8 @@
   </th>
 
   <th class="a-admin-text a-admin-list-th-categories">
-    <ul class="topnav">
-  		<li><a href="#" class="a-blog-sort-label"><?php echo __('Categories', array(), 'messages') ?></a>
+    <ul>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Categories', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'categories_list')) ?>
@@ -54,8 +54,8 @@
   </th>
 
   <th class="a-admin-enum a-admin-list-th-status">
-    <ul class="topnav">
-      <li><a href="#" class="a-blog-sort-label"><?php echo __('Status', array(), 'messages') ?></a>
+    <ul>
+      <li><a href="#" class="a-sort-label"><?php echo __('Status', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'status')) ?>

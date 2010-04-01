@@ -1,13 +1,11 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-<div id="a-subnav" class="blog">
-  <div id="a-subnav-top" class="a-subnav-top"></div>
-  <div class="a-subnav-wrapper">
-    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories)) ?>
-  </div> 
-  <div id="a-subnav-bottom" class="a-subnav-bottom"></div>
-</div>
+	<div class="a-subnav-wrapper blog">
+		<div class="a-subnav-inner">
+	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories)) ?>
+	  </div> 
+	</div>
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main">
@@ -20,12 +18,12 @@
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
-  <?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon')) ?>
+  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon')) ?>
   <?php endif ?>
+
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
-  <?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
-  <hr>
-  <?php endforeach ?>  
-  
+  	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
+  	<hr>
+  <?php endforeach ?>    
 </div>
   

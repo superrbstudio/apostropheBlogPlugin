@@ -3,12 +3,13 @@
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
-  $("ul.topnav").click(function(event) {
+	var sortLabel = $("a.a-sort-label").parent().parent();
+	sortLabel.click(function(event) {
 		event.preventDefault();		
-    $(this).addClass('show-filters').find(".filternav").show().show();
+    $(this).addClass('show-filters').find(".filternav").show();
     $(this).parent().hover(function() {
-    }, function(){
-			$(this).find('ul.topnav').removeClass('show-filters');
+    }, function() {
+			$(this).find('ul').removeClass('show-filters');
       $(this).find(".filternav").fadeOut();
     });
   });
