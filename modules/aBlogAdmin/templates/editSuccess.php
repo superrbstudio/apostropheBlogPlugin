@@ -23,19 +23,14 @@
   <?php include_partial('aBlogAdmin/flashes') ?>
 	
 
-	<div class="a-admin-content main">
-	
-  <?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
-  
-  <div class="a-admin-sidebar">
-    
-    <div id='a-admin-blog-post-form'>
+	<div class="a-admin-content main">	
+  	<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
+  </div>
 
+  <div class="a-admin-sidebar">
+    <div id='a-admin-blog-post-form'>
     <?php include_partial('aBlogAdmin/form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
-    
     </div>
-    
-		
   </div>
   
   <div class="a-admin-footer">

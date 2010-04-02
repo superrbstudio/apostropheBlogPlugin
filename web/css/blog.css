@@ -225,11 +225,13 @@
 	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);			
 	border: 1px solid #ccc;
+	overflow: hidden;
 }
 
-.a-admin-sidebar .tag-input
+.a-admin-sidebar input,
+.a-admin-sidebar input.tag-input
 {
-	width: 192px !important;
+	width: 192px;
 }
 
 .a-admin-sidebar hr
@@ -241,6 +243,7 @@
 	background: #efefef;
 	margin: 15px 0;
 }
+
 
 .a-admin-sidebar .a-time-wrapper input,
 .a-admin-sidebar .a-date-wrapper input
@@ -280,14 +283,11 @@ width: 100%;
 
 .a-blog-post-title
 {
-	position: absolute;
-	top: 55px;
-	left: 0;
+	
 }
 
 .a-area-blog-post-body
 {
-	margin-top: 65px;
 }
 
 .a-area-blog-post-body input
