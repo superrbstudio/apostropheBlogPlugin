@@ -55,7 +55,7 @@
   list-style: none;
   position: absolute;
   left: -5px; 
-	top: -5px;
+	top: -4px;
   display: none;
   float: left;
 	padding: 26px 0 10px;
@@ -65,9 +65,9 @@
 	width: auto !important;
 	width: 120px;
 	z-index: 100;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;	
-	border-radius: 8px;	
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;	
+	border-radius: 2px;	
 	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-opera-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
@@ -142,15 +142,16 @@
 	height: 18px;
 	line-height: 18px;
 	padding: 0 3px;
-	border: 1px outset rgba(0,0,0,0.15);
+	border: 1px solid rgba(0,0,0,0.05);
 	margin-left: -1px;
-	color: #fc0;			
+	background-color: #eee;
+	color: #666;
 }
 
 .a-admin-list th a.a-sort-label:hover
 {
-	background-color: #eee;
-	color: #555;
+	color: #000;
+	background-color: #fc0;	
 }
 
 .a-admin-list th .show-filters a.a-sort-label,
