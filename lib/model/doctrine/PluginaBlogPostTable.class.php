@@ -6,7 +6,7 @@ class PluginaBlogPostTable extends Doctrine_Table
 {
   public function buildQuery(sfWebRequest $request, $tableName = 'aBlogPost', $q)
   {    
-    Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName, $q);
+    $q = Doctrine::getTable('aBlogItem')->buildQuery($request, $tableName, $q);
     $rootAlias = $q->getRootAlias();
     $q->orderBy($rootAlias.'.published_at desc');
     return $q;
