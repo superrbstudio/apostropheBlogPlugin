@@ -17,7 +17,7 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
 
   public function linkToEdit($object, $params)
   {
-    return '<li class="a-admin-action-edit">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('edit'), $object, array('class'=>'a-btn icon icon-only a-edit')).'</li>';
+    return '<li class="a-admin-action-edit">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('edit'), $object, array('class'=>'a-btn icon no-label a-edit')).'</li>';
   }
 
   public function linkToDelete($object, $params)
@@ -27,7 +27,7 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
       return '';
     }
 
-    return '<li class="a-admin-action-delete">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('delete'), $object, array('class'=>'a-btn icon-only icon a-delete','method' => 'delete', 'confirm' => !empty($params['confirm']) ? __($params['confirm'], array(), 'a_admin') : $params['confirm'])).'</li>';
+    return '<li class="a-admin-action-delete">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('delete'), $object, array('class'=>'a-btn no-label icon a-delete','method' => 'delete', 'confirm' => !empty($params['confirm']) ? __($params['confirm'], array(), 'a_admin') : $params['confirm'])).'</li>';
   }
 
   public function linkToList($params)
