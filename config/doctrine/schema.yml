@@ -186,7 +186,6 @@ aBlogSlot:
     keyField: type
     keyValue: 'aBlog'
       
-
 aBlogSingleSlot:
   options:
     symfony:
@@ -197,3 +196,35 @@ aBlogSingleSlot:
     type: column_aggregation
     keyField: type
     keyValue: 'aBlogSingle'
+    
+aEvent:
+  inheritance:
+    extends: aBlogItem
+    type: column_aggregation
+    keyField: type
+    keyValue: 'event'
+  columns:
+    start_date: datetime
+    end_date: datetime
+    
+aEventSlot:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aEvent'
+      
+aEventSingleSlot:
+  options:
+    symfony:
+      form:   false
+      filter: false
+  inheritance:
+    extends: aSlot
+    type: column_aggregation
+    keyField: type
+    keyValue: 'aEventSingle'

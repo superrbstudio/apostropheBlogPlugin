@@ -10,6 +10,8 @@
  */
 abstract class BaseaBlogComponents extends sfComponents
 {
+  protected $modelClass = 'aBlogPost';
+  
   
   public function executeSidebar()
   {
@@ -18,9 +20,9 @@ abstract class BaseaBlogComponents extends sfComponents
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
     
-    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true, 'limit' => 10));
+    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass, 'sort_by_popularity' => true, 'limit' => 10));
 
-    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost'));
+    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass));
     
     $this->categories = Doctrine::getTable('aBlogCategory')
       ->createQuery('c')

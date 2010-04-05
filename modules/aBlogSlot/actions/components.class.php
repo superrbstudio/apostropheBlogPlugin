@@ -2,6 +2,7 @@
 class aBlogSlotComponents extends BaseaSlotComponents
 {
   protected $modelClass = 'aBlogPost';
+  protected $formClass = 'aBlogSlotForm';
   
   public function executeEditView()
   {
@@ -12,7 +13,7 @@ class aBlogSlotComponents extends BaseaSlotComponents
     // from an earlier pass
     if (!isset($this->form))
     {
-      $this->form = new aBlogSlotForm($this->id, $this->slot->getArrayValue());
+      $this->form = new $this->formClass($this->id, $this->slot->getArrayValue());
     }
   }
   public function executeNormalView()

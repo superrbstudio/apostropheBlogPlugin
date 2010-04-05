@@ -1,12 +1,15 @@
 <?php
 class aBlogSingleSlotActions extends BaseaSlotActions
 {
+  protected $modelClass = 'aBlogPost';
+  protected $formClass = 'aBlogSlotForm';
+  
   public function executeEdit(sfRequest $request)
   {
     $this->editSetup();
 
     $value = $this->getRequestParameter('slotform-' . $this->id);
-    $this->form = new aBlogSingleSlotForm($this->id, array());
+    $this->form = new $this->formClass($this->id, array());
     $this->form->bind($value);
     if ($this->form->isValid())
     {

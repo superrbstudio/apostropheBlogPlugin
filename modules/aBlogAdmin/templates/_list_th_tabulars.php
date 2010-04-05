@@ -11,7 +11,7 @@
 
   <th class="a-admin-text a-admin-list-th-author">
   	<ul>
-  		<li><a href="#" class="a-btn a-sort-label"><?php echo __('Author', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Author', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'author_id')) ?>
@@ -22,7 +22,7 @@
 
   <th class="a-admin-text a-admin-list-th-editors">
   	<ul>
-  		<li><a href="#" class="a-btn a-sort-label"><?php echo __('Editors', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Editors', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'editors_list')) ?>
@@ -33,18 +33,18 @@
 
   <th class="a-admin-text a-admin-list-th-tags">
   	<ul class="a-tags-sort">
-  		<li><a href="#" class="a-btn a-sort-label"><?php echo __('Tags', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Tags', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_tags', array('filters' => $filters)) ?>
 				</div>
       </li>
     </ul>
-  </th>	
+  </th>
 
   <th class="a-admin-text a-admin-list-th-categories">
     <ul>
-  		<li><a href="#" class="a-btn a-sort-label"><?php echo __('Categories', array(), 'messages') ?></a>
+  		<li><a href="#" class="a-sort-label"><?php echo __('Categories', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'categories_list')) ?>
@@ -55,7 +55,7 @@
 
   <th class="a-admin-enum a-admin-list-th-status">
     <ul>
-      <li><a href="#" class="a-btn a-sort-label"><?php echo __('Status', array(), 'messages') ?></a>
+      <li><a href="#" class="a-sort-label"><?php echo __('Status', array(), 'messages') ?></a>
         <div class="filternav">
 					<hr/>
 					<?php include_partial('aBlogAdmin/list_th_select', array('filters' => $filters, 'name' => 'status')) ?>
