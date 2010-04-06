@@ -29,7 +29,7 @@
             success:function(data, textStatus){
             jQuery('#a-admin-blog-post-form').html(data);
           },
-          url: '<?php echo url_for('@a_blog_admin_update?slug='.$a_event['slug']) ?>'
+          url: '<?php echo url_for('@a_event_admin_update?slug='.$a_event['slug']) ?>'
         });
       });
     });

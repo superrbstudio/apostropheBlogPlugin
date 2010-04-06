@@ -32,7 +32,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   {
     $this->a_event = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->a_event);
-
+    
     if($request->isXmlHttpRequest())
     {
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));

@@ -12,5 +12,5 @@
  */
 abstract class PluginaEventSlot extends BaseaEventSlot
 {
-
+  protected $editDefault = true;
 }
