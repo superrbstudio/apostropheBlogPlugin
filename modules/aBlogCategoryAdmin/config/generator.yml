@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           aBlogCategory
-    theme:                 aAdminAlt
+    theme:                 aBlogAdmin
     non_verbose_templates: true
     with_show:             false
     singular:              ~

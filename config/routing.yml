@@ -297,6 +297,11 @@ a_blog_admin_addFilter:
 a_blog_admin_autocomplete:
   url:   /admin/aBlogAdmin/autocomplete
   param: { module: aBlogAdmin, action: autocomplete }
+  class: sfRoute
+  
+a_blog_admin_editCategories:
+  url:   /admin/aBlogAdmin/editCategories
+  param: { module: aBlogAdmin, action: editCategories }
   class: sfRoute  
       
 a_blog_category_admin:
