@@ -16,11 +16,11 @@
 {
 	position: relative;
 	z-index: 50;
-	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
+/*	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-opera-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-khtml-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);	
-	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);			
+	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);		*/	
 }
 
 .a-admin-list thead th
@@ -167,6 +167,11 @@
 .a-admin-list th .show-filters .filternav
 {
 	z-index: 300;
+}
+
+.a-admin-list tr.first td
+{
+ background: url(/apostropheBlogPlugin/images/a-blog-td-bg.png) 0 -1px repeat-x;
 }
 
 /* Tags Sort Box */
