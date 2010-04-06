@@ -20,7 +20,7 @@ $(document).ready(function(){
 <div class="a-subnav-wrapper blog">
   <div class="a-subnav-inner">
     <ul class="a-admin-action-controls">
-      [?php include_partial('<?php echo $this->getModuleName() ?>/edit_actions', array('helper' => $helper)) ?]   
+      [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
   </div> 
 </div>

@@ -11,9 +11,14 @@ generator:
     with_doctrine_route:   1
     
     config:
+      actions: []
+    
       list:
         display: [ _name, numBlogItems, numUsers ]
         object_actions: []
+        actions:
+          _new:
+            name: New
         table_method: 
       
       form:
@@ -27,4 +32,7 @@ generator:
       fields:
         numBlogItems: { label: Blog Items Count }
         numUsers: { label: Active Users }
+      
+      edit:
+        actions: ~
         

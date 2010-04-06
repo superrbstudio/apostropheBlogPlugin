@@ -4,7 +4,7 @@
 <?php echo $this->addCredentialCondition('[?php echo $helper->linkToNew('.$this->asPhp($params).') ?]', $params) ?>
 <?php else: ?>
   <li class="a-admin-action-<?php echo $params['class_suffix'] ?>">
-    [?php echo link_to('<?php echo $params['label'] ?>', '@<?php echo $name ?>') ?]
+    <?php echo $this->addCredentialCondition($this->getLinkToAction($name, $params, false), $params) ?>
   </li>
 <?php endif; ?>
 <?php endforeach; ?>

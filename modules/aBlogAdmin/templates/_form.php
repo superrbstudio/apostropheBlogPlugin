@@ -19,18 +19,33 @@
 
 <?php include_partial('aBlogAdmin/optionsForm', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
 
-<script type="text/javascript">
-      $(function () {
-      $('#a-admin-form').change(function() {
-        jQuery.ajax({
-            type:'POST',
-            dataType:'html',
-            data:jQuery(this).serialize(),
-            success:function(data, textStatus){
-            jQuery('#a-admin-blog-post-form').html(data);
-          },
-          url: '<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>'
-        });
-      });
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+
+    $('#a-admin-form').change(function() {
+      updateBlogForm(this);
     });
+
+    $('#a_blog_post_title_interface').val($('#a_blog_post_title').val());
+    $('#a_blog_post_title_interface').change(function(){
+      $('#a_blog_post_title').val($(this).val());
+      updateBlogForm(this);
+    })
+    
+    function updateBlogForm(form)
+    {
+      jQuery.ajax({
+          type:'POST',
+          dataType:'html',
+          data:jQuery(form).serialize(),
+          success:function(data, textStatus){
+          jQuery('#a-admin-blog-post-form').html(data);
+        },
+        url: '<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>'
+      });
+    }
+    
+
+
+  });
 </script>
