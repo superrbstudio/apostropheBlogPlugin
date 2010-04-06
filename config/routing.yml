@@ -133,6 +133,142 @@ a_blog_today:
   url:   
   param: { module: aBlog, action: today }
   class: aRoute
+ 
+#################
+# aEvent routes #
+#################
+
+a_event_post:
+  url:     /:year/:month/:day/:slug
+  param:   { module: aEvent, action: show }
+  options: { model: aEvent, type: object }
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class:   aDoctrineRoute
+
+a_event_cat_tag_year_month_day:
+  url:   /:cat/tag/:tag/:year/:month/:day
+  param: { module: aEvent, action: index }
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class: aRoute
+
+a_event_cat_tag_year_month:
+  url:   /:cat/tag/:tag/:year/:month
+  param: { module: aEvent, action: index }
+  requirements: { year: '\d{4}', month: '\d|\d{2}' }
+  options: 
+    filters: [ filterByYMD, filterByCategory, filterByTag ] 
+  class: aRoute
+
+a_event_cat_tag_year:
+  url:   /:cat/tag/:tag/:year
+  param: { module: aEvent, action: index }
+  requirements: { year: '\d{4}' }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  class: aRoute
+
+a_event_tag_year_month_day:
+  url:   /tag/:tag/:year/:month/:day
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class: aRoute
+
+a_event_tag_year_month:
+  url:   /tag/:tag/:year/:month
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  requirements: { year: '\d{4}', month: '\d|\d{2}' }
+  class: aRoute
+
+a_event_tag_year:
+  url:   /tag/:tag/:year
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD ] 
+  requirements: { year: '\d{4}' }
+  class: aRoute
+
+a_event_cat_year_month_day:
+  url:   /:cat/:year/:month/:day
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class: aRoute
+
+a_event_cat_year_month:
+  url:   /:cat/:year/:month
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  requirements: { year: '\d{4}', month: '\d|\d{2}' }
+  class: aRoute
+
+a_event_cat_year:
+  url:   /:cat/:year
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD, filterByCategory ] 
+  requirements: { year: '\d{4}' }
+  class: aRoute
+  
+a_event_year_month_day:
+  url:   /:year/:month/:day
+  options: 
+    filters: [ filterByYMD ] 
+  param: { module: aEvent, action: index }
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class: aRoute
+
+a_event_year_month:
+  url:   /:year/:month
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByYMD ]
+  requirements: { year: '\d{4}', month: '\d|\d{2}' }
+  class: aRoute
+
+a_event_year:
+  url:   /:year
+  options: 
+    filters: [ filterByYMD ]
+  param: { module: aEvent, action: index }
+  requirements: { year: '\d{4}' }
+  class: aRoute
+
+a_event_cat_tag:
+  url:   /:cat/tag/:tag
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByCategory ] 
+  class: aRoute
+
+a_event_tag:
+  url:   /tag/:tag
+  param: { module: aEvent, action: index }
+  options: 
+    filters: [ filterByTag ] 
+  class: aRoute
+
+a_event_cat:
+  url:   /:cat
+  options: 
+    filters: [ filterByCategory ] 
+  param: { module: aEvent, action: index }
+  class: aRoute
+
+a_event:
+  url:   
+  param: { module: aEvent, action: index }
+  class: aRoute
+
+a_event_today:
+  url:   
+  param: { module: aEvent, action: today }
+  class: aRoute 
   
   
 ################
