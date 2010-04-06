@@ -3,6 +3,7 @@ class aBlogSingleSlotForm extends sfForm
 {
   // Ensures unique IDs throughout the page
   protected $id;
+  protected $model = 'aBlogPost';
   public function __construct($id, $defaults)
   {
     $this->id = $id;
@@ -17,8 +18,8 @@ class aBlogSingleSlotForm extends sfForm
     $this->widgetSchema['search'] = new sfWidgetFormInput(array(), array('autocomplete' => 'off'));
     $this->validatorSchema['search'] = new sfValidatorString();
     
-    $this->widgetSchema['blog_post'] = new sfWidgetFormInputHidden();
-    $this->validatorSchema['blog_post'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogPost', 'multiple' => false));
+    $this->widgetSchema['blog_item'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['blog_item'] = new sfValidatorDoctrineChoice(array('model' => $this->model, 'multiple' => false));
     
     // Ensures unique IDs throughout the page
     $this->widgetSchema->setNameFormat('slotform-' . $this->id . '[%s]');

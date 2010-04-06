@@ -1,8 +1,8 @@
 <?php
 class aBlogSingleSlotComponents extends BaseaSlotComponents
 {
-  protected abstract $modelClass = 'aBlogPost';
-  protected abstract $formClass = 'aBlogSlotSingleForm';
+  protected $modelClass = 'aBlogPost';
+  protected $formClass = 'aBlogSingleSlotForm';
   
   public function executeEditView()
   {
@@ -20,7 +20,7 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-    if(isset($this->values['blog_post']))
-      $this->aBlogPost = Doctrine::getTable($modelClass)->findOneBy('id', $this->values['blog_post']);
+    if(isset($this->values['blog_item']))
+      $this->aBlogItem = Doctrine::getTable($modelClass)->findOneBy('id', $this->values['blog_item']);
   }
 }

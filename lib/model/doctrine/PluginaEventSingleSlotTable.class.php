@@ -7,6 +7,7 @@
  */
 class PluginaEventSingleSlotTable extends aSlotTable
 {
+  protected $editDefault = true;
     /**
      * Returns an instance of this class.
      *

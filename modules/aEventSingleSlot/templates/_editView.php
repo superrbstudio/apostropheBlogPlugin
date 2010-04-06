@@ -3,7 +3,7 @@
 <script type="text/javascript">
 $().ready(function() {
   
-  $('#<?php echo $form->getName()."_search" ?>').autocomplete('<?php echo url_for("@a_blog_admin_autocomplete") ?>');
+  $('#<?php echo $form->getName()."_search" ?>').autocomplete('<?php echo url_for("@a_event_admin_autocomplete") ?>');
   $('#<?php echo $form->getName()."_search" ?>').result(function(event, data, formatted){
     if (data) {
       $('#<?php echo $form->getName()."_blog_item" ?>').val(data[1]);
