@@ -3,7 +3,7 @@
 <?php $filterFields = $filterForm->getFields() ?>
 <?php foreach ($this->configuration->getValue('list.display') as $name => $field): ?>
 	[?php slot('a-admin.current-header') ?]
-	<th class="a-admin-<?php echo strtolower($field->getType()) ?> a-admin-list-th-<?php echo $name ?>">
+	<th class="a-admin-<?php echo strtolower($field->getType()) ?> a-column-<?php echo $name ?>">
 	<?php if(isset($filterFieldConfig[$name])): ?>
     <?php //This field needs dropdown filters to be applied ?>
     <ul>

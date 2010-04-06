@@ -28,6 +28,12 @@
 	border-bottom: 1px solid #ccc;	
 }
 
+.aBlogAdmin #a-admin-list-batch-actions,
+.aBlogAdmin #a-admin-list-th-actions
+{
+ width: auto;
+}
+
 /* Top Nav for Filtering */
 
 .a-admin-list th ul {
@@ -119,20 +125,8 @@
 
 .a-admin-list thead th
 {
-	background-image:
-	-moz-linear-gradient(
-	    center bottom,
-	    rgb(250,250,250) 28%,
-	    rgb(255,255,255) 100%
-	);
-	background-image:
-	-webkit-gradient(
-	    linear,
-	    left bottom,
-	    left top,
-	    color-stop(0.28, rgb(249,249,249)),
-	    color-stop(1, rgb(255,255,255))
-	) !important;
+padding: 0 5px;
+
 }
 
 .a-admin-list th a.a-sort-label
@@ -171,7 +165,7 @@
 
 .a-admin-list tr.first td
 {
- background: url(/apostropheBlogPlugin/images/a-blog-td-bg.png) 0 -1px repeat-x;
+ background: #F7F7F7 url(/apostropheBlogPlugin/images/a-blog-td-bg.png) 0 -1px repeat-x;
 }
 
 /* Tags Sort Box */
@@ -248,7 +242,6 @@
 	background: #efefef;
 	margin: 15px 0;
 }
-
 
 .a-admin-sidebar .a-time-wrapper input,
 .a-admin-sidebar .a-date-wrapper input
@@ -341,4 +334,12 @@ margin-top: -10px;
 .a-admin-filter-sentence a.selected:hover span.close
 {
 background-position: 100% -20px;
+}
+
+
+/* Blog Edit Post View */
+
+.a-admin input#a_blog_post_title_interface
+{
+ font-size: 18px;
 }
