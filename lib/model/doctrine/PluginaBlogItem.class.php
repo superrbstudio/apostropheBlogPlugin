@@ -41,6 +41,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page['slug'] = 'aBlogPost-'.$this['id'];
     $page->save();
     $this->Page = $page;
+    $this->slug = 'untitled-'.$this['id'];
+    $this->title = 'untitled';
     $this->save();
   }
   

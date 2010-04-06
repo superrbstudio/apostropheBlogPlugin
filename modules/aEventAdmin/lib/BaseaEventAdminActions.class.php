@@ -16,7 +16,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $this->a_event = new aEvent();
     $this->a_event->Author = $this->getUser()->getGuardUser();
     $this->a_event->save();
-    $this->redirect('@a_event_admin_edit?id='.$this->a_event->getId());
+    $this->redirect('@a_event_admin_edit?slug='.$this->a_event->getSlug());
   }
     
   public function executeAutocomplete(sfWebRequest $request)
