@@ -1,18 +1,18 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:            aBlogPost
+    model_class:            aEvent
     column:                 slug
     theme:                  aBlogAdmin
     non_verbose_templates:  true
     with_show:              false
     singular:               ~
     plural:                 ~
-    route_prefix:           a_blog_admin
+    route_prefix:           a_event_admin
     with_doctrine_route:    1
     
     config:
-      
+      actions: [wef, _new]        
       fields:
         author_id:  { label: created by }
         _editors_list: { label: edited by }
@@ -20,9 +20,8 @@ generator:
         tags_list: { label: tagged }       
       
       list:
-        title:    "Blog Post Admin"
+        title:    "Event Admin"
         display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
-        actions:  []
         fields:
           author_id:
             label:  Author

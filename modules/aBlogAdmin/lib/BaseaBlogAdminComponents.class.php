@@ -3,10 +3,9 @@
 /**
  * Base actions for the aBlogPlugin aBlogAdmin module.
  * 
- * @package     aBlogPlugin
+ * @package     apostropheBlogPlugin
  * @subpackage  aBlogAdmin
- * @author      P'UNK Avenue
- * @version     SVN: $Id: BaseActions.class.php 12534 2008-11-01 13:38:27Z Kris.Wallsmith $
+ * @author      Dan Ordille <dan@punkave.com>
  */
 abstract class BaseaBlogAdminComponents extends sfComponents
 {

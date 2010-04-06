@@ -33,6 +33,8 @@ aBlogItem:
     template:
       type: string(255)
       default: singleColumnTemplate
+    published_at:
+      type: timestamp
   relations:
     Author:
       class: sfGuardUser
@@ -170,10 +172,7 @@ aBlogPost:
     extends: aBlogItem
     type: column_aggregation
     keyField: type
-    keyValue: 'post'
-  columns:
-    published_at:
-      type: timestamp
+    keyValue: 'post'    
       
 aBlogSlot:
   options:

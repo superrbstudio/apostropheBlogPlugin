@@ -6,21 +6,20 @@
 	<th class="a-admin-<?php echo strtolower($field->getType()) ?> a-admin-list-th-<?php echo $name ?>">
 	<?php if(isset($filterFieldConfig[$name])): ?>
     <?php //This field needs dropdown filters to be applied ?>
+    <ul>
+      <li><a href="#" class="a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
+        <div class="filternav">
+          <hr/>
     <?php if($filterFieldConfig[$name]->isComponent()): ?>
       [?php include_component('<?php echo $this->getModuleName() ?>', 'list_th_<?php echo $name ?>_dropdown', array('filters' => $filters, 'name' => '<?php echo $name ?>'  )) ?]
     <?php elseif($filterFieldConfig[$name]->isPartial()): ?>
       [?php include_partial('<?php echo $this->getModuleName() ?>/list_th_<?php echo $name ?>_dropdown', array('filters' => $filters, 'name' => '<?php echo $name ?>'  )) ?]
     <?php elseif(in_array($filterFields[$name], array('Enum', 'ForeignKey', 'ManyKey'))): ?>
-      <ul>
-        <li><a href="#" class="a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
-          <div class="filternav">
-            <hr/>
-            [?php include_partial('<?php echo $this->getModuleName() ?>/list_th_dropdown', array('filters' => $filters, 'name' => '<?php echo $name ?>'  )) ?]
-          </div>
-        </li>
-      </ul>
+      [?php include_partial('<?php echo $this->getModuleName() ?>/list_th_dropdown', array('filters' => $filters, 'name' => '<?php echo $name ?>'  )) ?]    
     <?php endif ?>
-
+        </div>
+      </li>
+    </ul>
   
   
   <?php elseif ($field->isReal()): ?>

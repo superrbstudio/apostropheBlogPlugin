@@ -3,10 +3,9 @@
 /**
  * aBlogAdmin module configuration.
  *
- * @package    aBlog
+ * @package    apostropheBlogPlugin
  * @subpackage aBlogAdmin
- * @author     Your name here
- * @version    SVN: $Id: configuration.php 12474 2008-10-31 10:41:27Z fabien $
+ * @author     Dan Ordille <dan@punkave.com>
  */
 class aBlogAdminGeneratorConfiguration extends BaseaBlogAdminGeneratorConfiguration
 {

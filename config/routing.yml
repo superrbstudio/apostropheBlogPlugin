@@ -136,7 +136,7 @@ a_blog_today:
   
   
 ################
-# admin routes #
+# blog admin routes #
 ################
 
 a_blog_admin:
@@ -169,6 +169,47 @@ a_blog_category_admin:
     model:               aBlogCategory
     module:              aBlogCategoryAdmin
     prefix_path:         admin/blog_categories
+    column:              id
+    with_wildcard_routes: true
+    collection_actions:
+      addFilter: [GET, POST]
+      removeFilter: [GET, POST]
+      
+      
+######################
+# event admin routes #
+######################
+
+a_event_admin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:               aEvent
+    module:              aEventAdmin
+    prefix_path:         admin/event
+    column:              slug
+    with_wildcard_routes: true
+      
+a_event_admin_removeFilter:
+  url:   /admin/aEventAdmin/remove_filter/:name/:value
+  param: { module: aEventAdmin, action: removeFilter }
+  class: sfRoute
+  
+a_event_admin_addFilter:
+  url:   /admin/aEventAdmin/add_filter/:name/:value
+  param: { module: aEventAdmin, action: addFilter }
+  class: sfRoute
+  
+a_event_admin_autocomplete:
+  url:   /admin/aEventAdmin/autocomplete
+  param: { module: aEventAdmin, action: autocomplete }
+  class: sfRoute  
+      
+a_event_category_admin:
+  class: sfDoctrineRouteCollection
+  options:
+    model:               aEventCategory
+    module:              aEventCategoryAdmin
+    prefix_path:         admin/event_categories
     column:              id
     with_wildcard_routes: true
     collection_actions:

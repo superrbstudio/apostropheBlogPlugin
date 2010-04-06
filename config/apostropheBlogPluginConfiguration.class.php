@@ -28,7 +28,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     {
       aTools::addGlobalButtons(array(
         new aGlobalButton('blog', 'Blog', '@a_blog_admin', 'a-blog-btn'),
-        new aGlobalButton('events', '<span class="day"></span> Events', 'aBlogEventAdmin/index', 'a-events day-'.date('j'))
+        new aGlobalButton('events', '<span class="day"></span> Events', '@a_event_admin', 'a-events day-'.date('j'))
       ));
     }
   }

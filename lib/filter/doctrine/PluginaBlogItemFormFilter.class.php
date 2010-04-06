@@ -10,7 +10,6 @@
  */
 abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
 {
-  
   public function configure()
   {
     //$this->widgetSchema->setLabel('editors_list', 'Edited By');

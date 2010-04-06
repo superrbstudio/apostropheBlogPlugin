@@ -30,7 +30,5 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 	  $('a.selected').prepend('<span class="close"></span>')
-	}); 
+	});
 </script>
-
-

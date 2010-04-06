@@ -24,7 +24,7 @@ $(document).ready(function(){
         <li>[?php echo link_to('Edit Categories', '@a_blog_category_admin') ?]</li>
 				<li>[?php echo link_to('Edit Posts', '@a_blog_admin') ?]</li>
         <li>[?php echo link_to('Edit Comments', '@a_comment_admin') ?]</li>
-        [?php //include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
+        [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
   </div> 
 </div>
