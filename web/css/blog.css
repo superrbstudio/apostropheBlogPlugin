@@ -265,7 +265,7 @@ padding: 0 5px;
 	height: 1px;
 	border: 0;
 	background: #efefef;
-	margin: 15px 0;
+	margin: 10px 0;
 }
 
 .a-admin-sidebar .a-time-wrapper input,
@@ -290,7 +290,7 @@ width: 100%;
 
 .a-admin-sidebar .option
 {
-	margin-bottom: 5px;
+ display: none;
 }
 
 .a-admin-action-controls,
@@ -367,4 +367,44 @@ background-position: 100% -20px;
 .a-admin input#a_blog_post_title_interface
 {
  font-size: 18px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+}
+
+.a-admin #a-blog-post-title-placeholder
+{
+line-height: 30px;
+font-size: 18px;	
+color: #999;
+margin-top: -30px;
+padding-left: 5px;
+}
+
+.a-btn.a-publish-post
+{
+	padding: 0;
+	width: 100%;
+	text-align: center;
+	margin-left: -1px;
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 10px;
+}
+
+.a-btn.a-publish-post.published
+{
+ background: #aaa;
+}
+
+.a-btn.a-publish-post em.unpublish,
+.a-btn.a-publish-post.published em.publish
+{
+	display: none;
+}
+
+.a-btn.a-publish-post em.publish,
+.a-btn.a-publish-post.published em.unpublish
+{
+	display: inline;
 }

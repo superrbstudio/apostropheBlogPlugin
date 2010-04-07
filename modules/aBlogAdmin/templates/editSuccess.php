@@ -8,20 +8,25 @@
   <?php // include_partial('aBlogAdmin/form_bar', array('title' => __('Edit Blog Post', array(), 'messages'))) ?>
 
 	<?php slot('a-subnav') ?>
-  <div class="a-subnav-wrapper blog">
-  	<div class="a-subnav-inner">	
-       <ul class="a-admin-action-controls">
-				<li><a href="">All Posts</a></li>
-         <?php include_partial('aBlogAdmin/list_actions', array('helper' => $helper)) ?>
-       </ul>
-     </div> 
-  </div>
+		<div class="a-subnav-wrapper blog">
+			<div class="a-subnav-inner">	
+				<ul class="a-admin-action-controls">
+					<li><a href="<?php echo url_for('@a_blog_admin'); ?>"><?php echo __('All Posts', array(), 'messages') ?></a></li>
+	         <?php include_partial('aBlogAdmin/list_actions', array('helper' => $helper)) ?>
+				</ul>
+			</div> 
+	  </div>
 	<?php end_slot() ?>
   
   <?php include_partial('aBlogAdmin/flashes') ?>
 	
 	<div class="a-admin-content main">	
-		<input type="text" id="a_blog_post_title_interface" value="<?php echo $a_blog_post->title ?>" />
+		
+		<div class="a-blog-post-title-interface">
+			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
+			<div id="a-blog-post-title-placeholder"><?php echo __('Title your post...', array(), 'messages') ?></div>
+		</div>		
+		
 		<div id="a_blog_post_permalink_interface">http://site/blog/url/<?php echo $a_blog_post->slug ?></div>
   	<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
   </div>
@@ -43,15 +48,67 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 
+		// If there are any conventional Chamges to the admin form
     $('#a-admin-form').change(function() {
-			updateBlogForm();
+			updateBlogForm(); 
     });
 
-		$('#a_blog_post_title_interface').change(function(){
-			$('#a_blog_post_title').val($(this).val());
+
+		// Publish / Unpublish Button
+		var postStatus = $('#a_blog_post_status');
+
+		if (postStatus.val() == 'published') {
+			$('#a-admin-form a.a-publish-post').addClass('published');
+		};
+
+		$('#a-admin-form a.a-publish-post').click(function(){
+			
+			$(this).toggleClass('published');
+			$(this).blur();
+			
+			if (postStatus.val() == 'draft') {
+				postStatus.val('published');
+			}
+			else
+			{
+				postStatus.val('draft');
+			};
 			updateBlogForm();
-		}).focus();
-				
+		});
+
+
+		// Title Interface Magic Label
+		var titleInterface = $('#a_blog_post_title_interface');
+		var titlePlaceholder = $('#a-blog-post-title-placeholder');
+		
+		titleInterface.change(function(){
+			if ($(this).val() != '') { // If the input is not empty
+				$('#a_blog_post_title').val($(this).val()); // Pass the value to the admin form and update
+				updateBlogForm();				
+			};
+		});
+		
+		titleInterface.blur(function(){
+			if ($(this).val() == '') { // If the input is empty			
+				$(this).next().show(); // Show the label on blur
+			}
+		});
+
+		titleInterface.focus(function(){
+			$(this).next().hide(); // Always hide the placeholder on focus
+		});
+		
+		<?php if ($a_blog_post->title == 'untitled'): ?>
+			titleInterface.focus();
+		<?php endif ?>
+		
+		titlePlaceholder.mousedown(function(){
+			titleInterface.focus(); // If you click the placeholder text, focus the input (Mousedown is faster than click here)
+		}).hide();
+		
+		
+		
+		// Ajax Update Blog Form
 		function updateBlogForm()
 		{
       jQuery.ajax({
@@ -60,6 +117,7 @@
           data:jQuery('#a-admin-form').serialize(),
           success:function(data, textStatus){
           jQuery('#a-admin-blog-post-form').html(data);
+					aUI('#a-admin-form');
         },
         url: '<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>'
       });
