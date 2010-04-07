@@ -1,9 +1,34 @@
-.aBlogAdmin.edit .a-admin-content,
-.aBlogAdmin.edit .a-admin-footer,
-.aBlogAdmin.edit .a-admin-actions
+.aBlogAdmin .a-admin-container
 {
-	clear: both;
-	width: 460px;
+	width: 920px;
+	margin: 0 20px;
+}
+
+.aBlogAdmin #a-content,
+.aBlogAdmin .a-admin-content,
+.aBlogAdmin .a-admin-footer,
+.aBlogAdmin .a-admin-actions
+{
+width: 100%;
+}
+
+.aBlogAdmin .a-admin-content
+{
+float: right;
+width: 100%;
+}
+
+.aBlogAdmin.edit .a-admin-content
+{
+width: 680px;
+}
+
+.aBlogAdmin .a-subnav-wrapper
+{
+	background: none;
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
 }
 
 .a-admin-batch-checkbox,
@@ -137,7 +162,7 @@ padding: 0 5px;
 	line-height: 18px;
 	padding: 0 3px;
 	border: 1px solid rgba(0,0,0,0.05);
-	margin-left: -1px;
+	margin-left: -3px;
 	background-color: #eee;
 	color: #666;
 }
@@ -215,7 +240,7 @@ padding: 0 5px;
 	float: left;
 	width: 200px;
 	padding: 10px;
-	margin: 10px 10px 10px 20px;
+	margin: 0;
 	background-color: #e0e0e0;
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;	

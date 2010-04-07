@@ -12,7 +12,7 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
 {
   public function linkToNew($params)
   {
-    return '<li class="a-admin-action-new">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('new'), array() ,array("class"=>"a-btn icon big a-add", 'title' => 'Add')).'</li>';
+    return '<li class="a-admin-action-new">'.link_to(__($params['label'], array(), 'a_admin'), $this->getUrlForAction('new'), array() ,array("class"=>"a-btn icon a-add", 'title' => 'Add')).'</li>';
   }
 
   public function linkToEdit($object, $params)
