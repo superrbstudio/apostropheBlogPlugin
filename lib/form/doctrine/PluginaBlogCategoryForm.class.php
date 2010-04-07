@@ -14,7 +14,7 @@ abstract class PluginaBlogCategoryForm extends BaseaBlogCategoryForm
   {
     parent::setup();
     
-    $this->useFields(array('name', 'users_list'));
+    $this->useFields(array('name', 'users_list', 'posts', 'events'));
   }
 
 }

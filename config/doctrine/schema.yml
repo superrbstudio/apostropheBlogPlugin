@@ -9,7 +9,7 @@ aBlogItem:
       canUpdate: true
   columns:
     id:
-      type: integer
+      type: integer(4)
       primary: true
       autoincrement: true
     author_id:
@@ -64,7 +64,7 @@ aBlogItem:
 aBlogEditor:
   columns:
     blog_item_id: 
-      type: integer
+      type: integer(4)
       primary: true
     user_id:
       type: integer(4)
@@ -82,7 +82,7 @@ aBlogEditor:
 aBlogItemCategory:
   columns:
     blog_item_id:
-      type: integer
+      type: integer(4)
       primary: true
     blog_category_id:
       type: integer(4)
@@ -108,6 +108,12 @@ aBlogCategory:
       unique: true
     description:
       type: string
+    posts:
+      type: boolean
+      default: true
+    events:
+      type: boolean
+      default: false
   relations:
     Users:
       foreignAlias: BlogCategories

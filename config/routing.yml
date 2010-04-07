@@ -282,7 +282,7 @@ a_blog_admin:
     module:              aBlogAdmin
     prefix_path:         admin/blog
     column:              slug
-    with_wildcard_routes: false
+    with_wildcard_routes: true
       
 a_blog_admin_removeFilter:
   url:   /admin/aBlogAdmin/remove_filter/:name/:value

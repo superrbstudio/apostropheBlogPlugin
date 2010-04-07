@@ -22,12 +22,12 @@ generator:
         table_method: 
       
       form:
-        fields:   [ name, users_list ]
-        display:  [ name, users_list ]
+        fields:   [ name, users_list, posts, events ]
+        display:  [ name, users_list, posts, events ]
         
       filter:
-        fields:  [ name, users_list ]
-        display: [ name, users_list ]
+        fields:  [  users_list ]
+        display: [  users_list ]
         
       fields:
         numBlogItems: { label: Blog Items Count }
