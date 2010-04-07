@@ -78,7 +78,7 @@ $(document).ready(function() {
 		$(this).toggleClass('over');		
 	});	
 	
-	$('a.selected').prepend('<span class="close"></span>')
+	$('a.selected').append('<span class="icon a-close"></span>');
 });	
 /* ]]> */
 </script>
