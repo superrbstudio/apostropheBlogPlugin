@@ -1,6 +1,6 @@
 <div style="float:left;width:500px;padding-right:10px">
-<?php a_area('blog-post-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_event['id'],
+<?php a_area('body', array(
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_event['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
@@ -12,8 +12,8 @@
 </div>
 
 <div style="float:left;width:200px;">
-<?php a_area('blog-post-side', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_event['id'],
+<?php a_area('sidebar', array(
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_event['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   

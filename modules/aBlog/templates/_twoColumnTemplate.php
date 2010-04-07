@@ -1,5 +1,5 @@
 <div style="float:left;width:500px;padding-right:10px">
-<?php a_area('blog-post-body', array(
+<?php a_area('body', array(
   'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(
@@ -12,7 +12,7 @@
 </div>
 
 <div style="float:left;width:200px;">
-<?php a_area('blog-post-side', array(
+<?php a_area('sidebar', array(
   'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(

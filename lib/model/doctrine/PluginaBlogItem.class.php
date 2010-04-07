@@ -38,8 +38,15 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function postInsert($event)
   {
     $page = new aPage();
-    $page['slug'] = 'aBlogPost-'.$this['id'];
+    $page['slug'] = 'aBlog-'.$this['id'];
     $page->save();
+    $slot = $page->createSlot('aRichText');
+    $slot->value = 'This is your body.';
+    $slot->save();
+    $page->newAreaVersion('body', 'add', 
+      array(
+        'permid' => 1, 
+        'slot' => $slot));
     $this->Page = $page;
     $this->slug = 'untitled-'.$this['id'];
     $this->title = 'untitled';
