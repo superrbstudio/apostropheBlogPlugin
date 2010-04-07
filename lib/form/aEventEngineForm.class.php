@@ -1,11 +1,11 @@
 <?php
 
-class aBlogEngineForm extends aPageForm
+class aEventEngineForm extends aPageForm
 {
   public function configure()
   {
     $this->useFields();
-    $q = Doctrine::getTable('aBlogPost')->addCategories();
+    $q = Doctrine::getTable('aEvent')->addCategories();
     $this->setWidget('blog_categories_list', new sfWidgetFormDoctrineChoice(array('multiple' => true, 'query' => $q, 'model' => 'aBlogCategory')));
     $this->widgetSchema->setLabel('blog_categories_list', 'blog Categories');
     $this->widgetSchema->setHelp('blog_categories_list','(Defaults to All Cateogories)');

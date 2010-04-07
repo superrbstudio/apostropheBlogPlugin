@@ -7,13 +7,15 @@
  */
 class PluginaEventTable extends aBlogItemTable
 {
-    /**
-     * Returns an instance of this class.
-     *
-     * @return object PluginaEventTable
-     */
-    public static function getInstance()
-    {
-        return Doctrine_Core::getTable('PluginaEvent');
-    }
+  protected $categoryColumn = 'events';
+    
+  /**
+   * Returns an instance of this class.
+   *
+   * @return object PluginaEventTable
+   */
+  public static function getInstance()
+  {
+    return Doctrine_Core::getTable('PluginaEvent');
+  }
 }

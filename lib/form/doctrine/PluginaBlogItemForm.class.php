@@ -19,18 +19,11 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
     );
     
-    //TODO: Refactor query into model and change query to table_method, also need admins to get all categories
-    $q = Doctrine_Query::create()
-      ->from('aBlogCategory c');
-    if(!$user->hasCredential('admin'))
-    {
-      $q->innerJoin('c.Users u')
-        ->where('u.id = ?', $user->getGuardUser()->getId());
-    }
+    $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
     $this->setWidget('categories_list',
-      new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q)));
+      new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getModelName(), 'query' => $q)));
     $this->setValidator('categories_list',
-      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory', 'query' => $q, 'required' => false)));
+      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' =>  $this->getModelName(), 'query' => $q, 'required' => false)));
          
     $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))

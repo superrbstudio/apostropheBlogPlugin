@@ -2,7 +2,9 @@
 /**
  */
 class PluginaBlogItemTable extends Doctrine_Table
-{  
+{
+  protected $categoryColumn = 'posts';
+  
   public function filterByYMD(Doctrine_Query $q, sfWebRequest $request)
   {
     $rootAlias = $q->getRootAlias();
@@ -29,5 +31,20 @@ class PluginaBlogItemTable extends Doctrine_Table
   public function filterByTag(Doctrine_Query $q, sfWebRequest $request)
   {
     PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $request->getParameter('tag'), $q, array('nb_common_tag' => 1));
+  }
+  
+  public function addCategoriesForUser(sfGuardUser $user, $admin = false)
+  {
+    $q = $this->addCategories();  
+    return Doctrine::getTable('aBlogCategory')->addCategoriesForUser($user, $admin, $q);
+  }
+  
+  public function addCategories(Doctrine_Query $q=null)
+  {
+    if(is_null($q))
+      $q = Doctrine::getTable('aBlogCategory')->createQuery();
+      
+    $q->andwhere('aBlogCategory.'.$this->categoryColumn .'= ?', true);
+    return $q;
   }
 }
