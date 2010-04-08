@@ -1,7 +1,8 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
-
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
 <?php include_partial('aBlogAdmin/assets') ?>
+
+<?php $blog_post_url = url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>
 
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 	
@@ -50,32 +51,10 @@
 
 		// If there are any conventional Chamges to the admin form
     $('#a-admin-form').change(function() {
-			updateBlogForm(); 
+			updateBlogForm('<?php echo $blog_post_url ?>'); 
     });
 
-
-		// Publish / Unpublish Button
-		var postStatus = $('#a_blog_post_status');
-
-		if (postStatus.val() == 'published') {
-			$('#a-admin-form a.a-publish-post').addClass('published');
-		};
-
-		$('#a-admin-form a.a-publish-post').click(function(){
-			
-			$(this).toggleClass('published');
-			$(this).blur();
-			
-			if (postStatus.val() == 'draft') {
-				postStatus.val('published');
-			}
-			else
-			{
-				postStatus.val('draft');
-			};
-			updateBlogForm();
-		});
-
+		checkAndSetPublish('<?php echo $blog_post_url ?>'); // This lives in blog.js
 
 		// Title Interface Magic Label
 		var titleInterface = $('#a_blog_post_title_interface');
@@ -84,44 +63,27 @@
 		titleInterface.change(function(){
 			if ($(this).val() != '') { // If the input is not empty
 				$('#a_blog_post_title').val($(this).val()); // Pass the value to the admin form and update
-				updateBlogForm();				
+				updateBlogForm('<?php echo $blog_post_url ?>'); 
 			};
 		});
 		
 		titleInterface.blur(function(){
-			if ($(this).val() == '') { // If the input is empty			
-				$(this).next().show(); // Show the label on blur
+			if ($(this).val() == '') { 	// If the input is empty			
+				$(this).next().show(); 		// Show the label on blur
 			}
 		});
 
 		titleInterface.focus(function(){
-			$(this).next().hide(); // Always hide the placeholder on focus
+			$(this).next().hide(); 	// Always hide the placeholder on focus
 		});
 		
 		<?php if ($a_blog_post->title == 'untitled'): ?>
-			titleInterface.focus();
+			titleInterface.focus(); // The blog post is 'Untitled' -- Focus the input
 		<?php endif ?>
 		
 		titlePlaceholder.mousedown(function(){
 			titleInterface.focus(); // If you click the placeholder text, focus the input (Mousedown is faster than click here)
 		}).hide();
-		
-		
-		
-		// Ajax Update Blog Form
-		function updateBlogForm()
-		{
-      jQuery.ajax({
-          type:'POST',
-          dataType:'html',
-          data:jQuery('#a-admin-form').serialize(),
-          success:function(data, textStatus){
-          jQuery('#a-admin-blog-post-form').html(data);
-					aUI('#a-admin-form');
-        },
-        url: '<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>'
-      });
-		}
 
   });
 </script>

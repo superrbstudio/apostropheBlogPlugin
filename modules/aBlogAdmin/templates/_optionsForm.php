@@ -1,5 +1,6 @@
 <?php use_helper('I18N') ?>
-
+<?php $blog_post_url = url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>
+		
 <?php echo $form->renderHiddenFields() ?>
 
 <div class="published section">
@@ -66,7 +67,6 @@
 
 <?php // To Do: If there is only one template, hide this section ?>
 <div class="template section">
-
   <h4>Template</h4>
   <?php echo $form['template']->render() ?>
   <?php echo $form['template']->renderError() ?>
@@ -82,6 +82,7 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
     aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories',});
-    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', })
+    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
+		checkAndSetPublish('<?php echo $blog_post_url ?>');
   });
 </script>
