@@ -464,14 +464,14 @@ padding-left: 5px;
  background: #aaa;
 }
 
-.a-btn.a-publish-post em.unpublish,
-.a-btn.a-publish-post.published em.publish
+.a-btn.a-publish-post .unpublish,
+.a-btn.a-publish-post.published .publish
 {
 	display: none;
 }
 
-.a-btn.a-publish-post em.publish,
-.a-btn.a-publish-post.published em.unpublish
+.a-btn.a-publish-post .publish,
+.a-btn.a-publish-post.published .unpublish
 {
 	display: inline;
 }
