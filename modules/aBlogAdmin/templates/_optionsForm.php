@@ -65,12 +65,14 @@
 
 <hr />
 
-<?php // To Do: If there is only one template, hide this section ?>
+
+<?php if(isset($form['template'])): ?>
 <div class="template section">
   <h4>Template</h4>
   <?php echo $form['template']->render() ?>
   <?php echo $form['template']->renderError() ?>
 </div>
+<?php endif ?>
 
 <?php if (0): ?>
 	<?php // To Do: Comments are not built yet ?>	
