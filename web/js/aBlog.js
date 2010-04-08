@@ -35,7 +35,6 @@ function updateBlogForm(slug_url)
 		{
 			$('#a-admin-blog-post-form').html(data);
 			aUI('#a-admin-form');
-			Cufon.refresh(); // This is specific to this project, how do we want to handle special calls? an function override at the project level?
 	 	},
 	 	url: slug_url
 	});
