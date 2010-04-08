@@ -1,4 +1,4 @@
-<?php use_helper('i18n') ?>
+<?php use_helper('I18N') ?>
 
 <?php echo $form->renderHiddenFields() ?>
 
