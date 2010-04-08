@@ -5,16 +5,28 @@
 
 <div class="published section">
 
-	<a href="#" class="a-btn big a-publish-post" onclick="return false;"><em class="publish">Publish</em><em class="unpublish">Unpublish</em></a>
+	<a href="#" class="a-btn big a-publish-post <?php echo ($a_blog_post['status'] == 'published')? 'published':'' ?>" onclick="return false;"><em class="publish"><?php echo __('Publish', array(), 'messages') ?></em><em class="unpublish"><?php echo __('Unpublish', array(), 'messages') ?></em></a>
 
-	<div class="post-status">
+	<div class="post-status option">
 		<?php echo $form['status']->renderRow() ?>
 	</div>
 
-	Publish now or <a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('set a date', array(), 'messages') ?></a>
-	<div class="post-date option">
-	<?php echo $form['published_at']->render() ?>
-	<?php echo $form['published_at']->renderError() ?>	
+	<?php echo __('Publish now or', array(), 'messages') ?>	<a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'messages') ?></a>
+	
+	<div class="post-published-at option">
+		<?php echo $form['published_at']->render() ?>
+		<?php echo $form['published_at']->renderError() ?>	
+
+		<?php
+		// Dan:
+		// All of a sudden we have save and cancel buttons now.
+		// So apparently when you click save it makes this change
+		// If you click cancel it some how restores it to 'Publish Now' – It doesn't just simply hide this options pane
+		?>
+		<ul class="a-controls">
+			<li><a href="#" onclick="checkAndSetPublish('<?php echo $blog_post_url ?>'); return false;" class="a-btn a-save">Save</a></li>
+			<li><a href="#" onclick="checkAndSetPublish('<?php echo $blog_post_url ?>'); return false;" class="a-btn a-cancel">Cancel</a></li>
+		</ul>
 	</div>
 	
 </div>
@@ -23,18 +35,23 @@
 
 <div class="author section">
 
-	<h4>Author</h4>
-
 	<div class="post-author">
-		<?php echo $a_blog_post->Author ?>
+		<h4>Author:	<span><?php echo $a_blog_post->Author ?></span></h4>
 		<?php // We aren't letting them switch the user as per Rick's design ?>
 		<?php // echo $form['author_id']->renderRow() ?>
 	</div>
 
 	<div class="post-editors">
-		Allow others to edit this post
+		<a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo __('allow others to edit this post', array(), 'messages') ?></a>
 		<div class="post-editors-options option">
-			<?php echo $form['editors_list']->renderRow()?>
+			<h4>Editors:</h4>
+			<?php 
+			// Dan: 
+			// The multiple-select needs to go away 
+			// This should be the multi-select just like categories only it's hidden 
+			?>
+			<?php echo $form['editors_list']->render()?>
+			<?php echo $form['editors_list']->renderError() ?>
 		</div>
 	</div>
 	
@@ -63,10 +80,8 @@
   <?php include_component('aBlogAdmin','tagList', array('a_blog_post' => $form->getObject())) ?>
 </div>
 
-<hr />
-
-
 <?php if(isset($form['template'])): ?>
+<hr />
 <div class="template section">
   <h4>Template</h4>
   <?php echo $form['template']->render() ?>
@@ -75,7 +90,7 @@
 <?php endif ?>
 
 <?php if (0): ?>
-	<?php // To Do: Comments are not built yet ?>	
+<?php // To Do: Comments are not built yet ?>	
 	<div class="comments section">
 		<?php  echo $form['allow_comments']->renderRow() ?>
 	</div>
@@ -83,8 +98,13 @@
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
+		checkAndSetPublish('<?php echo $blog_post_url ?>');
+
+		$('.a-sidebar-toggle').click(function(){
+			$(this).toggleClass('open').next().toggle();
+		})
+
     aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories',});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
-		checkAndSetPublish('<?php echo $blog_post_url ?>');
   });
 </script>

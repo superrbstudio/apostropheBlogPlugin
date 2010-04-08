@@ -242,9 +242,9 @@ padding: 0 5px;
 	padding: 10px;
 	margin: 0;
 	background-color: #e0e0e0;
-	-moz-border-radius: 12px;
-	-webkit-border-radius: 12px;	
-	border-radius: 12px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;	
+	border-radius: 6px;
 	-moz-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	-webkit-box-shadow:0 0 6px rgba(0, 0, 0, 0.20);
 	box-shadow:0 0 6px rgba(0, 0, 0, 0.20);			
@@ -258,14 +258,27 @@ padding: 0 5px;
 	width: 192px;
 }
 
+.a-admin-sidebar a:hover
+{
+	color: #333;
+	text-decoration: underline;
+}
+
 .a-admin-sidebar hr
 {
 	display: block;
 	width: 100%;
-	height: 1px;
+	height: 2px;
 	border: 0;
-	background: #efefef;
+	background: rgba(255,255,255,0.35);
+	border-top: 1px inset rgba(0,0,0,0.1);
+	border-right: 1px inset rgba(0,0,0,0.1);
 	margin: 10px 0;
+}
+
+.a-admin-sidebar .a-controls
+{
+	margin: 5px 0 0;
 }
 
 .a-admin-sidebar .a-time-wrapper input,
@@ -281,27 +294,81 @@ padding: 0 5px;
 
 .a-admin-sidebar hr,
 .a-admin-sidebar .section,
-.a-admin-sidebar .option
+.a-admin-sidebar .option,
+.a-admin-sidebar .section .a-multiple-select-list,
+a.a-sidebar-toggle.post-editors-toggle
 {
 float: left;
 clear: both;
 width: 100%;
 }
 
+.a-admin-sidebar .section
+{
+	font-size: 11px;
+}
+
+.a-admin-sidebar .section h4
+{
+	float: left;
+	margin-bottom: 5px;
+}
+
+.a-admin-sidebar .section.author .post-author span
+{
+	color: #999;
+}
+
+.a-admin-sidebar .section.categories select
+{
+	width: 200px !important;
+	width: auto; /* ? For IE */
+	float: right;
+	clear: both;
+}
+
+.a-admin-sidebar .section.tags a
+{
+	font-size: 11px;
+}
+
+.a-admin-sidebar .section.template select
+{
+	max-width: 50%;
+	float: right;
+}
+
 .a-admin-sidebar .option
 {
  display: none;
+	margin: 10px 0 0;
+}
+
+a.a-sidebar-toggle.open
+{
+text-decoration: underline;
+}
+
+
+.a-admin-action-controls
+{
+	width: 100%;
 }
 
 .a-admin-action-controls,
 .a-admin-action-controls li
 {
-	overflow: auto;
+	float: left;
 }
 
 .a-admin-action-controls li
 {
-	margin: 0 0 5px 0;
+	margin: 0 10px 0 0;
+}
+
+.a-admin-action-controls li a:not(.a-btn)
+{
+	line-height: 20px;
 }
 
 .a-blog-post-title

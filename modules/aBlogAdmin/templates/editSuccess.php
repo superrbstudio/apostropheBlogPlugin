@@ -49,13 +49,11 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function(){
 
-		// If there are any conventional Chamges to the admin form
+		// If there are any conventional changes to the admin form
     $('#a-admin-form').change(function() {
 			updateBlogForm('<?php echo $blog_post_url ?>'); 
     });
-
-		checkAndSetPublish('<?php echo $blog_post_url ?>'); // This lives in blog.js
-
+			
 		// Title Interface Magic Label
 		var titleInterface = $('#a_blog_post_title_interface');
 		var titlePlaceholder = $('#a-blog-post-title-placeholder');

@@ -1,5 +1,5 @@
-<div class="a-form-row a-admin-text a-admin-form-field-tags">
-  <label for="blog-tag-list">Recommended Tags</label>
+<div class="a-admin-form-field-tags">
+  <h5>Popular Tags</h5>
 
   <div id="blog-tag-list">
     <?php $n=1; foreach ($tags as $tag => $count): ?>

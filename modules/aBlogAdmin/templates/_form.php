@@ -17,7 +17,6 @@
 <?php include_partial('aBlogAdmin/optionsForm', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
 
 <?php // Delete this when you're done ?>
-<hr />
 <?php echo rand(0, 5000) ?>
 
 <?php // Dan: I moved this javascript to the bottom of editSuccess ?>

@@ -2,12 +2,13 @@
 function checkAndSetPublish(slug_url)
 {
 	var postStatus = $('#a_blog_post_status');
+	var publishButton = $('#a-admin-form a.a-publish-post');
 
 	if (postStatus.val() == 'published') {
-		$('#a-admin-form a.a-publish-post').addClass('published');
+		publishButton.addClass('published');
 	};
 
-	$('#a-admin-form a.a-publish-post').unbind('click').click(function(){
+	publishButton.unbind('click').click(function(){
 
 		$(this).toggleClass('published');
 		$(this).blur();
