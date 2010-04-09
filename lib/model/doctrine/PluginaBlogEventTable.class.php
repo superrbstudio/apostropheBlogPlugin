@@ -13,7 +13,7 @@ class PluginaBlogEventTable extends aBlogItemTable
    */
   public function buildQuery(sfWebRequest $request, $tableName = 'aBlogEvent', Doctrine_Query $q = null)
   {
-    Doctrine::getTable('aBlogItem')->buildQuery($request, 'aBlogEvent', $q);
+    $q = Doctrine::getTable('aBlogItem')->buildQuery($request, 'aBlogEvent', $q);
     $rootAlias = $q->getRootAlias();
     $q->orderBy($rootAlias.'.start_date asc');
     return $q;
