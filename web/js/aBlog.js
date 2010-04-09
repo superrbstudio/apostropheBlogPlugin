@@ -10,7 +10,7 @@ function checkAndSetPublish(slug_url)
 
 	publishButton.unbind('click').click(function(){
 
-		$(this).toggleClass('published');
+		//$(this).toggleClass('published');
 		$(this).blur();
 
 		if (postStatus.val() == 'draft') {

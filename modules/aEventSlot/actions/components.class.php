@@ -22,15 +22,16 @@ class aEventSlotComponents extends BaseaSlotComponents
     $this->values = $this->slot->getArrayValue();
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c');
+      ->leftJoin($this->modelClass.'.Categories c')->orderBy($orderby);
     if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)  
       $q->andWhereIn('c.id', $this->values['categories_list']);
     if(isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
       PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tag' => 1));
-    if(isset($this->values['count']))
-      $q->limit($this->values['count']);
-    $this->aEvents = $q->execute();
+
+    $limit = isset($this->values['count']) ? $this->values['count'] : 5;
+
+    aEventTable::getInstance()->addUpcomming($q, $limit);
     
-      
+    $this->aEvents = $q->execute();  
   }
 }

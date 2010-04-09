@@ -18,4 +18,11 @@ class PluginaEventTable extends aBlogItemTable
   {
     return Doctrine_Core::getTable('PluginaEvent');
   }
+  
+  public function addUpcomming(Doctrine_Query $q, $limit = null)
+  {
+    $q->orderBy('start_date');
+    if(!is_null($limit))
+      $q->limit($limit);
+  }
 }
