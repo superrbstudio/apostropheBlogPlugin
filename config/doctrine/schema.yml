@@ -102,7 +102,8 @@ aBlogEvent:
 aBlogCategory:
   actAs:
     Timestampable: ~
-    Sluggable: ~
+    Sluggable:
+      unique: true
   columns:
     id:
       type: integer(4)
