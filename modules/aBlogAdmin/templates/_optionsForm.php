@@ -2,9 +2,6 @@
 <?php $blog_post_url = url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>
 
 <?php echo $form->renderHiddenFields() ?>
-<?php foreach($form as $field): ?>
-<?php echo $field->getName() . ' '. $field->renderError() ?>
-<?php endforeach ?>
 <div class="published section">
 
   <a href="#" class="a-btn big a-publish-post <?php echo ($a_blog_post['status'] == 'published')? 'published':'' ?>" onclick="return false;">
