@@ -39,11 +39,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $this->setValidator('categories_list_add',
         new sfValidatorPass());
     }
-    
-    $this->setWidget('author_id',
-      new sfWidgetFormDoctrineChoice(array('multiple' => false, 'model' => 'sfGuardUser', 'query' => $q)));
-    $this->setValidator('author_id',
-      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => true)));
       
     $this->setWidget('editors_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
