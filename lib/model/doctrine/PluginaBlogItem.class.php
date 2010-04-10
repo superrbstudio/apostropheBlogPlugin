@@ -44,7 +44,12 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   
 	public function getSearchSummary()
 	{
-    return aString::limitWords(strip_tags($this->getExcerpt()), 100, "...");
+	  $source = $this->excerpt;
+	  if (!strlen(trim($source)))
+	  {
+	    $source = $this->body;
+	  }
+    return aString::limitWords(strip_tags($source), 100, "...");
 	}
   
   public function updateLuceneIndex()

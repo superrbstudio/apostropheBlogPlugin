@@ -44,7 +44,7 @@ class PluginaBlogItemTable extends Doctrine_Table
    * 
    * @param Doctrine_Query $q
    * @param sfWebRequest $request
-   * @return Doctrrin_Query $q
+   * @return Doctrine_Query $q
    * @see aBlogPost aBlogEvent
    */
   public function addDateRangeQuery(sfWebRequest $request, Doctrine_Query $q = null)
@@ -55,5 +55,38 @@ class PluginaBlogItemTable extends Doctrine_Table
     }
 
     return $q;
+  }
+  
+  // Required wrappers for Lucene support. These are stubs for customization
+  
+  public function getLuceneIndex()
+  {
+    return aZendSearch::getLuceneIndex($this);
+  }
+   
+  public function getLuceneIndexFile()
+  {
+    return aZendSearch::getLuceneIndexFile($this);
+  }
+
+
+  public function searchLucene($luceneQuery)
+  {
+    return aZendSearch::searchLucene($this, $luceneQuery);
+  }
+  
+  public function rebuildLuceneIndex()
+  {
+    return aZendSearch::rebuildLuceneIndex($this);
+  }
+  
+  public function optimizeLuceneIndex()
+  {
+    return aZendSearch::optimizeLuceneIndex($this);
+  }
+  
+  public function addSearchQuery(Doctrine_Query $q = null, $luceneQuery)
+  {
+    return aZendSearch::addSearchQuery($this, $q, $luceneQuery);
   }
 }
