@@ -1,14 +1,17 @@
 [?php use_helper('I18N', 'Date', 'jQuery') ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
-<script type="text/javascript" charset="utf-8">
+<script charset="utf-8" type="text/javascript">
 $(document).ready(function(){
 	var sortLabel = $("a.a-sort-label").parent().parent();
 	sortLabel.click(function(event) {
-		event.preventDefault();		
+		event.preventDefault();				
+		var thisSortLabel = $(this).find('a.a-sort-label');
+		thisSortLabel.focus();
     $(this).addClass('show-filters').find(".filternav").show();
     $(this).parent().hover(function() {
     }, function() {
+			thisSortLabel.blur();
 			$(this).find('ul').removeClass('show-filters');
       $(this).find(".filternav").fadeOut();
     });

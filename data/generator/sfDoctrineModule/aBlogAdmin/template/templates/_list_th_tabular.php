@@ -7,7 +7,7 @@
 	<?php if(isset($filterFieldConfig[$name])): ?>
     <?php //This field needs dropdown filters to be applied ?>
     <ul>
-      <li><a href="#" class="a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
+      <li><a href="#" class="a-btn a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
         <div class="filternav">
           <hr/>
     <?php if($filterFieldConfig[$name]->isComponent()): ?>
