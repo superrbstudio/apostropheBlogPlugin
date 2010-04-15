@@ -1,6 +1,6 @@
-<?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
 <?php include_partial('aBlogAdmin/assets') ?>
+<?php slot('body_class') ?>a-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
 
 <?php $blog_post_url = url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>
 
@@ -120,7 +120,6 @@
 			if (($(this).val() != '') && ($(this).val() != originalSlug)) {
 				$(this).slugify($(this).val());
 				$('#a_blog_post_slug').val($(this).val()); // Pass the value to the admin form and update
-				console.log($('#a_blog_post_slug').val());
 			}						
 		})
 

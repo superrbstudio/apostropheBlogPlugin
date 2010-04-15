@@ -349,6 +349,9 @@ width: 100%;
 	width: auto; /* ? For IE */
 	float: right;
 	clear: both;
+	font-family: Arial, sans-serif;
+	border: 1px solid #ddd;
+	padding: 2px;	
 }
 
 .a-admin-sidebar .section.tags a
@@ -356,10 +359,20 @@ width: 100%;
 	font-size: 11px;
 }
 
+.a-admin-sidebar .section.tags input
+{
+	font-family: Arial, sans-serif;
+	border: 1px solid #ddd;
+	padding: 3px;	
+}
+
 .a-admin-sidebar .section.template select
 {
 	max-width: 50%;
 	float: right;
+	font-family: Arial, sans-serif;
+	border: 1px solid #ddd;
+	padding: 2px;	
 }
 
 .a-admin-sidebar .section.comments label,
@@ -464,6 +477,9 @@ background-position: 100% -20px;
 -webkit-border-radius: 2px;
 border-radius: 2px;
 width: 360px;
+padding: 3px;
+font-family: Arial, sans-serif;
+border: 1px solid #ddd;
 }
 
 .a-admin #a-blog-post-title-placeholder
@@ -552,3 +568,22 @@ padding-left: 5px;
 {
 	color: #000 !important;
 } 
+
+
+/* Bundled Blog Templates */
+
+.singleColumnTemplate .a-area-blog-body
+{
+	width: 680px;
+}
+
+.twoColumnTemplate .a-area-blog-body
+{
+	width: 480px;
+}
+
+.twoColumnTemplate .a-area-blog-sidebar
+{
+	margin-left: 20px;
+	width: 180px;
+}
