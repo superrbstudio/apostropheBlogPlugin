@@ -31,14 +31,13 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
     }
     
-    if(false)
-    {
-      $this->setWidget('categories_list_add',
-        new sfWidgetFormInputHidden());
 
-      $this->setValidator('categories_list_add',
-        new sfValidatorPass());
-    }
+    $this->setWidget('categories_list_add',
+      new sfWidgetFormInputText());
+    //TODO: Make this validator better, should check for duplicate categories, etc.
+    $this->setValidator('categories_list_add',
+      new sfValidatorPass());
+
       
     $this->setWidget('editors_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
@@ -82,7 +81,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $tags = str_replace(', ', ',', $tags);
 
     $this->object->setTags($tags);
-    
+    $this->updateCategoriesList($this->values['categories_list_add']);
     parent::doSave($con);
   }
   

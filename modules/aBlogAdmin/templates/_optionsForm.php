@@ -100,13 +100,17 @@
 
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function(){
+    $('#a-admin-form').change(function(event) {
+      updateBlog(event);
+    });
+
     checkAndSetPublish('<?php echo $blog_post_url ?>');
 
     $('.a-sidebar-toggle').click(function(){
       $(this).toggleClass('open').next().toggle();
     })
 
-    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories',});
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category'});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
   });
 </script>

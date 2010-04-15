@@ -47,13 +47,22 @@
 
 
 <script type="text/javascript" charset="utf-8">
-	$(document).ready(function(){
+	function updateBlog(event)
+  {
+    if(event.target.name == 'select-<?php echo $form['categories_list']->renderName() ?>[]' &&
+       event.target.options[0].selected == true)
+    {
 
-		// If there are any conventional changes to the admin form
-    $('#a-admin-form').change(function() {
-			updateBlogForm('<?php echo $blog_post_url ?>'); 
-    });
-			
+    }
+    else if(event.target.name == 'add-text') {}
+    else
+    {
+      updateBlogForm('<?php echo $blog_post_url ?>');
+    }
+  }
+
+  $(document).ready(function(){
+    
 		// Title Interface Magic Label
 		var titleInterface = $('#a_blog_post_title_interface');
 		var titlePlaceholder = $('#a-blog-post-title-placeholder');

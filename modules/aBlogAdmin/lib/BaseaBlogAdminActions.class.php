@@ -39,6 +39,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       if ($this->form->isValid())
       {
         $this->a_blog_post = $this->form->save();
+        //We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
+        $this->form = $this->configuration->getForm($this->a_blog_post);
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
       }
       $this->setLayout(false);
