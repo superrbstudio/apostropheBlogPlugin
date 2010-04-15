@@ -32,7 +32,8 @@ generator:
           categories_list:
             label:  Categories
             type:   ManyKey
-          
+          published_at:
+            label:  Date
                 
       filter:
         fields:   [ author_id, editors_list, categories_list, status, _tags_list ]

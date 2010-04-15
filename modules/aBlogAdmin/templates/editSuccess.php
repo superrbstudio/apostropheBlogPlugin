@@ -12,7 +12,7 @@
 		<div class="a-subnav-wrapper blog">
 			<div class="a-subnav-inner">	
 				<ul class="a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_blog_admin'); ?>"><?php echo __('All Posts', array(), 'messages') ?></a></li>
+					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="all-posts-btn"><?php echo __('All Posts', array(), 'messages') ?></a></li>
 	         <?php include_partial('aBlogAdmin/list_actions', array('helper' => $helper)) ?>
 				</ul>
 			</div> 
@@ -28,8 +28,19 @@
 			<div id="a-blog-post-title-placeholder"><?php echo __('Title your post...', array(), 'messages') ?></div>
 		</div>		
 		
-		<div id="a_blog_post_permalink_interface">http://site/blog/url/<?php echo $a_blog_post->slug ?></div>
+
+		<div id="a-blog-post-permalink-interface">
+			<h6>Permalink:</h6> 
+			<div class="a-blog-post-permalink-wrapper url">
+				<span>http://site/blog/url/</span> 		<?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
+			</div>
+			<div class="a-blog-post-permalink-wrapper slug">
+				<input type="text" name="a_blog_post_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_post_permalink_interface">
+			</div>
+		</div>
+
   	<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post)) ?>
+
   </div>
 
   <div class="a-admin-sidebar">
@@ -91,6 +102,27 @@
 		titlePlaceholder.mousedown(function(){
 			titleInterface.focus(); // If you click the placeholder text, focus the input (Mousedown is faster than click here)
 		}).hide();
+		
+		// Permalink Interface
+		var permalinkInterface = $('#a_blog_post_permalink_interface');
+		var originalSlug = permalinkInterface.val(); // Store original slug at Dom Ready
+
+		// On Focus select the permalink
+		permalinkInterface.focus(function(){
+			$(this).select();
+		});
+
+		// On Blur check for changes
+		permalinkInterface.blur(function(){
+			if ($(this).val() == '') { 	// If the input is empty			
+				$(this).val(originalSlug);
+			}
+			if (($(this).val() != '') && ($(this).val() != originalSlug)) {
+				$(this).slugify($(this).val());
+				$('#a_blog_post_slug').val($(this).val()); // Pass the value to the admin form and update
+				console.log($('#a_blog_post_slug').val());
+			}						
+		})
 
   });
 </script>

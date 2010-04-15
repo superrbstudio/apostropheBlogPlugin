@@ -93,8 +93,12 @@
 
 <?php if (1): ?>
 <?php // To Do: Comments are not built yet ?>
+	<hr />
   <div class="comments section">
-    <?php  echo $form['allow_comments']->renderRow() ?>
+	<h4>Comments: <span></span></h4> 
+  
+	<?php echo $form['allow_comments']->render() ?>
+	<?php echo $form['allow_comments']->renderError() ?>
   </div>
 <?php endif ?>
 
@@ -112,5 +116,15 @@
 
     aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category'});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
+
+		// TODO: Check this using PHP, not on Dom Ready JS
+		if ($('.section.comments input').attr('checked')) {
+			$('.section.comments h4 span').text('Enabled');
+		}
+		else
+		{	
+			$('.section.comments h4 span').text('Disabled');		
+		};
+
   });
 </script>
