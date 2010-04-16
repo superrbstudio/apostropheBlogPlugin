@@ -29,8 +29,9 @@ class aBlogSlotComponents extends BaseaSlotComponents
       PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tag' => 1));
     if(isset($this->values['count']))
       $q->limit($this->values['count']);
+
+
     $this->aBlogPosts = $q->execute();
     aBlogItemTable::populatePages($this->aBlogPosts);
-
   }
 }

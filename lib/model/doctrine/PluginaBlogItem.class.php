@@ -43,7 +43,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $slot = $page->createSlot('aRichText');
     $slot->value = 'This is your body.';
     $slot->save();
-    $page->newAreaVersion('body', 'add', 
+    $page->newAreaVersion('blog-body', 'add',
       array(
         'permid' => 1, 
         'slot' => $slot));
@@ -61,7 +61,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function getFeedText()
   {
     $text = '';
-    foreach($this->Page->getArea('body') as $slot)
+    foreach($this->Page->getArea('blog-body') as $slot)
     {
       if(method_exists($slot, 'getSearchText'))
       {

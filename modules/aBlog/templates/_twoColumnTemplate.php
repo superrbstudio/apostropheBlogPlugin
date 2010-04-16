@@ -1,5 +1,5 @@
 <?php a_area('blog-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
@@ -11,7 +11,7 @@
 ) ?>
 
 <?php a_area('blog-sidebar', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlogPost-'.$a_blog_post['id'],
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_blog_post['id'],
   'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
