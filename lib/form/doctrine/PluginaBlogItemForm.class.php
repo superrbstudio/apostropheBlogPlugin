@@ -74,6 +74,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $aBlogCategory->save();
       $link[] = $aBlogCategory['id'];
     }
+    if(!is_array($this->values['categories_list']))
+    {
+      $this->values['categories_list'] = array();
+    }
     $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
   }
   
