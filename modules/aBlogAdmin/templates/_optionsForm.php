@@ -72,14 +72,5 @@
     aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': 'updateBlogMulti'});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
 
-
-		if ($('.section.comments input').attr('checked')) {
-			$('.section.comments h4 span').text('Enabled');
-		}
-		else
-		{	
-			$('.section.comments h4 span').text('Disabled');		
-		};
-
   });
 </script>

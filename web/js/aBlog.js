@@ -35,6 +35,7 @@ function updateBlogForm(slug_url, event)
 		{
       //data is a JSON object, we can handle any updates with it
       updateTitleAndSlug(data.title, data.slug);
+			updateComments(data.allow_comments);
 	 	},
 	 	url: slug_url
 	});
@@ -68,4 +69,22 @@ function updateTitleAndSlug(title, slug)
 {
 	updateTitle(title);
 	updateSlug(slug);
+}
+
+// Toggle any checkbox you want with this one
+function toggleCheckbox(checkbox)
+{
+	checkbox.attr('checked', !checkbox.attr('checked')); 
+}
+
+function updateComments(enabled)
+{
+	if (enabled)
+	{
+		$('.section.comments .allow_comments_toggle').addClass('enabled').removeClass('disabled');
+	}
+	else
+	{
+		$('.section.comments .allow_comments_toggle').addClass('disabled').removeClass('enabled');		
+	}
 }

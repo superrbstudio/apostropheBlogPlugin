@@ -75,9 +75,11 @@
 
   $(document).ready(function(){
     
-		// Title Interface
+		// Title Interface 
+		// =============================================
 		var titleInterface = $('#a_blog_post_title_interface');
 		var titlePlaceholder = $('#a-blog-post-title-placeholder');
+		var originalTitle = "<?php echo $a_blog_post->title ?>";
 
 		<?php if ($a_blog_post->title == 'untitled'): ?>
 		titleInterface.focus(); // The blog post is 'Untitled' -- Focus the input
@@ -92,20 +94,30 @@
 		});
 		
 		titleInterface.blur(function(){
-			if ($(this).val() == '') { 	// If the input is empty			
+			// Check for Empty Title Field			
+			if ($(this).val() == '' && originalTitle == "untitled") 
+			{ 	
 				$(this).next().show(); 		// Show the label on blur
+			}
+			if ($(this).val() == '' && originalTitle != "untitled")
+			{
+				$(this).val(originalTitle); // Restore the original title
 			}
 		});
 
 		titleInterface.focus(function(){
-			$(this).next().hide(); 	// Always hide the placeholder on focus
+			// Always hide the placeholder on focus
+			$(this).next().hide(); 
 		});
 			
 		titlePlaceholder.mousedown(function(){
-			titleInterface.focus(); // If you click the placeholder text, focus the input (Mousedown is faster than click here)
+			// If you click the placeholder text 
+			// focus the input (Mousedown is faster than click here)
+			titleInterface.focus(); 
 		}).hide();
 		
-		// Permalink Interface
+		// Permalink Interface  
+		// =============================================
 		var permalinkInterface = $('#a-blog-post-permalink-interface');
 		var pInput = permalinkInterface.find('input');
 		var pControls = permalinkInterface.find('ul.a-controls');
@@ -145,6 +157,12 @@
 				pInput.val(originalSlug);
 				pControls.hide();
 			}
+		});		
+
+		$('.section.comments a.allow_comments_toggle').click(function(event){
+			event.preventDefault();
+			toggleCheckbox($('#a_blog_post_allow_comments'));
+			updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');	
 		});
 
   });
