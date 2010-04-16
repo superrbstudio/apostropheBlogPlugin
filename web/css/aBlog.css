@@ -470,7 +470,7 @@ background-position: 100% -20px;
 
 /* Blog Edit Post View */
 
-.a-admin input#a_blog_post_title_interface
+input#a_blog_post_title_interface
 {
  font-size: 18px;
 -moz-border-radius: 2px;
@@ -482,7 +482,7 @@ font-family: Arial, sans-serif;
 border: 1px solid #ddd;
 }
 
-.a-admin #a-blog-post-title-placeholder
+#a-blog-post-title-placeholder
 {
 line-height: 30px;
 font-size: 18px;	
@@ -491,8 +491,8 @@ margin-top: -30px;
 padding-left: 5px;
 }
 
-.a-admin #a-blog-post-permalink-interface,
-.a-admin #a-blog-post-permalink-interface *
+#a-blog-post-permalink-interface,
+#a-blog-post-permalink-interface *
 {
 	float: left;
 	font-size: 11px;
@@ -500,40 +500,51 @@ padding-left: 5px;
 	line-height: 20px;
 }
 
-.a-admin #a-blog-post-permalink-interface
+#a-blog-post-permalink-interface
 {
 	margin: 10px 0;
 	width: 100%;
 	clear: both;
 }
 
-.a-admin #a-blog-post-permalink-interface h6
+#a-blog-post-permalink-interface h6
 {
 	font-weight: bold;
 	margin-right: 5px;
 }
 
-.a-admin #a-blog-post-permalink-interface input
+#a-blog-post-permalink-interface input
 {
 	border: none;
-	padding: 2px 0;
+	padding: 1px;
+	margin: 0 2px;
 	width: auto;
-	background: #ffd;	
+	background: #ffe;	
 	border: 1px solid rgba(0,0,0,0.05);
 	-moz-border-radius: 2px;
 	-webkit-border-radius: 2px;
 	border-radius: 2px;
 }
 
-.a-admin #a-blog-post-permalink-interface input:hover,
-.a-admin #a-blog-post-permalink-interface input:focus
+#a-blog-post-permalink-interface input:hover,
+#a-blog-post-permalink-interface input:focus
 {
-	border: 1px solid rgba(0,0,0,0.25);
+	border: 1px solid rgba(0,0,0,0.15);
 }
 
-.a-admin #a-blog-post-permalink-interface input:focus
+#a-blog-post-permalink-interface input:focus
 {
 	color: #444;
+}
+
+#a-blog-post-permalink-interface .a-controls
+{
+	display: none;
+}
+
+#a-blog-post-permalink-interface.has-changes .a-controls
+{
+/*	display: block;*/
 }
 
 .a-btn.a-publish-post

@@ -12,7 +12,7 @@
   // So apparently when you click save it makes this change
   // If you click cancel it some how restores it to 'Publish Now' – It doesn't just simply hide this options pane
   ?>
-  <ul class="a-controls">
+  <ul class="a-controls published_at">
     <li><a href="#" onclick="checkAndSetPublish('<?php echo $blog_post_url ?>'); return false;" class="a-btn a-save"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
     <li><a href="#" onclick="checkAndSetPublish('<?php echo $blog_post_url ?>'); return false;" class="a-btn a-cancel"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
   </ul>

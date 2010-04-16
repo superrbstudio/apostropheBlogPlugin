@@ -56,8 +56,6 @@
   {
     updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');
   }
-  //TODO: Set slug value
-
 
   $(document).ready(function(){
 	
@@ -74,7 +72,7 @@
     aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': 'updateBlogMulti'});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
 
-		// TODO: Check this using PHP, not on Dom Ready JS
+
 		if ($('.section.comments input').attr('checked')) {
 			$('.section.comments h4 span').text('Enabled');
 		}

@@ -24,7 +24,6 @@ function checkAndSetPublish(slug_url)
 	});			
 }
 
-
 // Ajax Update Blog Form
 function updateBlogForm(slug_url)
 {
@@ -39,4 +38,34 @@ function updateBlogForm(slug_url)
 	 	},
 	 	url: slug_url
 	});
+}
+
+// Update Title Function for Ajax calls when it is returned clean from Apostrophe
+function updateTitle(title)
+{
+		var titleInput = $('#a_blog_post_title_interface');
+		
+		if (title != null) 
+		{
+			titleInput.val(title);			
+		};
+		
+}
+
+// Update Slug Function for Ajax calls when it is returned clean from Apostrophe
+function updateSlug(slug)
+{
+		var permalinkInput = $('#a_blog_post_permalink_interface');
+		
+		if (slug != null)
+		{
+			permalinkInput.val(slug);			
+		};
+}
+
+// Update TitleAndSlug Function to save u time :D !
+function updateTitleAndSlug(title, slug)
+{
+	updateTitle(title);
+	updateSlug(slug);
 }

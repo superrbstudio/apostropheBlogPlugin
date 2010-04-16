@@ -10,7 +10,6 @@
 <div class="post-title post-slug option">
   <?php echo $form['title']->renderRow() ?>
   <?php echo $form['slug']->getWidget()->render('a_blog_post[slug]', $a_blog_post['slug']) ?>
-  <?php //echo $form['slug']->render() ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
 
