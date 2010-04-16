@@ -3,54 +3,53 @@
 <?php echo $form->renderHiddenFields() ?>
 
 <div class="published section">
-	<?php include_partial('aBlogAdmin/form_status', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
-	<?php include_partial('aBlogAdmin/form_published_at', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	<div class="status subsection">
+		<?php include_partial('aBlogAdmin/form_status', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
+	<div class="published_at subsection">
+		<?php include_partial('aBlogAdmin/form_published_at', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
 </div>
 
 <hr />
 <div class="author section">
-	<?php include_partial('aBlogAdmin/form_author_id', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
-	<?php include_partial('aBlogAdmin/form_editors_list', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	<div class="author_id subsection">
+		<?php include_partial('aBlogAdmin/form_author_id', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
+	<div class="editors_list subsection">
+		<?php include_partial('aBlogAdmin/form_editors_list', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
 </div>
 
 <hr />
 <div class="categories section" id="categories-section">
-	<?php include_partial('aBlogAdmin/form_categories_list', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	<div class="categories_list subsection">
+		<?php include_partial('aBlogAdmin/form_categories_list', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
 </div>
 
 <hr />
 <div class="tags section">
-  <h4>Tags</h4>
-  <?php echo $form['tags']->render() ?>
-  <?php echo $form['tags']->renderError() ?>
-  <script src='/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js'></script>
-  <script type="text/javascript" charset="utf-8">
-    $(function() {
-      pkTagahead(<?php echo json_encode(url_for("taggableComplete/complete")) ?>);
-    });
-  </script>
-  <?php include_component('aBlogAdmin','tagList', array('a_blog_post' => $form->getObject())) ?>
+	<div class="tags subsection">
+		<?php include_partial('aBlogAdmin/form_tags', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>
+	</div>
 </div>
 
 <?php if(isset($form['template'])): ?>
 <hr />
 <div class="template section">
-  <h4>Template</h4>
-  <?php echo $form['template']->render() ?>
-  <?php echo $form['template']->renderError() ?>
+	<div class="template subsection">
+		<?php include_partial('aBlogAdmin/form_template', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>		
+	</div>
 </div>
 <?php endif ?>
 
-<?php if (1): ?>
-<?php // To Do: Comments are not built yet ?>
-	<hr />
-  <div class="comments section">
-	<h4>Comments: <span></span></h4> 
-  
-	<?php echo $form['allow_comments']->render() ?>
-	<?php echo $form['allow_comments']->renderError() ?>
-  </div>
-<?php endif ?>
+<hr />
+<div class="comments section">
+	<div class="allow_comments subsection">
+		<?php include_partial('aBlogAdmin/form_allow_comments', array('form' => $form, 'a_blog_post' => $a_blog_post)) ?>		
+	</div>
+</div>
 
 <script type="text/javascript" charset="utf-8">
   function updateBlogMulti()
