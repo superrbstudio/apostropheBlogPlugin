@@ -103,6 +103,13 @@
 <?php endif ?>
 
 <script type="text/javascript" charset="utf-8">
+  function updateBlogMulti()
+  {
+    updateBlogForm('<?php echo $blog_post_url ?>');
+  }
+  //TODO: Set slug value
+
+
   $(document).ready(function(){
     $('#a-admin-form').change(function(event) {
       updateBlog(event);
@@ -114,7 +121,7 @@
       $(this).toggleClass('open').next().toggle();
     })
 
-    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category'});
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': 'updateBlogMulti'});
     aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
 
 		// TODO: Check this using PHP, not on Dom Ready JS

@@ -33,7 +33,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     
 
     $this->setWidget('categories_list_add',
-      new sfWidgetFormInputText());
+      new sfWidgetFormInputHidden());
     //TODO: Make this validator better, should check for duplicate categories, etc.
     $this->setValidator('categories_list_add',
       new sfValidatorPass());
@@ -52,7 +52,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
   }
-  
+
   public function updateSlugColumn($value)
   {
     if($this->getObject()->getSlug() == $value && $this->getObject()->getStatus() != 'published')
@@ -64,6 +64,9 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   
   public function updateCategoriesList($values)
   {
+    $link = array();
+    if(!is_array($values))
+      $values = array();
     foreach ($values as $value)
     {
       $aBlogCategory = new aBlogCategory();

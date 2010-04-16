@@ -47,4 +47,15 @@ class PluginaBlogItemTable extends Doctrine_Table
     $q->andwhere('aBlogCategory.'.$this->categoryColumn .'= ?', true);
     return $q;
   }
+
+  public static function populatePages($blogItems)
+  {
+    foreach($blogItems as $aBlogItem)
+    {
+      $pageIds[] = $aBlogItem['page_id'];
+    }
+    $q = aPageTable::queryWithSlots();
+    $q->whereIn('id', $pageIds);
+    $q->execute();
+  }
 }

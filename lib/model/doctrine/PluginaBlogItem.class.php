@@ -69,5 +69,5 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       }
     }
     return $text;
-  }  
+  }
 }

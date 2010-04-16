@@ -30,7 +30,7 @@ class aBlogSlotComponents extends BaseaSlotComponents
     if(isset($this->values['count']))
       $q->limit($this->values['count']);
     $this->aBlogPosts = $q->execute();
-    
-      
+    aBlogItemTable::populatePages($this->aBlogPosts);
+
   }
 }
