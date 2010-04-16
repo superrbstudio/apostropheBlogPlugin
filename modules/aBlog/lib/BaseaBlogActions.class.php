@@ -143,6 +143,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function getFeed()
   {
     $this->articles = $this->pager->getResults();
+    aBlogItemTable::populatePages($this->articles);
     
     $this->feed = sfFeedPeer::createFromObjects(
       $this->articles,
