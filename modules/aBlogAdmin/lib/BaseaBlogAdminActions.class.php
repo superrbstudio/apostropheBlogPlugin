@@ -44,9 +44,13 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
       }
       $this->setLayout(false);
-      if($request->getParameter('field', false))
+      $field = $request->getParameter('field', false);
+      if($field)
       {
-        return $this->renderPartial('aBlogAdmin/form_'.$request->getParameter('field'),
+        $l = strpos($field, '[');
+        $r = strpos($field, ']');
+        $partial = 'form_'.substr($field, $l+1, $r-$l-1);
+        return $this->renderPartial("aBlogAdmin/$partial",
           array('a_blog_post' => $this->a_blog_post, 'form' => $this->form));
       }
       return $this->renderPartial('aBlogAdmin/form', array('a_blog_post' => $this->a_blog_post, 'form' => $this->form));

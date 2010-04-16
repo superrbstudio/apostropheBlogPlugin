@@ -68,7 +68,7 @@
     else if(event.target.name == 'add-text') {}
     else
     {
-      updateBlogForm('<?php echo $blog_post_url ?>');
+      updateBlogForm('<?php echo $blog_post_url ?>', event);
     }
   }
 
@@ -81,7 +81,7 @@
 		titleInterface.change(function(){
 			if ($(this).val() != '') { // If the input is not empty
 				$('#a_blog_post_title').val($(this).val()); // Pass the value to the admin form and update
-				updateBlogForm('<?php echo $blog_post_url ?>'); 
+				updateBlogForm('<?php echo $blog_post_url ?>');
 			};
 		});
 		
