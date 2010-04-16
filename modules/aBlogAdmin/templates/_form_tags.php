@@ -1,3 +1,5 @@
+<?php use_helper('I18N') ?>
+
 <h4>Tags</h4>
 <?php echo $form['tags']->render() ?>
 <?php echo $form['tags']->renderError() ?>
