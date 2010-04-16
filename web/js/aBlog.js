@@ -25,16 +25,16 @@ function checkAndSetPublish(slug_url)
 }
 
 // Ajax Update Blog Form
-function updateBlogForm(slug_url)
+function updateBlogForm(slug_url, event)
 {
 	$.ajax({
 	  type:'POST',
-	  dataType:'html',
+	  dataType:'json',
 	  data:jQuery('#a-admin-form').serialize(),
 	  success:function(data, textStatus)
 		{
-			$('#a-admin-blog-post-form').html(data);
-			aUI('#a-admin-form');
+      //data is a JSON object, we can handle any updates with it
+      updateTitleAndSlug(data.title, data.slug);
 	 	},
 	 	url: slug_url
 	});
