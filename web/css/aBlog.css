@@ -354,6 +354,12 @@ width: 100%;
 	padding: 2px;	
 }
 
+.a-admin-sidebar .section.categories .a-multiple-select-list
+{
+	margin: 10px 0;
+	font-size: 12px;
+}
+
 .a-admin-sidebar .section.tags a
 {
 	font-size: 11px;
