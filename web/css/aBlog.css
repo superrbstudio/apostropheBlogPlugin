@@ -399,6 +399,10 @@ width: 100%;
 	display: inline;
 }
 
+.a-admin-sidebar .section.comments .allow_comments_toggle.disabled span.disabled
+{
+	color: #600;
+}
 .a-admin-sidebar .option
 {
  display: none;

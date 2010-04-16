@@ -36,6 +36,7 @@ function updateBlogForm(slug_url, event)
       //data is a JSON object, we can handle any updates with it
       updateTitleAndSlug(data.title, data.slug);
 			updateComments(data.allow_comments);
+			aUI('#a-admin-form');
 	 	},
 	 	url: slug_url
 	});

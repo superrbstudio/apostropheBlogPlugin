@@ -95,13 +95,9 @@
 		
 		titleInterface.blur(function(){
 			// Check for Empty Title Field			
-			if ($(this).val() == '' && originalTitle == "untitled") 
+			if ($(this).val() == '') 
 			{ 	
-				$(this).next().show(); 		// Show the label on blur
-			}
-			if ($(this).val() == '' && originalTitle != "untitled")
-			{
-				$(this).val(originalTitle); // Restore the original title
+				$(this).next().show(); 
 			}
 		});
 
