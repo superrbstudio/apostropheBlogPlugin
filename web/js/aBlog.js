@@ -94,9 +94,15 @@ function updateComments(enabled)
 function updateTemplate(template)
 {
 	location.reload(true);
+	// sendUserMessage('Your post template was changed to '+template.name); // See sendUserMessage function below 
 }
 
 function sendUserMessage(params)
 {
-	// This will be used to send messages up to the top of the page telling the user what's happeningsvn
+	// This will be used to send messages up to the top of the page telling the user what's happening
+	// Dan we need to set up a stored location for messages to be delivered to the user after an event
+	
+	// For Example:
+	// User changes template, this event happens and a message gets passed to this function
+	// That message is canned somewhere inside PHP inside the plugin where I18N can get to it
 }
