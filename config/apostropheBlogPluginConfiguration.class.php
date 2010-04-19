@@ -29,7 +29,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     if(sfConfig::get('aBlog', true)) //TODO: Add Bundled layout config to app.yml
     {
       $response->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
-      $response->addStylesheet('/apostropheBlogPlugin/js/aBlog.js');
+      $response->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
     }
   }
   
