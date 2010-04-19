@@ -36,6 +36,7 @@ function updateBlogForm(slug_url, event)
       //data is a JSON object, we can handle any updates with it
       updateTitleAndSlug(data.title, data.slug);
 			updateComments(data.allow_comments);
+			// updateTemplate(data.template); # Calls a page refresh if the template changes 
 			aUI('#a-admin-form');
 	 	},
 	 	url: slug_url
@@ -88,4 +89,14 @@ function updateComments(enabled)
 	{
 		$('.section.comments .allow_comments_toggle').addClass('disabled').removeClass('enabled');		
 	}
+}
+
+function updateTemplate(template)
+{
+	location.reload(true);
+}
+
+function sendUserMessage(params)
+{
+	// This will be used to send messages up to the top of the page telling the user what's happeningsvn
 }
