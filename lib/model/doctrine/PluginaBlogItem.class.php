@@ -57,6 +57,44 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     $this->Page->delete();
   }
+
+  /**
+   *
+   * @param string $areas Array of areas to retrieve text for
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getTextForAreas($areas = array(), $limit = null)
+  {
+    $text = '';
+    foreach($areas as $area)
+    {
+      foreach($this->Page->getArea($area) as $slot)
+      {
+        if(method_exists($slot, 'getSearchText'))
+        {
+          $text .= $slot->getSearchText();
+        }
+      }
+    }
+    if(!is_null($limit))
+    {
+      $text = substr($text, 0, $limit);
+    }
+
+    return $text;
+  }
+
+  /**
+   *
+   * @param string $area Name of an area
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getTextForArea($area, $limit = null)
+  {
+    return $this->getTextForAreas(array($area), $limit);
+  }
   
   public function getFeedText()
   {
