@@ -98,7 +98,7 @@ a.all-posts-btn:hover
 {
 	position: relative;
 	z-index: 200;
-	color: #333;
+	color: #333 !important;
 }
 
 .a-admin-list th .filternav {
