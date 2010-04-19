@@ -16,7 +16,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $user = sfContext::getInstance()->getUser();
     
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['author_id']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
     );
     
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));

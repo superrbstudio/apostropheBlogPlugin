@@ -54,15 +54,30 @@
 <div class="author section">
 
 	<div class="post-author">
-	  <h4><?php echo __('Author', array(), 'apostrophe_blog') ?>: <span><?php echo $a_blog_post->Author ?></span></h4>
-	  <?php // We aren't letting them switch the user as per Rick's design ?>
-	  <?php // echo $form['author_id']->renderRow() ?>
+	  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>:
+			<?php if ($sf_user->hasCredential('admin')): ?>
+				</h4>	
+				<div class="author_id option">
+				<?php echo $form['author_id']->render() ?>
+				<?php echo $form['author_id']->renderError() ?>				
+				</div>
+			<?php else: ?>
+				<span><?php echo $a_blog_post->Author ?></span></h4>	
+			<?php endif ?>
+
 	</div>
 
 	<div class="post-editors">
-	  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo __('allow others to edit this post', array(), 'apostrophe_blog') ?></a>
-	  <div class="post-editors-options option" id="editors-section">
-	    <h4><?php echo __('Editors', array(), 'apostrophe_blog') ?>:</h4>
+
+		<?php if (!count($a_blog_post->Editors)): ?>
+		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo __('allow others to edit this post', array(), 'apostrophe_blog') ?></a>
+	  	<div class="post-editors-options option" id="editors-section">
+		<?php else: ?>
+			<hr/>
+	  	<div class="post-editors-options option show-editors" id="editors-section">			
+		<?php endif ?>
+
+	    <h4><?php echo __('Editors', array(), 'apostrophe_blog') ?>: </h4>
 	    <?php
 	    // Dan:
 	    // The multiple-select needs to go away
@@ -70,6 +85,7 @@
 	    ?>
 	    <?php echo $form['editors_list']->render()?>
 	    <?php echo $form['editors_list']->renderError() ?>
+	
 	  </div>
 	</div>
 </div>

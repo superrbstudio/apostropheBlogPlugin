@@ -311,11 +311,6 @@ padding: 0 5px;
 	width: 75px;
 }
 
-.a-admin-sidebar .a-time-wrapper select
-{
-	
-}
-
 .a-admin-sidebar hr,
 .a-admin-sidebar .section,
 .a-admin-sidebar .option,
@@ -325,6 +320,17 @@ a.a-sidebar-toggle.post-editors-toggle
 float: left;
 clear: both;
 width: 100%;
+}
+
+a.a-sidebar-toggle.post-editors-toggle
+{
+	margin: 5px 0 0;
+}
+
+.a-admin-sidebar .section .post-editors-options.option.show-editors
+{
+	display: block;
+	margin: 0;
 }
 
 .a-admin-sidebar .section
@@ -348,18 +354,33 @@ width: 100%;
 	background: none !important;
 }
 
+.a-admin-sidebar .section.author .author_id.option,
+.a-admin-sidebar .section.author #a_blog_post_editors_list
+{
+	display: block;
+	float: left;
+	margin: 0 0 0 5px;
+	width: 145px;
+	clear: none;
+}
+
+.a-admin-sidebar select
+{
+	font-family: Arial, sans-serif;
+	border: 1px solid #ddd;
+	padding: 2px;	
+}
+
+
 .a-admin-sidebar .section.categories select
 {
 	width: 200px !important;
 	width: auto; /* ? For IE */
 	float: right;
 	clear: both;
-	font-family: Arial, sans-serif;
-	border: 1px solid #ddd;
-	padding: 2px;	
 }
 
-.a-admin-sidebar .section.categories .a-multiple-select-list
+.a-admin-sidebar .a-multiple-select-list
 {
 	margin: 10px 0;
 	font-size: 12px;
