@@ -343,6 +343,11 @@ width: 100%;
 	color: #999;
 }
 
+.a-admin-sidebar .section a span
+{
+	background: none !important;
+}
+
 .a-admin-sidebar .section.categories select
 {
 	width: 200px !important;
@@ -393,15 +398,18 @@ width: 100%;
 	float: right;
 }
 
+.a-admin-sidebar .section.comments h4,
+.a-admin-sidebar .section.comments .allow_comments_toggle
+{
+	float: left;
+	width: 100%;
+	clear: both;
+}
+
 .a-admin-sidebar .section.comments .allow_comments_toggle span
 {
 	color: inherit;
 	display: none;
-}
-
-.a-admin-sidebar .section.comments .allow_comments_toggle:hover span
-{
-	text-decoration: inherit;
 }
 
 .a-admin-sidebar .section.comments .allow_comments_toggle.enabled span.enabled,

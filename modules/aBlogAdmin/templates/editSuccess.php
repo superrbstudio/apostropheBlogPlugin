@@ -21,6 +21,9 @@
 	
 	<div class="a-admin-content main">	
 		
+		<div id="a-blog-messages">
+		</div>
+		
 		<div class="a-blog-post-title-interface">
 			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
 			<div id="a-blog-post-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
