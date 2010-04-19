@@ -283,24 +283,42 @@ a_blog_admin:
     prefix_path:         admin/blog
     column:              slug
     with_wildcard_routes: true
+
+a_blog_admin_edit:
+  url:  /admin/blog/:id/edit/:slug
+  options: { model: aBlogPost, type: object, method: findOne }
+  param: { module: aBlogAdmin, action: edit }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: GET
+    id: \d+
+
+a_blog_admin_update:
+  url: /admin/blog/:id/update/:slug
+  options: { model: aBlogPost, type: object, method: findOne }
+  param: { module: aBlogAdmin, action: update }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: PUT
+    id: \d+
       
 a_blog_admin_removeFilter:
-  url:   /admin/aBlogAdmin/remove_filter/:name/:value
+  url:   /admin/blog/remove_filter/:name/:value
   param: { module: aBlogAdmin, action: removeFilter }
   class: sfRoute
   
 a_blog_admin_addFilter:
-  url:   /admin/aBlogAdmin/add_filter/:name/:value
+  url:   /admin/blog/add_filter/:name/:value
   param: { module: aBlogAdmin, action: addFilter }
   class: sfRoute
   
 a_blog_admin_autocomplete:
-  url:   /admin/aBlogAdmin/autocomplete
+  url:   /admin/blog/autocomplete
   param: { module: aBlogAdmin, action: autocomplete }
   class: sfRoute
   
 a_blog_admin_editCategories:
-  url:   /admin/aBlogAdmin/editCategories
+  url:   /admin/blog/editCategories
   param: { module: aBlogAdmin, action: editCategories }
   class: sfRoute  
       

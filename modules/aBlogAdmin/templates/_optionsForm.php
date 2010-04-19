@@ -53,8 +53,8 @@
 
 <script type="text/javascript" charset="utf-8">
   function updateBlogMulti()
-  {
-    updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');
+  {url
+    updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
   }
 
   $(document).ready(function(){
@@ -63,7 +63,7 @@
       updateBlog(event);
     });
 
-    checkAndSetPublish('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');
+    checkAndSetPublish('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 
     $('.a-sidebar-toggle').click(function(){
       $(this).toggleClass('open').next().toggle();

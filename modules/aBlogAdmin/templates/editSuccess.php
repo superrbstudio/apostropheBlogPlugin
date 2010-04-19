@@ -69,7 +69,7 @@
     else if(event.target.name == 'add-text') {}
     else
     {
-      updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>', event);
+      updateBlogForm('<?php echo url_for('a_blog_admin_update', $a_blog_post) ?>', event);
     }
   }
 
@@ -89,7 +89,7 @@
 		titleInterface.change(function(){
 			if ($(this).val() != '') { // If the input is not empty
 				$('#a_blog_post_title').val($(this).val()); // Pass the value to the admin form and update
-				updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');
+				updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 			};
 		});
 		
@@ -144,7 +144,7 @@
 				}
 				if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) {
 					$('#a_blog_post_slug').val(pInput.val()); // Pass the value to the admin form and update
-					updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');
+					updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 				}										
 			}
 			
@@ -158,7 +158,7 @@
 		$('.section.comments a.allow_comments_toggle').click(function(event){
 			event.preventDefault();
 			toggleCheckbox($('#a_blog_post_allow_comments'));
-			updateBlogForm('<?php echo url_for('@a_blog_admin_update?slug='.$a_blog_post['slug']) ?>');	
+			updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 		});
 
   });

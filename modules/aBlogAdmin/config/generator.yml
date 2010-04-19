@@ -9,7 +9,7 @@ generator:
     singular:               ~
     plural:                 ~
     route_prefix:           a_blog_admin
-    with_doctrine_route:    1
+    with_doctrine_route:    true
     
     config:
       fields:
