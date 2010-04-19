@@ -19,11 +19,24 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
   {
     $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
       'getGlobalButtons'));
+    $this->dispatcher->connect('view.configure_format', array($this, 'configureFormat'));
+  }
+
+  public function configureFormat(sfEvent $event)
+  {
+    $params = $event->getParameters();
+    $response = $params['response'];
+    if(sfConfig::get('aBlog', true)) //TODO: Add Bundled layout config to app.yml
+    {
+      $response->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
+      $response->addStylesheet('/apostropheBlogPlugin/js/aBlog.js');
+    }
   }
   
   static public function getGlobalButtons()
   {
     $user = sfContext::getInstance()->getUser();
+ 
     if ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'))
     {
       aTools::addGlobalButtons(array(

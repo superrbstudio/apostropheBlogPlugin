@@ -1,11 +1,4 @@
-all:
-  aComment:
-    aBlogPost:
-      threaded: false
-      max_depth: 0
-      layout:
-        title: optional
-        
+all:        
   aBlog:
     templates: 
       singleColumnTemplate: Single Column
