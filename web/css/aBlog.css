@@ -372,9 +372,9 @@ width: 100%;
 	padding: 3px;	
 }
 
-.a-admin-sidebar .section.tags .tag-suggestions
+.a-admin-sidebar #a-admin-form .tag-suggestions
 {
-	width: 100%;
+	width: 194px;
 }
 
 .a-admin-sidebar .section.template select
