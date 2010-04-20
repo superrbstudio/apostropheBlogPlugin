@@ -142,10 +142,8 @@
 	<?php echo $form['allow_comments']->render() ?>
 	<?php echo $form['allow_comments']->renderError() ?>
 	</div>
+	
 </div>
-
-
-
 
 <script type="text/javascript" charset="utf-8">
   function updateBlogMulti()
@@ -165,8 +163,8 @@
       $(this).toggleClass('open').next().toggle();
     })
 
-    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': updateBlogMulti});
-    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors','onChange': updateBlogMulti });
+    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>', 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>', 'onChange': updateBlogMulti});
+    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': updateBlogMulti });
     
  });
 </script>
