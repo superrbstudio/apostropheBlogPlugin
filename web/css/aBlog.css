@@ -277,10 +277,10 @@ padding: 0 5px;
 	width: 192px;
 }
 
-.a-admin-sidebar a:link
+.a-admin-sidebar a
 {
-	color: #000;
-	text-decoration: underline;
+	color: #000 !important;
+	text-decoration: underline !important;
 }
 
 .a-admin-sidebar a:hover
