@@ -50,6 +50,7 @@ class PluginaBlogItemTable extends Doctrine_Table
 
   public static function populatePages($blogItems)
   {
+    $pageIds = array();
     foreach($blogItems as $aBlogItem)
     {
       $pageIds[] = $aBlogItem['page_id'];
