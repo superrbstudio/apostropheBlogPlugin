@@ -41,7 +41,10 @@ function updateBlogForm(slug_url, event)
 
       updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug);
       updateComments(data.aBlogPost.allow_comments);
-			// updateTemplate(data.template); # Calls a page refresh if the template changes 
+
+			// if ( the Template has changed ) {
+			// updateTemplate(data.template, data.feedback);
+			// };
 			aUI('#a-admin-form');
       }
 	 	},
@@ -50,7 +53,7 @@ function updateBlogForm(slug_url, event)
 }
 
 // Update Title Function for Ajax calls when it is returned clean from Apostrophe
-function updateTitle(title)
+function updateTitle(title, feedback)
 {
 		var titleInput = $('#a_blog_post_title_interface');
 		
@@ -59,10 +62,11 @@ function updateTitle(title)
 			titleInput.val(title);			
 		};
 		
+		// sendUserMessage(feedback); // See sendUserMessage function below
 }
 
 // Update Slug Function for Ajax calls when it is returned clean from Apostrophe
-function updateSlug(slug)
+function updateSlug(slug, feedback)
 {
 		var permalinkInput = $('#a_blog_post_permalink_interface');
 		
@@ -70,6 +74,8 @@ function updateSlug(slug)
 		{
 			permalinkInput.val(slug);			
 		};
+
+		// sendUserMessage(feedback); // See sendUserMessage function below
 }
 
 // Update TitleAndSlug Function to save u time :D !
@@ -85,22 +91,24 @@ function toggleCheckbox(checkbox)
 	checkbox.attr('checked', !checkbox.attr('checked')); 
 }
 
-function updateComments(enabled)
+function updateComments(enabled, feedback)
 {
 	if (enabled)
 	{
 		$('.section.comments .allow_comments_toggle').addClass('enabled').removeClass('disabled');
+		// sendUserMessage(feedback); // See sendUserMessage function below		
 	}
 	else
 	{
 		$('.section.comments .allow_comments_toggle').addClass('disabled').removeClass('enabled');		
+		// sendUserMessage(feedback); // See sendUserMessage function below		
 	}
 }
 
-function updateTemplate(template)
+function updateTemplate(template, feedback)
 {
 	location.reload(true);
-	// sendUserMessage('Your post template was changed to '+template.name); // See sendUserMessage function below 
+	// sendUserMessage(feedback); // See sendUserMessage function below 
 }
 
 function sendUserMessage(params)
