@@ -398,11 +398,15 @@ a.a-sidebar-toggle.post-editors-toggle
 	padding: 3px;	
 }
 
-.a-admin-sidebar #a-admin-form .tag-suggestions
+.a-admin-sidebar .section.tags .a-admin-form-field-tags
 {
-	width: 194px;
+	margin-top: 10px;
 }
 
+.a-admin-sidebar .section.tags #blog-tag-list
+{
+	margin-top: 5px;
+}
 .a-admin-sidebar .section.template select
 {
 	max-width: 50%;
@@ -617,6 +621,7 @@ padding-left: 5px;
 	height: 30px;
 	line-height: 30px;
 	margin-bottom: 10px;
+	text-decoration: none !important;
 }
 
 .a-btn.a-publish-post.published
