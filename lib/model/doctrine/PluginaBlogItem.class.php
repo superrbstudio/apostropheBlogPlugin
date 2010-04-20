@@ -73,7 +73,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       {
         if(method_exists($slot, 'getSearchText'))
         {
-          $text .= $slot->getSearchText();
+          $text .= strip_tags($slot->getValue());
         }
       }
     }

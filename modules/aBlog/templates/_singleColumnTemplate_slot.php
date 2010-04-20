@@ -1,2 +1,2 @@
-<?php echo $aBlogPost->getTextForArea('blog-body', 120) ?>
+<?php echo $aBlogPost->getTextForArea('blog-body', 100) ?>
 

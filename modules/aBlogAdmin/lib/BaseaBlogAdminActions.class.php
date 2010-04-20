@@ -44,9 +44,12 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
       }
       $this->setLayout(false);
-      $output = json_encode($this->a_blog_post->toArray());
+      $response = array();
+      $response['aBlogPost'] = $this->a_blog_post->toArray();
+      //Any additional messages can go here
+      $output = json_encode($response);
       $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
-      return $this->renderText($output);
+      return sfView::HEADER_ONLY;
     }
     else
     {

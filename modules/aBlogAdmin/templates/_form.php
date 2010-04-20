@@ -165,8 +165,8 @@
       $(this).toggleClass('open').next().toggle();
     })
 
-    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': 'updateBlogMulti'});
-    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors', });
- 
+    aMultipleSelect('#categories-section', { 'choose-one': 'Add Categories', 'add': 'New Category', 'onChange': updateBlogMulti});
+    aMultipleSelect('#editors-section', { 'choose-one': 'Add Editors','onChange': updateBlogMulti });
+    
  });
 </script>

@@ -29,15 +29,21 @@ function updateBlogForm(slug_url, event)
 {
 	$.ajax({
 	  type:'POST',
-	  dataType:'json',
+	  dataType:'text',
 	  data:jQuery('#a-admin-form').serialize(),
-	  success:function(data, textStatus)
+	  complete:function(xhr, textStatus)
 		{
+      if(textStatus == 'success')
+      {
       //data is a JSON object, we can handle any updates with it
-      updateTitleAndSlug(data.title, data.slug);
-			updateComments(data.allow_comments);
+      var json = xhr.getResponseHeader('X-Json');
+      var data = eval('(' + json + ')');
+
+      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug);
+      updateComments(data.aBlogPost.allow_comments);
 			// updateTemplate(data.template); # Calls a page refresh if the template changes 
 			aUI('#a-admin-form');
+      }
 	 	},
 	 	url: slug_url
 	});
