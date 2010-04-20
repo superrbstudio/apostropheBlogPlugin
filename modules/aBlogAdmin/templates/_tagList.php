@@ -9,39 +9,40 @@
 </div>
 
 <script type="text/javascript">
+	$(document).ready(function(){
 
-$(document).ready(function(){
-
-	var tagList;
-	var recommendedTag = $('.recommended-tag');
+		var tagList = $('#a_blog_post_tags');
 			
-	recommendedTag.click(function(){
-	
-	tagList = $('#a_blog_post_tags').attr('value');
-	theTag = $(this).text();
-	
-		if (!$(this).hasClass('selected'))
-		{ //Only add it if it hasn't been added already
-			tagList += ", "+theTag;
-			$('#a_blog_post_tags').attr('value',tagList);
-		}
-		else
-		{
-			newTagList = tagList.split(',');
-			tagPosition = $.inArray(" "+theTag, newTagList);
-
-			if (tagPosition == -1)
-			{ // If it can't find the tag in the array, it is the first tag in the list
-				tagPosition = 0;
-			}
-
-			newTagList.splice(tagPosition,1);
-			$('#a_blog_post_tags').attr('value',newTagList.toString());
-		}
+		$('.recommended-tag').each(function(){
 		
-		$(this).toggleClass('selected');
-		
+			$(this).click(function(){
+
+				var theTag = $(this).text();
+				var tagSeparator = ", ";
+				var currentTags = tagList.val();			
+			
+					if (!$(this).hasClass('selected'))
+					{ 
+						if (currentTags == "") { tagSeparator = ""; }; // Remove separator if there are no starting tags
+						tagList.val(currentTags += tagSeparator+theTag); 
+					}
+					else
+					{
+						newTagList = currentTags.split(',');
+						tagPosition = $.inArray(" "+theTag, newTagList);
+
+						if (tagPosition == -1)
+						{ // If it can't find the tag in the array, it is the first tag in the list
+							tagPosition = 0;
+						}
+
+						newTagList.splice(tagPosition,1);
+						tagList.val(newTagList.toString());
+					}
+
+					$(this).toggleClass('selected');
+			
+				});	
+		});
 	});
-});
-
 </script>
