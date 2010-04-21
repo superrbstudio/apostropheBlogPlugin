@@ -58,13 +58,21 @@ function updateBlogForm(slug_url, event)
       var json = xhr.getResponseHeader('X-Json');
       var data = eval('(' + json + ')');
 			
-			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
-      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-      updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+			// TODO: There needs to be a way to selectively call these functions
+			// Comments are getting updated EVERYTIME anything gets updated and it's not necessary
+			// We need to provide a scope or context to the ajax event
 
 			// if ( the Template has changed ) {
 			// updateTemplate(data.template, data.feedback);
 			// };
+
+			// if ( the Comments has changed ) {
+      updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+			// };
+
+			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+			
 			aUI('#a-admin-form');
       }
 	 	},
