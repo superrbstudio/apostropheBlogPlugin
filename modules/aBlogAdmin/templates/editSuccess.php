@@ -13,6 +13,7 @@
 					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="all-posts-btn"><?php echo __('All Posts', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('aBlogAdmin/list_actions', array('helper' => $helper)) ?>
 				</ul>
+				<div id="a-blog-post-status-indicator"></div>
 			</div> 
 	  </div>
 	<?php end_slot() ?>
@@ -135,7 +136,8 @@
 			});
 		});
 
-		// Permalink: Clicking Save or Cancel
+		// Permalink Interface Controls: Save | Cancel
+		// =============================================
 		pControls.click(function(event){
 			event.preventDefault();
 			$target = $(event.target);
@@ -159,6 +161,8 @@
 			}
 		});		
 
+		// Comments Toggle
+		// =============================================
 		$('.section.comments a.allow_comments_toggle').click(function(event){
 			event.preventDefault();
 			toggleCheckbox($('#a_blog_post_allow_comments'));

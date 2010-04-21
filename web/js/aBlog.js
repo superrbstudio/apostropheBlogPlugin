@@ -11,13 +11,19 @@ function checkAndSetPublish(status, slug_url)
 	};
 
 	publishButton.unbind('click').click(function(){
+
 		$(this).blur();
+
 		if (status == 'draft') {
 			postStatus.val('published');
+			publishButton.addClass('published');			
+			sendUserMessage('','Your post is now published.');			
 		}
 		else
 		{
 			postStatus.val('draft');
+			publishButton.removeClass('published');			
+			sendUserMessage('','You unpublished your post.');			
 		};
 		
 		// If slug_url
@@ -31,20 +37,30 @@ function checkAndSetPublish(status, slug_url)
 // Ajax Update Blog Form
 function updateBlogForm(slug_url, event)
 {
+
+	$('#a-blog-post-status-indicator').ajaxStart(function(){
+		$(this).show();
+	})
+	$('#a-blog-post-status-indicator').ajaxStop(function(){
+		$(this).hide();
+	})
+
 	$.ajax({
 	  type:'POST',
 	  dataType:'text',
 	  data:jQuery('#a-admin-form').serialize(),
 	  complete:function(xhr, textStatus)
 		{
+			
       if(textStatus == 'success')
       {
       //data is a JSON object, we can handle any updates with it
       var json = xhr.getResponseHeader('X-Json');
       var data = eval('(' + json + ')');
-
-      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug);
-      updateComments(data.aBlogPost.allow_comments);
+			
+			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+      updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
 
 			// if ( the Template has changed ) {
 			// updateTemplate(data.template, data.feedback);
@@ -100,12 +116,12 @@ function updateComments(enabled, feedback)
 	if (enabled)
 	{
 		$('.section.comments .allow_comments_toggle').addClass('enabled').removeClass('disabled');
-		// sendUserMessage(feedback); // See sendUserMessage function below		
+		sendUserMessage('Comments Enabled','Viewers can leave comments on this blog post.');
 	}
 	else
 	{
 		$('.section.comments .allow_comments_toggle').addClass('disabled').removeClass('enabled');		
-		// sendUserMessage(feedback); // See sendUserMessage function below		
+		sendUserMessage('Disabled Comments','Viewers of this blog post cannot comment on it.');
 	}
 }
 
@@ -115,22 +131,16 @@ function updateTemplate(template, feedback)
 	// sendUserMessage(feedback); // See sendUserMessage function below 
 }
 
+// Send a message to the blog editor confirming a change made via Ajax
 function sendUserMessage(label, desc)
-{
-	// This will be used to send messages up to the top of the page telling the user what's happening
-	// Dan we need to set up a stored location for messages to be delivered to the user after an event
-	
-	// For Example:
-	// User changes template, this event happens and a message gets passed to this function
-	// That message is canned somewhere inside PHP inside the plugin where I18N can get to it
-	
-	var mLabel = label; // Temporary -- mLabel is passed from ajaxAction
-	var mDescription = desc; // Temporary - mDescription is passed from ajaxAction
+{	
+	var mLabel = (label)?label.toString():""; // passed from ajaxAction
+	var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
 	var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
 	var messageContainer = $('#a-blog-post-status-messages');
 	messageContainer.append(newMessage).addClass('has-messages');
-	messageContainer.children('dt:last').fadeTo(3000,1).fadeOut(function(){ $(this).remove(); })
-	messageContainer.children('dd:last').fadeTo(3000,1).fadeOut(function(){	$(this).remove(); checkMessageContainer(); })
+	messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
+	messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
 	
 	function checkMessageContainer()
 	{

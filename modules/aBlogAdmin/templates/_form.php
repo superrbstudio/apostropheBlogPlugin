@@ -157,7 +157,7 @@
       updateBlog(event);
     });
 
-    checkAndSetPublish('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
+    checkAndSetPublish('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 
     $('.a-sidebar-toggle').click(function(){
       $(this).toggleClass('open').next().toggle();
