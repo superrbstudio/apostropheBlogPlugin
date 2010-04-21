@@ -1,26 +1,30 @@
 // Publish / Unpublish Button
-function checkAndSetPublish(slug_url)
+function checkAndSetPublish(status, slug_url)
 {
+	//todo: use jq to get the action from the Form ID
+	
 	var postStatus = $('#a_blog_post_status');
 	var publishButton = $('#a-admin-form a.a-publish-post');
 
-	if (postStatus.val() == 'published') {
+	if (status == 'published') {
 		publishButton.addClass('published');
 	};
 
 	publishButton.unbind('click').click(function(){
-
-		//$(this).toggleClass('published');
 		$(this).blur();
-
-		if (postStatus.val() == 'draft') {
+		if (status == 'draft') {
 			postStatus.val('published');
 		}
 		else
 		{
 			postStatus.val('draft');
 		};
-		updateBlogForm(slug_url);
+		
+		// If slug_url
+		if (typeof slug_url != 'undefined') {
+			updateBlogForm(slug_url);			
+		};
+
 	});			
 }
 
@@ -111,7 +115,7 @@ function updateTemplate(template, feedback)
 	// sendUserMessage(feedback); // See sendUserMessage function below 
 }
 
-function sendUserMessage(params)
+function sendUserMessage(label, desc)
 {
 	// This will be used to send messages up to the top of the page telling the user what's happening
 	// Dan we need to set up a stored location for messages to be delivered to the user after an event
@@ -119,4 +123,19 @@ function sendUserMessage(params)
 	// For Example:
 	// User changes template, this event happens and a message gets passed to this function
 	// That message is canned somewhere inside PHP inside the plugin where I18N can get to it
+	
+	var mLabel = label; // Temporary -- mLabel is passed from ajaxAction
+	var mDescription = desc; // Temporary - mDescription is passed from ajaxAction
+	var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
+	var messageContainer = $('#a-blog-post-status-messages');
+	messageContainer.append(newMessage).addClass('has-messages');
+	messageContainer.children('dt:last').fadeTo(3000,1).fadeOut(function(){ $(this).remove(); })
+	messageContainer.children('dd:last').fadeTo(3000,1).fadeOut(function(){	$(this).remove(); checkMessageContainer(); })
+	
+	function checkMessageContainer()
+	{
+		if (!messageContainer.children().length) {
+			messageContainer.removeClass('has-messages');
+		};
+	}
 }
