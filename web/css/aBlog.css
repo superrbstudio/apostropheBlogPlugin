@@ -349,7 +349,7 @@ a.a-sidebar-toggle.post-editors-toggle
 	color: #999;
 }
 
-.a-admin-sidebar .section a span
+.a-admin-sidebar a.a-btn.a-publish-post span
 {
 	background: none !important;
 }
