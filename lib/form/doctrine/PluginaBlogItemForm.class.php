@@ -55,10 +55,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
   public function updateSlugColumn($value)
   {
-    if($this->getObject()->getSlug() == $value && $this->getObject()->getStatus() != 'published')
-    {
-      return $this->getValue('title'); 
-    }
     return $value;
   }
   

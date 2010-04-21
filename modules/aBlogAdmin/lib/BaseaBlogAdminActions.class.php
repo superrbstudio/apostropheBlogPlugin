@@ -46,6 +46,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->setLayout(false);
       $response = array();
       $response['aBlogPost'] = $this->a_blog_post->toArray();
+      $response['modified'] = $this->a_blog_post->getLastModified();
       //Any additional messages can go here
       $output = json_encode($response);
       $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
@@ -56,6 +57,31 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->processForm($request, $this->form);
     }
     $this->setTemplate('edit');
+  }
+
+  protected function buildQuery()
+  {
+    $tableMethod = $this->configuration->getTableMethod();
+    if (is_null($this->filters))
+    {
+      $this->filters = $this->configuration->getFilterForm($this->getFilters());
+    }
+
+    $this->filters->setTableMethod($tableMethod);
+
+    $query = $this->filters->buildQuery($this->getFilters());
+
+    $this->addSortQuery($query);
+
+    if(!$this->getUser()->hasCredential('admin'))
+    {
+      Doctrine::getTable('aBlogPost')->filterByEditable($query, $this->getUser()->getGuardUser()->getId());
+    }
+
+    $event = $this->dispatcher->filter(new sfEvent($this, 'admin.build_query'), $query);
+    $query = $event->getReturnValue();
+
+    return $query;
   }
   
 }

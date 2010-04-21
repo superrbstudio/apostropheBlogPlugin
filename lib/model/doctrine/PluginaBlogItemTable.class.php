@@ -32,6 +32,15 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $request->getParameter('tag'), $q, array('nb_common_tag' => 1));
   }
+
+  public function filterByEditable(Doctrine_Query $q, $user_id)
+  {
+    $rootAlias = $q->getRootAlias();
+    $q->leftJoin($rootAlias.'.Categories c');
+    $q->leftJoin('c.Users u');
+    $q->leftJoin($rootAlias.'.Editors e');
+    $q->addWhere('author_id = ? OR u.id = ? OR e.id = ?', array($user_id, $user_id, $user_id));
+  }
   
   public function addCategoriesForUser(sfGuardUser $user, $admin = false)
   {
