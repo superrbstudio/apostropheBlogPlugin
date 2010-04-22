@@ -740,3 +740,44 @@ width: 480px;
 margin-left: 20px;
 width: 180px;
 }
+
+/*Typography*/
+
+.a-blog-post,
+.a-blog-event
+{
+	display:inline;
+	position:relative;
+	float:left;
+	margin-bottom:10px;
+}
+
+.a-blog-post-title,
+.a-blog-post-meta,
+.a-blog-post-excerpt-container,
+.a-blog-event-title,
+.a-blog-event-meta,
+.a-blog-event-excerpt-container
+{
+	display:inline;
+	float:left;
+	width:100%;
+	margin-bottom:7px;
+}
+
+.a-blog-read-more,
+.a-event-read-more
+{
+	margin-top:7px;
+}
+
+.a-blog-post .a-area
+{
+	margin-top:0;
+}
+
+.a-blog-main hr
+{
+	margin-bottom:10px;
+}
+
