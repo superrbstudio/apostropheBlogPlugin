@@ -34,6 +34,12 @@ generator:
             type:   ManyKey
           published_at:
             label:  Date
+        actions:
+          new:
+            label: New Post
+            action: new
+            params:
+              class: a-btn big icon a-add alt
                 
       filter:
         fields:   [ author_id, editors_list, categories_list, status, _tags_list ]

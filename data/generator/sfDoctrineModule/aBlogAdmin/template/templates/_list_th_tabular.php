@@ -33,7 +33,7 @@
       ) ?]
     [?php else: ?]
     [?php echo link_to(
-      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __($sort[1], array(), 'a-admin'), 'title' => __($sort[1], array(), 'a-admin'))),
+      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __('desc', array(), 'a-admin'), 'title' => __('desc', array(), 'a-admin'))),
       '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')
       ) ?]
   [?php endif; ?]
