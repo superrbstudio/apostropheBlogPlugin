@@ -2,22 +2,27 @@
 
 <?php echo $form->renderHiddenFields() ?>
 
+<h4>Blog Slot Settings</h4>
+
 <div class="a-form-row count">
-<?php echo $form['count']->renderLabel() ?>
-<div class="a-form-field"><?php echo $form['count']->render() ?></div>
-<div class="a-form-error"><?php echo $form['count']->renderError() ?></div>
+	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe_blog')) ?>
+	<div class="a-form-field"><?php echo $form['count']->render() ?></div>
+	<?php echo $form['count']->renderHelp() ?>
+	<div class="a-form-error"><?php echo $form['count']->renderError() ?></div>
 </div>
 
 <div class="a-form-row categories">
-<?php echo $form['categories_list']->renderLabel() ?>
-<div class="a-form-field"><?php echo $form['categories_list']->render() ?></div>
-<div class="a-form-error"><?php echo $form['categories_list']->renderError() ?></div>
+	<?php echo $form['categories_list']->renderLabel(__('Category', array(), 'apostrophe_blog')) ?>
+	<div class="a-form-field"><?php echo $form['categories_list']->render() ?></div>
+	<?php echo $form['categories_list']->renderHelp() ?>
+	<div class="a-form-error"><?php echo $form['categories_list']->renderError() ?></div>
 </div>
 
 <div class="a-form-row tags">
-<?php echo $form['tags_list']->renderLabel() ?>
-<div class="a-form-field"><?php echo $form['tags_list']->render() ?></div>
-<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
+	<?php echo $form['tags_list']->renderLabel(__('Tags', array(), 'apostrophe_blog')) ?>
+	<div class="a-form-field"><?php echo $form['tags_list']->render() ?></div>
+	<?php echo $form['tags_list']->renderHelp() ?>
+	<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
 </div>
 
 <script src='/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js'></script>
