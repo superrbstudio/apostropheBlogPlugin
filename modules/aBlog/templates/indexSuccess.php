@@ -18,7 +18,7 @@
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
-  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon')) ?>
+  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
