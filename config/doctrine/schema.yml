@@ -92,10 +92,12 @@ aBlogItemCategory:
       foreignAlias: BlogItemCategories
       class: aBlogItem
       local: blog_item_id
+      onDelete: CASCADE
     BlogCategory:
       foreignAlias: BlogItemCategories
       class: aBlogCategory
       local: blog_category_id
+      onDelete: CASCADE
       
 aBlogCategory:
   columns:

@@ -108,4 +108,57 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     return $text;
   }
+
+  public function userCanEdit(sfGuardUser $user)
+  {
+    $q = $this->getTable()->createQuery()
+      ->addWhere('id = ?', $this['id']);
+    Doctrine::getTable('aBlogItem')->filterByEditable($q, $user['id']);
+    return count($q->execute());
+  }
+
+  public function delete(Doctrine_Connection $conn = null)
+  {
+    $user = sfContext::getInstance()->getUser()->getGuardUser();
+    if($this->userHasPrivilege($user, 'delete'))
+    {
+      return parent::delete($conn);
+    }
+    else
+      return false;
+  }
+
+  public function publish()
+  {
+    if($this->userHasPrivilege('publish'))
+    {
+      $this['status'] = 'published';
+    }
+  }
+
+  public function unpublish()
+  {
+    if($this->userHasPrivilege('publish'))
+    {
+      $this['status'] = 'draft';
+    }
+  }
+
+
+  public function userHasPrivilege($privilege = 'publish')
+  {
+    $user = sfContext::getInstance()->getUser();
+    if($user->hasCredential('admin'))
+      return true;
+
+    if($user->getGuardUser()->getId() == $this['author_id'])
+      return true;
+    
+    if($privilege == 'edit')
+    {
+      return $this->userCanEdit($user->getGuardUser());
+    }
+
+    return false;
+  }
 }

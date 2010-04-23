@@ -83,5 +83,73 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
     return $query;
   }
+
+  protected function executeBatchPublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $items = Doctrine_Query::create()
+      ->from('aBlogPost')
+      ->whereIn('id', $ids)
+      ->execute();
+    $count = count($items);
+    $error = false;
+    try
+    {
+      foreach($items as $item)
+      {
+        $item->publish();
+      }
+      $items->save();
+    } catch (Exception $e)
+    {
+      $error = true;
+    }
+
+    if (($count == count($ids)) && (!$error))
+    {
+      $this->getUser()->setFlash('notice', 'The selected items have been published successfully.');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'An error occurred while publishing the selected items.');
+    }
+
+    $this->redirect('@a_blog_admin');
+  }
+
+  protected function executeBatchUnpublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $items = Doctrine_Query::create()
+      ->from('aBlogPost')
+      ->whereIn('id', $ids)
+      ->execute();
+    $count = count($items);
+    $error = false;
+    try
+    {
+      foreach($items as $item)
+      {
+        $item->unpublish();
+      }
+      $items->save();
+    } catch (Exception $e)
+    {
+      $error = true;
+    }
+
+    if (($count == count($ids)) && (!$error))
+    {
+      $this->getUser()->setFlash('notice', 'The selected items have been unpublished successfully.');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'An error occurred while unpublishing the selected items.');
+    }
+
+    $this->redirect('@a_blog_admin');
+  }
   
 }

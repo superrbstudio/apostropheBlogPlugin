@@ -6,9 +6,9 @@
     <?php echo $this->addCredentialCondition('<option value="'.$action.'">[?php echo __(\''.$params['label'].'\', array(), \'a-admin\') ?]</option>', $params) ?>
 <?php endforeach; ?>
   </select>
-<?php $form = new baseForm(); if ($form->isCSRFProtected()): ?>
-  <input type="hidden" name="<?php echo $form->getCSRFFieldName() ?>" value="<?php echo $form->getCSRFToken() ?>" />
-<?php endif; ?>
+[?php $form = new BaseForm(); if ($form->isCSRFProtected()): ?]
+  <input type="hidden" name="[?php echo $form->getCSRFFieldName() ?]" value="[?php echo $form->getCSRFToken() ?]" />
+[?php endif; ?]
 	[?php echo jq_link_to_function('Go', '$("#a-admin-batch-form").submit();', array('class' => 'a-btn', )) ?]
 </li>
 <?php endif; ?>
