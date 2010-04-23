@@ -8,6 +8,9 @@
 	</div>
 <?php end_slot() ?>
 
+<?php //If you want to have headers in your blog override this
+      //a_area('blog-header') ?>
+
 <div id="a-blog-main" class="a-blog-main">
   <?php if ($sf_params->get('year')): ?>
   <h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
