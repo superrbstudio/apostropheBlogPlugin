@@ -90,7 +90,7 @@ width: auto;
 .a-admin-list th ul
 {
 list-style: none;
-padding: 0 40px 0 0;
+padding: 0;
 margin: 0;
 float: left;
 }
@@ -178,7 +178,7 @@ padding-left: 10px;
 
 .a-admin-list thead th
 {
-padding: 0 5px;
+padding: 0 30px 0 5px;
 }
 
 .a-admin-list th a.a-sort-label
