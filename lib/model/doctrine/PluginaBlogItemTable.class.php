@@ -58,14 +58,17 @@ class PluginaBlogItemTable extends Doctrine_Table
   }
 
   public static function populatePages($blogItems)
-  {
+  {    
     $pageIds = array();
     foreach($blogItems as $aBlogItem)
     {
       $pageIds[] = $aBlogItem['page_id'];
     }
-    $q = aPageTable::queryWithSlots();
-    $q->whereIn('id', $pageIds);
-    $q->execute();
+    if(count($pageIds))
+    {
+      $q = aPageTable::queryWithSlots();
+      $q->whereIn('id', $pageIds);
+      $q->execute();
+    }
   }
 }
