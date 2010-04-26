@@ -4,5 +4,6 @@
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
     pkTagahead(<?php echo json_encode(url_for("taggableComplete/complete")) ?>);
+		$(document.body).addClass('aBlog aBlogAdmin');
 	});
 </script>
