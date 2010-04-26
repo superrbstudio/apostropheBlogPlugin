@@ -62,9 +62,9 @@ function updateBlogForm(slug_url, event)
 			// Comments are getting updated EVERYTIME anything gets updated and it's not necessary
 			// We need to provide a scope or context to the ajax event
 
-			// if ( the Template has changed ) {
-			// updateTemplate(data.template, data.feedback);
-			// };
+      if ( typeof(data.modified.template) != "undefined" ) {
+        updateTemplate(data.template, data.feedback);
+      };
 
 			// if ( the Comments has changed ) {
       updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
