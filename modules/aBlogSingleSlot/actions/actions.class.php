@@ -2,7 +2,7 @@
 class aBlogSingleSlotActions extends BaseaSlotActions
 {
   protected $modelClass = 'aBlogPost';
-  protected $formClass = 'aBlogSlotSingleForm';
+  protected $formClass = 'aBlogSingleSlotForm';
   
   public function executeEdit(sfRequest $request)
   {

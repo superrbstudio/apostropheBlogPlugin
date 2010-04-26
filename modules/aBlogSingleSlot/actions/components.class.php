@@ -21,6 +21,9 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
     $this->setup();
     $this->values = $this->slot->getArrayValue();
     if(isset($this->values['blog_item']))
-      $this->aBlogItem = Doctrine::getTable($modelClass)->findOneBy('id', $this->values['blog_item']);
+    {
+      $this->aBlogItem = Doctrine::getTable($this->modelClass)->findOneBy('id', $this->values['blog_item']);
+      aBlogItemTable::populatePages(array($this->aBlogItem));
+    }
   }
 }

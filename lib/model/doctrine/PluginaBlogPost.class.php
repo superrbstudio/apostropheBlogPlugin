@@ -13,4 +13,45 @@
 abstract class PluginaBlogPost extends BaseaBlogPost
 {
 
+  /**
+   * This function attempts to find the "best" engine to route a given post to.
+   */
+  public function findBestEngineRoute()
+  {
+    $engines = aPageTable::createQuery()->addWhere('engine = aBlog')->execute();
+
+    if(count($engines) == 0)
+      return '';
+    else if(count($engines) == 1)
+      return url_for('@aPage?slug='.$engines[0]['slug']);
+
+    //When there are more than one engine page we need to use some heuristics to
+    //guess what the best page is.
+    $catIds = array();
+    foreach($this->Categories as $category)
+    {
+      $catIds[$category['id']] = $category['id'];
+    }
+
+    if(count($catIds) < 1)
+      return url_for('@aPage?slug='.$engines[0]['slug']);
+
+    $best = array(0, '');
+    foreach($engines as $engine)
+    {
+      $score = 0;
+      foreach($engine->blogCategories as $category)
+      {
+        if(isset($catIds[$category['id']]))
+          $score = $score + 1;
+      }
+      if($score > $best[0])
+      {
+        $best = array($score, url_for('@aPage?slug='.$engine['slug']));
+      }
+    }
+
+    return $best[1];
+  }
+
 }

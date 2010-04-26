@@ -9,5 +9,6 @@ class PluginaBlogPostTable extends aBlogItemTable
   {
     return Doctrine::getTable('aBlogPost')->findOneBy('id', $params['id']);
   }
+  
 
 }
