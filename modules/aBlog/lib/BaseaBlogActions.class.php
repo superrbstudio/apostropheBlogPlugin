@@ -62,6 +62,8 @@ abstract class BaseaBlogActions extends aEngineActions
   
   public function executeShow(sfWebRequest $request)
   {
+    $this->buildParams();
+    $this->dateRange = '';
     $this->aBlogPost = $this->getRoute()->getObject();
   }
   
