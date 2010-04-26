@@ -55,7 +55,7 @@
 	
 </div>
 
-<?php if(isset($noFeed)): ?>
+<?php if(!isset($noFeed)): ?>
 <hr />
 <h5><?php echo link_to('RSS Feed',  aUrl::addParams('aBlog/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
 <?php endif ?>
