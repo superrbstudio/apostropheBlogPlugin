@@ -69,6 +69,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       {
         $this['slug'] = aTools::slugify($this['title']);
       }
+      else
+      {
+        $this['slug'] = aTools::slugify($this['slug']);
+      }
     }
   }
   
