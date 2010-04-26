@@ -11,7 +11,9 @@
  * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
 abstract class PluginaBlogItem extends BaseaBlogItem
-{  
+{
+  protected $update = true;
+
   /**
    * These date methods are use in the routing of the permalink
    */
@@ -50,7 +52,24 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this->Page = $page;
     $this->slug = 'untitled-'.$this['id'];
     $this->title = 'untitled';
+    $this['slug_saved'] = false;
+    $this->update = false;
     $this->save();
+  }
+
+  public function preUpdate($event)
+  {
+    if($this->update)
+    {
+      if(array_key_exists('slug', $this->getModified()))
+      {
+        $this['slug_saved'] = true;
+      }
+      if($this['slug_saved'] == false)
+      {
+        $this['slug'] = aTools::slugify($this['title']);
+      }
+    }
   }
   
   public function postDelete($event)

@@ -5,8 +5,6 @@ aBlogItem:
   actAs:
     Timestampable: ~
     Taggable: ~
-    Sluggable:
-      canUpdate: true
   columns:
     id:
       type: integer(4)
@@ -19,6 +17,13 @@ aBlogItem:
     title:
       type: string(255)
       notnull: true
+    slug:
+      type: string(255)
+      notnull: true
+      unique: true
+    slug_saved:
+      type: boolean
+      default: false
     excerpt:
       type: string
     status:

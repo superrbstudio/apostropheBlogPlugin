@@ -97,10 +97,11 @@ function updateTitle(title, feedback)
 function updateSlug(slug, feedback)
 {
 		var permalinkInput = $('#a_blog_post_permalink_interface');
-		
+    var slugInput = $('#a_blog_post_slug');
 		if (slug != null)
 		{
-			permalinkInput.val(slug);			
+			permalinkInput.val(slug);
+      slugInput.val(slug);
 		};
 
 		// sendUserMessage(feedback); // See sendUserMessage function below

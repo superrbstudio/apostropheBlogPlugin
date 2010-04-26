@@ -16,7 +16,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $user = sfContext::getInstance()->getUser();
     
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved']
     );
     
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
@@ -51,11 +51,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
-  }
-
-  public function updateSlugColumn($value)
-  {
-    return $value;
   }
   
   public function updateCategoriesList($values)

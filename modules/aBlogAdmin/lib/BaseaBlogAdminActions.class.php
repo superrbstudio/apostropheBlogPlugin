@@ -16,7 +16,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $this->a_blog_post = new aBlogPost();
     $this->a_blog_post->Author = $this->getUser()->getGuardUser();
     $this->a_blog_post->save();
-    $this->redirect('aBlogAdmin/edit?slug='.$this->a_blog_post->getSlug());
+    $this->redirect('a_blog_admin_edit', $this->a_blog_post);
   }
     
   public function executeAutocomplete(sfWebRequest $request)

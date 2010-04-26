@@ -268,14 +268,12 @@ a_event:
 a_event_today:
   url:   
   param: { module: aEvent, action: today }
-  class: aRoute 
+  class: aRoute
   
   
 ################
 # blog admin routes #
 ################
-
-
 
 a_blog_admin:
   class: sfDoctrineRouteCollection
@@ -285,13 +283,12 @@ a_blog_admin:
     prefix_path:         admin/blog
     column:              slug
     with_wildcard_routes: true
-    with_show:           false
+    with_show:            false
 
 a_blog_admin_autocomplete:
   url:   /admin/blog/autocomplete
   param: { module: aBlogAdmin, action: autocomplete }
   class: sfRoute
-
 
 a_blog_admin_edit:
   url:  /admin/blog/:id/edit/:slug
