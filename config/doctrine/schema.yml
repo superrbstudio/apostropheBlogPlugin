@@ -5,6 +5,9 @@ aBlogItem:
   actAs:
     Timestampable: ~
     Taggable: ~
+    Sluggable:
+      fields: [ title ]
+      builder: [ aTools, slugify ]
   columns:
     id:
       type: integer(4)
@@ -17,10 +20,6 @@ aBlogItem:
     title:
       type: string(255)
       notnull: true
-    slug:
-      type: string(255)
-      notnull: true
-      unique: true
     slug_saved:
       type: boolean
       default: false
@@ -64,6 +63,7 @@ aBlogItem:
       refClass: aBlogItemCategory
       local: blog_item_id
       foreign: blog_category_id
+
       
       
 aBlogEditor:
