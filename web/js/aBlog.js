@@ -142,18 +142,20 @@ function updateTemplate(template, feedback)
 // Send a message to the blog editor confirming a change made via Ajax
 function sendUserMessage(label, desc)
 {	
-	var mLabel = (label)?label.toString():""; // passed from ajaxAction
-	var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
-	var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
-	var messageContainer = $('#a-blog-post-status-messages');
-	messageContainer.append(newMessage).addClass('has-messages');
-	messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
-	messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
+	// Messages are turned off for now!
 	
-	function checkMessageContainer()
-	{
-		if (!messageContainer.children().length) {
-			messageContainer.removeClass('has-messages');
-		};
-	}
+	// var mLabel = (label)?label.toString():""; // passed from ajaxAction
+	// var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
+	// var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
+	// var messageContainer = $('#a-blog-post-status-messages');
+	// messageContainer.append(newMessage).addClass('has-messages');
+	// messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
+	// messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
+	// 
+	// function checkMessageContainer()
+	// {
+	// 	if (!messageContainer.children().length) {
+	// 		messageContainer.removeClass('has-messages');
+	// 	};
+	// }
 }
