@@ -86,7 +86,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   
   public function preSave($event)
   {
-    if (in_array('published', $this->getModified()))
+    if (in_array('published', $this->getModified()) && !$this->getPublishedAt())
     {
       $this->setPublishedAt(date('Y-m-d H:i:s'));
     }
