@@ -8,7 +8,7 @@
     <?php //This field needs dropdown filters to be applied ?>
     <ul class="a-multi-title">
       <li><a href="#" class="a-btn a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
-        <div class="filternav">
+        <div class="filternav <?php echo aTools::slugify($name); ?>">
           <hr/>
     <?php if($filterFieldConfig[$name]->isComponent()): ?>
       [?php include_component('<?php echo $this->getModuleName() ?>', 'list_th_<?php echo $name ?>_dropdown', array('filters' => $filters, 'name' => '<?php echo $name ?>'  )) ?]
