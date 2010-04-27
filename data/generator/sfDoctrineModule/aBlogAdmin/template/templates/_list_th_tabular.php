@@ -6,7 +6,7 @@
 	<th class="a-admin-<?php echo strtolower($field->getType()) ?> a-column-<?php echo $name ?>">
   <?php if(isset($filterFieldConfig[$name])): ?>
     <?php //This field needs dropdown filters to be applied ?>
-    <ul>
+    <ul class="a-multi-title">
       <li><a href="#" class="a-btn a-sort-label">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</a>
         <div class="filternav">
           <hr/>
@@ -21,7 +21,7 @@
       </li>
     </ul>
   <?php else: ?>
-    <span>[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</span>
+    <span class="a-simple-title">[?php echo __('<?php echo $field->getConfig('label') ?>', array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</span>
   <?php endif; ?>
 
   <?php if ($field->isReal()): ?>
