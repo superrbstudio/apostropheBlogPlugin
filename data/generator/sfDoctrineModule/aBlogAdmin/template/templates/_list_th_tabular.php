@@ -27,14 +27,16 @@
   <?php if ($field->isReal()): ?>
   
   [?php if ('<?php echo $name ?>' == $sort[0]): ?]
+	[?php ($sort[1] == 'asc')? $sortLabel = __("Ascending", array(), 'a-admin'): __("Descending", array(), 'a-admin'); ?]
+
     [?php echo link_to(
-      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/'.$sort[1].'-on.png', array('alt' => __($sort[1], array(), 'a-admin'), 'title' => __($sort[1], array(), 'a-admin', 'class' => 'a-sort-arrow asc'))),
-      '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')
+      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/'.$sort[1].'-on.png', array('alt' => __($sortLabel, array(), 'a-admin'))),
+      '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc'), array('class' => 'a-sort-arrow asc', 'title' => __($sortLabel, array(), 'a-admin'))
       ) ?]
     [?php else: ?]
     [?php echo link_to(
-      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __('desc', array(), 'a-admin'), 'title' => __('desc', array(), 'a-admin'), 'class' => 'a-sort-arrow desc')),
-      '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')
+      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __('desc', array(), 'a-admin'))),
+      '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc'), array('class' => 'a-sort-arrow desc', 'title' => __('Descending', array(), 'a-admin'))
       ) ?]
   [?php endif; ?]
 
