@@ -28,12 +28,12 @@
   
   [?php if ('<?php echo $name ?>' == $sort[0]): ?]
     [?php echo link_to(
-      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/'.$sort[1].'-on.png', array('alt' => __($sort[1], array(), 'a-admin'), 'title' => __($sort[1], array(), 'a-admin'))),
+      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/'.$sort[1].'-on.png', array('alt' => __($sort[1], array(), 'a-admin'), 'title' => __($sort[1], array(), 'a-admin', 'class' => 'a-sort-arrow asc'))),
       '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')
       ) ?]
     [?php else: ?]
     [?php echo link_to(
-      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __('desc', array(), 'a-admin'), 'title' => __('desc', array(), 'a-admin'))),
+      image_tag(((sfConfig::get('app_aAdmin_web_dir',false))?sfConfig::get('app_aAdmin_web_dir'):'/apostrophePlugin').'/images/desc.png', array('alt' => __('desc', array(), 'a-admin'), 'title' => __('desc', array(), 'a-admin'), 'class' => 'a-sort-arrow desc')),
       '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc')
       ) ?]
   [?php endif; ?]
