@@ -33,7 +33,12 @@ generator:
           categories_list:
             label:  Categories
             type:   ManyKey
-          
+        actions: 
+          new:
+            label: New Event
+            action: new 
+            params: 
+              class: a-btn big icon a-add alt          
                 
       filter:
         fields:   [ author_id, editors_list, categories_list, status, _tags_list ]
