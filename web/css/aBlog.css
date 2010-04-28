@@ -95,6 +95,7 @@ width: 200px;
 .a-admin-list thead th .a-sort-arrow
 {
 	margin-left: -25px;
+	text-indent: -9999px;
 }
 
 .aBlogAdmin #a-admin-list-batch-actions,
