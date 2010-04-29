@@ -210,6 +210,7 @@ border: 1px solid rgba(0,0,0,0.05);
 margin-left: -3px;
 background-color: #eee;
 color: #666;
+text-shadow:0 1px 0 rgba(255,255,255,.5);
 }
 
 .a-admin-list th a.a-sort-label:hover
