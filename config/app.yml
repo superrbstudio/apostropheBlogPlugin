@@ -4,3 +4,4 @@ all:
       singleColumnTemplate: Single Column
       twoColumnTemplate: Two Column
       # bannerTemplate: Banner Template # Dan, I wanna make a banner template bundled with the plugin
+    comments: false

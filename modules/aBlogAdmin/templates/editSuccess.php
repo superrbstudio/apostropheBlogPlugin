@@ -34,7 +34,7 @@
 		<div id="a-blog-post-permalink-interface">
 			<h6>Permalink:</h6> 
 			<div class="a-blog-post-permalink-wrapper url">
-				<span>http://site/blog/url/</span> 		<?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
+        <span><?php echo aTools::urlForPage($a_blog_post->findBestEngine()->getSlug()).'/' ?></span><?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
 			</div>
 			<div class="a-blog-post-permalink-wrapper slug">
 				<input type="text" name="a_blog_post_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_post_permalink_interface">

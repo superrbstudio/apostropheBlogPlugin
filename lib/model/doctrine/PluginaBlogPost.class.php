@@ -16,14 +16,16 @@ abstract class PluginaBlogPost extends BaseaBlogPost
   /**
    * This function attempts to find the "best" engine to route a given post to.
    */
-  public function findBestEngineRoute()
+  public function findBestEngine()
   {
-    $engines = aPageTable::createQuery()->addWhere('engine = aBlog')->execute();
+    $engines = Doctrine::getTable('aPage')->createQuery()
+      ->addWhere('engine = ?', 'aBlog')
+      ->execute();
 
     if(count($engines) == 0)
       return '';
     else if(count($engines) == 1)
-      return url_for('@aPage?slug='.$engines[0]['slug']);
+      return $engines[0];
 
     //When there are more than one engine page we need to use some heuristics to
     //guess what the best page is.
@@ -34,24 +36,25 @@ abstract class PluginaBlogPost extends BaseaBlogPost
     }
 
     if(count($catIds) < 1)
-      return url_for('@aPage?slug='.$engines[0]['slug']);
+      return $engines[0];
 
     $best = array(0, '');
+    
     foreach($engines as $engine)
     {
       $score = 0;
-      foreach($engine->blogCategories as $category)
+      foreach($engine->BlogCategories as $category)
       {
         if(isset($catIds[$category['id']]))
           $score = $score + 1;
       }
       if($score > $best[0])
       {
-        $best = array($score, url_for('@aPage?slug='.$engine['slug']));
+        $best = $engine;
       }
     }
 
-    return $best[1];
+    return $best;
   }
 
 }
