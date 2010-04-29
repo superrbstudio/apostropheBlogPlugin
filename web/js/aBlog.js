@@ -36,12 +36,12 @@ function checkAndSetPublish(status, slug_url)
 function updateBlogForm(slug_url, event)
 {
 
-	$('#a-blog-post-status-indicator').ajaxStart(function(){
-		$(this).show();
-	})
-	$('#a-blog-post-status-indicator').ajaxStop(function(){
-		$(this).hide();
-	})
+	// $('#a-blog-post-status-indicator').ajaxStart(function(){
+	// 	$(this).show();
+	// })
+	// $('#a-blog-post-status-indicator').ajaxStop(function(){
+	// 	$(this).hide();
+	// })
 
 	$.ajax({
 	  type:'POST',
@@ -142,25 +142,27 @@ function updateMessage(msg)
 	};
 
 	var publishButton = $('#a-blog-publish-button');
+	var pUpdate = $('#a-blog-post-update');
 
-	publishButton.children('.message').text(msg).show().siblings(':not(".message")').hide();
-	
-	publishButton.addClass('status').addClass('highlight', 500, function()
-	{
-		publishButton.fadeTo(500,1).removeClass('highlight', 200, function()
-		{
-			publishButton.removeClass('status');
-			if (publishButton.hasClass('published')) 
-			{
-				publishButton.children('.publish').show();
-			}
-			else
-			{
-				publishButton.children('.unpublish').show();				
-			};
-			publishButton.children('.message').hide();			
+	if (pUpdate.data('animating') != 1) {
+		pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
+			publishButton.children().hide();
+			pUpdate.fadeTo(500,1, function(){
+				pUpdate.fadeOut(500, function(){
+					if (publishButton.hasClass('published')) 
+					{
+						publishButton.children('.unpublish').fadeIn(100);
+					}
+					else	
+					{
+						publishButton.children('.publish').fadeIn(100);					
+					}
+					pUpdate.data('animating', 0);
+				});
+			});
 		});
-	});
+	};
+	
 }
 
 function sendUserMessage(label, desc)

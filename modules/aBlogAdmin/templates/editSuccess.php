@@ -22,9 +22,10 @@
 	
 	<div class="a-admin-content main">	
 		
-
-		<dl id="a-blog-post-status-messages">
-		</dl>
+		<?php if (0): ?>	
+		<?php // We aren't using status messages right now ?>
+			<dl id="a-blog-post-status-messages"></dl>
+		<?php endif ?>
 		
 		<div id="a-blog-post-title-interface" class="a-blog-post-title-interface">
 			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />

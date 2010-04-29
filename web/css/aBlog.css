@@ -348,6 +348,7 @@ width: 75px;
 .a-admin-sidebar .section .a-multiple-select-list,
 a.a-sidebar-toggle.post-editors-toggle
 {
+position: relative;
 float: left;
 clear: both;
 width: 100%;
@@ -651,7 +652,8 @@ display: none;
 /*	display: block;*/
 }
 
-.a-btn.a-publish-post
+.a-btn.a-publish-post,
+#a-blog-post-update
 {
 padding: 0;
 width: 100%;
@@ -668,18 +670,17 @@ text-decoration: none !important;
 background: #aaa;
 }
 
-.a-btn.a-publish-post.status
+#a-blog-post-update
 {
-color: #fff !important;
-text-shadow: 0 1px rgba(0,0,0,0.55) !important;
-}
-
-.a-btn.a-publish-post.highlight
-{
+	position: absolute;
+	top: 0;
+	left: 0;
 	background-color: #ac3;
+	color: #fff !important;
+	text-shadow: 0 1px rgba(0,0,0,0.55) !important;
+	display: none;
 }
 
-.a-btn.a-publish-post .message,
 .a-btn.a-publish-post .unpublish,
 .a-btn.a-publish-post.published .publish
 {
@@ -687,8 +688,7 @@ display: none;
 }
 
 .a-btn.a-publish-post .publish,
-.a-btn.a-publish-post.published .unpublish,
-.a-btn.a-publish-post.status .message
+.a-btn.a-publish-post.published .unpublish
 {
 display: inline;
 }

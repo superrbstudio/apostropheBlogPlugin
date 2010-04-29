@@ -22,9 +22,9 @@
 	<a href="#" class="a-btn big a-publish-post <?php echo ($a_blog_post['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
 	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe_blog') ?></span>
 	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe_blog') ?></span>
-		<span class="message"></span>
 	</a>
-
+	<div id="a-blog-post-update" class="a-btn big a-publish-post">Saved</div>
+	
 	<div class="post-status option">
 	  <?php echo $form['status']->renderRow() ?>
 	</div>
@@ -79,11 +79,6 @@
 		<?php endif ?>
 
 	    <h4><?php echo __('Editors', array(), 'apostrophe_blog') ?>: </h4>
-	    <?php
-	    // Dan:
-	    // The multiple-select needs to go away
-	    // This should be the multi-select just like categories only it's hidden
-	    ?>
 	    <?php echo $form['editors_list']->render()?>
 	    <?php echo $form['editors_list']->renderError() ?>
 	
