@@ -668,6 +668,18 @@ text-decoration: none !important;
 background: #aaa;
 }
 
+.a-btn.a-publish-post.status
+{
+color: #fff !important;
+text-shadow: 0 1px rgba(0,0,0,0.55) !important;
+}
+
+.a-btn.a-publish-post.highlight
+{
+	background-color: #ac3;
+}
+
+.a-btn.a-publish-post .message,
 .a-btn.a-publish-post .unpublish,
 .a-btn.a-publish-post.published .publish
 {
@@ -675,7 +687,8 @@ display: none;
 }
 
 .a-btn.a-publish-post .publish,
-.a-btn.a-publish-post.published .unpublish
+.a-btn.a-publish-post.published .unpublish,
+.a-btn.a-publish-post.status .message
 {
 display: inline;
 }
@@ -684,6 +697,7 @@ display: inline;
 {
 color: #000 !important;
 }
+
 
 /* Editor Status Messages */
 

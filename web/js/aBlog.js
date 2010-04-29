@@ -4,7 +4,7 @@ function checkAndSetPublish(status, slug_url)
 	//todo: use jq to get the action from the Form ID
 	
 	var postStatus = $('#a_blog_post_status');
-	var publishButton = $('#a-admin-form a.a-publish-post');
+	var publishButton = $('#a-blog-publish-button');
 
 	if (status == 'published') {
 		publishButton.addClass('published');
@@ -17,13 +17,11 @@ function checkAndSetPublish(status, slug_url)
 		if (status == 'draft') {
 			postStatus.val('published');
 			publishButton.addClass('published');			
-			sendUserMessage('','Your post is now published.');			
 		}
 		else
 		{
 			postStatus.val('draft');
 			publishButton.removeClass('published');			
-			sendUserMessage('','You unpublished your post.');			
 		};
 		
 		// If slug_url
@@ -72,7 +70,7 @@ function updateBlogForm(slug_url, event)
 
 			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
       updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			
+			updateMessage();
 			aUI('#a-admin-form');
       }
 	 	},
@@ -125,25 +123,50 @@ function updateComments(enabled, feedback)
 	if (enabled)
 	{
 		$('.section.comments .allow_comments_toggle').addClass('enabled').removeClass('disabled');
-		sendUserMessage('Comments Enabled','Viewers can leave comments on this blog post.');
 	}
 	else
 	{
 		$('.section.comments .allow_comments_toggle').addClass('disabled').removeClass('enabled');		
-		sendUserMessage('Disabled Comments','Viewers of this blog post cannot comment on it.');
 	}
 }
 
 function updateTemplate(template, feedback)
 {
 	location.reload(true);
-	// sendUserMessage(feedback); // See sendUserMessage function below 
 }
 
-// Send a message to the blog editor confirming a change made via Ajax
+function updateMessage(msg)
+{
+	if (typeof msg == 'undefined') {
+		msg = 'Saved!';
+	};
+
+	var publishButton = $('#a-blog-publish-button');
+
+	publishButton.children('.message').text(msg).show().siblings(':not(".message")').hide();
+	
+	publishButton.addClass('status').addClass('highlight', 500, function()
+	{
+		publishButton.fadeTo(500,1).removeClass('highlight', 200, function()
+		{
+			publishButton.removeClass('status');
+			if (publishButton.hasClass('published')) 
+			{
+				publishButton.children('.publish').show();
+			}
+			else
+			{
+				publishButton.children('.unpublish').show();				
+			};
+			publishButton.children('.message').hide();			
+		});
+	});
+}
+
 function sendUserMessage(label, desc)
 {	
 	// Messages are turned off for now!
+	// Send a message to the blog editor confirming a change made via Ajax
 	
 	// var mLabel = (label)?label.toString():""; // passed from ajaxAction
 	// var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction

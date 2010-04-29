@@ -19,9 +19,10 @@
 
 <?php // Huge Publish Button and Publish Date ?>
 <div class="published section">
-	<a href="#" class="a-btn big a-publish-post <?php echo ($a_blog_post['status'] == 'published')? 'published':'' ?>" onclick="return false;">
+	<a href="#" class="a-btn big a-publish-post <?php echo ($a_blog_post['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
 	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe_blog') ?></span>
 	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe_blog') ?></span>
+		<span class="message"></span>
 	</a>
 
 	<div class="post-status option">
