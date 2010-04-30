@@ -12,5 +12,5 @@
  */
 abstract class PluginaEvent extends BaseaEvent
 {
-
+  protected $engine = 'aEvent';
 }
