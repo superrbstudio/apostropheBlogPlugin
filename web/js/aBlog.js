@@ -1,4 +1,3 @@
-// Publish / Unpublish Button
 function checkAndSetPublish(status, slug_url)
 {
 	//todo: use jq to get the action from the Form ID
@@ -14,7 +13,8 @@ function checkAndSetPublish(status, slug_url)
 
 		$(this).blur();
 
-		if (status == 'draft') {
+		if (status == 'draft') 
+		{
 			postStatus.val('published');
 			publishButton.addClass('published');			
 		}
@@ -25,12 +25,107 @@ function checkAndSetPublish(status, slug_url)
 		};
 		
 		// If slug_url
-		if (typeof slug_url != 'undefined') {
+		if (typeof slug_url != 'undefined') 
+		{
 			updateBlogForm(slug_url);			
 		};
 
 	});			
 }
+
+function initTitle(slug_url)
+{
+	// Title Interface 
+	// =============================================
+	var titleInterface = $('#a_blog_post_title_interface');
+	var titlePlaceholder = $('#a-blog-post-title-placeholder');
+	var originalTitle = titleInterface.val();
+
+	if (originalTitle == 'untitled') 
+	{ // The blog post is 'Untitled' -- Focus the input		
+		titleInterface.focus(); 
+	};
+	
+	// Title: On Change Compare
+	titleInterface.change(function(){
+		if ($(this).val() != '') 
+		{ // If the input is not empty
+			// Pass the value to the admin form and update
+			$('#a_blog_post_title').val($(this).val()); 
+			updateBlogForm(slug_url);
+		};
+	});
+	
+	titleInterface.blur(function()
+	{ // Check for Empty Title Field			
+		if ($(this).val() == '') 
+		{ 	
+			$(this).next().show(); 
+		}
+	});
+
+	titleInterface.focus(function()
+	{	// Always hide the placeholder on focus
+		$(this).next().hide(); 
+	});
+		
+	titlePlaceholder.mousedown(function()
+	{	// If you click the placeholder text 
+		// focus the input (Mousedown is faster than click here)
+		titleInterface.focus(); 
+	}).hide();
+}
+
+function initPermalink(slug_url)
+{
+	// Permalink Interface  
+	// =============================================
+	var permalinkInterface = $('#a-blog-post-permalink-interface');
+	var pInput = permalinkInterface.find('input');
+	var pControls = permalinkInterface.find('ul.a-controls');
+	var originalSlug = pInput.val();
+
+	// Permalink: On Focus Listen for Changes
+	pInput.focus(function(){
+		$(this).select();
+		$(this).keyup(function(){
+			if ($(this).val().trim() != originalSlug)
+			{
+				permalinkInterface.addClass('has-changes');
+				pControls.fadeIn();
+			}
+		});
+	});
+
+	// Permalink Interface Controls: Save | Cancel
+	// =============================================
+	pControls.click(function(event)
+	{
+		event.preventDefault();
+		$target = $(event.target);
+					
+		if ($target.hasClass('a-save'))
+		{
+			if (pInput.val() == '') 
+			{ 	
+				pInput.val(originalSlug);
+				pControls.hide();
+			}
+			if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) 
+			{
+				$('#a_blog_post_slug').val(pInput.val()); // Pass the value to the admin form and update
+				updateBlogForm(slug_url);
+			}										
+		}
+		
+		if ($target.hasClass('a-cancel'))
+		{
+			pInput.val(originalSlug);
+			pControls.hide();
+		}
+	});
+}
+
 
 // Ajax Update Blog Form
 function updateBlogForm(slug_url, event)
@@ -78,43 +173,42 @@ function updateBlogForm(slug_url, event)
 	});
 }
 
-// Update Title Function for Ajax calls when it is returned clean from Apostrophe
+
 function updateTitle(title, feedback)
-{
-		var titleInput = $('#a_blog_post_title_interface');
+{ // Update Title Function for Ajax calls when it is returned clean from Apostrophe
+	var titleInput = $('#a_blog_post_title_interface');
 		
-		if (title != null) 
-		{
-			titleInput.val(title);			
-		};
-		
-		// sendUserMessage(feedback); // See sendUserMessage function below
+	if (title != null) 
+	{
+		titleInput.val(title);			
+	};
 }
 
-// Update Slug Function for Ajax calls when it is returned clean from Apostrophe
+
 function updateSlug(slug, feedback)
-{
-		var permalinkInput = $('#a_blog_post_permalink_interface');
-    var slugInput = $('#a_blog_post_slug');
-		if (slug != null)
-		{
-			permalinkInput.val(slug);
-      slugInput.val(slug);
-		};
+{ // Update Slug Function for Ajax calls when it is returned clean from Apostrophe
+	var permalinkInput = $('#a_blog_post_permalink_interface');
+  var slugInput = $('#a_blog_post_slug');
 
-		// sendUserMessage(feedback); // See sendUserMessage function below
+	if (slug != null)
+	{
+		permalinkInput.val(slug);
+     slugInput.val(slug);
+	};
+
+	// sendUserMessage(feedback); // See sendUserMessage function below
 }
 
-// Update TitleAndSlug Function to save u time :D !
+
 function updateTitleAndSlug(title, slug)
-{
+{ // Update TitleAndSlug Function to save u time :D !
 	updateTitle(title);
 	updateSlug(slug);
 }
 
-// Toggle any checkbox you want with this one
+
 function toggleCheckbox(checkbox)
-{
+{ // Toggle any checkbox you want with this one
 	checkbox.attr('checked', !checkbox.attr('checked')); 
 }
 
