@@ -7,14 +7,12 @@
 <?php echo $form->renderHiddenFields() ?>
 
 
-
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
   <?php echo $form['title']->renderRow() ?>
   <?php echo $form['slug']->getWidget()->render('a_blog_post[slug]', $a_blog_post['slug']) ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
-
 
 
 <?php // Huge Publish Button and Publish Date ?>
@@ -32,19 +30,8 @@
 	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 
 	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render() ?>
+	  <?php echo $form['published_at']->render(array('onClose' => 'updateBlogMulti')) ?>
 	  <?php echo $form['published_at']->renderError() ?>
-
-	  <?php
-	  // Dan:
-	  // All of a sudden we have save and cancel buttons now.
-	  // So apparently when you click save it makes this change
-	  // If you click cancel it some how restores it to 'Publish Now' – It doesn't just simply hide this options pane
-	  ?>
-	  <ul class="a-controls published_at">
-	    <li><a href="#" onclick="checkAndSetPublish('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>'); return false;" class="a-btn a-save"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
-	    <li><a href="#" onclick="checkAndSetPublish('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>'); return false;" class="a-btn a-cancel"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
-	  </ul>
 	</div>
 </div>
 
@@ -142,4 +129,4 @@
 </div>
 <?php endif ?>
 
-<?php include_partial('aBlogAdmin/formScripts', array('a_blog_post' => $a_blog_post)) ?>
+<?php include_partial('aBlogAdmin/formScripts', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>

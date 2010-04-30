@@ -11,6 +11,10 @@
 				}
 	    });
 
+			$('#<?php echo $form['published_at']->renderId(); ?>').datepicker('option', 'onClose', function() {	
+					alert('hello monkey');
+				});
+
 			// Sidebar Toggle
 			// =============================================
 	    $('.a-sidebar-toggle').click(function(){
