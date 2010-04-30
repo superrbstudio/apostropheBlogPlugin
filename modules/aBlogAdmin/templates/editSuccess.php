@@ -1,5 +1,5 @@
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
-<?php include_partial('aBlogAdmin/assets') ?>
+<?php include_partial('assets') ?>
 <?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
 
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
@@ -11,14 +11,14 @@
 			<div class="a-subnav-inner">	
 				<ul class="a-admin-action-controls">
 					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="all-posts-btn"><?php echo __('All Posts', array(), 'apostrophe-blog') ?></a></li>
-	         <?php include_partial('aBlogAdmin/list_actions', array('helper' => $helper)) ?>
+	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
 				<div id="a-blog-post-status-indicator"></div>
 			</div> 
 	  </div>
 	<?php end_slot() ?>
   
-  <?php include_partial('aBlogAdmin/flashes') ?>
+  <?php include_partial('flashes') ?>
 	
 	<div class="a-admin-content main">	
 		
@@ -52,13 +52,13 @@
 
   <div class="a-admin-sidebar">
     <div id='a-admin-blog-post-form'>
-    <?php include_partial('aBlogAdmin/form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
+    <?php include_partial('form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
     </div>
   </div>
   
   <div class="a-admin-footer">
-    <?php include_partial('aBlogAdmin/form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
+    <?php include_partial('form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
   </form>
-<?php //include_partial('aBlogAdmin/form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+<?php //include_partial('form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>

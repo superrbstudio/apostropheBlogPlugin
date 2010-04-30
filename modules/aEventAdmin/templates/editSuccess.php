@@ -46,129 +46,19 @@
 			</div>
 		</div>
 
-  	<?php include_partial('aBlog/'.$a_event->getTemplate(), array('a_blog_post' => $a_event)) ?>
+  	<?php include_partial('aBlog/'.$a_event->getTemplate(), array('a_event' => $a_event)) ?>
 
   </div>
 
   <div class="a-admin-sidebar">
     <div id='a-admin-blog-post-form'>
-    <?php include_partial('form', array('a_blog_post' => $a_event, 'form' => $form)) ?>
+    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form)) ?>
     </div>
   </div>
 
   <div class="a-admin-footer">
-    <?php include_partial('form_footer', array('a_blog_post' => $a_event, 'form' => $form, 'configuration' => $configuration)) ?>
+    <?php include_partial('form_footer', array('a_event' => $a_event, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
   </form>
-<?php //include_partial('form_actions', array('a_blog_post' => $a_event, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+<?php //include_partial('form_actions', array('a_event' => $a_event, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>
-
-
-<script type="text/javascript" charset="utf-8">
-	function updateBlog(event)
-  {
-    if(event.target.name == 'select-<?php echo $form['categories_list']->renderName() ?>[]' &&
-       event.target.options[0].selected == true)
-    {
-
-    }
-    else if(event.target.name == 'add-text') {}
-    else
-    {
-      updateBlogForm('<?php echo url_for('a_blog_admin_update', $a_event) ?>', event);
-    }
-  }
-
-  $(document).ready(function(){
-
-		// Title Interface
-		// =============================================
-		var titleInterface = $('#a_blog_post_title_interface');
-		var titlePlaceholder = $('#a-blog-post-title-placeholder');
-		var originalTitle = "<?php echo $a_event->title ?>";
-
-		<?php if ($a_event->title == 'untitled'): ?>
-		titleInterface.focus(); // The blog post is 'Untitled' -- Focus the input
-		<?php endif ?>
-
-		// Title: On Change Compare
-		titleInterface.change(function(){
-			if ($(this).val() != '') { // If the input is not empty
-				$('#a_blog_post_title').val($(this).val()); // Pass the value to the admin form and update
-				updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_event) ?>');
-			};
-		});
-
-		titleInterface.blur(function(){
-			// Check for Empty Title Field
-			if ($(this).val() == '')
-			{
-				$(this).next().show();
-			}
-		});
-
-		titleInterface.focus(function(){
-			// Always hide the placeholder on focus
-			$(this).next().hide();
-		});
-
-		titlePlaceholder.mousedown(function(){
-			// If you click the placeholder text
-			// focus the input (Mousedown is faster than click here)
-			titleInterface.focus();
-		}).hide();
-
-		// Permalink Interface
-		// =============================================
-		var permalinkInterface = $('#a-blog-post-permalink-interface');
-		var pInput = permalinkInterface.find('input');
-		var pControls = permalinkInterface.find('ul.a-controls');
-		var originalSlug = '<?php echo $a_event->slug ?>';
-
-		// Permalink: On Focus Listen for Changes
-		pInput.focus(function(){
-			$(this).select();
-			$(this).keyup(function(){
-				if ($(this).val().trim() != originalSlug)
-				{
-					permalinkInterface.addClass('has-changes');
-					pControls.fadeIn();
-				}
-			});
-		});
-
-		// Permalink Interface Controls: Save | Cancel
-		// =============================================
-		pControls.click(function(event){
-			event.preventDefault();
-			$target = $(event.target);
-
-			if ($target.hasClass('a-save'))
-			{
-				if (pInput.val() == '') {
-					pInput.val(originalSlug);
-					pControls.hide();
-				}
-				if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) {
-					$('#a_blog_post_slug').val(pInput.val()); // Pass the value to the admin form and update
-					updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_event) ?>');
-				}
-			}
-
-			if ($target.hasClass('a-cancel'))
-			{
-				pInput.val(originalSlug);
-				pControls.hide();
-			}
-		});
-
-		// Comments Toggle
-		// =============================================
-		$('.section.comments a.allow_comments_toggle').click(function(event){
-			event.preventDefault();
-			toggleCheckbox($('#a_blog_post_allow_comments'));
-			updateBlogForm('<?php echo url_for('a_blog_admin_update',$a_event) ?>');
-		});
-
-  });
-</script>
