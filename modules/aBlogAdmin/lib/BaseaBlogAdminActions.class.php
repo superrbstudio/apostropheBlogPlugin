@@ -9,7 +9,7 @@ require_once dirname(__FILE__).'/aBlogAdminGeneratorHelper.class.php';
  * @author      Dan Ordille <dan@punkave.com>
  */
 abstract class BaseaBlogAdminActions extends autoABlogAdminActions
-{ 
+{
 
   public function executeNew(sfWebRequest $request)
   {
@@ -58,98 +58,4 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
     $this->setTemplate('edit');
   }
-
-  protected function buildQuery()
-  {
-    $tableMethod = $this->configuration->getTableMethod();
-    if (is_null($this->filters))
-    {
-      $this->filters = $this->configuration->getFilterForm($this->getFilters());
-    }
-
-    $this->filters->setTableMethod($tableMethod);
-
-    $query = $this->filters->buildQuery($this->getFilters());
-
-    $this->addSortQuery($query);
-
-    if(!$this->getUser()->hasCredential('admin'))
-    {
-      Doctrine::getTable('aBlogPost')->filterByEditable($query, $this->getUser()->getGuardUser()->getId());
-    }
-
-    $event = $this->dispatcher->filter(new sfEvent($this, 'admin.build_query'), $query);
-    $query = $event->getReturnValue();
-
-    return $query;
-  }
-
-  protected function executeBatchPublish(sfWebRequest $request)
-  {
-    $ids = $request->getParameter('ids');
-
-    $items = Doctrine_Query::create()
-      ->from('aBlogPost')
-      ->whereIn('id', $ids)
-      ->execute();
-    $count = count($items);
-    $error = false;
-    try
-    {
-      foreach($items as $item)
-      {
-        $item->publish();
-      }
-      $items->save();
-    } catch (Exception $e)
-    {
-      $error = true;
-    }
-
-    if (($count == count($ids)) && (!$error))
-    {
-      $this->getUser()->setFlash('notice', 'The selected items have been published successfully.');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'An error occurred while publishing the selected items.');
-    }
-
-    $this->redirect('@a_blog_admin');
-  }
-
-  protected function executeBatchUnpublish(sfWebRequest $request)
-  {
-    $ids = $request->getParameter('ids');
-
-    $items = Doctrine_Query::create()
-      ->from('aBlogPost')
-      ->whereIn('id', $ids)
-      ->execute();
-    $count = count($items);
-    $error = false;
-    try
-    {
-      foreach($items as $item)
-      {
-        $item->unpublish();
-      }
-      $items->save();
-    } catch (Exception $e)
-    {
-      $error = true;
-    }
-
-    if (($count == count($ids)) && (!$error))
-    {
-      $this->getUser()->setFlash('notice', 'The selected items have been unpublished successfully.');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'An error occurred while unpublishing the selected items.');
-    }
-
-    $this->redirect('@a_blog_admin');
-  }
-  
 }

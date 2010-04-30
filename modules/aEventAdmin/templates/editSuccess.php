@@ -10,7 +10,7 @@
 		<div class="a-subnav-wrapper blog">
 			<div class="a-subnav-inner">
 				<ul class="a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="all-posts-btn"><?php echo __('All Posts', array(), 'apostrophe-blog') ?></a></li>
+					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="all-posts-btn"><?php echo __('All Events', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
 				<div id="a-blog-post-status-indicator"></div>

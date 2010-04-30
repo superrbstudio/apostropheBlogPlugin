@@ -1,29 +1,29 @@
-.aBlogAdmin .a-admin-container
+.a-blog-admin .a-admin-container
 {
 float: left;
 width: 100%;
 }
 
-.aBlogAdmin #a-content,
-.aBlogAdmin .a-admin-content,
-.aBlogAdmin .a-admin-footer,
-.aBlogAdmin .a-admin-actions
+.a-blog-admin #a-content,
+.a-blog-admin .a-admin-content,
+.a-blog-admin .a-admin-footer,
+.a-blog-admin .a-admin-actions
 {
 width: 100%;
 }
 
-.aBlogAdmin .a-admin-content
+.a-blog-admin .a-admin-content
 {
 float: right;
 width: 100%;
 }
 
-.aBlogAdmin.edit .a-admin-content
+.a-blog-admin.edit .a-admin-content
 {
 width: 720px;
 }
 
-.a-admin.aBlogAdmin .a-subnav-wrapper
+.a-admin.a-blog-admin .a-subnav-wrapper
 {
 width: 100%;
 background: none;
@@ -33,7 +33,7 @@ box-shadow: none;
 margin: 0 0 10px 0;
 }
 
-.a-admin.aBlogAdmin .a-subnav-inner
+.a-admin.a-blog-admin .a-subnav-inner
 {
 	padding: 0;
 }
@@ -98,8 +98,8 @@ width: 200px;
 	text-indent: -9999px;
 }
 
-.aBlogAdmin #a-admin-list-batch-actions,
-.aBlogAdmin #a-admin-list-th-actions
+.a-blog-admin #a-admin-list-batch-actions,
+.a-blog-admin #a-admin-list-th-actions
 {
 width: auto;
 }

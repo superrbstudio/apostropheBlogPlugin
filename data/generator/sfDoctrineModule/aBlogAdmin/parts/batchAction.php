@@ -43,12 +43,8 @@
     $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
   }
 
-  protected function executeBatchDelete(sfWebRequest $request)
+  protected function batchAction($action, sfWebRequest $request)
   {
-    // TBB: use collection delete rather than a delete query. This ensures
-    // that the object's delete() method is called, which provides
-    // for checking userHasPrivileges()
-    
     $ids = $request->getParameter('ids');
 
     $items = Doctrine_Query::create()
@@ -59,19 +55,58 @@
     $error = false;
     try
     {
-      $items->delete();
+      $items->$action();
     } catch (Exception $e)
     {
       $error = true;
     }
+    return $error;
+  }
+
+  protected function executeBatchDelete(sfWebRequest $request)
+  {
+    $error = $this->batchAction('delete', $request);
     
-    if (($count == count($ids)) && (!$error))
+    if (($count == count($request->getParameter('ids'))) && (!$error))
     {
       $this->getUser()->setFlash('notice', 'The selected items have been deleted successfully.');
     }
     else
     {
       $this->getUser()->setFlash('error', 'An error occurred while deleting the selected items.');
+    }
+
+    $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
+  }
+
+
+  protected function executeBatchPublish(sfWebRequest $request)
+  {
+    $error = $this->batchAction('publish', $request);
+
+    if (($count == count($request->getParameter('ids'))) && (!$error))
+    {
+      $this->getUser()->setFlash('notice', 'The selected items have been published successfully.');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'An error occurred while publishing the selected items.');
+    }
+
+    $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
+  }
+
+  protected function executeBatchUnpublish(sfWebRequest $request)
+  {
+    $error = $this->batchAction('unpublish', $request);
+
+    if (($count == count($request->getParameter('ids'))) && (!$error))
+    {
+      $this->getUser()->setFlash('notice', 'The selected items have been unpublished successfully.');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'An error occurred while unpublishing the selected items.');
     }
 
     $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');

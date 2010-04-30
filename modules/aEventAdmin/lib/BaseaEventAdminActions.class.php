@@ -32,17 +32,25 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   {
     $this->a_event = $this->getRoute()->getObject();
     $this->form = $this->configuration->getForm($this->a_event);
-    
+
     if($request->isXmlHttpRequest())
     {
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
       if ($this->form->isValid())
       {
         $this->a_event = $this->form->save();
+        //We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
+        $this->form = $this->configuration->getForm($this->a_event);
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
       }
       $this->setLayout(false);
-      return $this->renderPartial('aEventAdmin/form', array('a_event' => $this->a_event, 'form' => $this->form, 'dog' => '1'));
+      $response = array();
+      $response['aBlogPost'] = $this->a_event->toArray();
+      $response['modified'] = $this->a_event->getLastModified();
+      //Any additional messages can go here
+      $output = json_encode($response);
+      $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
+      return sfView::HEADER_ONLY;
     }
     else
     {

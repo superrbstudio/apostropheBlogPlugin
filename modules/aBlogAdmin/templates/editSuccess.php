@@ -1,6 +1,6 @@
 <?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
 <?php include_partial('aBlogAdmin/assets') ?>
-<?php slot('body_class') ?>a-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
+<?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
 
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 	

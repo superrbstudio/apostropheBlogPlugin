@@ -19,7 +19,7 @@ generator:
         tags_list: { label: tagged }
 
       list:
-        title:    "Blog Post Admin"
+        title:    "Event Admin"
         display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
         fields:
           author_id:
@@ -36,7 +36,7 @@ generator:
             label:  Date
         actions:
           new:
-            label: New Post
+            label: New Event
             action: new
             params:
               class: a-btn big icon a-add alt

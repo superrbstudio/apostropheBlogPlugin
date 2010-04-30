@@ -19,6 +19,7 @@ generator:
         tags_list: { label: tagged }       
       
       list:
+        table_method:   filterByEditable
         title:    "Blog Post Admin"
         display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
         fields:

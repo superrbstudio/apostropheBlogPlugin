@@ -11,11 +11,9 @@
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
   <?php echo $form['title']->renderRow() ?>
-  <?php echo $form['slug']->getWidget()->render('a_blog_post[slug]', $a_blog_post['slug']) ?>
+  <?php echo $form['slug']->renderRow() ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
-
-
 
 <?php // Huge Publish Button and Publish Date ?>
 <div class="published section">
