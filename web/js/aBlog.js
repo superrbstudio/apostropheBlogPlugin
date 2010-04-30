@@ -133,10 +133,10 @@ function updateBlogForm(slug_url, event)
 
 	// $('#a-blog-post-status-indicator').ajaxStart(function(){
 	// 	$(this).show();
-	// })
+	// });
 	// $('#a-blog-post-status-indicator').ajaxStop(function(){
 	// 	$(this).hide();
-	// })
+	// });
 
 	$.ajax({
 	  type:'POST',
@@ -159,9 +159,9 @@ function updateBlogForm(slug_url, event)
         updateTemplate(data.template, data.feedback);
       };
 
-			// if ( the Comments has changed ) {
-      updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
-			// };
+      if ( typeof(data.modified.allow_comments) != "undefined" ) {
+      	updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+			};
 
 			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
       updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
