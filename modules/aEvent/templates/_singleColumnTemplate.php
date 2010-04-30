@@ -1,10 +1,9 @@
-<?php a_area('body', array(
+<?php a_area('blog-body', array(
   'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_event['id'],
-  'allowed_types' => array('aRichText', 'aImage', 'aButton', 'aSlideshow', 'aVideo'),
+  'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
-    'aImage' => array('width' => 700, 'flexHeight' => true, 'resizeType' => 's'),
-    'aButton' => array('width' => 700, 'flexHeight' => true, 'resizeType' => 's'),
-    'aSlideshow' => array("width" => 700, "flexHeight" => true, 'resizeType' => 's', )
-  ))
-) ?>
+    'aSlideshow' => array("width" => 680, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 680)),
+		'aVideo' => array('width' => 680), 
+		'aPDF' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'),				
+))) ?>

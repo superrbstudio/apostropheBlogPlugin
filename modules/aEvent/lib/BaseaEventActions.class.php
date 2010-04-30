@@ -148,10 +148,10 @@ abstract class BaseaEventActions extends aEngineActions
       array(
         'format'      => 'rss',
         'title'       => sfConfig::get('app_aEvent_feed_title'),
-        'link'        => '@a_blog',
+        'link'        => '@a_event',
         'authorEmail' => sfConfig::get('app_aEvent_feed_author_email'),
         'authorName'  => sfConfig::get('app_aEvent_feed_author_name'),
-        'routeName'   => '@a_blog_post',
+        'routeName'   => '@a_event',
         'methods'     => array('description' => 'getFeedText')
       )
     );

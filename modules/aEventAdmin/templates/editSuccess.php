@@ -46,7 +46,7 @@
 			</div>
 		</div>
 
-  	<?php include_partial('aBlog/'.$a_event->getTemplate(), array('a_event' => $a_event)) ?>
+  	<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event)) ?>
 
   </div>
 
