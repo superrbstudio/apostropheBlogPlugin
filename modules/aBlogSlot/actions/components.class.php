@@ -34,6 +34,7 @@ class aBlogSlotComponents extends BaseaSlotComponents
       $this->options['slideshowOptions'] = array();
 
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
+    $this->options['maxImages'] = $this->getOption('maxImages', 1);
     
     $this->aBlogPosts = $q->execute();
     aBlogItemTable::populatePages($this->aBlogPosts);
