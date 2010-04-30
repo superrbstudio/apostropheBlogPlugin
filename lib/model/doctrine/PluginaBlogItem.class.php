@@ -94,9 +94,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     {
       foreach($this->Page->getArea($area) as $slot)
       {
-        if(method_exists($slot, 'getSearchText'))
+        if(method_exists($slot, 'getText'))
         {
-          $text .= strip_tags($slot->getValue());
+          $text .= strip_tags($slot->getText());
         }
       }
     }
@@ -118,15 +118,48 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     return $this->getTextForAreas(array($area), $limit);
   }
+
+  public function getMediaForArea($area, $type = null, $limit = null)
+  {
+    return $this->getMediaForAreas(array($area), $type, $limit);
+  }
+
+  /**
+   * Given an array of array this function returns the mediaItems in those areas.
+   * @param  aArea $areas
+   * @param  $type Set the type of media to return (image, video, pdf, etc...)
+   * @param  $limit Limit the number of mediaItems returned
+   * @return array aMediaItems
+   */
+  public function getMediaForAreas($areas, $type = null, $limit = 9999)
+  {
+    $aMediaItems = array();
+    foreach($areas as $area)
+    {
+      foreach($this->Page->getArea($area) as $slot)
+      {
+        foreach($slot->MediaItems as $aMediaItem)
+        {
+          if(is_null($type) || $aMediaItem['type'] == $type)
+          {
+            $limit = $limit - 1;
+            $aMediaItems[] = $aMediaItem;
+            if($limit == 0) return $aMediaItems;
+          }
+        }
+      }
+    }
+    return $aMediaItems;
+  }
   
   public function getFeedText()
   {
     $text = '';
     foreach($this->Page->getArea('blog-body') as $slot)
     {
-      if(method_exists($slot, 'getSearchText'))
+      if(method_exists($slot, 'getText'))
       {
-        $text .= $slot->getSearchText();
+        $text .= $slot->getText();
       }
     }
     return $text;

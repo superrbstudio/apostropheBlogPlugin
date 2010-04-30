@@ -47,7 +47,8 @@ class PluginaBlogItemTable extends Doctrine_Table
     $q = $this->addCategories();  
     return Doctrine::getTable('aBlogCategory')->addCategoriesForUser($user, $admin, $q);
   }
-  
+
+
   public function addCategories(Doctrine_Query $q=null)
   {
     if(is_null($q))
@@ -57,6 +58,11 @@ class PluginaBlogItemTable extends Doctrine_Table
     return $q;
   }
 
+  /**
+   * Given an array of blogItems this function will populate its virtual page
+   * areas with the current slot versions.
+   * @param aBlogItem $blogItems
+   */
   public static function populatePages($blogItems)
   {    
     $pageIds = array();
@@ -68,7 +74,8 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $q = aPageTable::queryWithSlots();
       $q->whereIn('id', $pageIds);
-      $q->execute();
+      $pages = $q->execute();
+      aTools::cacheVirtualPages($pages);
     }
   }
 }

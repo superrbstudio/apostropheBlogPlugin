@@ -51,7 +51,9 @@ abstract class BaseaBlogActions extends aEngineActions
     $pager->init();
     
     $this->pager = $pager;
-    
+
+    aBlogItemTable::populatePages($pager->getResults());
+
     if($this->getRequestParameter('feed', false))
     {
       $this->getFeed();

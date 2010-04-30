@@ -14,7 +14,7 @@
       <?php endif ?>
 
       <div class="a-blog-post-excerpt-container">
-        <?php include_partial('aBlog/'.$aBlogPost['template'].'_slot', array('aBlogPost' => $aBlogPost)) ?>
+        <?php include_partial('aBlog/'.$aBlogPost['template'].'_slot', array('aBlogPost' => $aBlogPost, 'options' => $options)) ?>
         <div class="a-blog-read-more">
           <?php echo link_to('Read More', 'a_blog_post', $aBlogPost, array('class' => 'a-blog-more')) ?>
         </div>

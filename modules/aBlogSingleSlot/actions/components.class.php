@@ -25,5 +25,10 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
       $this->aBlogItem = Doctrine::getTable($this->modelClass)->findOneBy('id', $this->values['blog_item']);
       aBlogItemTable::populatePages(array($this->aBlogItem));
     }
+    $this->options['word_count'] = $this->getOption('word_count', 100);
+    if(!isset($this->options['slideshowOptions']))
+      $this->options['slideshowOptions'] = array();
+
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
   }
 }

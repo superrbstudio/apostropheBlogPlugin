@@ -30,6 +30,10 @@ class aBlogSlotComponents extends BaseaSlotComponents
     if(isset($this->values['count']))
       $q->limit($this->values['count']);
 
+    if(!isset($this->options['slideshowOptions']))
+      $this->options['slideshowOptions'] = array();
+
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     
     $this->aBlogPosts = $q->execute();
     aBlogItemTable::populatePages($this->aBlogPosts);
