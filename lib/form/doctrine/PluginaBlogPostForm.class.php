@@ -19,6 +19,8 @@ abstract class PluginaBlogPostForm extends BaseaBlogPostForm
 		));
     
     $this->getWidgetSchema()->setDefault('published_at', date('Y/m/d H:i'));
+
+    $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }  
 
 }

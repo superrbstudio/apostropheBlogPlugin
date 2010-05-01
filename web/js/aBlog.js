@@ -2,7 +2,7 @@ function checkAndSetPublish(status, slug_url)
 {
 	//todo: use jq to get the action from the Form ID
 	
-	var postStatus = $('#a_blog_post_status');
+	var postStatus = $('#a_blog_item_status');
 	var publishButton = $('#a-blog-publish-button');
 
 	if (status == 'published') {
@@ -37,8 +37,8 @@ function initTitle(slug_url)
 {
 	// Title Interface 
 	// =============================================
-	var titleInterface = $('#a_blog_post_title_interface');
-	var titlePlaceholder = $('#a-blog-post-title-placeholder');
+	var titleInterface = $('#a_blog_item_title_interface');
+	var titlePlaceholder = $('#a-blog-item-title-placeholder');
 	var originalTitle = titleInterface.val();
 
 	if (originalTitle == 'untitled') 
@@ -51,7 +51,7 @@ function initTitle(slug_url)
 		if ($(this).val() != '') 
 		{ // If the input is not empty
 			// Pass the value to the admin form and update
-			$('#a_blog_post_title').val($(this).val()); 
+			$('#a_blog_item_title').val($(this).val());
 			updateBlogForm(slug_url);
 		};
 	});
@@ -113,7 +113,7 @@ function initPermalink(slug_url)
 			}
 			if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) 
 			{
-				$('#a_blog_post_slug').val(pInput.val()); // Pass the value to the admin form and update
+				$('#a_blog_item_slug').val(pInput.val()); // Pass the value to the admin form and update
 				updateBlogForm(slug_url);
 			}										
 		}
@@ -176,7 +176,7 @@ function updateBlogForm(slug_url, event)
 
 function updateTitle(title, feedback)
 { // Update Title Function for Ajax calls when it is returned clean from Apostrophe
-	var titleInput = $('#a_blog_post_title_interface');
+	var titleInput = $('#a_blog_item_title_interface');
 		
 	if (title != null) 
 	{
@@ -187,8 +187,8 @@ function updateTitle(title, feedback)
 
 function updateSlug(slug, feedback)
 { // Update Slug Function for Ajax calls when it is returned clean from Apostrophe
-	var permalinkInput = $('#a_blog_post_permalink_interface');
-  var slugInput = $('#a_blog_post_slug');
+	var permalinkInput = $('#a_blog_item_permalink_interface');
+  var slugInput = $('#a_blog_item_slug');
 
 	if (slug != null)
 	{

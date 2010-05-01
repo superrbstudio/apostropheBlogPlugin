@@ -10,4 +10,11 @@
  */
 abstract class PluginaEventForm extends BaseaEventForm
 {
+
+  public function setup()
+  {
+    parent::setup();
+    
+    $this->widgetSchema->setNameFormat('a_blog_item[%s]');
+  }
 }
