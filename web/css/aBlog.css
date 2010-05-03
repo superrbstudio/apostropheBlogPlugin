@@ -567,7 +567,7 @@ background-position: 100% -20px;
 
 /* Blog Edit Post View */
 
-#a-blog-post-title-interface
+#a-blog-item-title-interface
 {
 	display: block;
 	float: left;
@@ -575,7 +575,7 @@ background-position: 100% -20px;
 	clear: both;
 }
 
-input#a_blog_post_title_interface
+input#a_blog_item_title_interface
 {
 font-size: 18px;
 -moz-border-radius: 2px;
@@ -587,7 +587,7 @@ font-family: Arial, sans-serif;
 border: 1px solid #ddd;
 }
 
-#a-blog-post-title-placeholder
+#a-blog-item-title-placeholder
 {
 line-height: 30px;
 font-size: 18px;
@@ -597,8 +597,8 @@ padding-left: 5px;
 display: none;
 }
 
-#a-blog-post-permalink-interface,
-#a-blog-post-permalink-interface *
+#a-blog-item-permalink-interface,
+#a-blog-item-permalink-interface *
 {
 float: left;
 font-size: 11px;
@@ -606,20 +606,20 @@ color: #999;
 line-height: 20px;
 }
 
-#a-blog-post-permalink-interface
+#a-blog-item-permalink-interface
 {
 margin: 10px 0;
 width: 100%;
 clear: both;
 }
 
-#a-blog-post-permalink-interface h6
+#a-blog-item-permalink-interface h6
 {
 font-weight: bold;
 margin-right: 5px;
 }
 
-#a-blog-post-permalink-interface input
+#a-blog-item-permalink-interface input
 {
 border: none;
 padding: 1px;
@@ -632,23 +632,23 @@ border: 1px solid rgba(0,0,0,0.05);
 border-radius: 2px;
 }
 
-#a-blog-post-permalink-interface input:hover,
-#a-blog-post-permalink-interface input:focus
+#a-blog-item-permalink-interface input:hover,
+#a-blog-item-permalink-interface input:focus
 {
 border: 1px solid rgba(0,0,0,0.15);
 }
 
-#a-blog-post-permalink-interface input:focus
+#a-blog-item-permalink-interface input:focus
 {
 color: #444;
 }
 
-#a-blog-post-permalink-interface .a-controls
+#a-blog-item-permalink-interface .a-controls
 {
 display: none;
 }
 
-#a-blog-post-permalink-interface.has-changes .a-controls
+#a-blog-item-permalink-interface.has-changes .a-controls
 {
 /*	display: block;*/
 }
