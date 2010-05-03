@@ -22,16 +22,25 @@ class aEventSlotComponents extends BaseaSlotComponents
     $this->values = $this->slot->getArrayValue();
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c')->orderBy($orderby);
+      ->leftJoin($this->modelClass.'.Categories c');
     if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)  
       $q->andWhereIn('c.id', $this->values['categories_list']);
     if(isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
       PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tag' => 1));
 
     $limit = isset($this->values['count']) ? $this->values['count'] : 5;
+   
+    if(!isset($this->options['slideshowOptions']))
+      $this->options['slideshowOptions'] = array();
 
-    aEventTable::getInstance()->addUpcomming($q, $limit);
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
+    $this->options['maxImages'] = $this->getOption('maxImages', 1);
+
+   	aEventTable::getInstance()->addUpcomming($q, $limit);
     
     $this->aEvents = $q->execute();  
+
+    aBlogItemTable::populatePages($this->aEvents);
+
   }
 }
