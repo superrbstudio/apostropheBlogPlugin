@@ -336,9 +336,9 @@ a_blog_category_admin:
       removeFilter: [GET, POST]
       
       
-######################
+################
 # event admin routes #
-######################
+################
 
 a_event_admin:
   class: sfDoctrineRouteCollection
@@ -348,30 +348,42 @@ a_event_admin:
     prefix_path:         admin/event
     column:              slug
     with_wildcard_routes: true
-      
+    with_show:            false
+
+a_event_admin_autocomplete:
+  url:   /admin/event/autocomplete
+  param: { module: aEventAdmin, action: autocomplete }
+  class: sfRoute
+
+a_event_admin_edit:
+  url:  /admin/event/:id/edit/:slug
+  options: { model: aEvent, type: object, method: findOne }
+  param: { module: aEventAdmin, action: edit }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: GET
+    id: \d+
+
+a_event_admin_update:
+  url: /admin/event/:id/update/:slug
+  options: { model: aEvent, type: object, method: findOne }
+  param: { module: aEventAdmin, action: update }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: PUT
+    id: \d+
+
 a_event_admin_removeFilter:
-  url:   /admin/aEventAdmin/remove_filter/:name/:value
+  url:   /admin/event/remove_filter/:name/:value
   param: { module: aEventAdmin, action: removeFilter }
   class: sfRoute
-  
+
 a_event_admin_addFilter:
-  url:   /admin/aEventAdmin/add_filter/:name/:value
+  url:   /admin/event/add_filter/:name/:value
   param: { module: aEventAdmin, action: addFilter }
   class: sfRoute
-  
-a_event_admin_autocomplete:
-  url:   /admin/aEventAdmin/autocomplete
-  param: { module: aEventAdmin, action: autocomplete }
+
+a_event_admin_editCategories:
+  url:   /admin/event/editCategories
+  param: { module: aEventAdmin, action: editCategories }
   class: sfRoute  
-      
-a_event_category_admin:
-  class: sfDoctrineRouteCollection
-  options:
-    model:               aEventCategory
-    module:              aEventCategoryAdmin
-    prefix_path:         admin/event_categories
-    column:              id
-    with_wildcard_routes: true
-    collection_actions:
-      addFilter: [GET, POST]
-      removeFilter: [GET, POST]

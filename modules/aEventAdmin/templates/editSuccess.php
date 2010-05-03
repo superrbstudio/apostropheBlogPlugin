@@ -13,7 +13,7 @@
 					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="all-posts-btn"><?php echo __('All Events', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
-				<div id="a-blog-post-status-indicator"></div>
+				<div id="a-blog-item-status-indicator"></div>
 			</div>
 	  </div>
 	<?php end_slot() ?>
@@ -24,20 +24,20 @@
 
 		<?php if (0): ?>
 		<?php // We aren't using status messages right now ?>
-			<dl id="a-blog-post-status-messages"></dl>
+			<dl id="a-blog-item-status-messages"></dl>
 		<?php endif ?>
 
-		<div id="a-blog-post-title-interface" class="a-blog-post-title-interface">
+		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_event->title == 'untitled')? '':$a_event->title ?>" />
-			<div id="a-blog-post-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
+			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
 		</div>
 
-		<div id="a-blog-post-permalink-interface">
+		<div id="a-blog-item-permalink-interface">
 			<h6>Permalink:</h6>
-			<div class="a-blog-post-permalink-wrapper url">
+			<div class="a-blog-item-permalink-wrapper url">
         <span><?php echo aTools::urlForPage($a_event->findBestEngine()->getSlug()).'/' ?></span><?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
 			</div>
-			<div class="a-blog-post-permalink-wrapper slug">
+			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_post_permalink_interface" value="<?php echo $a_event->slug ?>" id="a_blog_post_permalink_interface">
 			  <ul class="a-controls slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>

@@ -80,7 +80,7 @@ function initPermalink(slug_url)
 {
 	// Permalink Interface  
 	// =============================================
-	var permalinkInterface = $('#a-blog-post-permalink-interface');
+	var permalinkInterface = $('#a-blog-item-permalink-interface');
 	var pInput = permalinkInterface.find('input');
 	var pControls = permalinkInterface.find('ul.a-controls');
 	var originalSlug = pInput.val();
@@ -131,10 +131,10 @@ function initPermalink(slug_url)
 function updateBlogForm(slug_url, event)
 {
 
-	// $('#a-blog-post-status-indicator').ajaxStart(function(){
+	// $('#a-blog-item-status-indicator').ajaxStart(function(){
 	// 	$(this).show();
 	// });
-	// $('#a-blog-post-status-indicator').ajaxStop(function(){
+	// $('#a-blog-item-status-indicator').ajaxStop(function(){
 	// 	$(this).hide();
 	// });
 
@@ -236,7 +236,7 @@ function updateMessage(msg)
 	};
 
 	var publishButton = $('#a-blog-publish-button');
-	var pUpdate = $('#a-blog-post-update');
+	var pUpdate = $('#a-blog-item-update');
 
 	if (pUpdate.data('animating') != 1) {
 		pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
@@ -267,7 +267,7 @@ function sendUserMessage(label, desc)
 	// var mLabel = (label)?label.toString():""; // passed from ajaxAction
 	// var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
 	// var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
-	// var messageContainer = $('#a-blog-post-status-messages');
+	// var messageContainer = $('#a-blog-item-status-messages');
 	// messageContainer.append(newMessage).addClass('has-messages');
 	// messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
 	// messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay

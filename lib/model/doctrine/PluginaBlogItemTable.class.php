@@ -4,6 +4,11 @@
 class PluginaBlogItemTable extends Doctrine_Table
 {
   protected $categoryColumn = 'posts';
+
+  public static function getInstance()
+  {
+    return Doctrine_Core::getTable('aBlogItem');
+  }
   
   public function filterByYMD(Doctrine_Query $q, sfWebRequest $request)
   {
@@ -80,5 +85,10 @@ class PluginaBlogItemTable extends Doctrine_Table
       $pages = $q->execute();
       aTools::cacheVirtualPages($pages);
     }
+  }
+
+  public static function findOne($params)
+  {
+    return self::getInstance()->findOneBy('id', $params['id']);
   }
 }

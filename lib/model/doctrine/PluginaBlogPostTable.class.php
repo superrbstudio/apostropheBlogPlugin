@@ -5,10 +5,9 @@ class PluginaBlogPostTable extends aBlogItemTable
 {
   protected $categoryColumn = 'posts';
 
-  public static function findOne($params)
+  public static function getInstance()
   {
-    return Doctrine::getTable('aBlogPost')->findOneBy('id', $params['id']);
+    return Doctrine_Core::getTable('aBlogPost');
   }
-  
 
 }

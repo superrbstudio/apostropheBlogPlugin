@@ -13,7 +13,7 @@
 					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="all-posts-btn"><?php echo __('All Posts', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
-				<div id="a-blog-post-status-indicator"></div>
+				<div id="a-blog-item-status-indicator"></div>
 			</div> 
 	  </div>
 	<?php end_slot() ?>
@@ -24,21 +24,21 @@
 		
 		<?php if (0): ?>	
 		<?php // We aren't using status messages right now ?>
-			<dl id="a-blog-post-status-messages"></dl>
+			<dl id="a-blog-item-status-messages"></dl>
 		<?php endif ?>
 		
-		<div id="a-blog-post-title-interface" class="a-blog-post-title-interface">
-			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
-			<div id="a-blog-post-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
+		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
+			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
+			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
 		</div>		
 
-		<div id="a-blog-post-permalink-interface">
+		<div id="a-blog-item-permalink-interface">
 			<h6>Permalink:</h6> 
-			<div class="a-blog-post-permalink-wrapper url">
+			<div class="a-blog-item-permalink-wrapper url">
         <span><?php echo aTools::urlForPage($a_blog_post->findBestEngine()->getSlug()).'/' ?></span><?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
 			</div>
-			<div class="a-blog-post-permalink-wrapper slug">
-				<input type="text" name="a_blog_post_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_post_permalink_interface">
+			<div class="a-blog-item-permalink-wrapper slug">
+				<input type="text" name="a_blog_item_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-controls slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
 			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
