@@ -480,10 +480,28 @@ display: inline;
 {
 color: #600;
 }
+
 .a-admin-sidebar .option
 {
 display: none;
 margin: 10px 0 0;
+}
+
+.a-admin-sidebar #post-last-saved.option
+{
+	margin: 0 0 5px;
+}
+
+#post-last-saved b,
+#post-last-saved span
+{
+	font-size: 11px;
+	float: left;
+}
+
+#post-last-saved b
+{
+	margin-right: 10px;
 }
 
 a.a-sidebar-toggle.open

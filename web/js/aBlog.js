@@ -131,30 +131,17 @@ function initPermalink(slug_url)
 function updateBlogForm(slug_url, event)
 {
 
-	// $('#a-blog-item-status-indicator').ajaxStart(function(){
-	// 	$(this).show();
-	// });
-	// $('#a-blog-item-status-indicator').ajaxStop(function(){
-	// 	$(this).hide();
-	// });
-
 	$.ajax({
 	  type:'POST',
 	  dataType:'text',
 	  data:jQuery('#a-admin-form').serialize(),
 	  complete:function(xhr, textStatus)
-		{
-			
+		{			
       if(textStatus == 'success')
       {
-      //data is a JSON object, we can handle any updates with it
-      var json = xhr.getResponseHeader('X-Json');
+      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
       var data = eval('(' + json + ')');
 			
-			// TODO: There needs to be a way to selectively call these functions
-			// Comments are getting updated EVERYTIME anything gets updated and it's not necessary
-			// We need to provide a scope or context to the ajax event
-
       if ( typeof(data.modified.template) != "undefined" ) {
         updateTemplate(data.template, data.feedback);
       };
@@ -165,7 +152,7 @@ function updateBlogForm(slug_url, event)
 
 			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
       updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			updateMessage();
+			updateMessage('Saved!', data.aBlogPost.updated_at);
 			aUI('#a-admin-form');
       }
 	 	},
@@ -229,7 +216,7 @@ function updateTemplate(template, feedback)
 	location.reload(true);
 }
 
-function updateMessage(msg)
+function updateMessage(msg, timestamp)
 {
 	if (typeof msg == 'undefined') {
 		msg = 'Saved!';
@@ -237,6 +224,7 @@ function updateMessage(msg)
 
 	var publishButton = $('#a-blog-publish-button');
 	var pUpdate = $('#a-blog-item-update');
+	var lastSaved = $('#post-last-saved');
 
 	if (pUpdate.data('animating') != 1) {
 		pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
@@ -251,11 +239,18 @@ function updateMessage(msg)
 					{
 						publishButton.children('.publish').fadeIn(100);					
 					}
+					lastSaved.find('span').text(timestamp);
+					lastSaved.fadeIn(2000, function(){
+						lastSaved.fadeTo(3000, 1, function(){
+							// lastSaved.fadeOut();
+						});
+					});					
 					pUpdate.data('animating', 0);
 				});
 			});
 		});
 	};
+	
 	
 }
 
