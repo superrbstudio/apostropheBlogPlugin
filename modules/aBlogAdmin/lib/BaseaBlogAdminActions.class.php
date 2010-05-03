@@ -58,4 +58,11 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
     $this->setTemplate('edit');
   }
+
+  public function executeRedirect()
+  {
+    $aBlogPost = $this->getRoute()->getObject();
+    aRouteTools::pushTargetEnginePage($aBlogPost->findBestEngine());
+    $this->redirect($this->generateUrl('a_blog_post', $this->getRoute()->getObject()));
+  }
 }

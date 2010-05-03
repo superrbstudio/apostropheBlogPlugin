@@ -133,6 +133,12 @@ a_blog_today:
   url:   
   param: { module: aBlog, action: today }
   class: aRoute
+
+a_blog_search_redirect:
+  url: /aBlog/:id
+  param: { module: aBlogAdmin, action: redirect }
+  options: { model: aBlogPost, type: object }
+  class: sfDoctrineRoute
  
 #################
 # aEvent routes #
@@ -269,6 +275,12 @@ a_event_today:
   url:   
   param: { module: aEvent, action: today }
   class: aRoute
+
+a_event_search_redirect:
+  url: /aEvent/:id
+  param: { module: aEventAdmin, action: redirect }
+  options: { model: aEvent, type: object }
+  class: sfDoctrineRoute
   
   
 ################

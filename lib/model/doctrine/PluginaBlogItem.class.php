@@ -43,6 +43,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page = new aPage();
     $page['slug'] = $this->engine.'/'.$this['id'];
     $page->save();
+
     $slot = $page->createSlot('aRichText');
     $slot->value = 'This is your body.';
     $slot->save();
@@ -50,6 +51,15 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       array(
         'permid' => 1, 
         'slot' => $slot));
+    
+    $title = $page->createSlot('aText');
+    $title->value = "Untitled";
+    $title->save();
+    $page->newAreaVersion('title', 'add',
+      array(
+        'permid' => 1,
+        'slot' => $title));
+
     $this->Page = $page;
     $this->slug = 'untitled-'.$this['id'];
     $this->title = 'untitled';
@@ -75,6 +85,17 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         $this['slug'] = aTools::slugify($this['slug']);
       }
     }
+  }
+
+  public function postUpdate($event)
+  {
+    $title = $this->Page->createSlot('aText');
+    $title->value = $this['title'];
+    $title->save();
+    $this->Page->newAreaVersion('title', 'add',
+      array(
+        'permid' => 1,
+        'slot' => $title));
   }
   
   public function postDelete($event)
@@ -174,6 +195,13 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return count($q->execute());
   }
 
+
+  /**
+   * Deletes a blog item after checking if the user has permission to perform
+   * the delete.
+   * @param Doctrine_Connection $conn
+   * @return boolean
+   */
   public function delete(Doctrine_Connection $conn = null)
   {
     $user = sfContext::getInstance()->getUser()->getGuardUser();
@@ -185,6 +213,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       return false;
   }
 
+  /**
+   * Publishes a blog post or event if user has permission
+   */
   public function publish()
   {
     if($this->userHasPrivilege('publish'))
@@ -193,6 +224,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
   }
 
+
+  /**
+   * Unpublishes a blog post or event if the user has permission
+   */
   public function unpublish()
   {
     if($this->userHasPrivilege('publish'))
@@ -202,6 +237,13 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
 
+  /**
+   * Checks whether a user has permission to perform various actions on blog
+   * post or event.
+   *
+   * @param string $privilege
+   * @return boolean
+   */
   public function userHasPrivilege($privilege = 'publish')
   {
     $user = sfContext::getInstance()->getUser();
@@ -221,6 +263,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   
   /**
    * This function attempts to find the "best" engine to route a given post to.
+   * based on the categories that are used on various engine pages.
+   *
+   * @return aPage the best engine page
    */
   public function findBestEngine()
   {

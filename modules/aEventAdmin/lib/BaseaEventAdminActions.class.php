@@ -58,5 +58,12 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
     $this->setTemplate('edit');
   }
+
+  public function executeRedirect()
+  {
+    $aEvent = $this->getRoute()->getObject();
+    aRouteTools::pushTargetEnginePage($aEvent->findBestEngine());
+    $this->redirect($this->generateUrl('a_event', $this->getRoute()->getObject()));
+  }
   
 }
