@@ -1,6 +1,6 @@
 <?php use_helper('a') ?>
-<?php $catClass = ""; foreach ($a_blog_post->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
-<div class="a-blog-item event <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
+<?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
+<div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
   <h3 class="a-blog-item-title">
     <?php echo link_to($a_event->getTitle(), 'a_event_post', $a_event) ?>
   </h3>
