@@ -5,6 +5,7 @@ all:
       twoColumnTemplate: Two Column
       bannerTemplate: Banner Template
     comments: false
+    # add_this: punkave     # Username for AddThis -- http://addthis.com
   aEvent:
     templates:
       singleColumnTemplate: Single Column

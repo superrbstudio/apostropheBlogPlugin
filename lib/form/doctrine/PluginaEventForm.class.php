@@ -1,4 +1,4 @@
-	<?php
+<?php
 
 /**
  * PluginaEvent form.

@@ -944,3 +944,22 @@ width: 180px;
 	top:-24px;
 	width:auto;
 }
+
+
+.addthis_toolbox
+{
+	float:left;
+	width: auto;
+	clear: both;
+	padding: 5px;
+	background: #fff;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	
+}
+
+.aEvent .addthis_toolbox
+{
+	margin-left: 140px;
+}

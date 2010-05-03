@@ -17,3 +17,5 @@
 		'aVideo' => array('width' => 180), 
 		'aPDF' => array('width' => 180, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
+
+<?php include_partial('addThis') ?>
