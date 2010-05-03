@@ -28,7 +28,7 @@
 		<?php endif ?>
 
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
-			<input type="text" id="a_blog_post_title_interface" value="<?php echo ($a_event->title == 'untitled')? '':$a_event->title ?>" />
+			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_event->title == 'untitled')? '':$a_event->title ?>" />
 			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
 		</div>
 
