@@ -26,6 +26,12 @@ abstract class BaseaEventComponents extends sfComponents
       ->createQuery('c')
       ->orderBy('c.name')
       ->execute();
+
+    if($this->reset == true)
+    {
+      $this->params['cat'] = array();
+      $this->params['tag'] = array();
+    }
   }
-  
+
 }

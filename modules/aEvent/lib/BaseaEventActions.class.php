@@ -61,6 +61,8 @@ abstract class BaseaEventActions extends aEngineActions
   
   public function executeShow(sfWebRequest $request)
   {
+    $this->buildParams();
+    $this->dateRange = '';
     $this->aEvent = $this->getRoute()->getObject();
   }
   
