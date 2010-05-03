@@ -18,12 +18,12 @@
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
-  	<?php echo link_to('New Post', '@a_event_admin_new', array('class' => 'a-btn icon')) ?>
+  	<?php echo link_to('New Event', '@a_event_admin_new', array('class' => 'a-btn icon big a-add')) ?>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>
   	<?php echo include_partial('aEvent/post', array('a_event' => $a_event)) ?>
-  	<hr>
+  	<hr />
   <?php endforeach ?>    
 </div>
   
