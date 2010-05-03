@@ -1,5 +1,5 @@
 <?php if($options['maxImages'] > 0): ?>
-<div class="a-blog-post-media">
+<div class="a-blog-item-media">
 <?php include_component('aSlideshowSlot', 'slideshow', array(
   'items' => $aBlogPost->getMediaForArea('blog-body', 'image', $options['maxImages']),
   'id' => 'test',
@@ -8,6 +8,6 @@
 </div>
 <?php endif ?>
 
-<div class="a-blog-post-excerpt">
+<div class="a-blog-item-excerpt">
 <?php echo $aBlogPost->getTextForArea('blog-body', $options['excerptLength']) ?>
 </div>

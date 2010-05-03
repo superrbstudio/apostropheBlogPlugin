@@ -2,9 +2,9 @@
   <?php if (isset($values['count'])): ?>
 
   <?php foreach ($aBlogPosts as $aBlogPost): ?>
-    <div class="a-blog-post<?php ($hasMedia)? ' has-media':''; ?>">
-      <h2 class="a-blog-post-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h2>
-        <ul class="a-blog-post-meta">
+    <div class="a-blog-item post<?php ($hasMedia)? ' has-media':''; ?>">
+      <h2 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h2>
+        <ul class="a-blog-item-meta">
           <li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>
         </ul>
       <?php if (false): ?>
@@ -13,7 +13,7 @@
         </div>
       <?php endif ?>
 
-      <div class="a-blog-post-excerpt-container">
+      <div class="a-blog-item-excerpt-container">
         <?php include_partial('aBlog/'.$aBlogPost['template'].'_slot', array('aBlogPost' => $aBlogPost, 'options' => $options)) ?>
         <div class="a-blog-read-more">
           <?php echo link_to('Read More', 'a_blog_post', $aBlogPost, array('class' => 'a-blog-more')) ?>
