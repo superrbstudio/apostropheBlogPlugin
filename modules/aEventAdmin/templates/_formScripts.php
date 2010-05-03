@@ -21,7 +21,7 @@
 			// =============================================
 			$('.section.comments a.allow_comments_toggle').click(function(event){
 				event.preventDefault();
-				toggleCheckbox($('#a_event_allow_comments'));
+				toggleCheckbox($('#a_blog_item_allow_comments'));
 				updateBlogForm('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 			});
 

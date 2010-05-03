@@ -42,21 +42,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->setValidator('editors_list',
       new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
 
-    $this->setWidget('template',
-      new sfWidgetFormChoice(array('multiple' => false, 'choices' => sfConfig::get('app_aBlog_templates'))));
-    $this->setValidator('template',
-      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip(sfConfig::get('app_aBlog_templates')))));
-
-    if(count(sfConfig::get('app_aBlog_templates')) <= 1)
-    {
-      unset($this['template']);
-    }
-
-    if(!sfConfig::get('app_aBlog_comments', false))
-    {
-      unset($this['allow_comments']);
-    }
-    
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
   }

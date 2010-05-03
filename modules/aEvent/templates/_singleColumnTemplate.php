@@ -1,5 +1,5 @@
 <?php a_area('blog-body', array(
-  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aBlog-'.$a_event['id'],
+  'editable' => false, 'toolbar' => 'basic', 'slug' => 'aEvent/'.$a_event['id'],
   'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   

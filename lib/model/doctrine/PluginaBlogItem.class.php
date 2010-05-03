@@ -13,7 +13,7 @@
 abstract class PluginaBlogItem extends BaseaBlogItem
 {
   protected $update = true;
-  protected $engine = 'aBlog';
+  public $engine = 'aBlog';
 
   /**
    * These date methods are use in the routing of the permalink
@@ -41,7 +41,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function postInsert($event)
   {
     $page = new aPage();
-    $page['slug'] = 'aBlog-'.$this['id'];
+    $page['slug'] = $this->engine.'/'.$this['id'];
     $page->save();
     $slot = $page->createSlot('aRichText');
     $slot->value = 'This is your body.';

@@ -117,7 +117,7 @@ aBlogCategory:
       type: string
     posts:
       type: boolean
-      default: true
+      default: false
     events:
       type: boolean
       default: false

@@ -129,4 +129,4 @@
 </div>
 <?php endif ?>
 
-<?php include_partial('aBlogAdmin/formScripts', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
+<?php include_partial('formScripts', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>

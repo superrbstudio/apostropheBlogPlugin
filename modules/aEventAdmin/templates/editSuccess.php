@@ -2,7 +2,7 @@
 <?php include_partial('assets') ?>
 <?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_event['template'] ?><?php end_slot() ?>
 
-<div class="a-admin-container a-blog-admin <?php echo $sf_params->get('module') ?>">
+<div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 
   <?php // include_partial('form_bar', array('title' => __('Edit Blog Post', array(), 'apostrophe-blog'))) ?>
 
@@ -38,7 +38,7 @@
         <span><?php echo aTools::urlForPage($a_event->findBestEngine()->getSlug()).'/' ?></span><?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
 			</div>
 			<div class="a-blog-item-permalink-wrapper slug">
-				<input type="text" name="a_blog_post_permalink_interface" value="<?php echo $a_event->slug ?>" id="a_blog_post_permalink_interface">
+				<input type="text" name="a_blog_item_interface" value="<?php echo $a_event->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-controls slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
 			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>

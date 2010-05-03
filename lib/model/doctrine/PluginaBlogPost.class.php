@@ -12,5 +12,5 @@
  */
 abstract class PluginaBlogPost extends BaseaBlogPost
 {
-  protected $engine = 'aBlog';
+  public $engine = 'aBlog';
 }
