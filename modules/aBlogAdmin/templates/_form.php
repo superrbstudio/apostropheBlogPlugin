@@ -21,7 +21,7 @@
 	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe_blog') ?></span>
 	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe_blog') ?></span>
 	</a>
-	<div id="a-blog-post-update" class="a-btn big a-publish-post">Saved</div>
+	<div id="a-blog-item-update" class="a-btn big a-publish-post">Saved</div>
 	
 	<div class="post-status option">
 	  <?php echo $form['status']->renderRow() ?>
