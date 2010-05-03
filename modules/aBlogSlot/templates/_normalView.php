@@ -3,7 +3,7 @@
 
   <?php foreach ($aBlogPosts as $aBlogPost): ?>
     <div class="a-blog-item post<?php ($hasMedia)? ' has-media':''; ?>">
-      <h2 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h2>
+      <h3 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h3>
         <ul class="a-blog-item-meta">
           <li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>
         </ul>

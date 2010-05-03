@@ -3,7 +3,7 @@
 
   <?php foreach ($aEvents as $aEvent): ?>
     <div class="a-blog-item event">
-      <h2 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event', $aEvent) ?></h2>
+      <h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event', $aEvent) ?></h3>
         <ul class="a-blog-item-meta">
           <li class="date"><?php echo aDate::pretty($aEvent['published_at']) ?></li>
         </ul>
