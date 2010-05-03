@@ -31,8 +31,7 @@
 		<div id="post-last-saved" class="post-updated-at option">
 			<h6>
 					<b>Last Saved:</b>
-					<span> 
-					</span>
+					<span></span>
 			</h6>		
 		</div>
 	<?php endif ?>

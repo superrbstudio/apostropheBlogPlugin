@@ -33,8 +33,23 @@
 	  <?php echo $form['published_at']->render(array('onClose' => 'updateBlogMulti')) ?>
 	  <?php echo $form['published_at']->renderError() ?>
 	</div>
+
 </div>
 
+<hr />
+<div class="event-date section">
+<h4>Start Date</h4>
+<div class="start_date">
+	<?php echo $form['start_date']->render() ?>
+	<?php echo $form['start_date']->renderError() ?>					
+</div>
+<h4>End Date</h4>
+<div class="end_date">
+	<?php echo $form['end_date']->render() ?>
+	<?php echo $form['end_date']->renderError() ?>					
+</div>
+
+</div>
 
 
 <?php // Author & Editors Section ?>
@@ -42,16 +57,14 @@
 <div class="author section">
 
 	<div class="post-author">
-	  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>:
+	  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>
 			<?php if ($sf_user->hasCredential('admin')): ?>
 				</h4>	
 				<div class="author_id option">
 				<?php echo $form['author_id']->render() ?>
 				<?php echo $form['author_id']->renderError() ?>				
 				</div>
-			<?php else: ?>
-				<span><?php echo $a_event->Author ?></span></h4>	
-			<?php endif ?>
+			<?php else: ?>: <span><?php echo $a_event->Author ?></span></h4><?php endif ?>
 
 	</div>
 
@@ -65,7 +78,7 @@
 	  	<div class="post-editors-options option show-editors" id="editors-section">			
 		<?php endif ?>
 
-	    <h4><?php echo __('Editors', array(), 'apostrophe_blog') ?>: </h4>
+	    <h4><?php echo __('Editors', array(), 'apostrophe_blog') ?></h4>
 	    <?php echo $form['editors_list']->render()?>
 	    <?php echo $form['editors_list']->renderError() ?>
 	
@@ -89,10 +102,8 @@
 <hr />
 <div class="tags section">
 	<h4><?php echo __('Tags', array(), 'apostrophe_blog') ?></h4>
-
 	<?php echo $form['tags']->render() ?>
 	<?php echo $form['tags']->renderError() ?>
-
 	<script src='/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js'></script>
 	<script type="text/javascript" charset="utf-8">
 	  $(function() {
@@ -109,7 +120,6 @@
 <hr />
 <div class="template section">
 	<h4><?php echo __('Template', array(), 'apostrophe_blog') ?></h4>
-
 	<?php echo $form['template']->render() ?>
 	<?php echo $form['template']->renderError() ?>
 </div>
@@ -122,10 +132,9 @@
 <div class="comments section">
 	<h4><a href="#" class="allow_comments_toggle <?php echo ($a_event['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo __('Click to disable comments', array(), 'apostrophe_blog') ?>"><?php echo __('Comments are enabled', array(), 'apostrophe_blog') ?></span><span class="disabled" title="<?php echo __('Click to enable comments', array(), 'apostrophe_blog') ?>"><?php echo __('Comments are disabled', array(), 'apostrophe_blog') ?></span></a></h4> 
 	<div class="allow_comments option">
-	<?php echo $form['allow_comments']->render() ?>
-	<?php echo $form['allow_comments']->renderError() ?>
-	</div>
-	
+		<?php echo $form['allow_comments']->render() ?>
+		<?php echo $form['allow_comments']->renderError() ?>
+	</div>	
 </div>
 <?php endif ?>
 

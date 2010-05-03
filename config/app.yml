@@ -3,7 +3,7 @@ all:
     templates: 
       singleColumnTemplate: Single Column
       twoColumnTemplate: Two Column
-      # bannerTemplate: Banner Template # Dan, I wanna make a banner template bundled with the plugin
+      bannerTemplate: Banner Template
     comments: false
   aEvent:
     templates:

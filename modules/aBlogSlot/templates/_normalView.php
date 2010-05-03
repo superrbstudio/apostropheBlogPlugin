@@ -7,11 +7,6 @@
         <ul class="a-blog-item-meta">
           <li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>
         </ul>
-      <?php if (false): ?>
-        <div class="a-blog-post-media">
-    
-        </div>
-      <?php endif ?>
 
       <div class="a-blog-item-excerpt-container">
         <?php include_partial('aBlog/'.$aBlogPost['template'].'_slot', array('aBlogPost' => $aBlogPost, 'options' => $options)) ?>
