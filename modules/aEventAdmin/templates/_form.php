@@ -49,12 +49,12 @@
 <div class="event-date section">
 <h4>Start Date</h4>
 <div class="start_date">
-	<?php echo $form['start_date']->render() ?>
+	<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange')) ?>
 	<?php echo $form['start_date']->renderError() ?>					
 </div>
 <h4>End Date</h4>
 <div class="end_date">
-	<?php echo $form['end_date']->render() ?>
+	<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange')) ?>
 	<?php echo $form['end_date']->renderError() ?>					
 </div>
 

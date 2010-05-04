@@ -1,7 +1,6 @@
-function checkAndSetPublish(status, slug_url)
+function aBlogPublishBtn(status, slug_url)
 {
-	//todo: use jq to get the action from the Form ID
-	
+	//todo: use jq to get the action from the Form ID	for the slug_url
 	var postStatus = $('#a_blog_item_status');
 	var publishButton = $('#a-blog-publish-button');
 
@@ -10,7 +9,6 @@ function checkAndSetPublish(status, slug_url)
 	};
 
 	publishButton.unbind('click').click(function(){
-
 		$(this).blur();
 
 		if (status == 'draft') 
@@ -27,13 +25,12 @@ function checkAndSetPublish(status, slug_url)
 		// If slug_url
 		if (typeof slug_url != 'undefined') 
 		{
-			updateBlogForm(slug_url);			
+			aBlogUpdateForm(slug_url);			
 		};
-
 	});			
 }
 
-function initTitle(slug_url)
+function aBlogTitle(slug_url)
 {
 	// Title Interface 
 	// =============================================
@@ -52,7 +49,7 @@ function initTitle(slug_url)
 		{ // If the input is not empty
 			// Pass the value to the admin form and update
 			$('#a_blog_item_title').val($(this).val());
-			updateBlogForm(slug_url);
+			aBlogUpdateForm(slug_url);
 		};
 	});
 	
@@ -76,7 +73,7 @@ function initTitle(slug_url)
 	}).hide();
 }
 
-function initPermalink(slug_url)
+function aBlogPermalink(slug_url)
 {
 	// Permalink Interface  
 	// =============================================
@@ -114,7 +111,7 @@ function initPermalink(slug_url)
 			if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) 
 			{
 				$('#a_blog_item_slug').val(pInput.val()); // Pass the value to the admin form and update
-					updateBlogForm(slug_url);				
+					aBlogUpdateForm(slug_url);				
 			}										
 		}
 		
@@ -128,9 +125,8 @@ function initPermalink(slug_url)
 
 
 // Ajax Update Blog Form
-function updateBlogForm(slug_url, event)
+function aBlogUpdateForm(slug_url, event)
 {
-
 	$.ajax({
 	  type:'POST',
 	  dataType:'text',
@@ -143,16 +139,16 @@ function updateBlogForm(slug_url, event)
       var data = eval('(' + json + ')');
 			
       if ( typeof(data.modified.template) != "undefined" ) {
-        updateTemplate(data.template, data.feedback);
+        aBlogUpdateTemplate(data.template, data.feedback);
       };
 
       if ( typeof(data.modified.allow_comments) != "undefined" ) {
-      	updateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
 			};
 
-			checkAndSetPublish(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
-      updateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			updateMessage('Saved!', data.aBlogPost.updated_at);
+			aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+			aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
 			aUI('#a-admin-form');
       }
 	 	},
@@ -161,7 +157,7 @@ function updateBlogForm(slug_url, event)
 }
 
 
-function updateTitle(title, feedback)
+function aBlogUpdateTitle(title)
 { // Update Title Function for Ajax calls when it is returned clean from Apostrophe
 	var titleInput = $('#a_blog_item_title_interface');
 		
@@ -172,7 +168,7 @@ function updateTitle(title, feedback)
 }
 
 
-function updateSlug(slug, feedback)
+function aBlogUpdateSlug(slug)
 { // Update Slug Function for Ajax calls when it is returned clean from Apostrophe
 	var permalinkInput = $('#a_blog_item_permalink_interface');
   var slugInput = $('#a_blog_item_slug');
@@ -182,24 +178,21 @@ function updateSlug(slug, feedback)
 		permalinkInput.val(slug);
      slugInput.val(slug);
 	};
-
-	// sendUserMessage(feedback); // See sendUserMessage function below
 }
 
 
-function updateTitleAndSlug(title, slug)
+function aBlogUpdateTitleAndSlug(title, slug)
 { // Update TitleAndSlug Function to save u time :D !
-	updateTitle(title);
-	updateSlug(slug);
+	aBlogUpdateTitle(title);
+	aBlogUpdateSlug(slug);
 }
 
-
-function toggleCheckbox(checkbox)
+function aBlogCheckboxToggle(checkbox)
 { // Toggle any checkbox you want with this one
 	checkbox.attr('checked', !checkbox.attr('checked')); 
 }
 
-function updateComments(enabled, feedback)
+function aBlogUpdateComments(enabled, feedback)
 {
 	if (enabled)
 	{
@@ -211,12 +204,12 @@ function updateComments(enabled, feedback)
 	}
 }
 
-function updateTemplate(template, feedback)
+function aBlogUpdateTemplate(template, feedback)
 {
 	location.reload(true);
 }
 
-function updateMessage(msg, timestamp)
+function aBlogUpdateMessage(msg, timestamp)
 {
 	if (typeof msg == 'undefined') {
 		msg = 'Saved!';
@@ -242,35 +235,52 @@ function updateMessage(msg, timestamp)
 					lastSaved.find('span').text(timestamp);
 					lastSaved.fadeIn(2000, function(){
 						lastSaved.fadeTo(3000, 1, function(){
-							// lastSaved.fadeOut();
+							// lastSaved.fadeOut(); // Fade Out Message after some time
 						});
 					});					
 					pUpdate.data('animating', 0);
 				});
 			});
 		});
-	};
-	
-	
+	};	
 }
 
-function sendUserMessage(label, desc)
+function aBlogSendMessage(label, desc)
 {	
 	// Messages are turned off for now!
-	// Send a message to the blog editor confirming a change made via Ajax
+	// Send a message to the blog editor confirming a change made via Ajax	
+	var mLabel = (label)?label.toString():""; // passed from ajaxAction
+	var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
+	var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
+	var messageContainer = $('#a-blog-item-status-messages');
+	messageContainer.append(newMessage).addClass('has-messages');
+	messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
+	messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
 	
-	// var mLabel = (label)?label.toString():""; // passed from ajaxAction
-	// var mDescription = (desc)?desc.toString(): ""; // passed from ajaxAction
-	// var newMessage = "<dt>"+mLabel+"</dt><dd>"+mDescription+"</dd>";
-	// var messageContainer = $('#a-blog-item-status-messages');
-	// messageContainer.append(newMessage).addClass('has-messages');
-	// messageContainer.children('dt:last').fadeTo(5000,1).fadeOut('slow', function(){ $(this).remove(); }); // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
-	// messageContainer.children('dd:last').fadeTo(5000,1).fadeOut('slow', function(){	$(this).remove(); checkMessageContainer(); });  // This uses ghetto fadeTo delay because jQ1.4 has built-in delay
-	// 
-	// function checkMessageContainer()
-	// {
-	// 	if (!messageContainer.children().length) {
-	// 		messageContainer.removeClass('has-messages');
-	// 	};
-	// }
+	function checkMessageContainer()
+	{
+		if (!messageContainer.children().length) {
+			messageContainer.removeClass('has-messages');
+		};
+	}
+}
+
+
+function aBlogSyncDates()
+{
+
+}
+
+function aBlogSetDateRange(a) 
+{  
+	var b = new Date();  
+	var c = new Date(b.getFullYear(), b.getMonth(), b.getDate());  
+	if (a.id == 'a_blog_item_end_date_jquery_control') {  
+	    if ($('#a_blog_item_start_date_jquery_control').datepicker('getDate') != null) {  
+	        c = $('#a_blog_item_start_date_jquery_control').datepicker('getDate');  
+	    }  
+	}  
+	return {  
+	    minDate: c  
+	}  
 }
