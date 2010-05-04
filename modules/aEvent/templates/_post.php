@@ -2,8 +2,8 @@
 <?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 <div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
   <ul class="a-blog-item-meta">
-    <li class="day"><?php echo date('l', strtotime($a_event->getPublishedAt())) ?></li>
-    <li class="date"><?php echo date('F jS Y', strtotime($a_event->getPublishedAt())) ?></li>
+    <li class="start-day"><?php echo date('l', strtotime($a_event->getStartDate())) ?></li>
+    <li class="start-date"><?php echo date('F jS Y', strtotime($a_event->getStartDate())) ?></li>
     <li class="author"><?php echo __('Posted By:', array(), 'apostrophe_blog') ?> <?php echo $a_event->getAuthor() ?></li>   
   </ul>
   <h3 class="a-blog-item-title">

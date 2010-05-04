@@ -21,7 +21,7 @@ class aBlogSingleSlotForm extends BaseForm
     $this->validatorSchema['blog_item'] = new sfValidatorDoctrineChoice(array('model' => $this->model, 'multiple' => false));
     
     // Ensures unique IDs throughout the page
-    $this->widgetSchema->setNameFormat('slotform-' . $this->id . '[%s]');
+    $this->widgetSchema->setNameFormat('slot-form-' . $this->id . '[%s]');
     
     // You don't have to use our form formatter, but it makes things nice
     $this->widgetSchema->setFormFormatterName('aAdmin');

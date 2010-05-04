@@ -1,8 +1,8 @@
 <h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event', $aEvent) ?></h3>
 
 <ul class="a-blog-item-meta">
-  <li class="day"><?php echo date('l', strtotime($aEvent->getPublishedAt())) ?></li>
-  <li class="date"><?php echo date('F jS Y', strtotime($aEvent->getPublishedAt())) ?></li>
+  <li class="start-day"><?php echo date('l', strtotime($aEvent->getStartDate())) ?></li>
+  <li class="start-date"><?php echo date('F jS Y', strtotime($aEvent->getStartDate())) ?></li>
   <li class="author"><?php echo __('Posted By:', array(), 'apostrophe_blog') ?> <?php echo $aEvent->getAuthor() ?></li>   
 </ul>
 
