@@ -11,24 +11,11 @@
 abstract class PluginaEventForm extends BaseaEventForm
 {
 
+  protected $engine = 'aEvent';
+
   public function setup()
   {
     parent::setup();
-
-    $this->setWidget('template',
-      new sfWidgetFormChoice(array('multiple' => false, 'choices' => sfConfig::get('app_aEvent_templates'))));
-    $this->setValidator('template',
-      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip(sfConfig::get('app_aEvent_templates')))));
-
-    if(count(sfConfig::get('app_aEvent_templates')) <= 1)
-    {
-      unset($this['template']);
-    }
-
-    if(!sfConfig::get('app_aEvent_comments', false))
-    {
-      unset($this['allow_comments']);
-    }
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }

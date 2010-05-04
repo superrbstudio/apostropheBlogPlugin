@@ -141,7 +141,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $this->getTextForAreas(array($area), $limit);
   }
 
-  public function getMediaForArea($area, $type = null, $limit = null)
+  public function getMediaForArea($area, $type = 'image', $limit = 5)
   {
     return $this->getMediaForAreas(array($area), $type, $limit);
   }
@@ -153,7 +153,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param  $limit Limit the number of mediaItems returned
    * @return array aMediaItems
    */
-  public function getMediaForAreas($areas, $type = null, $limit = 9999)
+  public function getMediaForAreas($areas, $type = 'image', $limit = 5)
   {
     $aMediaItems = array();
     foreach($areas as $area)
@@ -173,7 +173,23 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     return $aMediaItems;
   }
-  
+
+  public function getAreas()
+  {
+    $templates = sfConfig::get('app_'.$this->engine.'_templates');
+    return $templates[$this['template']]['areas'];
+  }
+
+  public function getMedia($type = 'image', $limit = 5)
+  {
+    return $this->getMediaForAreas($this->getAreas(), $type, $limit);
+  }
+
+  public function hasMedia($type = 'image')
+  {
+    return count($this->getMedia($type, 1));
+  }
+
   public function getFeedText()
   {
     $text = '';

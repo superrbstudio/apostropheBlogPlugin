@@ -2,7 +2,7 @@
   <?php if (isset($values['count'])): ?>
 
   <?php foreach ($aBlogPosts as $aBlogPost): ?>
-    <div class="a-blog-item post<?php ($hasMedia)? ' has-media':''; ?>">
+    <div class="a-blog-item post<?php echo ($aBlogPost->hasMedia())? ' has-media':''; ?>">
       <h3 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h3>
         <ul class="a-blog-item-meta">
           <li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>

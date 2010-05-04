@@ -10,6 +10,8 @@
  */
 abstract class PluginaBlogPostForm extends BaseaBlogPostForm
 {
+  protected $engine = 'aBlog';
+
   public function setup()
   {
     parent::setup();
@@ -17,21 +19,6 @@ abstract class PluginaBlogPostForm extends BaseaBlogPostForm
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
 		));
-
-    $this->setWidget('template',
-      new sfWidgetFormChoice(array('multiple' => false, 'choices' => sfConfig::get('app_aBlog_templates'))));
-    $this->setValidator('template',
-      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip(sfConfig::get('app_aBlog_templates')))));
-
-    if(count(sfConfig::get('app_aBlog_templates')) <= 1)
-    {
-      unset($this['template']);
-    }
-
-    if(!sfConfig::get('app_aBlog_comments', false))
-    {
-      unset($this['allow_comments']);
-    }
     
     $this->getWidgetSchema()->setDefault('published_at', date('Y/m/d H:i'));
 

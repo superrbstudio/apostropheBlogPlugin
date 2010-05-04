@@ -10,6 +10,8 @@
  */
 abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 {
+  protected $engine = 'aBlog';
+
   public function setup()
   {
     parent::setup();
@@ -30,6 +32,29 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
     }
+
+    $templates = sfConfig::get('app_'.$this->engine.'_templates');
+    $templateChoices = array();
+    foreach ($templates as $key => $template)
+    {
+      $templateChoices[$key] = $template['name'];
+    }
+
+    $this->setWidget('template',
+      new sfWidgetFormChoice(array('multiple' => false, 'choices' => $templateChoices)));
+    $this->setValidator('template',
+      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip($templateChoices))));
+
+    if(count($templateChoices) <= 1)
+    {
+      unset($this['template']);
+    }
+
+    if(!sfConfig::get('app_aBlog_comments', false))
+    {
+      unset($this['allow_comments']);
+    }
+
     
     $this->setWidget('categories_list_add',
       new sfWidgetFormInputHidden());
