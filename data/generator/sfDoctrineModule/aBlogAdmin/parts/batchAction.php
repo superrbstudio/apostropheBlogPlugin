@@ -45,6 +45,12 @@
 
   protected function batchAction($action, sfWebRequest $request)
   {
+   
+    return $error;
+  }
+
+  protected function executeBatchDelete(sfWebRequest $request)
+  {
     $ids = $request->getParameter('ids');
 
     $items = Doctrine_Query::create()
@@ -55,19 +61,11 @@
     $error = false;
     try
     {
-      foreach($items as $item){
-        $item->$action();
-      }
+      $items->delete();
     } catch (Exception $e)
     {
       $error = true;
     }
-    return $error;
-  }
-
-  protected function executeBatchDelete(sfWebRequest $request)
-  {
-    $error = $this->batchAction('delete', $request);
     
     if (($count == count($request->getParameter('ids'))) && (!$error))
     {
@@ -84,7 +82,23 @@
 
   protected function executeBatchPublish(sfWebRequest $request)
   {
-    $error = $this->batchAction('publish', $request);
+    $ids = $request->getParameter('ids');
+
+    $items = Doctrine_Query::create()
+      ->from('<?php echo $this->getModelClass() ?>')
+      ->whereIn('<?php echo $this->getPrimaryKeys(true) ?>', $ids)
+      ->execute();
+    $count = count($items);
+    $error = false;
+    try
+    {
+      foreach($items as $item){
+        $item->publish();
+      }
+    } catch (Exception $e)
+    {
+      $error = true;
+    }
 
     if (($count == count($request->getParameter('ids'))) && (!$error))
     {
@@ -100,8 +114,24 @@
 
   protected function executeBatchUnpublish(sfWebRequest $request)
   {
-    $error = $this->batchAction('unpublish', $request);
+    $ids = $request->getParameter('ids');
 
+    $items = Doctrine_Query::create()
+      ->from('<?php echo $this->getModelClass() ?>')
+      ->whereIn('<?php echo $this->getPrimaryKeys(true) ?>', $ids)
+      ->execute();
+    $count = count($items);
+    $error = false;
+    try
+    {
+      foreach($items as $item){
+        $item->unPublish();
+      }
+    } catch (Exception $e)
+    {
+      $error = true;
+    }
+    
     if (($count == count($request->getParameter('ids'))) && (!$error))
     {
       $this->getUser()->setFlash('notice', 'The selected items have been unpublished successfully.');

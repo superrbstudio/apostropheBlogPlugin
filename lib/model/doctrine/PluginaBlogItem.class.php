@@ -76,7 +76,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       {
         $this['slug_saved'] = true;
       }
-      if($this['slug_saved'] == false)
+      if($this['slug_saved'] == false && array_key_exists('title', $this->getModified()))
       {
         $this['slug'] = aTools::slugify($this['title']);
       }
@@ -237,6 +237,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     if($this->userHasPrivilege('publish'))
     {
       $this['status'] = 'published';
+      $this->save();
     }
   }
 
@@ -249,6 +250,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     if($this->userHasPrivilege('publish'))
     {
       $this['status'] = 'draft';
+      $this->save();
     }
   }
 
