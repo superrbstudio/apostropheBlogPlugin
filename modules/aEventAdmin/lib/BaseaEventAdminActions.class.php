@@ -21,7 +21,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     
   public function executeAutocomplete(sfWebRequest $request)
   {
-    $search = $request->getParameter('search', '');
+    $search = $request->getParameter('q', '');
     $this->aEvents = Doctrine::getTable('aEvent')->createQuery()
       ->andWhere("title LIKE ?", '%'.$search.'%')
       ->execute(array(), Doctrine::HYDRATE_ARRAY);
