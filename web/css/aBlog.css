@@ -409,6 +409,15 @@ padding: 2px;
 	margin-bottom: 5px;	
 }
 
+.a-admin-sidebar .section.event-date div.start_date,
+.a-admin-sidebar .section.event-date div.end_date
+{
+float: left;
+width: 100%;
+clear: both;
+}
+
+
 .a-admin-sidebar .section.categories select
 {
 width: 200px !important;
