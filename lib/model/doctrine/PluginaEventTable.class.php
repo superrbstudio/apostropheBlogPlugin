@@ -16,7 +16,7 @@ class PluginaEventTable extends aBlogItemTable
    */
   public static function getInstance()
   {
-    return Doctrine_Core::getTable('PluginaEvent');
+    return Doctrine::getTable('aEvent');
   }
   
   public function addUpcomming(Doctrine_Query $q, $limit = null)
