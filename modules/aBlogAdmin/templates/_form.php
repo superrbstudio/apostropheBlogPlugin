@@ -39,7 +39,7 @@
 	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 
 	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render(array('onClose' => 'updateBlogMulti')) ?>
+	  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
 	  <?php echo $form['published_at']->renderError() ?>
 	</div>
 </div>

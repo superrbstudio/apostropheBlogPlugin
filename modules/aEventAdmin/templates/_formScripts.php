@@ -1,6 +1,6 @@
 <script type="text/javascript" charset="utf-8">
 	
-	function updateBlogMulti() { aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>'); }
+	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>'); }
 
 	$(document).ready(function(){
 		
@@ -28,8 +28,8 @@
 			aBlogTitle('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 			aBlogPermalink('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 	    aBlogPublishBtn('<?php echo $a_event->status  ?>','<?php echo url_for('a_event_admin_update',$a_event) ?>');
-	    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>', 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>', 'onChange': updateBlogMulti });
-	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': updateBlogMulti  });
+	    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>', 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>', 'onChange': aBlogUpdateMulti });
+	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });
     
 	 });
 

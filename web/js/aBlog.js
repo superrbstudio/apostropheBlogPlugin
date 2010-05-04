@@ -265,12 +265,6 @@ function aBlogSendMessage(label, desc)
 	}
 }
 
-
-function aBlogSyncDates()
-{
-
-}
-
 function aBlogSetDateRange(a) 
 {  
 	var b = new Date();  
@@ -282,6 +276,6 @@ function aBlogSetDateRange(a)
 	  	$('#a_blog_item_end_date_jquery_control').datepicker('setDate', c);
 	}  
 	return {  
-	    minDate: c  
-	}  
+		 minDate: c  
+	}  	
 }

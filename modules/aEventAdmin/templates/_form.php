@@ -7,6 +7,7 @@
 <?php echo $form->renderHiddenFields() ?>
 
 
+
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
   <?php echo $form['title']->render() ?>
@@ -21,10 +22,11 @@
 	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe_blog') ?></span>
 	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe_blog') ?></span>
 	</a>
+
 	<div id="a-blog-item-update" class="a-btn big a-publish-post">Saved</div>
-	
+
 	<div class="post-status option">
-	  <?php echo $form['status']->render() ?>
+  	<?php echo $form['status']->render() ?>
 	</div>
 
 	<?php if (isset($a_event['updated_at'])): ?>
@@ -39,25 +41,25 @@
 	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 
 	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render(array('onClose' => 'updateBlogMulti')) ?>
+	  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
 	  <?php echo $form['published_at']->renderError() ?>
 	</div>
-
 </div>
 
+
+<?php // Event Date Range ?>
 <hr />
 <div class="event-date section">
-<h4>Start Date</h4>
-<div class="start_date">
-	<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'updateBlogMulti')) ?>
-	<?php echo $form['start_date']->renderError() ?>					
-</div>
-<h4>End Date</h4>
-<div class="end_date">
-	<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'updateBlogMulti')) ?>
-	<?php echo $form['end_date']->renderError() ?>					
-</div>
-
+	<h4>Start Date</h4>
+	<div class="start_date">
+		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['start_date']->renderError() ?>					
+	</div>
+	<h4>End Date</h4>
+	<div class="end_date">
+		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['end_date']->renderError() ?>					
+	</div>
 </div>
 
 
