@@ -1,13 +1,11 @@
 <?php    
-class aEventSlotForm extends sfForm
+class aEventSlotForm extends BaseForm
 {
-  // Ensures unique IDs throughout the page
   protected $id;
-  public function __construct($id, $defaults)
+  public function __construct($id, $defaults = array(), $options = array(), $CSRFSecret = null)
   {
     $this->id = $id;
-    parent::__construct();
-    $this->setDefaults($defaults);
+    parent::__construct($defaults, $options, $CSRFSecret);
   }
   public function configure()
   {
