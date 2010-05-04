@@ -114,7 +114,7 @@ function initPermalink(slug_url)
 			if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) 
 			{
 				$('#a_blog_item_slug').val(pInput.val()); // Pass the value to the admin form and update
-				updateBlogForm(slug_url);
+					updateBlogForm(slug_url);				
 			}										
 		}
 		

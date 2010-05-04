@@ -10,7 +10,7 @@
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
   <?php echo $form['title']->render() ?>
-  <?php echo $form['slug']->getWidget()->render('a_event[slug]', $a_event['slug']) ?>
+  <?php echo $form['slug']->render(array('id' => 'a_blog_item_slug')) ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
 
