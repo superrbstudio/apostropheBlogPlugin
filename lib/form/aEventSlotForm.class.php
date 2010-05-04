@@ -19,7 +19,7 @@ class aEventSlotForm extends BaseForm
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory'));
     $this->validatorSchema['categories_list'] =
-      new sfValidatorDoctrineChoice(array('model' => 'aBlogCategory', 'required' => false));
+      new sfValidatorDoctrineChoice(array('model' => 'aBlogCategory', 'multiple' => true, 'required' => false));
 		$this->widgetSchema->setHelp('categories_list', '<span class="a-help-arrow"></span> Filter Events by Category');
 		    
     $this->widgetSchema['tags_list']       = new sfWidgetFormInput(array(), array('class' => 'tag-input', 'autocomplete' => 'off'));
