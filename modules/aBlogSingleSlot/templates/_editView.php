@@ -1,5 +1,5 @@
 <?php // Just echo the form. You might want to render the form fields differently ?>
-<script type="text/javascript" src='/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js' ></script>
+<?php use_javascript('/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js') ?>
 <script type="text/javascript">
 $('document').ready(function() {
   

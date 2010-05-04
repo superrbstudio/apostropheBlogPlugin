@@ -23,6 +23,7 @@ class aBlogSlotComponents extends BaseaSlotComponents
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
+    Doctrine::getTable($this->modelClass)->addPublished($q);
     if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)  
       $q->andWhereIn('c.id', $this->values['categories_list']);
     if(isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
