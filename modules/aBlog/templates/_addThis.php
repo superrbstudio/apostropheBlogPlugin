@@ -12,5 +12,5 @@
 		<a class="addthis_button_twitter"></a>
 	</div>
 	<!-- AddThis Button END -->	
+	<?php use_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username='.$addthis_username) ?>
 <?php endif ?>
-<?php use_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username='.$addthis_username) ?>
