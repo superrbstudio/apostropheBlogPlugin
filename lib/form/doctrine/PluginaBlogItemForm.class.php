@@ -67,6 +67,12 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->setValidator('editors_list',
       new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
 
+    $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
+			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
+		));
+
+    $this->getWidgetSchema()->setDefault('published_at', date('Y/m/d H:i'));
+
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
   }

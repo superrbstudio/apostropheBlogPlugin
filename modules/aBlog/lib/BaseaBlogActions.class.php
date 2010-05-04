@@ -38,6 +38,7 @@ abstract class BaseaBlogActions extends aEngineActions
         Doctrine::getTable($this->modelClass)->$method($q, $request);
       }
     }
+    Doctrine::getTable($this->modelClass)->addPublished($q);
     
     return $q;
   }
