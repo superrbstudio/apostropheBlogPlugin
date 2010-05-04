@@ -9,7 +9,7 @@
 
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
-  <?php echo $form['title']->renderRow() ?>
+  <?php echo $form['title']->render() ?>
   <?php echo $form['slug']->getWidget()->render('a_blog_post[slug]', $a_blog_post['slug']) ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
@@ -24,7 +24,7 @@
 	<div id="a-blog-item-update" class="a-btn big a-publish-post">Saved</div>
 	
 	<div class="post-status option">
-	  <?php echo $form['status']->renderRow() ?>
+	  <?php echo $form['status']->render() ?>
 	</div>
 	
 	<?php if (isset($a_blog_post['updated_at'])): ?>

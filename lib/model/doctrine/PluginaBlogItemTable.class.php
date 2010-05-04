@@ -49,6 +49,12 @@ class PluginaBlogItemTable extends Doctrine_Table
     $q->leftJoin($rootAlias.'.Editors e');
     $q->addWhere('author_id = ? OR u.id = ? OR e.id = ?', array($user_id, $user_id, $user_id));
   }
+
+  public function addPublished(Doctrine_Query $q)
+  {
+    $rootAlias = $q->getRootAlias();
+    $q->addWhere($rootAlias.'.status = ? AND '. $rootAlias.'.published_at <= NOW()', 'published');
+  }
   
   public function addCategoriesForUser(sfGuardUser $user, $admin = false)
   {
