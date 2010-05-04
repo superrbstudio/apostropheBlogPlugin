@@ -4,7 +4,7 @@
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
     'aSlideshow' => array("width" => 480, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 480)),
-		'aVideo' => array('width' => 480), 
+		'aVideo' => array('width' => 480 'flexHeight' => true, 'resizeType' => 's'), 
 		'aPDF' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'),		
 ))) ?>
 
@@ -14,7 +14,7 @@
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
     'aSlideshow' => array("width" => 180, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 180)),
-		'aVideo' => array('width' => 180), 
+		'aVideo' => array('width' => 180, 'flexHeight' => true, 'resizeType' => 's'), 
 		'aPDF' => array('width' => 180, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 

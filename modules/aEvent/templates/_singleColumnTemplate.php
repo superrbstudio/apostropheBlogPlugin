@@ -4,7 +4,7 @@
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
     'aSlideshow' => array("width" => 680, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 680)),
-		'aVideo' => array('width' => 680), 
+		'aVideo' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'), 
 		'aPDF' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
