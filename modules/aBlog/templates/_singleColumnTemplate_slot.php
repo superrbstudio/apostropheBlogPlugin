@@ -11,5 +11,3 @@
 <div class="a-blog-item-excerpt">
 <?php echo $aBlogPost->getTextForArea('blog-body', $options['excerptLength']) ?>
 </div>
-
-<?php echo sfConfig::get('app_add_this') ?>

@@ -9,7 +9,7 @@ generator:
     singular:               ~
     plural:                 ~
     route_prefix:           a_event_admin
-    with_doctrine_route:    1
+    with_doctrine_route:    true
     
     config:
       fields:
@@ -19,6 +19,7 @@ generator:
         tags_list: { label: tagged }
 
       list:
+        table_method:   filterByEditable        
         title:    "Event Admin"
         display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
         fields:
