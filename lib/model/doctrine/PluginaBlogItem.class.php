@@ -237,6 +237,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     if($this->userHasPrivilege('publish'))
     {
       $this['status'] = 'published';
+      if(is_null($this['published_at']))
+      {
+        $this['published_at'] = date('Y-m-d H:i:s');
+      }
       $this->save();
     }
   }
