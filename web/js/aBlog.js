@@ -278,7 +278,8 @@ function aBlogSetDateRange(a)
 	if (a.id == 'a_blog_item_end_date_jquery_control') {  
 	    if ($('#a_blog_item_start_date_jquery_control').datepicker('getDate') != null) {  
 	        c = $('#a_blog_item_start_date_jquery_control').datepicker('getDate');  
-	    }  
+	    }
+	  	$('#a_blog_item_end_date_jquery_control').datepicker('setDate', c);
 	}  
 	return {  
 	    minDate: c  
