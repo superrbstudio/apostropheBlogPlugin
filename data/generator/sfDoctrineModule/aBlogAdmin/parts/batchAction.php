@@ -55,7 +55,9 @@
     $error = false;
     try
     {
-      $items->$action();
+      foreach($items as $item){
+        $item->$action();
+      }
     } catch (Exception $e)
     {
       $error = true;
