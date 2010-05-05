@@ -319,6 +319,15 @@ a_blog_admin_update:
   requirements:
     sf_method: PUT
     id: \d+
+
+a_blog_admin_delete:
+  url: /admin/blog/:id/delete/:slug
+  options: { model: aBlogPost, type: object, method: findOne }
+  param: { module: aBlogAdmin, action: delete }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: delete
+    id: \d+
       
 a_blog_admin_removeFilter:
   url:   /admin/blog/remove_filter/:name/:value
