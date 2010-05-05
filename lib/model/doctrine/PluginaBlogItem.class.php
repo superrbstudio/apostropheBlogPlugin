@@ -297,7 +297,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     $engines = Doctrine::getTable('aPage')->createQuery()
       ->addWhere('engine = ?', $this->engine)
-      ->addWhere('admin = ?', false)
+      ->addWhere('admin != ?', true)
       ->execute();
 
     if(count($engines) == 0)
