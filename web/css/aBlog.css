@@ -909,9 +909,11 @@ width: 180px;
 }
 
 .a-slot .a-blog-item.event .a-blog-item-title,
-.a-slot .a-blog-item.event .a-blog-item-excerpt
+.a-slot .a-blog-item.event .a-blog-item-media,
+.a-slot .a-blog-item.event .a-blog-item-excerpt-container
 {
 	width: 60%;
+	clear: none;
 	float: right;
 }
 
