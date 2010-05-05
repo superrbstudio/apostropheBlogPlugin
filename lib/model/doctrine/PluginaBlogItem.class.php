@@ -221,7 +221,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function delete(Doctrine_Connection $conn = null)
   {
     $user = sfContext::getInstance()->getUser()->getGuardUser();
-    if($this->userHasPrivilege($user, 'delete'))
+    if($this->userHasPrivilege('delete'))
     {
       return parent::delete($conn);
     }
@@ -269,6 +269,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function userHasPrivilege($privilege = 'publish')
   {
     $user = sfContext::getInstance()->getUser();
+
+    if(!$user->isAuthenticated())
+      return false;
+    
     if($user->hasCredential('admin'))
       return true;
 

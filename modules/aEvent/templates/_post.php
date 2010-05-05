@@ -1,6 +1,10 @@
 <?php use_helper('a') ?>
 <?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 <div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
+  <?php if($a_event->userHasPrivilege('edit')): ?>
+  <?php //TODO: John style this edit button ?>
+  <?php echo link_to('Edit', 'a_event_admin_edit', $a_event) ?>
+  <?php endif ?>
   <ul class="a-blog-item-meta">
     <li class="start-day"><?php echo date('l', strtotime($a_event->getStartDate())) ?></li>
     <li class="start-date"><?php echo date('F jS Y', strtotime($a_event->getStartDate())) ?></li>
