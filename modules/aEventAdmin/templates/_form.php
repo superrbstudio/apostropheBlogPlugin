@@ -149,4 +149,13 @@
 </div>
 <?php endif ?>
 
+
+<?php if($a_blog_post->userHasPrivilege('delete')): ?>
+<hr />
+<div class="delete section">
+<?php echo link_to('Delete this event', 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete nobg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this event?', array(), 'apostrophe_blog'), )) ?>
+</div>
+<?php endif ?>
+
+
 <?php include_partial('formScripts', array('a_event' => $a_event, 'form' => $form)) ?>
