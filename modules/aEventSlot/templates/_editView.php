@@ -2,7 +2,7 @@
 
 <?php echo $form->renderHiddenFields() ?>
 
-<h4 class="a-slot-form-title">Recent Events</h4>
+<h4 class="a-slot-form-title">Events</h4>
 
 <div class="a-form-row count">
 	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe_blog')) ?>

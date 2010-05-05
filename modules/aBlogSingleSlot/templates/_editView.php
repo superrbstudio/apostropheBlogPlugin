@@ -1,10 +1,10 @@
-<h4 class="a-slot-form-title">Choose a Blog Post</h4>
+<h4 class="a-slot-form-title">Blog Post</h4>
 <?php echo $form->renderGlobalErrors() ?>
 <?php echo $form->renderHiddenFields() ?>
 <div class="a-form-row search">
 	<?php echo $form['search']->renderLabel(__('Search by Title', array(), 'apostrophe_blog')) ?>
 	<div class="a-form-field">
-		<?php echo $form['search']->render() ?>
+		<?php echo $form['search']->render(array('class' => 'a-blogsingle-input', )) ?>
 		<?php echo $form['search']->renderHelp() ?>
 	</div>
 	<div class="a-form-error"><?php echo $form['search']->renderError() ?></div>

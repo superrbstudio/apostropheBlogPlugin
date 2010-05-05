@@ -1,4 +1,4 @@
-<h4 class="a-slot-form-title">Choose an Event</h4>
+<h4 class="a-slot-form-title">Event</h4>
 
 <div class="a-form-row search">
   <?php echo $form->renderHiddenFields() ?>
