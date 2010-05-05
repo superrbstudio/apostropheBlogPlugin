@@ -1,6 +1,6 @@
 <?php
 
-class apostropheBlogMigratePageSlugs extends sfBaseTask
+class apostropheBlogMigratePageSlugsTask extends sfBaseTask
 {
 
   protected function configure()
