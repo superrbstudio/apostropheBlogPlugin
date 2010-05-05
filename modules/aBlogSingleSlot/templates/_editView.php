@@ -1,5 +1,3 @@
-<script type="text/javascript" src="/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js" />
-
 <h4 class="a-slot-form-title">Choose a Blog Post</h4>
 <?php echo $form->renderGlobalErrors() ?>
 <?php echo $form->renderHiddenFields() ?>
@@ -12,6 +10,7 @@
 	<div class="a-form-error"><?php echo $form['search']->renderError() ?></div>
 </div>
 
+<script type="text/javascript" src="/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#a-<?php echo $form->getName() ?>').addClass('a-options dropshadow');

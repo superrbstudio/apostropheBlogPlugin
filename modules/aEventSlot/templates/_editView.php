@@ -31,7 +31,7 @@
 	<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
 </div>
 
-<?php use_javascript('/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js') ?>
+<script type="text/javascript" charset="utf-8" src="/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
     pkTagahead(<?php echo json_encode(url_for("taggableComplete/complete")) ?>);
