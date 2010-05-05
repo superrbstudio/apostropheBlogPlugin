@@ -8,4 +8,4 @@
 		'aPDF' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
-<?php include_partial('aBlog/addThis') ?>
+<?php include_partial('aBlog/addThis', array('aBlogPost' => $a_blog_post)) ?>

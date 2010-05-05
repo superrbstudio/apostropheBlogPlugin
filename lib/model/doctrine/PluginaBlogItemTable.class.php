@@ -97,4 +97,5 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     return self::getInstance()->findOneBy('id', $params['id']);
   }
+
 }

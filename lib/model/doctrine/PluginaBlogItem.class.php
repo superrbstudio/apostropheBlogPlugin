@@ -297,6 +297,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     $engines = Doctrine::getTable('aPage')->createQuery()
       ->addWhere('engine = ?', $this->engine)
+      ->addWhere('admin = ?', false)
       ->execute();
 
     if(count($engines) == 0)
@@ -315,8 +316,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     if(count($catIds) < 1)
       return $engines[0];
 
-    $best = array(0, '');
-
+    $best = array(-1, '');
+    
     foreach($engines as $engine)
     {
       $score = 0;
@@ -327,10 +328,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       }
       if($score > $best[0])
       {
-        $best = $engine;
+        $best = array($score, $engine);
       }
     }
-
-    return $best;
+    
+    return $best[1];
   }
 }
