@@ -8,7 +8,7 @@ class aBlogSingleSlotActions extends BaseaSlotActions
   {
     $this->editSetup();
 
-    $value = $this->getRequestParameter('slotform-' . $this->id);
+    $value = $this->getRequestParameter('slot-form-' . $this->id);
     $this->form = new $this->formClass($this->id, array());
     $this->form->bind($value);
     if ($this->form->isValid())

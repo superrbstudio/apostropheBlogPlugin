@@ -24,7 +24,8 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $search = $request->getParameter('q', '');
     $q = Doctrine::getTable('aEvent')->createQuery()
       ->andWhere("title LIKE ?", '%'.$search.'%');
-    $this->aEvents = Doctrine::getTable('aEvent')->addPublished($q);
+    Doctrine::getTable('aEvent')->addPublished($q);
+    $this->aEvents = $q->execute();
     $this->setLayout(false);
   }
   

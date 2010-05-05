@@ -24,8 +24,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $search = $request->getParameter('q', '');
     $q = Doctrine::getTable('aBlogPost')->createQuery()
       ->andWhere("title LIKE ?", '%'.$search.'%');
-    $this->aBlogPosts = Doctrine::getTable('aBlogPost')->addPublished($q)
-      ->execute(array(), Doctrine::HYDRATE_ARRAY);
+    Doctrine::getTable('aBlogPost')->addPublished($q);
+    $this->aBlogPosts =  $q->execute(array(), Doctrine::HYDRATE_ARRAY);
     $this->setLayout(false);
   }
   
