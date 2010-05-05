@@ -11,7 +11,7 @@
 		<a class="addthis_button_google"></a>
 		<a class="addthis_button_twitter"></a>
 	</div>
-  <?php aRouteTools::popTargetEnginePage('aBlog') ?>
+  <?php aRouteTools::popTargetEnginePage('aEvent') ?>
 	<!-- AddThis Button END -->	
 	<?php use_javascript('http://s7.addthis.com/js/250/addthis_widget.js#username='.$addthis_username) ?>
 <?php endif ?>
