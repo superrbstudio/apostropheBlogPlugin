@@ -32,8 +32,18 @@ class aBlogSlotComponents extends BaseaSlotComponents
       $q->limit($this->values['count']);
 
     if(!isset($this->options['slideshowOptions']))
-      $this->options['slideshowOptions'] = array();
-
+		{ // If no slideshow options are set, use the defaults
+	    $this->options['slideshowOptions'] = array('width' => 100, 'height' => 100, 'resizeType' => 'c');
+		}
+		else
+		{ // If -some- slideshow options are set, make sure to include defaults where not specified
+	    $this->options['slideshowOptions'] = array(
+				'width' => ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100), 
+				'height' => ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100), 
+				'resizeType' => ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c'), 
+			);
+		}
+  
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
     

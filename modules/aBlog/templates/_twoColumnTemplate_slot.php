@@ -17,7 +17,8 @@
   <ul class="a-blog-item-meta">
 		<li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>
   </ul>
-	<?php if($options['maxImages'] > 0): ?>
+
+	<?php if($options['maxImages'] > 0 && $aBlogPost->hasMedia()): ?>
 		<div class="a-blog-item-media">
 		<?php include_component('aSlideshowSlot', 'slideshow', array(
 		  'items' => $aBlogPost->getMediaForArea('blog-body', 'image', $options['maxImages']),
@@ -26,6 +27,7 @@
 		  )) ?>
 		</div>
 	<?php endif ?>
+
   <div class="a-blog-item-excerpt-container">
 		<div class="a-blog-item-excerpt">
 			<?php echo $aBlogPost->getTextForArea('blog-body', $options['excerptLength']) ?>
