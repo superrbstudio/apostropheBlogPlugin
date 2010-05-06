@@ -1,4 +1,4 @@
-<div class="a-blog-item event">
+<div class="a-blog-item event<?php echo ($aEvent->hasMedia())? ' has-media':''; ?>">
 
 	<?php if (0): ?>
 	<?php // We --could-- have edit controls at the slot level, but it just seemed like a way to create confusion! ?>
