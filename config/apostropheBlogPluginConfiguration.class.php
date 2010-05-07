@@ -10,16 +10,24 @@
  */
 class apostropheBlogPluginConfiguration extends sfPluginConfiguration
 {
-  const VERSION = '1.0.0-DEV';
 
+  static $registered = false;
   /**
    * @see sfPluginConfiguration
    */
   public function initialize()
   {
-    $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
-      'getGlobalButtons'));
-    $this->dispatcher->connect('view.configure_format', array($this, 'configureFormat'));
+    // Yes, this can get called twice. This is Fabien's workaround:
+    // http://trac.symfony-project.org/ticket/8026
+    
+    if (!self::$registered)
+    {
+      $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
+        'getGlobalButtons'));
+      $this->dispatcher->connect('view.configure_format', array($this, 'configureFormat'));
+      $this->dispatcher->connect('command.post_command', array('aBlogEvents',  'listenToCommandPostCommandEvent'));  
+      self::$registered = true;
+    }
   }
 
   public function configureFormat(sfEvent $event)

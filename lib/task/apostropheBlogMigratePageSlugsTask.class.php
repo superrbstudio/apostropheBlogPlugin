@@ -13,9 +13,9 @@ class apostropheBlogMigratePageSlugsTask extends sfBaseTask
       // add your own options here
     ));
 
-    $this->namespace        = 'apostropheBlog';
-    $this->name             = 'migratePageSlugs';
-    $this->briefDescription = 'Changes slugs used for virtual pages following update.';
+    $this->namespace        = 'apostrophe-blog';
+    $this->name             = 'migrate-page-slugs';
+    $this->briefDescription = 'You don\'t want this.';
   }
 
   protected function execute($arguments = array(), $options = array())
