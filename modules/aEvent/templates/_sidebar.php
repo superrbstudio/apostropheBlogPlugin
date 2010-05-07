@@ -1,3 +1,4 @@
+<?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
   <ul class="a-filter-options blog">
@@ -10,6 +11,7 @@
 </div>
 
 <hr />
+<?php endif ?>
 
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>
@@ -22,6 +24,7 @@
 
 <hr />
 
+<?php if(count($tags)): ?>
 <div class="a-subnav-section tags">  
 
 	<?php if (isset($tag)): ?>
@@ -56,6 +59,8 @@
 </div>
 
 <hr />
+<?php endif ?>
+
 <h5><?php echo link_to('RSS Feed',  aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
 
 <script type="text/javascript">

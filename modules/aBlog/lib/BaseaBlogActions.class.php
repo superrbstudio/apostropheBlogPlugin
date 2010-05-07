@@ -15,7 +15,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function preExecute()
   {
     parent::preExecute();
-    $this->blogCategories = aTools::getCurrentPage()->BlogCategories->toArray();
+    $this->blogCategories = aTools::getCurrentPage()->BlogCategories;
     if(count($this->blogCategories) == 0)
     {
       $this->blogCategories = array();
@@ -27,8 +27,15 @@ abstract class BaseaBlogActions extends aEngineActions
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
-    $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $this->blogCategories);
-    $q->whereIn('c.id', $categoryIds);
+    $categoryIds = array();
+    foreach($this->blogCategories as $blogCategory)
+    {
+      $categoryIds[] = $blogCategory['id'];
+    }
+    if(count($categoryIds))
+    {
+      $q->whereIn('c.id', $categoryIds);
+    }
 
     $routingOptions = $this->getRoute()->getOptions();    
     if(isset($routingOptions['filters']))

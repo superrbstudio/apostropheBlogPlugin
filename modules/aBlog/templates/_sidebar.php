@@ -1,3 +1,4 @@
+<?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
   <ul class="a-filter-options blog">
@@ -10,7 +11,7 @@
 </div>
 
 <hr />
-
+<?php endif ?>
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>
   <ul class="a-filter-options blog">
@@ -22,6 +23,7 @@
 
 <hr />
 
+<?php if(count($tags)): ?>
 <div class="a-subnav-section tags">  
 
 	<?php if (isset($tag)): ?>
@@ -54,6 +56,7 @@
 	</ul>
 	
 </div>
+<?php endif ?>
 
 <?php if(!isset($noFeed)): ?>
 <hr />
