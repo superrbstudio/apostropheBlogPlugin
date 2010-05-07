@@ -41,7 +41,13 @@ class PluginaBlogItemTable extends Doctrine_Table
   public function filterByEditable(Doctrine_Query $q, $user_id = null)
   {
     if(is_null($user_id))
+    {
       $user_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
+      if(sfContext::getInstance()->getUser()->hasCredential('admin'))
+      {
+        return ;
+      }
+    }
 
     $rootAlias = $q->getRootAlias();
     $q->leftJoin($rootAlias.'.Categories c');
