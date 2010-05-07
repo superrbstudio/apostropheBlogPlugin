@@ -8,7 +8,7 @@
     'aImage' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 480)),
     'aButton' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 480)),
     'aSlideshow' => array("width" => 480, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 480)),
-		'aVideo' => array('width' => 480. 'flexHeight' => true, 'resizeType' => 's'), 
+		'aVideo' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'), 
   ))
 ) ?>
 
