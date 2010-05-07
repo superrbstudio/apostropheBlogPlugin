@@ -79,10 +79,12 @@ aBlogEditor:
       foreignAlias: BlogItemEditors
       class: aBlogItem
       local: blog_item_id
+      onDelete: CASCADE
     Editor:
       foreignAlias: BlogItemEditors
       class: sfGuardUser
       local: user_id
+      onDelete: CASCADE
       
 aBlogItemCategory:
   columns:
@@ -175,10 +177,12 @@ aBlogCategoryUser:
       foreignAlias: BlogCategoryUsers
       class: aBlogCategory
       local: blog_category_id
+      onDelete: CASCADE
     User:
       foreignAlias: BlogCategoryUsers
       class: sfGuardUser
       local: user_id
+      onDelete: CASCADE
     
 aBlogPost:
   inheritance:
