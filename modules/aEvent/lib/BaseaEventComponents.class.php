@@ -18,10 +18,6 @@ abstract class BaseaEventComponents extends sfComponents
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
     
-    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass, 'sort_by_popularity' => true, 'limit' => 10));
-
-    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass));
-
     if(is_null($this->categories))
     {
       $this->categories = Doctrine::getTable('aBlogCategory')
@@ -30,6 +26,15 @@ abstract class BaseaEventComponents extends sfComponents
         ->where('c.events = ?', true)
         ->execute();
     }
+
+    $categoryIds = array();
+    foreach($this->categories as $category)
+    {
+      $categoryIds[] = $category['id'];
+    }
+
+    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aEvent', true, 10);
+    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aEvent');
 
     if($this->reset == true)
     {

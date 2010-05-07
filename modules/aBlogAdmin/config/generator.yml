@@ -14,8 +14,8 @@ generator:
     config:
       fields:
         author_id:  { label: created by }
-        _editors_list: { label: edited by }
-        _categories_list: { label: categories }
+        editors_list: { label: edited by }
+        categories_list: { label: categorized }
         tags_list: { label: tagged }       
       
       list:

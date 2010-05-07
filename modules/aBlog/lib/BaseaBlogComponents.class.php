@@ -12,25 +12,30 @@ abstract class BaseaBlogComponents extends sfComponents
 {
   protected $modelClass = 'aBlogPost';
   
-  
   public function executeSidebar()
   {
     if ($this->getRequestParameter('tag'))
     {
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
-    
-    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass, 'sort_by_popularity' => true, 'limit' => 10));
-
-    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => $this->modelClass));
 
     if(is_null($this->categories))
     {
       $this->categories = Doctrine::getTable('aBlogCategory')
         ->createQuery('c')
+        ->addWhere('c.posts = ?', true)
         ->orderBy('c.name')
         ->execute();
     }
+
+    $categoryIds = array();
+    foreach($this->categories as $category)
+    {
+      $categoryIds[] = $category['id'];
+    }
+
+    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
+    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
 
     if($this->reset == true)
     {
