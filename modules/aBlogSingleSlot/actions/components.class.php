@@ -42,5 +42,20 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
 
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
+
+		// TODO: Make this work right
+		if (!$this->aBlogItem)
+		{ // The Blog Post was deleted perhaps ? :D
+
+			// This doesnt work 
+			//if ($sf_user->isAuthenticated() && $sf_user->isAdmin()) {
+			//	echo "This blog post has been deleted";
+			//}
+			echo "THIS BLOG POST WAS DELETED";
+
+			// This stops the error but isn't what we want
+			$this->aBlogItem = new aBlogItem();
+		}
+		
   }
 }
