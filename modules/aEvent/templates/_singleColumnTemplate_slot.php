@@ -32,7 +32,7 @@
 		<div class="a-blog-item-media">
 			<?php include_component('aSlideshowSlot', 'slideshow', array(
 		  'items' => $aEvent->getMediaForArea('blog-body', 'image', $options['maxImages']),
-		  'id' => 'test',
+		  'id' => 'a-slideshow-blogitem-'.$aBlogPost['id'],
 		  'options' => $options['slideshowOptions']
 		  )) ?>
 		</div>
