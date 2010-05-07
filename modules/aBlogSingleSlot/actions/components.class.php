@@ -57,5 +57,5 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
 			$this->aBlogItem = new aBlogItem();
 		}
 		
-  }
+  } 
 }
