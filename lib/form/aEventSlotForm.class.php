@@ -14,7 +14,10 @@ class aEventSlotForm extends BaseForm
     $this->widgetSchema['count'] = new sfWidgetFormInput(array(), array('size' => 2));
     $this->validatorSchema['count'] = new sfValidatorNumber(array('min' => 0, 'max' => 10));
 		$this->widgetSchema->setHelp('count', '<span class="a-help-arrow"></span> Set the number of posts to display – 10 max.');    
-		$this->setDefault('count', 1);
+		if(!$this->hasDefault('count'))
+		{
+      $this->setDefault('count', 1);
+    }
 		
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aBlogCategory'));
