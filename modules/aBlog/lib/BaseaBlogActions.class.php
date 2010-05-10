@@ -46,6 +46,7 @@ abstract class BaseaBlogActions extends aEngineActions
       }
     }
     Doctrine::getTable($this->modelClass)->addPublished($q);
+    $q->orderBy('published_at desc');
     
     return $q;
   }

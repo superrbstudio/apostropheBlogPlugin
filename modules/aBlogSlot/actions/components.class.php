@@ -31,6 +31,8 @@ class aBlogSlotComponents extends BaseaSlotComponents
     if(isset($this->values['count']))
       $q->limit($this->values['count']);
 
+    $q->orderBy('published_at desc');
+
     if(!isset($this->options['slideshowOptions']))
 		{ // If no slideshow options are set, use the defaults
 	    $this->options['slideshowOptions'] = array('width' => 100, 'height' => 100, 'resizeType' => 'c');
