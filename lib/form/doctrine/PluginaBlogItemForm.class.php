@@ -33,12 +33,21 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
     }
 
+		// This was crashing with errors if there was an empty / old / or incomplete aBlog entry in the project app.yml
+		// By adding the if statement and the else, when you have a malformed aBlog entry in the project app.yml, it still returns the single column template
+		// Which is bundled with the Plugin, so it's OK to assume we have it to return
     $templates = sfConfig::get('app_'.$this->engine.'_templates');
     $templateChoices = array();
-    foreach ($templates as $key => $template)
-    {
-      $templateChoices[$key] = $template['name'];
-    }
+		if ($templates) {
+	    foreach ($templates as $key => $template)
+	    {
+	      $templateChoices[$key] = $template['name'];
+	    }
+		}
+		else
+		{
+			$templateChoices['singleColumnTemplate'] = 'Single Column';
+		}
 
     $this->setWidget('template',
       new sfWidgetFormChoice(array('multiple' => false, 'choices' => $templateChoices)));
