@@ -11,6 +11,14 @@ require_once dirname(__FILE__).'/aBlogCategoryAdminGeneratorHelper.class.php';
  */
 abstract class BaseaBlogCategoryAdminActions extends autoaBlogCategoryAdminActions
 {
-  
+  public function executePosts()
+  {
+    $this->redirect('@a_blog_admin');
+  }
+
+  public function executeEvents()
+  {
+    $this->redirect('@a_event_admin');
+  }
  
 }

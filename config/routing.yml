@@ -296,6 +296,8 @@ a_blog_admin:
     column:              slug
     with_wildcard_routes: true
     with_show:            false
+    collection_actions:
+      categories: get
 
 a_blog_admin_autocomplete:
   url:   /admin/blog/autocomplete
@@ -338,11 +340,6 @@ a_blog_admin_addFilter:
   url:   /admin/blog/add_filter/:name/:value
   param: { module: aBlogAdmin, action: addFilter }
   class: sfRoute
-  
-a_blog_admin_editCategories:
-  url:   /admin/blog/editCategories
-  param: { module: aBlogAdmin, action: editCategories }
-  class: sfRoute  
       
 a_blog_category_admin:
   class: sfDoctrineRouteCollection
@@ -353,8 +350,8 @@ a_blog_category_admin:
     column:              id
     with_wildcard_routes: true
     collection_actions:
-      addFilter: [GET, POST]
-      removeFilter: [GET, POST]
+      posts: get
+      events: get
       
       
 ################
@@ -370,6 +367,8 @@ a_event_admin:
     column:              slug
     with_wildcard_routes: true
     with_show:            false
+    collection_actions:
+      categories: get
 
 a_event_admin_autocomplete:
   url:   /admin/event/autocomplete

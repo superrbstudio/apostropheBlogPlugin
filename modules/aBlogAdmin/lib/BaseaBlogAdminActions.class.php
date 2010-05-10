@@ -66,4 +66,9 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     aRouteTools::pushTargetEnginePage($aBlogPost->findBestEngine());
     $this->redirect($this->generateUrl('a_blog_post', $this->getRoute()->getObject()));
   }
+
+  public function executeCategories()
+  {
+    $this->redirect('@a_blog_category_admin');
+  }
 }

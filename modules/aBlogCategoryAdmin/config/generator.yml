@@ -11,15 +11,28 @@ generator:
     with_doctrine_route:   1
     
     config:
-      actions: []
-    
+      
       list:
-        display: [ _name, numBlogItems, numUsers ]
+        title: Categories
+        display: [ _name, numBlogPosts, numEvents, _users ]
         object_actions: []
         actions:
-          _new:
-            name: New
-        table_method: 
+          new:
+            label: New Post
+            action: new
+            params:
+              class: a-btn big icon a-add alt
+          posts:
+            label: Posts
+            action: posts
+            params:
+              class: a-btn big alt
+          events:
+            label: Events
+            action: events
+            params:
+              class: a-btn big alt
+
       
       form:
         fields:   [ name, users_list, posts, events ]
@@ -30,9 +43,10 @@ generator:
         display: [  users_list ]
         
       fields:
-        numBlogItems: { label: Blog Items Count }
-        numUsers: { label: Active Users }
+        numBlogPosts: { label: Number of Posts }
+        numEvents: { label: Number of Events }
+        users: { label: Active Users }
       
       edit:
-        actions: ~
+        title: Edit Category
         

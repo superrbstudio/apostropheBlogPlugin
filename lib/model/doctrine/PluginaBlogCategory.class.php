@@ -22,5 +22,23 @@ abstract class PluginaBlogCategory extends BaseaBlogCategory
   {
     return count($this->Users);
   }
+
+  public function getNumBlogPosts()
+  {
+    return Doctrine::getTable('aBlogCategory')->createQuery()
+      ->innerJoin('aBlogCategory.BlogItems')
+      ->addWhere('aBlogCategory.id = ?', $this['id'])
+      ->addWhere('aBlogCategory.BlogItems.type = ?', 'post')
+      ->count();
+  }
+
+  public function getNumEvents()
+  {
+    return Doctrine::getTable('aBlogCategory')->createQuery()
+      ->innerJoin('aBlogCategory.BlogItems')
+      ->addWhere('aBlogCategory.id = ?', $this['id'])
+      ->addWhere('aBlogCategory.BlogItems.type = ?', 'event')
+      ->count();
+  }
   
 }
