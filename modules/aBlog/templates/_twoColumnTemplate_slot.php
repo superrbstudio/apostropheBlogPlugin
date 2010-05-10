@@ -18,7 +18,7 @@
 		<li class="date"><?php echo aDate::pretty($aBlogPost['published_at']) ?></li>
   </ul>
 
-	<?php if($options['maxImages'] > 0 && $aBlogPost->hasMedia()): ?>
+	<?php if($options['maxImages'] && $aBlogPost->hasMedia()): ?>
 		<div class="a-blog-item-media">
 		<?php include_component('aSlideshowSlot', 'slideshow', array(
 		  'items' => $aBlogPost->getMediaForArea('blog-body', 'image', $options['maxImages']),

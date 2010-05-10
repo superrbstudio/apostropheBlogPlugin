@@ -28,7 +28,7 @@
 		<?php endif ?>
 	</ul>
 
-	<?php if($options['maxImages'] > 0 && $aEvent->hasMedia()): ?>
+	<?php if($options['maxImages'] && $aEvent->hasMedia()): ?>		
 		<div class="a-blog-item-media">
 			<?php include_component('aSlideshowSlot', 'slideshow', array(
 		  'items' => $aEvent->getMediaForArea('blog-body', 'image', $options['maxImages']),
