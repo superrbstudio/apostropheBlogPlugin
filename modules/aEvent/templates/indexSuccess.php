@@ -24,6 +24,10 @@
   <?php foreach ($pager->getResults() as $a_event): ?>
   	<?php echo include_partial('aEvent/post', array('a_event' => $a_event)) ?>
   	<hr />
-  <?php endforeach ?>    
+  <?php endforeach ?>
+
+    <?php if ($pager->haveToPaginate()): ?>
+ 		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aEvent/index?'. http_build_query($params['pagination'])))); ?>
+  <?php endif ?>
 </div>
   

@@ -32,6 +32,11 @@
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
   	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
   	<hr />
-  <?php endforeach ?>    
+  <?php endforeach ?>
+
+  <?php if ($pager->haveToPaginate()): ?>
+ 		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aBlog/index?'. http_build_query($params['pagination'])))); ?>
+  <?php endif ?>
+
 </div>
   
