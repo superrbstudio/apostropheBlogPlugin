@@ -38,11 +38,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $this->slug;
   }
 
-  public function getTitle($value)
-  {
-    return $this->Page->getSlot('title')->value;
-  }
-  
   public function postInsert($event)
   {
     $page = new aPage();
@@ -50,13 +45,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page->save();
     
     $title = $page->createSlot('aText');
-    if(sfConfig::get('sf_i18n', false))
-    {
-      $title->value = sfContext::getI18N()->__('Untitled', array(), 'apostrophe_blog');
-    } else {
-      $title->value = 'Untitled';
-    }
-    
+    $title->value = 'Untitled';
     $title->save();
     $page->newAreaVersion('title', 'add',
       array(
@@ -95,7 +84,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $title = $this->Page->createSlot('aText');
     $title->value = $this['title'];
     $title->save();
-    $this->Page->newAreaVersion('title', 'add',
+    $this->Page->newAreaVersion('title', 'update',
       array(
         'permid' => 1,
         'slot' => $title));
