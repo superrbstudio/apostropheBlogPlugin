@@ -27,13 +27,19 @@ abstract class BaseaCalendarComponents extends sfComponents
     {
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
-    
-    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogEvent', 'sort_by_popularity' => true, 'limit' => 10));
 
-    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogEvent'));
-    
     $this->categories =  aTools::getCurrentPage()->BlogCategories;
     $aPageCategories = aTools::getCurrentPage()->aBlogPageCategory;
+    
+    $categoryIds = array();
+    foreach($aPageCategories as $category)
+    {
+      $categoryIds[] = $category['blog_category_id'];
+    }
+    
+    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogEvent', true, 10);
+    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogEvent');
+    
     if(count($aPageCategories) == 0)
     {
       $this->categories = Doctrine::getTable('aBlogCategory')

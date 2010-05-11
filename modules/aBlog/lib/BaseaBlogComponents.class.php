@@ -47,12 +47,18 @@ abstract class BaseaBlogComponents extends sfComponents
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
     
-    $this->popular = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true, 'limit' => 10));
-
-    $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost'));
-    
     $this->categories =  aTools::getCurrentPage()->BlogCategories;
     $aPageCategories = aTools::getCurrentPage()->aBlogPageCategory;
+    
+    $categoryIds = array();
+    foreach($aPageCategories as $category)
+    {
+      $categoryIds[] = $category['blog_category_id'];
+    }
+    
+    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
+    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
+    
     if(count($aPageCategories) == 0)
     {
       $this->categories = Doctrine::getTable('aBlogCategory')
