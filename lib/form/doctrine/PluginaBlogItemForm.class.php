@@ -38,16 +38,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 		// Which is bundled with the Plugin, so it's OK to assume we have it to return
     $templates = sfConfig::get('app_'.$this->engine.'_templates');
     $templateChoices = array();
-		if ($templates) {
-	    foreach ($templates as $key => $template)
-	    {
-	      $templateChoices[$key] = $template['name'];
-	    }
-		}
-		else
-		{
-			$templateChoices['singleColumnTemplate'] = 'Single Column';
-		}
+	  foreach ($templates as $key => $template)
+	  {
+	    $templateChoices[$key] = $template['name'];
+	  }
 
     $this->setWidget('template',
       new sfWidgetFormChoice(array('multiple' => false, 'choices' => $templateChoices)));

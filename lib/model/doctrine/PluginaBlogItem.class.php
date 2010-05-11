@@ -38,6 +38,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $this->slug;
   }
 
+
   public function postInsert($event)
   {
     $page = new aPage();
@@ -53,9 +54,12 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         'slot' => $title));
 
     $this->Page = $page;
-    $this->slug = 'untitled-'.$this['id'];
-    $this->title = 'untitled';
+
+    $this['slug'] = 'untitled-'.$this['id'];
+    $this['title'] = 'untitled';
     $this['slug_saved'] = false;
+
+    // This prevents post update to be run after the save
     $this->update = false;
     $this->save();
   }
@@ -64,19 +68,33 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     if($this->update)
     {
+      // If the slug was altered by the user we no longer want to attempt to sluggify
+      // the title to create the slug
       if(array_key_exists('slug', $this->getModified()))
       {
         $this['slug_saved'] = true;
       }
+
       if($this['slug_saved'] == false && array_key_exists('title', $this->getModified()))
       {
+        // If the slug hasn't been altered slugify the title to create the slug
         $this['slug'] = aTools::slugify($this['title']);
       }
       else
       {
+        // Otherwise slugify the user entered value.
         $this['slug'] = aTools::slugify($this['slug']);
       }
     }
+    // Check if a blog post or event already has this slug
+    $i = 1;
+    $slug = $this['slug'];
+    while(Doctrine::getTable(get_class($this))->findOneBy('slug', $this['slug']))
+    {
+      $this['slug'] = $this['slug'].'-'.$i;
+      $i++;
+    }
+
   }
 
   public function postUpdate($event)
@@ -88,11 +106,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       array(
         'permid' => 1,
         'slot' => $title));
-  }
-  
-  public function postDelete($event)
-  {
-    $this->Page->delete();
   }
 
   /**
