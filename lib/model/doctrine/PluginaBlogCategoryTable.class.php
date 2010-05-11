@@ -4,7 +4,7 @@
  */
 class PluginaBlogCategoryTable extends Doctrine_Table
 {
-public function getTagsForCategories($categoryIds, $model, $popular = false, $limit = null)
+public function getTagsForCategories($categoryIds, $model, $popular = false, $limit = null, $null = false)
   {
     if(!is_array($categoryIds))
     {
@@ -25,6 +25,10 @@ public function getTagsForCategories($categoryIds, $model, $popular = false, $li
     {
       $query.=" AND b.category_id IN (".implode(',', $categoryIds).") ";
     }
+    
+    if($null)
+      $query.= " OR b.category_id IS NULL";
+    
 
     $query.= " GROUP BY tg.tag_id ";
 

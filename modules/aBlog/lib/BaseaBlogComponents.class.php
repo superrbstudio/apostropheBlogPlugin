@@ -53,11 +53,14 @@ abstract class BaseaBlogComponents extends sfComponents
     $categoryIds = array();
     foreach($aPageCategories as $category)
     {
-      $categoryIds[] = $category['blog_category_id'];
+      if(!is_null($category['blog_category_id']))
+        $categoryIds[] = $category['blog_category_id'];
+      else
+        $null = true;
     }
     
-    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
-    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
+    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10, $null);
+    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', $null);
     
     if(count($aPageCategories) == 0)
     {
