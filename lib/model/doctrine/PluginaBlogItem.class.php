@@ -16,35 +16,39 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public $engine = 'aBlog';
 
   /**
-   * These date methods are use in the routing of the permalink
+   * Doctrine_Record overrides
    */
-  public function getYear()
+
+  /**
+   * Deletes a blog item after checking if the user has permission to perform
+   * the delete.
+   * @param Doctrine_Connection $conn
+   * @return boolean
+   */
+  public function delete(Doctrine_Connection $conn = null)
   {
-    return date('Y', strtotime($this->getPublishedAt()));
+    $user = sfContext::getInstance()->getUser()->getGuardUser();
+    if($this->userHasPrivilege('delete'))
+    {
+      return parent::delete($conn);
+    }
+    else
+      return false;
   }
 
-  public function getMonth()
-  {
-    return date('m', strtotime($this->getPublishedAt()));
-  }
-
-  public function getDay()
-  {
-    return date('d', strtotime($this->getPublishedAt()));
-  }
-  
-  public function getFeedSlug()
-  {
-    return $this->slug;
-  }
-
-
+  /**
+   * Listener to setup blog item and its virtual page
+   * @param <type> $event
+   */
   public function postInsert($event)
   {
+    // Create a virtual page for this item
     $page = new aPage();
     $page['slug'] = $this->engine.'/'.$this['id'];
     $page->save();
-    
+    $this->Page = $page;
+
+    // Create a slot for the title and add to the virtual page
     $title = $page->createSlot('aText');
     $title->value = 'Untitled';
     $title->save();
@@ -53,17 +57,20 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         'permid' => 1,
         'slot' => $title));
 
-    $this->Page = $page;
-
+    // Make default values for this item
     $this['slug'] = 'untitled-'.$this['id'];
     $this['title'] = 'untitled';
     $this['slug_saved'] = false;
 
-    // This prevents post update to be run after the save
+    // This prevents post update from running after the next save
     $this->update = false;
     $this->save();
   }
 
+  /**
+   * preUpdate function used to do some slugification.
+   * @param <type> $event
+   */
   public function preUpdate($event)
   {
     if($this->update)
@@ -86,6 +93,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         $this['slug'] = aTools::slugify($this['slug']);
       }
     }
+
     // Check if a blog post or event already has this slug
     $i = 1;
     $slug = $this['slug'];
@@ -97,6 +105,11 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
   }
 
+  /**
+   * Post update function to update the title slot that is saved for search indexing
+   * and internationalization purposes.
+   * @param <type> $event
+   */
   public function postUpdate($event)
   {
     $title = $this->Page->createSlot('aText');
@@ -106,6 +119,67 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       array(
         'permid' => 1,
         'slot' => $title));
+  }
+
+  /**
+   * These date methods are use in the routing of the permalink
+   */
+  public function getYear()
+  {
+    return date('Y', strtotime($this->getPublishedAt()));
+  }
+
+  public function getMonth()
+  {
+    return date('m', strtotime($this->getPublishedAt()));
+  }
+
+  public function getDay()
+  {
+    return date('d', strtotime($this->getPublishedAt()));
+  }
+  
+  public function getFeedSlug()
+  {
+    return $this['slug'];
+  }
+
+
+
+
+
+  /**
+   * Slot content convenience methods
+   */
+
+  /**
+   * Gets text that should show up in an rss feed
+   * @return <type>
+   */
+  public function getFeedText()
+  {
+    return $this->getText(200);
+  }
+
+  /**
+   * Gets the text for the areas in this item
+   * @param int $limit
+   * @return string
+   */
+  public function getText($limit = null)
+  {
+    return $this->getTextForAreas($this->getAreas(), $limit);
+  }
+
+  /**
+   *
+   * @param string $area Name of an area
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getTextForArea($area, $limit = null)
+  {
+    return $this->getTextForAreas(array($area), $limit);
   }
 
   /**
@@ -135,24 +209,51 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $text;
   }
 
+  
   /**
-   *
-   * @param string $area Name of an area
-   * @param int $limit Number of characters to restrict retrieval to
-   * @return string
+   * Returns media for all areas for this items virtual page, this may produce
+   * an erroneous result if templates are changed and media is attached to a no
+   * longer used area.
+   * @param string $type Kind of media to select from (image, video, pdf)
+   * @param int $limit
+   * @return Array aMediaItem
    */
-  public function getTextForArea($area, $limit = null)
+  public function getMedia($type = 'image', $limit = 5)
   {
-    return $this->getTextForAreas(array($area), $limit);
+    return $this->getMediaForAreas($this->getAreas(), $type, $limit);
   }
 
+  /**
+   * Returns media for a given area attached to this items page.
+   * @param string $area
+   * @param string $type Kind of media to select from (image, video, pdf)
+   * @param int $limit
+   * @return Array aMediaItem
+   */
   public function getMediaForArea($area, $type = 'image', $limit = 5)
   {
     return $this->getMediaForAreas(array($area), $type, $limit);
   }
 
   /**
-   * Given an array of array this function returns the mediaItems in those areas.
+   * Checks if this item hasMedia
+   * @param string $type Kind of media to select from (image, video, pdf)
+   * @return bool
+   */
+  public function hasMedia($type = 'image', $areas = array())
+  {
+    if(count($areas))
+    {
+      return count($this->getMediaForAreas($areas, $type, 1));
+    }
+    else
+    {
+      return count($this->getMedia($type, 1));
+    }
+  }
+
+  /**
+   * Given an array of areas this function returns the mediaItems in those areas.
    * @param  aArea $areas
    * @param  $type Set the type of media to return (image, video, pdf, etc...)
    * @param  $limit Limit the number of mediaItems returned
@@ -179,60 +280,16 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $aMediaItems;
   }
 
+  /**
+   * Gets the areas for this item as defined in app.yml
+   * @return array $areas
+   */
   public function getAreas()
   {
     $templates = sfConfig::get('app_'.$this->engine.'_templates');
     return $templates[$this['template']]['areas'];
   }
 
-  public function getMedia($type = 'image', $limit = 5)
-  {
-    return $this->getMediaForAreas($this->getAreas(), $type, $limit);
-  }
-
-  public function hasMedia($type = 'image')
-  {
-    return count($this->getMedia($type, 1));
-  }
-
-  public function getFeedText()
-  {
-    $text = '';
-    foreach($this->Page->getArea('blog-body') as $slot)
-    {
-      if(method_exists($slot, 'getText'))
-      {
-        $text .= $slot->getText();
-      }
-    }
-    return $text;
-  }
-
-  public function userCanEdit(sfGuardUser $user)
-  {
-    $q = $this->getTable()->createQuery()
-      ->addWhere('id = ?', $this['id']);
-    Doctrine::getTable('aBlogItem')->filterByEditable($q, $user['id']);
-    return count($q->execute());
-  }
-
-
-  /**
-   * Deletes a blog item after checking if the user has permission to perform
-   * the delete.
-   * @param Doctrine_Connection $conn
-   * @return boolean
-   */
-  public function delete(Doctrine_Connection $conn = null)
-  {
-    $user = sfContext::getInstance()->getUser()->getGuardUser();
-    if($this->userHasPrivilege('delete'))
-    {
-      return parent::delete($conn);
-    }
-    else
-      return false;
-  }
 
   /**
    * Publishes a blog post or event if user has permission
@@ -263,6 +320,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
   }
 
+  /**
+   * Permission methods
+   */
+
 
   /**
    * Checks whether a user has permission to perform various actions on blog
@@ -291,6 +352,22 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
     return false;
   }
+
+  /**
+   * Checks if a user can edit this post
+   * @param sfGuardUser $user
+   * @return <type>
+   */
+  public function userCanEdit(sfGuardUser $user)
+  {
+    $q = $this->getTable()->createQuery()
+      ->addWhere('id = ?', $this['id']);
+    Doctrine::getTable('aBlogItem')->filterByEditable($q, $user['id']);
+    return count($q->execute());
+  }
+
+
+
   
   /**
    * This function attempts to find the "best" engine to route a given post to.
