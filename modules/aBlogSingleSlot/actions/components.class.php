@@ -51,7 +51,7 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
 			//if ($sf_user->isAuthenticated() && $sf_user->isAdmin()) {
 			//	echo "This blog post has been deleted";
 			//}
-			echo "THIS BLOG POST WAS DELETED";
+			// echo "THIS BLOG POST WAS DELETED";
 
 			// This stops the error but isn't what we want
 			$this->aBlogItem = new aBlogItem();
