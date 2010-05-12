@@ -19,7 +19,7 @@ abstract class BaseaBlogComponents extends sfComponents
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
 
-    if($this->categories->isEmpty() || !count($this->categories))
+    if(!count($this->categories) || $this->categories->isEmpty())
     {
       $this->categories = Doctrine::getTable('aBlogCategory')
         ->createQuery('c')
