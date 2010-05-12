@@ -1,0 +1,1 @@
+This version of the blog plugin is obsolete and there will be no supported upgrade path to the official release of the blog plugin, which is coming shortly and will be based on the version currently in the trunk (as of 5/12/2010). Use the svn trunk of this plugin, not this branch, and use it with the trunk of apostrophePlugin. Thanks!
