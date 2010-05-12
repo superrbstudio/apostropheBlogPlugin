@@ -18,7 +18,7 @@ abstract class BaseaEventComponents extends sfComponents
       $this->tag = TagTable::findOrCreateByTagname($this->getRequestParameter('tag'));
     }
     
-    if(is_null($this->categories))
+    if($this->categories->isEmpty() || !count($this->categories))
     {
       $this->categories = Doctrine::getTable('aBlogCategory')
         ->createQuery('c')

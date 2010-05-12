@@ -3,7 +3,7 @@
   <h4>Categories</h4>
   <ul class="a-filter-options blog">
   <?php foreach ($categories as $category): ?>
-    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName(), $params['cat']), array(
+    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.urlencode($category->getName()), $params['cat']), array(
       'class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '', 
     )) ?></li>
   <?php endforeach ?>
