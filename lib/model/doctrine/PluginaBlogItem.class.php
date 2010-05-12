@@ -97,12 +97,19 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // Check if a blog post or event already has this slug
     $i = 1;
     $slug = $this['slug'];
-    while(Doctrine::getTable(get_class($this))->findOneBy('slug', $this['slug']))
+    while($this->findConflictingItem())
     {
-      $this['slug'] = $this['slug'].'-'.$i;
+      $this['slug'] = $slug.'-'.$i;
       $i++;
     }
+  }
 
+  public function findConflictingItem()
+  {
+    return Doctrine::getTable(get_class($this))->createQuery()
+        ->addWhere('slug = ?', $this['slug'])
+        ->addWhere('id != ?', $this['id'])
+        ->fetchOne();
   }
 
   /**
@@ -296,6 +303,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function publish()
   {
+    
     if($this->userHasPrivilege('publish'))
     {
       $this['status'] = 'published';
