@@ -44,6 +44,7 @@ abstract class BaseaBlogActions extends aEngineActions
       {
         Doctrine::getTable($this->modelClass)->$method($q, $request);
       }
+      $this->getResponse()->addMeta('robots', 'noarchive, nofollow');
     }
     Doctrine::getTable($this->modelClass)->addPublished($q);
     $q->orderBy('published_at desc');
