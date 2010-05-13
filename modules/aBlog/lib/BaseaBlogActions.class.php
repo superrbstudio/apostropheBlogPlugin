@@ -12,6 +12,8 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
 {
   public function executeIndex(sfWebRequest $request)
   {
+    $this->nofollowIfNeeded();
+    
     $q = Doctrine_Query::create()->from('aBlogPost'.' a');
     $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
     $q->leftJoin('a.Category r ON 1=1');

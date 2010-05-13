@@ -26,6 +26,7 @@ abstract class BaseaCalendarActions extends apostropheBlogPluginEngineActions
 
   public function executeIndex(sfWebRequest $request)
   {
+    $this->nofollowIfNeeded();
     
     $q = Doctrine_Query::create()->from('aBlogEvent'.' a');
     $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();

@@ -89,4 +89,24 @@ class apostropheBlogPluginEngineActions extends aEngineActions
     $this->params[$name] = $this->params['pagination'];
     unset($this->params[$name][$name]);
   }
+  
+  public function nofollowIfNeeded()
+  {
+    $request = $this->getRequest();
+    
+    // Ask spiders not to follow further links once they reach category, tag, or search
+    // result pages or start browsing by year. This allows spidering of the first page of results 
+    // for a tag or category, which is good SEO, but not an infinite spidering of every 
+    // possible filter combination
+  
+    $nofollow = array('cat', 'tag', 'search', 'year');
+    foreach ($nofollow as $arg)
+    {
+      if (strlen($request->getParameter($arg)))
+      {
+        $this->getResponse()->addMeta('robots', 'noarchive, nofollow');
+        break;
+      }
+    }
+  }
 }
