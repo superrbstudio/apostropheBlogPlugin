@@ -395,7 +395,7 @@ a_event_admin_update:
 
 a_event_admin_delete:
   url: /admin/event/:id/delete/:slug
-  options: { model: aBlogPost, type: object, method: findOne }
+  options: { model: aEvent, type: object, method: findOne }
   param: { module: aEventAdmin, action: delete }
   class: sfDoctrineRoute
   requirements:

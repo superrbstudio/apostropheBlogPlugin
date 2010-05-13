@@ -5,7 +5,7 @@
 	[?php if($choice != ''): ?]
   [?php $class = in_array($id, $values)? 'selected' : '' ?]
 	<li class="[?php echo $class ?]">
-    [?php echo link_to($choice, 'aBlogAdmin/addFilter?name='.$name.'&value='.$id, 'post=true') ?]
+    [?php echo link_to($choice, '<?php echo $this->getModuleName() ?>/addFilter?name='.$name.'&value='.$id, 'post=true') ?]
   </li>
 	[?php endif ?]
 	[?php endforeach ?]
