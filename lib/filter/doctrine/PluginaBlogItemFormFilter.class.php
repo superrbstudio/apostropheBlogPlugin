@@ -47,7 +47,10 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
 				'multiple' => true,
 				'required' => false
 			)
-		));    
+		));
+
+     $this->setWidget('status', new sfWidgetFormChoice(array('choices' => array('' => '', 'draft' => 'draft', 'published' => 'published'))));
+    $this->setValidator('status', new sfValidatorChoice(array('required' => false, 'choices' => array('draft' => 'draft', 'published' => 'published'))));
   }
   
   public function getAppliedFilters()

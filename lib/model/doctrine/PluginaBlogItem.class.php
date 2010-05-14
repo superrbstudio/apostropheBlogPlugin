@@ -55,6 +55,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page->save();
     $this->Page = $page;
 
+
     // Create a slot for the title and add to the virtual page
     $title = $page->createSlot('aText');
     $title->value = 'Untitled';
@@ -129,7 +130,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function postUpdate($event)
   {
     $title = $this->Page->createSlot('aText');
-    $title->value = $this->_get('title');
+    $title->value = $title = $this->_get('title');
     $title->save();
     $this->Page->newAreaVersion('title', 'update',
       array(
@@ -181,6 +182,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $title;
   }
 
+  public function setTitle($value)
+  {
+    $this->_set('title', htmlentities($value, ENT_COMPAT, 'UTF-8'));
+  }
 
   /**
    * Slot content convenience methods
