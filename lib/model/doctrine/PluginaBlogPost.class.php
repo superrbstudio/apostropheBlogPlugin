@@ -13,4 +13,9 @@
 abstract class PluginaBlogPost extends BaseaBlogPost
 {
   public $engine = 'aBlog';
+  
+  public function getVirtualPageSlug()
+  {
+    return '@a_blog_search_redirect?' . $this->id;
+  }
 }

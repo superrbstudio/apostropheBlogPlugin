@@ -13,4 +13,9 @@
 abstract class PluginaEvent extends BaseaEvent
 {
   public $engine = 'aEvent';
+  
+  public function getVirtualPageSlug()
+  {
+    return '@a_event_search_redirect?' . $this->id;
+  }
 }

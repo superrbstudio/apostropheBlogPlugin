@@ -49,7 +49,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     // Create a virtual page for this item
     $page = new aPage();
-    $page['slug'] = $this->engine.'/'.$this['id'];
+    $page['slug'] = $this->getVirtualPageSlug();
     $page->save();
     $this->Page = $page;
 

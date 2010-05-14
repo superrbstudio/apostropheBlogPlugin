@@ -28,7 +28,14 @@ class apostropheBlogMigratePageSlugsTask extends sfBaseTask
       ->execute();
     foreach($blogItems as $blogItem)
     {
-      $blogItem->Page['slug'] = $blogItem->engine.'/'.$blogItem['id'];
+      if ($blogItem->type === 'post')
+      {
+        $blogItem->Page['slug'] = '@a_blog_search_redirect?id=' . $blogItem->id;
+      }
+      else
+      {
+        $blogItem->Page['slug'] = '@a_event_search_redirect?id=' . $blogItem->id;
+      }
       $blogItem->save();
     }
     echo("Slugs successfully migrated.\n");
