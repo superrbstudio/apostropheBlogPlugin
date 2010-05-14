@@ -103,6 +103,7 @@
 <hr />
 <div class="categories section" id="categories-section">
 	<h4><?php echo __('Categories', array(), 'apostrophe_blog') ?></h4>
+	<?php echo link_to('edit categories','@a_blog_category_admin') ?>
 	<?php echo $form['categories_list']->render() ?>
 	<?php echo $form['categories_list']->renderError() ?>
 </div>

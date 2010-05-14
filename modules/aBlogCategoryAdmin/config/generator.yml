@@ -13,25 +13,28 @@ generator:
     config:
       
       list:
-        title: Categories
+        title: Categories Admin
         display: [ _name, numBlogPosts, numEvents, _users ]
         object_actions: []
+        fields:
+          name:
+            label: Category
         actions:
           new:
-            label: New Post
+            label: New Category
             action: new
             params:
               class: a-btn big icon a-add alt
           posts:
-            label: Posts
+            label: Blog Admin
             action: posts
             params:
-              class: a-btn big alt
+              class: a-btn a-blog-back-btn alt #These button actions need UI
           events:
-            label: Events
+            label: Event Admin
             action: events
             params:
-              class: a-btn big alt
+              class: a-btn a-blog-back-btn alt #These button actions need UI
 
       
       form:

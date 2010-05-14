@@ -21,7 +21,7 @@ generator:
       
       list:
         table_method:   filterByEditable
-        title:    "Blog Post Admin"
+        title:    "Blog Admin"
         display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
         sort:     [published_at, desc]
         fields:

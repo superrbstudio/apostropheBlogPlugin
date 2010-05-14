@@ -38,8 +38,8 @@ function aBlogTitle(slug_url)
 	var titlePlaceholder = $('#a-blog-item-title-placeholder');
 	var originalTitle = titleInterface.val();
 
-	if (originalTitle == 'untitled') 
-	{ // The blog post is 'Untitled' -- Focus the input		
+	if (originalTitle == 'untitled' || originalTitle == '') 
+	{ // The blog post has no title -- Focus the input		
 		titleInterface.focus(); 
 	};
 	

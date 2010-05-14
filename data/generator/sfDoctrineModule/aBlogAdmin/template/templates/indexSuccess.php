@@ -23,6 +23,7 @@ $(document).ready(function(){
 <div class="a-subnav-wrapper blog">
   <div class="a-subnav-inner">
     <ul class="a-admin-action-controls">
+			<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="all-posts-btn">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe-blog') ?]</a></li>	
       [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
   </div> 

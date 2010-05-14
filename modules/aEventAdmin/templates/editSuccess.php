@@ -4,15 +4,14 @@
 
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 
-  <?php // include_partial('form_bar', array('title' => __('Edit Blog Post', array(), 'apostrophe-blog'))) ?>
-
 	<?php slot('a-subnav') ?>
 		<div class="a-subnav-wrapper blog">
 			<div class="a-subnav-inner">
 				<ul class="a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="all-posts-btn"><?php echo __('All Events', array(), 'apostrophe-blog') ?></a></li>
+					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="all-posts-btn"><?php echo __('Event Admin', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
+			  <?php include_partial('aEventAdmin/form_bar') ?>				
 				<div id="a-blog-item-status-indicator"></div>
 			</div>
 	  </div>
@@ -22,8 +21,7 @@
 
 	<div class="a-admin-content main">
 
-		<?php if (0): ?>
-		<?php // We aren't using status messages right now ?>
+		<?php if (0): ?> <?php // We aren't using status messages right now ?>
 			<dl id="a-blog-item-status-messages"></dl>
 		<?php endif ?>
 
