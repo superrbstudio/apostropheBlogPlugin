@@ -79,6 +79,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->aBlogPost = $this->getRoute()->getObject();
     $this->forward404Unless($this->aBlogPost);
     $this->forward404Unless($this->aBlogPost['status'] == 'published');
+    aBlogItemTable::populatePages(array($this->aBlogPost));
   }
   
   
