@@ -21,7 +21,8 @@ generator:
       list:
         table_method:   filterByEditable        
         title:    "Event Admin"
-        display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at ]
+        display:  [ _title, _author_id, _editors_list, _tags_list, _categories_list, status, published_at, start_date, end_date ]
+        sort:     [start_date, desc]
         fields:
           author_id:
             label:  Author
@@ -33,8 +34,10 @@ generator:
           categories_list:
             label:  Categories
             type:   ManyKey
-          published_at:
-            label:  Date
+          start_date:
+            label:  Start Date
+          end_date:
+            label:  End Date            
         actions:
           new:
             label: New Event
