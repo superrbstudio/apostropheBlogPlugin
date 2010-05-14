@@ -1,0 +1,1 @@
+<?php echo false !== strtotime($a_event->getEndDate()) ? format_date($a_event->getEndDate(), "f") : '&nbsp;' ?>

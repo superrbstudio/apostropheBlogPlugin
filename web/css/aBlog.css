@@ -1021,4 +1021,18 @@ width: 180px;
 .aEvent .addthis_toolbox
 {
 	margin-left: 140px;
+	font-size: 11px;
+	color: #999;
+}
+
+.a-event-date-range span
+{
+	float: left;
+	width: 100%;
+	color: #222;
+}
+
+.a-event-date-range .end_date
+{
+	margin-top: 5px;
 }
