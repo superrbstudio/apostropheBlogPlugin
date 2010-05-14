@@ -5,13 +5,13 @@
 	$(document).ready(function(){
 		
 	    $('#a-admin-form').change(function(event) {
-		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' ))
+		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' || event.target.name == 'a-ignored' ))
 				{
 		      aBlogUpdateForm('<?php echo url_for('a_blog_admin_update', $a_blog_post) ?>', event);
 				}
 	    });
 
-      $('#<?php echo $form['published_at']->renderId() ?>-ui').bind('updatedTime',function(){
+      $('#<?php echo $form['published_at']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
         aBlogUpdateForm('<?php echo url_for('a_blog_admin_update', $a_blog_post) ?>', event);
       });
 

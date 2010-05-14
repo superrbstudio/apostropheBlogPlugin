@@ -46,6 +46,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
       }
       $this->setLayout(false);
       $response = array();
+      aBlogItemTable::populatePages(array($this->a_event));
       $response['aBlogPost'] = $this->a_event->toArray();
       $response['aBlogPost']['title'] = html_entity_decode($response['aBlogPost']['title'], ENT_COMPAT, 'UTF-8');
       $response['modified'] = $this->a_event->getLastModified();

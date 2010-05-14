@@ -5,11 +5,19 @@
 	$(document).ready(function(){
 		
 	    $('#a-admin-form').change(function(event) {
-		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' ))
+		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' || event.target.name == 'a-ignored' ))
 				{
 		      aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
 				}
 	    });
+
+      $('#<?php echo $form['start_date']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
+        aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
+      });
+
+      $('#<?php echo $form['end_date']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
+        aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
+      });
 
 			// Sidebar Toggle
 			// =============================================
