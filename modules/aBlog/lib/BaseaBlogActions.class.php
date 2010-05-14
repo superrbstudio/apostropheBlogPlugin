@@ -77,6 +77,8 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aBlogPost = $this->getRoute()->getObject();
+    $this->forward404Unless($this->aBlogPost);
+    $this->forward404Unless($this->aBlogPost['status'] == 'published');
   }
   
   

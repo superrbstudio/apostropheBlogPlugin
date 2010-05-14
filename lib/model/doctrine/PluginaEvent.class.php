@@ -16,6 +16,6 @@ abstract class PluginaEvent extends BaseaEvent
   
   public function getVirtualPageSlug()
   {
-    return '@a_event_search_redirect?' . $this->id;
+    return '@a_event_search_redirect?id=' . $this->id;
   }
 }

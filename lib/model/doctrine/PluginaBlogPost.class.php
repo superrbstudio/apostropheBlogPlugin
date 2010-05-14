@@ -16,6 +16,6 @@ abstract class PluginaBlogPost extends BaseaBlogPost
   
   public function getVirtualPageSlug()
   {
-    return '@a_blog_search_redirect?' . $this->id;
+    return '@a_blog_search_redirect?id=' . $this->id;
   }
 }

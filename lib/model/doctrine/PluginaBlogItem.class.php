@@ -50,6 +50,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // Create a virtual page for this item
     $page = new aPage();
     $page['slug'] = $this->getVirtualPageSlug();
+    $page['view_is_secure'] = true;
+    $page['archived'] = true;
     $page->save();
     $this->Page = $page;
 
@@ -67,7 +69,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this['title'] = 'untitled';
     $this['slug_saved'] = false;
 
-    // This prevents post update from running after the next save
+    // This prevents post preupdate from running after the next save
     $this->update = false;
     $this->save();
   }
@@ -98,6 +100,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         $this['slug'] = aTools::slugify($this['slug']);
       }
     }
+
+    $this->Page['view_is_secure'] = ($this['status'] == 'published')? false: true;
 
     // Check if a blog post or event already has this slug
     $i = 1;

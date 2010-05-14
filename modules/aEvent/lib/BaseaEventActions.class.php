@@ -16,6 +16,8 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aEvent = $this->getRoute()->getObject();
+    $this->forward404Unless($this->aEvent);
+    $this->forward404Unless($this->aEvent['status'] == 'published');
   }
   
   public function getFeed()
