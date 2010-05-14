@@ -11,6 +11,10 @@
 				}
 	    });
 
+      $('#<?php echo $form['published_at']->renderId() ?>-ui').bind('updatedTime',function(){
+        aBlogUpdateForm('<?php echo url_for('a_blog_admin_update', $a_blog_post) ?>', event);
+      });
+
 			// Sidebar Toggle
 			// =============================================
 	    $('.a-sidebar-toggle').click(function(){
