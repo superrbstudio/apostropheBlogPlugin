@@ -48,6 +48,9 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->setLayout(false);
       $response = array();
       $response['aBlogPost'] = $this->a_blog_post->toArray();
+      // We need to decode the title because jQuery will be stuffing it in with .value, which
+      // doesn't need the escaping
+      $response['aBlogPost']['title'] = html_entity_decode($response['aBlogPost']['title'], ENT_COMPAT, 'UTF-8');
       $response['modified'] = $this->a_blog_post->getLastModified();
       //Any additional messages can go here
       $output = json_encode($response);

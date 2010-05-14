@@ -130,7 +130,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function postUpdate($event)
   {
     $title = $this->Page->createSlot('aText');
-    $title->value = $title = $this->_get('title');
+    $title->value = $this->_get('title');
     $title->save();
     $this->Page->newAreaVersion('title', 'update',
       array(
