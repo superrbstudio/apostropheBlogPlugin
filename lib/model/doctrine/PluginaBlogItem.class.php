@@ -36,6 +36,11 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       return false;
   }
 
+  public function postDelete($event)
+  {
+    $this->Page->delete();
+  }
+
   /**
    * Listener to setup blog item and its virtual page
    * @param <type> $event
