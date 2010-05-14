@@ -72,5 +72,31 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   {
     $this->redirect('@a_blog_category_admin');
   }
-  
+
+  public function executeIndex(sfWebRequest $request)
+  {
+    if(!aPageTable::getFirstEnginePage('aBlog'))
+    {
+      $this->setTemplate('engineWarning');
+    }
+
+    parent::executeIndex($request);
+    aBlogItemTable::populatePages($this->pager->getResults());
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    parent::executeEdit($request);
+    aBlogItemTable::populatePages(array($this->a_event));
+  }
+
+  protected function buildQuery()
+  {
+    $query = parent::buildQuery();
+    $query->leftJoin($query->getRootAlias().'.Author')
+      ->leftJoin($query->getRootAlias().'.Editors')
+      ->leftJoin($query->getRootAlias().'.Categories')
+      ->leftJoin($query->getRootAlias().'.Page');
+    return $query;
+  }
 }

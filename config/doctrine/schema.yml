@@ -220,8 +220,8 @@ aEvent:
     keyField: type
     keyValue: 'event'
   columns:
-    start_date: datetime
-    end_date: datetime
+    start_date: timestamp
+    end_date: timestamp
     
 aEventSlot:
   options:

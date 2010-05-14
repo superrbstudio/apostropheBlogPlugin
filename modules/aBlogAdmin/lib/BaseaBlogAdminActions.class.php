@@ -11,6 +11,7 @@ require_once dirname(__FILE__).'/aBlogAdminGeneratorHelper.class.php';
 abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 {
 
+
   public function executeNew(sfWebRequest $request)
   {
     $this->a_blog_post = new aBlogPost();
@@ -70,5 +71,32 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   public function executeCategories()
   {
     $this->redirect('@a_blog_category_admin');
+  }
+
+  public function executeIndex(sfWebRequest $request)
+  {
+    if(!aPageTable::getFirstEnginePage('aBlog'))
+    {
+      $this->setTemplate('engineWarning');
+    }
+
+    parent::executeIndex($request);
+    aBlogItemTable::populatePages($this->pager->getResults());
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    parent::executeEdit($request);
+    aBlogItemTable::populatePages(array($this->a_blog_post));
+  }
+
+  protected function buildQuery()
+  {
+    $query = parent::buildQuery();
+    $query->leftJoin($query->getRootAlias().'.Author')
+      ->leftJoin($query->getRootAlias().'.Editors')
+      ->leftJoin($query->getRootAlias().'.Categories')
+      ->leftJoin($query->getRootAlias().'.Page');
+    return $query;
   }
 }

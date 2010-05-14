@@ -90,7 +90,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       if($this['slug_saved'] == false && array_key_exists('title', $this->getModified()))
       {
         // If the slug hasn't been altered slugify the title to create the slug
-        $this['slug'] = aTools::slugify($this['title']);
+        $this['slug'] = aTools::slugify($this->_get('title'));
       }
       else
       {
@@ -125,7 +125,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function postUpdate($event)
   {
     $title = $this->Page->createSlot('aText');
-    $title->value = $this['title'];
+    $title->value = $this->_get('title');
     $title->save();
     $this->Page->newAreaVersion('title', 'update',
       array(
@@ -156,8 +156,26 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $this['slug'];
   }
 
-
-
+  public function getTitle()
+  {
+    $titleSlot = $this->Page->getSlot('title');
+    if ($titleSlot)
+    {
+      $result = $titleSlot->value;
+    }
+    else
+    {
+      $result = $this['slug'];
+    }
+    $title = trim($result);
+    if (!strlen($result))
+    {
+      // Don't break the UI, return something reasonable
+      $slug = $this->slug;
+      $title = substr(strrchr($slug, "/"), 1);
+    }
+    return $title;
+  }
 
 
   /**
@@ -379,9 +397,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return count($q->execute());
   }
 
-
-
-  
   /**
    * This function attempts to find the "best" engine to route a given post to.
    * based on the categories that are used on various engine pages.
