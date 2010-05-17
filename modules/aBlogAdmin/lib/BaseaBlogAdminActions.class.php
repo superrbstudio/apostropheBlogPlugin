@@ -47,7 +47,9 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       }
       $this->setLayout(false);
       $response = array();
-      aBlogItemTable::populatePages(array($this->a_blog_post));
+      aPageTable::queryWithTitles()
+        ->addWhere('page_id = ?', $this->a_blog_post['page_id'])
+        ->execute();
       $response['aBlogPost'] = $this->a_blog_post->toArray();
       // We need to decode the title because jQuery will be stuffing it in with .value, which
       // doesn't need the escaping
