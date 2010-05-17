@@ -13,7 +13,7 @@
 	<?php endif ?>
 	<?php endif ?>
 
-	<h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event', $aEvent) ?></h3>
+	<h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event_post', $aEvent) ?></h3>
 
 	<ul class="a-blog-item-meta">
 	  <li class="start-day"><?php echo aDate::dayAndTime($aEvent->getStartDate()) ?></li>
@@ -43,7 +43,7 @@
 			<?php echo $aEvent->getTextForArea('blog-body', $options['excerptLength']) ?>
 		</div>
 		<div class="a-blog-read-more">
-			<?php echo link_to('Read More', 'a_event', $aEvent, array('class' => 'a-blog-more')) ?>
+			<?php echo link_to('Read More', 'a_event_post', $aEvent, array('class' => 'a-blog-more')) ?>
 		</div>
 	</div>
 </div>
