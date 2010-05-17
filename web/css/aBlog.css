@@ -465,7 +465,11 @@ font-size: 11px;
 {
 font-family: Arial, sans-serif;
 border: 1px solid #ddd;
-padding: 3px;
+padding: 4px;
+border: 1px solid rgba(0,0,0,0.2);
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+border-radius: 3px;
 }
 
 .a-admin-sidebar .section.tags .a-admin-form-field-tags
@@ -930,15 +934,17 @@ width: 180px;
 
 .a-blog-item.has-media .a-blog-item-excerpt-container
 {
-	float: right;
+	float: left;
 	clear: none;
-	margin-left: -110px;
+	margin-left: -100px;
 	width: 100%;
 }
 
-.a-blog-item.post.has-media .a-blog-item-excerpt
+.a-blog-item.post.has-media .a-blog-item-excerpt,
+.a-blog-item.post.has-media .a-blog-read-more
 {
-	float: right;
+	float: left;
+	clear: left;
 	margin-left: 110px;
 }
 
