@@ -37,7 +37,7 @@ abstract class BaseaBlogActions extends aEngineActions
       $q->whereIn('c.id', $categoryIds);
     }
 
-    $routingOptions = $this->getRoute()->getOptions();    
+    $routingOptions = $this->getRoute()->getOptions();
     if(isset($routingOptions['filters']))
     {
       foreach($routingOptions['filters'] as $method)

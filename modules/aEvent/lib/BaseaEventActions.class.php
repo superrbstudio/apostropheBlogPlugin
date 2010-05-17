@@ -20,6 +20,15 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent['status'] == 'published');
     aBlogItemTable::populatePages(array($this->aEvent));
   }
+
+  protected function buildQuery($request)
+  {
+    $q = parent::buildQuery($request);
+    $q->addWhere('start_date > NOW()');
+    $q->orderBy('start_date asc');
+
+    return $q;
+  }
   
   public function getFeed()
   {

@@ -155,6 +155,8 @@ a_event_cat_tag_year_month_day:
   url:   /:cat/tag/:tag/:year/:month/:day
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  options:
+    filters: [ filterByYMD, filterByCategory, filterByTag ] 
   class: aRoute
 
 a_event_cat_tag_year_month:
