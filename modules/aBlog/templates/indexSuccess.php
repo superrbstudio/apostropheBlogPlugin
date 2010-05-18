@@ -20,8 +20,8 @@
   <?php if ($sf_params->get('year')): ?>
   <h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
   <ul class="a-controls a-blog-browser-controls">
-    <li><?php echo link_to('Previous', 'aBlog/index?'.http_build_query($params['prev']), array('class' => 'a-btn icon a-arrow-left nobg', )) ?></li>
-    <li><?php echo link_to('Next', 'aBlog/index?'.http_build_query($params['next']), array('class' => 'a-btn icon a-arrow-right nobg', )) ?></li>
+    <li><?php echo link_to('Previous', 'aBlog/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
+    <li><?php echo link_to('Next', 'aBlog/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
   </ul>
   <?php endif ?>
   
