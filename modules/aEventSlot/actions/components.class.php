@@ -44,6 +44,12 @@ class aEventSlotComponents extends BaseaSlotComponents
 			);
 		}
 
+		// If we are not specifying a template to use at the area/singleton slot level, then use the default templates
+    if(!isset($this->options['template']))
+		{
+			$this->options['template'] =	$this->aBlogPost['template']; 
+		}
+
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
 

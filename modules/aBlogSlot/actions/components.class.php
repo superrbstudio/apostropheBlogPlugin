@@ -46,6 +46,7 @@ class aBlogSlotComponents extends BaseaSlotComponents
 			);
 		}
   
+		// If we are not specifying a template to use at the area/singleton slot level, then use the default templates
     if(!isset($this->options['template']))
 		{
 			$this->options['template'] =	$this->aBlogPost['template']; 
