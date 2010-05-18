@@ -29,7 +29,7 @@
 		  )) ?>
 		</div>
 	<?php endif ?>
-	
+
   <div class="a-blog-item-excerpt-container">
 		<div class="a-blog-item-excerpt">
 			<?php echo $aBlogPost->getTextForArea('blog-body', $options['excerptLength']) ?>
