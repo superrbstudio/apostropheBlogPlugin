@@ -27,7 +27,7 @@ class aEventSlotComponents extends BaseaSlotComponents
     if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)  
       $q->andWhereIn('c.id', $this->values['categories_list']);
     if(isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
-      PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tag' => 1));
+      PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tags' => 1));
 
     $limit = isset($this->values['count']) ? $this->values['count'] : 5;
    
