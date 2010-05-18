@@ -46,6 +46,11 @@ class aBlogSlotComponents extends BaseaSlotComponents
 			);
 		}
   
+    if(!isset($this->options['template']))
+		{
+			$this->options['template'] =	$this->aBlogPost['template']; 
+		}
+
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
     
