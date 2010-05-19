@@ -46,6 +46,12 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
 			);
 		}
 
+		$this->options['suffix'] = '_slot'; // Defaults to _slot
+
+		if (isset($this->options['full']) && $this->options['full']) {
+			$this->options['suffix'] = $this->options['full']; // Tom's full option
+		}
+
 		// IF we set a template via the area/slot call use it
 		// ELSE IF blog post has template use the blog post template
 		// ELSE default to singleColumnTemplate
