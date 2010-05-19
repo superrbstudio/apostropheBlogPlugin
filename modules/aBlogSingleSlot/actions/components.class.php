@@ -40,10 +40,12 @@ class aBlogSingleSlotComponents extends BaseaSlotComponents
 			);
 		}
 
-		// If we are not specifying a template to use at the area/singleton slot level, then use the default templates
+		// IF we set a template via the area/slot call use it
+		// ELSE IF blog post has template use the blog post template
+		// ELSE default to singleColumnTemplate
     if(!isset($this->options['template']))
 		{
-			$this->options['template'] =	$this->aBlogPost['template']; 
+			$this->options['template'] =	(isset($this->aBlogPost['template']))? $this->aBlogPost['template']: 'singleColumnTemplate'; 
 		}
 
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
