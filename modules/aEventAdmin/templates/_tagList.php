@@ -11,7 +11,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 
-		var tagList = $('#a_event_tags');
+		var tagList = $('#a_blog_item_tags');
 			
 		$('.recommended-tag').each(function(){
 		
