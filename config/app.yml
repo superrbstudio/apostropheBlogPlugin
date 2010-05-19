@@ -7,7 +7,6 @@ all:
       twoColumnTemplate:
         name: Two Column
         areas: ['blog-body', 'blog-sidebar']
-      # bannerTemplate: Banner Template
     comments: false
     # add_this: punkave     # Username for AddThis -- http://addthis.com
   aEvent:
