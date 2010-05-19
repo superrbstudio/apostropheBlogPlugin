@@ -66,3 +66,4 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
 		}
 
   } 
+}
