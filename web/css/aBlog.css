@@ -333,10 +333,10 @@ overflow: hidden;
 width: 192px;
 }
 
-.a-admin-sidebar a
+.a-admin .a-admin-sidebar a
 {
 color: #000 !important;
-text-decoration: underline !important;
+text-decoration: underline;
 }
 
 .a-admin-sidebar a:hover
