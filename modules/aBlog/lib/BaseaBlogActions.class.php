@@ -12,21 +12,23 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
 {
   public function executeIndex(sfWebRequest $request)
   {
+    $q = Doctrine_Query::create()->from('aBlogPost');
     $this->nofollowIfNeeded();
     
-    $q = Doctrine_Query::create()->from('aBlogPost'.' a');
     $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
-    $q->leftJoin('a.Category r ON 1=1');
-    $q->leftJoin('r.aBlogPageCategory apc on apc.page_id=' . aTools::getCurrentPage()->getId());
     if(count($categories) > 0)
     {
       $categoryIds = array_map(create_function('$a', 'return $a["blog_category_id"];'),  $categories);
-      $q->whereIn('a.category_id', $categoryIds);
+      
       if(in_array(null, $categoryIds)) 
       {
         if(count($categories) == 1) $uncat = true;
-        $q->orWhere('a.category_id IS NULL');
-      }   
+        $q->addWhere('aBlogPost.category_id IS NULL OR aBlogPost.category_id IN ?', array($categoryIds));
+      }
+      else
+      {
+        $q->addWhere('aBlogPost.category_id IN ?', array($categoryIds));
+      }
     }
     
     $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
@@ -58,7 +60,7 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
   
   public function executeFeed(sfWebRequest $request)
   {
-    $q = Doctrine_Query::create()->from('aBlogPost'.' a');
+    $q = Doctrine_Query::create()->from('aBlogPost');
     $categories = aTools::getCurrentPage()->BlogCategories->toArray();
     if(count($categories) > 0)
     {

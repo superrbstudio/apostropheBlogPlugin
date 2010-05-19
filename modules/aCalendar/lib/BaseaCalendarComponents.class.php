@@ -32,6 +32,7 @@ abstract class BaseaCalendarComponents extends sfComponents
     $aPageCategories = aTools::getCurrentPage()->aBlogPageCategory;
     
     $categoryIds = array();
+    $null = false;
     foreach($aPageCategories as $category)
     {
       if(!is_null($category['blog_category_id']))
