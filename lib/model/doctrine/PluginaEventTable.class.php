@@ -39,6 +39,7 @@ class PluginaEventTable extends aBlogItemTable
   public function addUpcomming(Doctrine_Query $q, $limit = null)
   {
     $q->orderBy('start_date');
+    $q->addWhere('start_date >= NOW()');
     if(!is_null($limit))
       $q->limit($limit);
   }
