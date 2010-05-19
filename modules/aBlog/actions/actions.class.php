@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BaseaBlogActions.class.php';
-
 /**
  * aBlog actions.
  * 

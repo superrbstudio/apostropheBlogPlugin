@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BaseaBlogComponents.class.php';
-
 /**
  * aBlog Components.
  * 

@@ -1,7 +1,4 @@
 <?php
-
-require_once dirname(__FILE__).'/../lib/BaseaEventComponents.class.php';
-
 /**
  * aEvent Components.
  * 

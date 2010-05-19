@@ -1,7 +1,5 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/BaseaEventActions.class.php';
-
 /**
  * aEvent actions.
  * 

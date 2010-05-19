@@ -37,6 +37,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
     if($request->isXmlHttpRequest())
     {
+      
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
       if ($this->form->isValid())
       {
@@ -44,6 +45,11 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
         //We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
         $this->form = $this->configuration->getForm($this->a_blog_post);
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
+      }
+      else
+      {
+        $this->setLayout(false);
+        return $this->renderText($this->form);
       }
       $this->setLayout(false);
       $response = array();
