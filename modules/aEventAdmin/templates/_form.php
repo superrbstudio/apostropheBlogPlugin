@@ -78,7 +78,7 @@
 			<?php else: ?>: <span><?php echo $a_event->Author ?></span></h4><?php endif ?>
 
 	</div>
-
+  <?php if(isset($form['editors_list'])): ?>
 	<div class="post-editors">
 
 		<?php if (!count($a_event->Editors)): ?>
@@ -93,9 +93,10 @@
 	    <?php echo $form['editors_list']->render()?>
 	    <?php echo $form['editors_list']->renderError() ?>
 	
-	  </div>
-	</div>
-</div>
+      </div>
+    </div>
+  </div>
+  <?php endif ?>
 
 
 

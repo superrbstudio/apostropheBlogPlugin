@@ -31,7 +31,15 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    $this->a_event = $this->getRoute()->getObject();
+    if($this->getUser()->hasCredential('admin'))
+    {
+      $this->a_event = $this->getRoute()->getObject();
+    }
+    else
+    {
+      $this->a_event = Doctrine::getTable('aEvent')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
+    }
+    $this->forward404Unless($this->a_event);
     $this->form = $this->configuration->getForm($this->a_event);
 
     if($request->isXmlHttpRequest())
@@ -90,7 +98,16 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    parent::executeEdit($request);
+    if($this->getUser()->hasCredential('admin'))
+    {
+      $this->a_event = $this->getRoute()->getObject();
+    }
+    else
+    {
+      $this->a_event = Doctrine::getTable('aEvent')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
+    }
+    $this->forward404Unless($this->a_event);
+    $this->form = $this->configuration->getForm($this->a_event);
     aBlogItemTable::populatePages(array($this->a_event));
   }
 
