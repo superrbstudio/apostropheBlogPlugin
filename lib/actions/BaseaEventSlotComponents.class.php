@@ -52,7 +52,7 @@ abstract class BaseaEventSlotComponents extends BaseaSlotComponents
 			$this->options['template'] =	(isset($this->aEvent['template']))? $this->aEvent['template']: 'singleColumnTemplate';
 		}
 
-    $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
 
    	aEventTable::getInstance()->addUpcomming($q, $limit);

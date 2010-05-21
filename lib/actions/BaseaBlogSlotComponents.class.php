@@ -60,7 +60,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
 			$this->options['template'] =	(isset($this->aBlogPost['template']))? $this->aBlogPost['template']: 'singleColumnTemplate';
 		}
 
-    $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
 
     $this->aBlogPosts = $q->execute();
