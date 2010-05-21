@@ -236,13 +236,13 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       {
         if(method_exists($slot, 'getText'))
         {
-          $text .= strip_tags($slot->getText());
+          $text .= $slot->getText();
         }
       }
     }
     if(!is_null($limit))
     {
-      $text = substr($text, 0, $limit);
+      $text = aString::limitWords($slot->getText(), $limit, array('append_ellipsis' => true));
     }
 
     return $text;
