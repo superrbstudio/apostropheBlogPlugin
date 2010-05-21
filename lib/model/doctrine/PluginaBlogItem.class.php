@@ -267,7 +267,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     if(!is_null($limit))
     {
-      $text = aString::limitWords($slot->getText(), $limit, array('append_ellipsis' => true));
+      $text = aString::limitWords($text, $limit, array('append_ellipsis' => true));
     }
 
     return $text;
