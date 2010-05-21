@@ -1,0 +1,15 @@
+<?php include_partial('a/simpleEditButton', array('name' => $name, 'pageid' => $pageid, 'permid' => $permid)) ?>
+<?php if (isset($values['blog_item'])): ?>
+<<<<<<< .mine
+  <?php $full = a_get_option($options, 'full') ?>
+  <?php $templateOptionsAll = a_get_option($options, 'template_options', array()) ?>
+  <?php $templateOptions = a_get_option($templateOptionsAll, $aBlogItem['template'], array()) ?>
+  <?php $suffix = a_get_option($templateOptions, 'subtemplate', false) ?>
+  <?php if ($suffix === false): ?>
+    <?php $suffix = $full ? '' : '_slot' ?>
+  <?php endif ?>
+=======
+>>>>>>> .r1345
+  <?php // TODO: passing a variable as both underscore and intercap is silly clean this up make the partials consistent but look out for overrides ?>
+  <?php include_partial('aBlog/'.$options['template'].$options['suffix'], array('aBlogPost' => $aBlogItem, 'a_blog_post' => $aBlogItem, 'edit' => false, 'options' => $options)) ?>
+<?php endif ?>

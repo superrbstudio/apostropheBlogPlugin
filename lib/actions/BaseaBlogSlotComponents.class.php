@@ -24,13 +24,18 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
     Doctrine::getTable($this->modelClass)->addPublished($q);
-    if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
+    if (isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
+    {
       $q->andWhereIn('c.id', $this->values['categories_list']);
-    if(isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
+    }
+    if (isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
+    {
       PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tags' => 1));
-    if(isset($this->values['count']))
+    }
+    if (isset($this->values['count']))
+    {
       $q->limit($this->values['count']);
-
+    }
     $q->orderBy('published_at desc');
 
     if(!isset($this->options['slideshowOptions']))
@@ -44,20 +49,6 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
 				'height' => ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100),
 				'resizeType' => ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c'),
 			);
-		}
-
-		$this->options['suffix'] = '_slot'; // Defaults to _slot
-
-		if (isset($this->options['full']) && $this->options['full']) {
-			$this->options['suffix'] = $this->options['full']; // Tom's full option
-		}
-
-		// IF we set a template via the area/slot call use it
-		// ELSE IF blog post has template use the blog post template
-		// ELSE default to singleColumnTemplate
-    if(!isset($this->options['template']))
-		{
-			$this->options['template'] =	(isset($this->aBlogPost['template']))? $this->aBlogPost['template']: 'singleColumnTemplate';
 		}
 
     $this->options['excerptLength'] = $this->getOption('excerptLength', 100);

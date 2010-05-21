@@ -40,36 +40,7 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
 			);
 		}
 
-		// IF we set a template via the area/slot call use it
-		// ELSE IF blog post has template use the blog post template
-		// ELSE default to singleColumnTemplate
-    if(!isset($this->options['template']))
-		{
-			$this->options['template'] =	(isset($this->aBlogPost['template']))? $this->aBlogPost['template']: 'singleColumnTemplate';
-		}
-
-		$this->options['suffix'] = '_singleSlot'; // Defaults to _singleSlot
-
-		if (isset($this->options['full']) && $this->options['full']) {
-			$this->options['suffix'] = $this->options['full']; // Tom's full option
-		}
-
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
-
-		// TODO: Make this work right
-		if (!$this->aBlogItem)
-		{ // The Blog Post was deleted perhaps ? :D
-
-			// This doesnt work
-			//if ($sf_user->isAuthenticated() && $sf_user->isAdmin()) {
-			//	echo "This blog post has been deleted";
-			//}
-			// echo "THIS BLOG POST WAS DELETED";
-
-			// This stops the error but isn't what we want
-			$this->aBlogItem = new aBlogItem();
-		}
-
   } 
 }
