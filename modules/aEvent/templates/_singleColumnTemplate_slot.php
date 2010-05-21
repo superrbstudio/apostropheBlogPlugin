@@ -5,10 +5,6 @@
   <?php if($aEvent->userHasPrivilege('edit')): ?>
   <ul class="a-controls a-blog-post-controls">
 		<li><?php echo link_to('Edit', 'a_event_admin_edit', $aEvent, array('class' => 'a-btn icon a-edit flag no-label', )) ?></li>
-
-	 	<?php if($aEvent->userHasPrivilege('delete')): ?>
-		<li><?php echo link_to('Delete', 'a_event_admin_delete', $aEvent, array('class' => 'a-btn icon a-delete no-label', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this event?', array(), 'apostrophe_blog'), )) ?></li>
-		<?php endif ?>
 	</ul>
 	<?php endif ?>
 	<?php endif ?>

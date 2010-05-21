@@ -1,4 +1,4 @@
-<?php use_helper('a') ?>
+<?php use_helper('a', 'I18N') ?>
 <?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 
 <div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
