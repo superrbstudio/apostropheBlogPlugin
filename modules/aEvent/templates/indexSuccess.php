@@ -22,7 +22,7 @@
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>
-  	<?php echo include_partial('aEvent/post', array('a_event' => $a_event)) ?>
+  	<?php echo include_partial('aEvent/post', array('a_event' => $a_event, 'edit' => false, )) ?>
   	<hr />
   <?php endforeach ?>
 
