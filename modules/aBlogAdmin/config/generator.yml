@@ -48,6 +48,7 @@ generator:
             action: categories
             params:
               class: a-btn big alt
+            credentials: admin
         batch_actions:
           delete:
             label: Delete
