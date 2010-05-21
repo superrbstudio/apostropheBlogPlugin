@@ -279,3 +279,38 @@ function aBlogSetDateRange(a)
 		 minDate: c  
 	}  	
 }
+
+function aPopularTags(tagList, recommendedTags)
+{
+	// tagList is a jquery object for the input that contains the list of tags
+	// recommendedTags is a jquery object that contains .recommended-tags
+	recommendedTags.each(function(){
+		$(this).click(function(){
+			var theTag = $(this).text();
+			var tagSeparator = ", ";
+			var currentTags = tagList.val();			
+
+				if (!$(this).hasClass('selected'))
+				{ 
+					if (currentTags == "") { tagSeparator = ""; }; // Remove separator if there are no starting tags
+					tagList.val(currentTags += tagSeparator+theTag); 
+				}
+				else
+				{
+					newTagList = currentTags.split(',');
+					tagPosition = $.inArray(" "+theTag, newTagList);
+
+					if (tagPosition == -1)
+					{ // If it can't find the tag in the array, it is the first tag in the list
+						tagPosition = 0;
+					}
+
+					newTagList.splice(tagPosition,1);
+					tagList.val(newTagList.toString());
+				}
+
+				$(this).toggleClass('selected');
+				aBlogUpdateMulti(); // call the save function after the tags are toggled
+			});	
+	});
+}

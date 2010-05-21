@@ -33,6 +33,7 @@
 				aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 			});
 
+			aPopularTags($('#a_blog_item_tags'), $('#blog-tag-list .recommended-tag'));
 			aBlogTitle('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 			aBlogPermalink('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 	    aBlogPublishBtn('<?php echo $a_event->status  ?>','<?php echo url_for('a_event_admin_update',$a_event) ?>');

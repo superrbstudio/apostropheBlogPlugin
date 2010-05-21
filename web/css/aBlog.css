@@ -534,9 +534,12 @@ display: none;
 margin: 10px 0 0;
 }
 
-.a-admin-sidebar #post-last-saved.option
+#post-last-saved.option
 {
-	margin: 0 0 5px;
+	float: left;
+	clear: left;
+	margin: 10px 0;
+	display: none;
 }
 
 #post-last-saved b,
@@ -832,134 +835,4 @@ border-radius: 4px;
 	width: 20px;
 	background: url('/apostrophePlugin/images/a-icon-loader-2.gif') center center no-repeat;
 	display: none;
-}
-
-
-
-/* 23. Blog Engine
--------------------------------------*/
-
-#a-blog-main,
-.a-blog-item,
-.a-blog-item-title,
-.a-blog-item-meta,
-.a-blog-item-tags,
-.a-blog-item-media,
-.a-blog-item-body,
-.a-blog-item-excerpt-container
-{
-	float: left;
-	clear: both;
-	display: inline;
-	position: relative;	
-	width: 100%;
-}
-
-.a-blog-item
-{
-	margin: 0 0 20px;
-}
-
-.a-blog-item .a-area
-{
-	margin-top:0;
-}
-
-.a-blog-item-title,
-.a-blog-item-meta,
-.a-blog-item-tags,
-.a-blog-item-media,
-.a-blog-item-body
-{
-	margin-bottom: 10px;
-}
-
-.a-blog-item-body p
-{
-	margin-bottom: 10px;
-}
-
-.a-blog-item-tags li
-{
-	float: left;
-	margin: 0 5px 0 0;
-}
-
-.a-blog-item-meta
-{
-	font-size: 11px;
-	color: #ccc;
-}
-
-.a-blog-item.has-media .a-blog-item-media
-{
-	float: left;
-	clear: none;
-	width: 100px;
-}
-
-.a-blog-item.has-media .a-blog-item-excerpt-container
-{
-	float: left;
-	clear: none;
-	margin-left: -100px;
-	width: 100%;
-}
-
-.a-blog-item.post.has-media .a-blog-item-excerpt,
-.a-blog-item.post.has-media .a-blog-read-more
-{
-	float: left;
-	clear: left;
-	margin-left: 110px;
-}
-
-.a-blog-item.post .a-blog-item-meta
-{
-	margin-top: -5px;
-}
-
-.a-blog-item.post .a-blog-item-meta li
-{
-	float: left;
-	width: auto;
-	clear: none;
-	line-height: 1.2;
-}
-
-.a-blog-item.post .a-blog-item-meta li.author
-{
-	margin-left: 5px;
-	padding-left: 5px;
-	border-left: 1px solid rgba(0,0,0,0.15);
-}
-
-.a-subnav-wrapper.blog h4
-{
-	float: left;
-	width: 100%;
-	clear: both;
-	display: inline;
-	position: relative;
-	font-size: 14px;
-}
-
-.a-subnav-wrapper.blog .a-blog-filter-options
-{
-	float: left;
-	width: 100%;
-	clear: both;
-	display: inline;
-	position: relative;
-	line-height: 20px;
-}
-
-.a-subnav-wrapper.media .a-media-filter-options a,
-.a-subnav-wrapper.blog .a-blog-filter-options a
-{
-	float: left;
-	clear: both;
-	display: inline;
-	width: auto;
-	padding: 0 5px;
 }

@@ -29,6 +29,7 @@
 				aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 			});
 
+			aPopularTags($('#a_blog_item_tags'), $('#blog-tag-list .recommended-tag'));
 			aBlogTitle('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 			aBlogPermalink('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	    aBlogPublishBtn('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');

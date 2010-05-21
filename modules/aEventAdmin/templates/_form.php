@@ -29,15 +29,6 @@
   	<?php echo $form['status']->render() ?>
 	</div>
 
-	<?php if (isset($a_event['updated_at'])): ?>
-		<div id="post-last-saved" class="post-updated-at option">
-			<h6>
-					<b>Last Saved:</b>
-					<span></span>
-			</h6>		
-		</div>
-	<?php endif ?>
-
 	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 
 	<div class="post-published-at option">

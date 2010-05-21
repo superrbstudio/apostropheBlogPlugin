@@ -54,6 +54,15 @@
     </div>
   </div>
   
+<?php if (isset($a_blog_post['updated_at'])): ?>
+		<div id="post-last-saved" class="post-updated-at option">
+			<h6>
+					<b>Last Saved:</b>
+					<span></span>
+			</h6>		
+		</div>
+	<?php endif ?>
+	
   <div class="a-admin-footer">
     <?php include_partial('form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
