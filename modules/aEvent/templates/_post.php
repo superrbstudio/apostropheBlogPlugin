@@ -13,7 +13,7 @@
 	</ul>
 	<?php endif ?>
 
-<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event)) ?>
+<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event, 'edit' => false)) ?>
 
 </div>
 
