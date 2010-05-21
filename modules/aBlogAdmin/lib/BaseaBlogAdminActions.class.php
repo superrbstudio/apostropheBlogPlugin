@@ -32,7 +32,15 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    $this->a_blog_post = $this->getRoute()->getObject();
+    if($this->getUser()->hasCredential('admin'))
+    {
+      $this->a_blog_post = $this->getRoute()->getObject();
+    }
+    else
+    {
+      $this->a_blog_post = Doctrine::getTable('aBlogPost')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
+    }
+    $this->forward404Unless($this->a_blog_post);
     $this->form = $this->configuration->getForm($this->a_blog_post);
 
     if($request->isXmlHttpRequest())
@@ -98,7 +106,17 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    parent::executeEdit($request);
+    if($this->getUser()->hasCredential('admin'))
+    {
+      $this->a_blog_post = $this->getRoute()->getObject();
+    }
+    else
+    {
+      $this->a_blog_post = Doctrine::getTable('aBlogPost')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
+    }
+    $this->forward404Unless($this->a_blog_post);
+    $this->form = $this->configuration->getForm($this->a_blog_post);
+
     aBlogItemTable::populatePages(array($this->a_blog_post));
   }
 

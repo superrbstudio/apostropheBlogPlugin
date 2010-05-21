@@ -104,4 +104,12 @@ class PluginaBlogItemTable extends Doctrine_Table
     return self::getInstance()->findOneBy('id', $params['id']);
   }
 
+  public function findOneEditable($id, $user_id)
+  {
+    $q = $this->createQuery()
+      ->addWhere('id = ?', $id);
+    $this->filterByEditable($q, $user_id);
+    return $q->fetchOne();
+  }
+
 }

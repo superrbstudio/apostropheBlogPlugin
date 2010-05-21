@@ -52,7 +52,7 @@
 
 	<div class="post-author">
 	  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>:
-			<?php if ($sf_user->hasCredential('admin')): ?>
+			<?php if (isset($form['author_id'])): ?>
 				</h4>	
 				<div class="author_id option">
 				<?php echo $form['author_id']->render() ?>
@@ -64,6 +64,7 @@
 
 	</div>
 
+  <?php if(isset($form['editors_list']) ): ?>
 	<div class="post-editors">
 
 		<?php if (!count($a_blog_post->Editors)): ?>
@@ -78,10 +79,10 @@
 	    <?php echo $form['editors_list']->render()?>
 	    <?php echo $form['editors_list']->renderError() ?>
 	
-	  </div>
-	</div>
-</div>
-
+      </div>
+    </div>
+  </div>
+  <?php endif ?>
 
 
 <?php // Blog Post Categories ?>

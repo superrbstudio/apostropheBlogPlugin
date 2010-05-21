@@ -26,16 +26,23 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getModelName(), 'query' => $q)));
     $this->setValidator('categories_list',
       new sfValidatorDoctrineChoice(array('multiple' => true, 'model' =>  $this->getModelName(), 'query' => $q, 'required' => false)));
+
+    if($user->hasCredential('admin'))
+    {
+      $this->setWidget('categories_list_add',
+        new sfWidgetFormInputHidden());
+      //TODO: Make this validator better, should check for duplicate categories, etc.
+      $this->setValidator('categories_list_add',
+        new sfValidatorString(array('required' => false)));
+    }
          
     $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))
     {
       $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
+      unset($this['author_id']);
     }
 
-		// This was crashing with errors if there was an empty / old / or incomplete aBlog entry in the project app.yml
-		// By adding the if statement and the else, when you have a malformed aBlog entry in the project app.yml, it still returns the single column template
-		// Which is bundled with the Plugin, so it's OK to assume we have it to return
     $templates = sfConfig::get('app_'.$this->engine.'_templates');
     $templateChoices = array();
 	  foreach ($templates as $key => $template)
@@ -58,18 +65,18 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['allow_comments']);
     }
 
+    if($user->hasCredential('admin'))
+    {
+      $this->setWidget('editors_list',
+        new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
+      $this->setValidator('editors_list',
+        new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+    }
+    else
+    {
+      unset($this['editors_list']);
+    }
     
-    $this->setWidget('categories_list_add',
-      new sfWidgetFormInputHidden());
-    //TODO: Make this validator better, should check for duplicate categories, etc.
-    $this->setValidator('categories_list_add',
-      new sfValidatorPass());
-
-    $this->setWidget('editors_list',
-      new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
-    $this->setValidator('editors_list',
-      new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
-
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
 		));
@@ -108,7 +115,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $tags = str_replace(', ', ',', $tags);
 
     $this->object->setTags($tags);
-    $this->updateCategoriesList($this->values['categories_list_add']);
+    if(isset($this['categories_list_add']))
+    {
+      $this->updateCategoriesList($this->values['categories_list_add']);
+    }
     parent::doSave($con);
   }
   
