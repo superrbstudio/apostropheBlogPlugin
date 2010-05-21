@@ -44,18 +44,10 @@ abstract class BaseaEventSlotComponents extends BaseaSlotComponents
 			);
 		}
 
-		// IF we set a template via the area/slot call use it
-		// ELSE IF blog post has template use the blog post template
-		// ELSE default to singleColumnTemplate
-    if(!isset($this->options['template']))
-		{
-			$this->options['template'] =	(isset($this->aEvent['template']))? $this->aEvent['template']: 'singleColumnTemplate';
-		}
-
     $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
 
-   	aEventTable::getInstance()->addUpcomming($q, $limit);
+   	aEventTable::getInstance()->addUpcoming($q, $limit);
 
     $this->aEvents = $q->execute();
 

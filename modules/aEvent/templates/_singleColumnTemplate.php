@@ -13,9 +13,9 @@
   'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
-    'aSlideshow' => array("width" => 680, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 680)),
-		'aVideo' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'), 
-		'aPDF' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'),				
+    'aSlideshow' => array("width" => 580, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 580)),
+		'aVideo' => array('width' => 580, 'flexHeight' => true, 'resizeType' => 's'), 
+		'aPDF' => array('width' => 580, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
 <?php include_partial('aEvent/addThis', array('aEvent' => $a_event)) ?>

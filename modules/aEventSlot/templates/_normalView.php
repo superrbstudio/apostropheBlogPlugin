@@ -1,6 +1,5 @@
-<?php include_partial('a/simpleEditButton', array('name' => $name, 'pageid' => $pageid, 'permid' => $permid)) ?>
-<?php if (isset($values['count'])): ?>
-	<?php foreach ($aEvents as $aEvent): ?>
-		<?php include_partial('aEvent/'.$options['template'].'_slot', array('aEvent' => $aEvent, 'options' => $options)) ?>
-	<?php endforeach ?>
-<?php endif ?>
+<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
+
+<?php foreach ($aEvents as $aEvent): ?>
+	<?php include_partial('aEventSingleSlot/post', array('options' => $options, 'aBlogItem' => $aEvent,)) ?>
+<?php endforeach ?>

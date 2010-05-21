@@ -36,7 +36,7 @@ class PluginaEventTable extends aBlogItemTable
     $q->addWhere($rootAlias.'.start_date BETWEEN ? AND ?', array($startDate, $endDate));
   }
 
-  public function addUpcomming(Doctrine_Query $q, $limit = null)
+  public function addUpcoming(Doctrine_Query $q, $limit = null)
   {
     $q->orderBy('start_date');
     $q->addWhere('start_date >= NOW()');

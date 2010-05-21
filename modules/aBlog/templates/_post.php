@@ -4,11 +4,7 @@
 
   <?php if($a_blog_post->userHasPrivilege('edit')): ?>
   <ul class="a-controls a-blog-post-controls">
-		<li><?php echo link_to('Edit', 'a_blog_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-edit flag no-label', )) ?></li>
-
-	 	<?php if($a_blog_post->userHasPrivilege('delete')): ?>
-		<li><?php echo link_to('Delete', 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete no-label', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe_blog'), )) ?></li>
-		<?php endif ?>
+		<li><?php echo link_to('Edit', 'a_blog_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-edit no-label', )) ?></li>
 	</ul>
 	<?php endif ?>
 

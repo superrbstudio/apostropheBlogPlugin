@@ -1,6 +1,8 @@
 <h4 class="a-slot-form-title">Blog Post</h4>
+
 <?php echo $form->renderGlobalErrors() ?>
 <?php echo $form->renderHiddenFields() ?>
+
 <div class="a-form-row search">
 	<?php echo $form['search']->renderLabel(__('Search by Title', array(), 'apostrophe_blog')) ?>
 	<div class="a-form-field">

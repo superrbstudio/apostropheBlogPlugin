@@ -1,4 +1,4 @@
-<?php include_partial('a/simpleEditButton', array('name' => $name, 'pageid' => $pageid, 'permid' => $permid)) ?>
+<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
 
 <?php if ($aBlogItem): ?>
   <?php include_partial('aBlogSingleSlot/post', array('aBlogItem' => $aBlogItem, 'options' => $options)) ?>
