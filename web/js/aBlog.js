@@ -172,7 +172,7 @@ function aBlogPermalink(slug_url)
 	// Permalink: On Focus Listen for Changes
 	pInput.focus(function(){
 		pInput.select();
-		pInput.keyup(function(){
+		pInput.keyup(function(event){
 			if (pInput.val().trim() != originalSlug)
 			{
 				permalinkInterface.addClass('has-changes');
