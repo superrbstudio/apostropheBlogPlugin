@@ -1,13 +1,13 @@
-<?php $full = a_get_option($options, 'full') ?>
+<?php $full = a_get_option($options, 'full', false) ?>
 <?php $template = a_get_option($options, 'force_template', $aBlogItem['template']) ?>
-<?php $subtemplate = a_get_option($options, 'subtemplate', false) ?>
+<?php $subtemplate = a_get_option($options, 'subtemplate', 'slot') ?>
 <?php $templateOptionsAll = a_get_option($options, 'template_options', array()) ?>
 <?php $templateOptions = a_get_option($templateOptionsAll, $template, array()) ?>
 <?php $subtemplate = a_get_option($templateOptions, 'subtemplate', $subtemplate) ?>
-<?php if ($subtemplate === false): ?>
-  <?php $suffix = $full ? '' : '_slot' ?>
+<?php if ($full): ?>
+	<?php $suffix == ''; ?>
 <?php else: ?>
-  <?php $suffix = '_' . $subtemplate ?>
+	<?php $suffix = '_'.$subtemplate; ?>
 <?php endif ?>
 <?php // Allows styling based on whether there is media in the post, ?>
 <?php // the blog template, and the subtemplate ?>
