@@ -1,4 +1,4 @@
-<?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?> by <?php echo $aBlogPost->Author ?>
+<?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost, array('absolute' => true)) ?>
 <br/>
 <?php echo $aBlogPost['published_at'] ?>
 <br/><br/>

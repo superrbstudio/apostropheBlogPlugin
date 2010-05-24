@@ -222,7 +222,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function getFeedText()
   {
-    return $this->getText(200);
+    /**
+     * Due to the design of the feed plugin we have to render a partial here even though
+     * we are technically in the model layer. RSS needs templating and customizing like everything else
+     * we present to the end user
+     */
+    
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+    return get_partial($this->engine . '/' . $this->template . '_rss', array(get_class($this) => $this));
   }
 
   /**

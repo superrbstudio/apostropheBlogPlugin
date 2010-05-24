@@ -2,10 +2,8 @@
 <h3 class="a-blog-item-title">
   <?php echo link_to($a_event->getTitle(), 'a_event_post', $a_event) ?>
 </h3>
-<ul class="a-blog-item-meta">
-  <li class="date"><?php echo aDate::pretty($a_event['published_at']); ?></li>
-  <li class="author"><?php echo __('Posted By:', array(), 'apostrophe_blog') ?> <?php echo $a_event->getAuthor() ?></li>   
-</ul>
+<?php include_partial('aEvent/meta', array('aEvent' => $a_event)) ?>
+
 <?php endif ?>
 
 <?php a_area('blog-body', array(

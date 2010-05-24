@@ -41,11 +41,12 @@ abstract class BaseaEventActions extends BaseaBlogActions
   {
     $this->articles = $this->pager->getResults();
     
+    $title = sfConfig::get('app_aEvent_feed_title', $this->page->getTitle());
     $this->feed = sfFeedPeer::createFromObjects(
       $this->articles,
       array(
         'format'      => 'rss',
-        'title'       => sfConfig::get('app_aEvent_feed_title'),
+        'title'       => $title,
         'link'        => '@a_event',
         'authorEmail' => sfConfig::get('app_aEvent_feed_author_email'),
         'authorName'  => sfConfig::get('app_aEvent_feed_author_name'),
