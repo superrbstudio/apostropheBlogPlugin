@@ -76,7 +76,7 @@ function aBlogTitle(slug_url)
 	if (originalTitle == 'untitled' || originalTitle == '') 
 	{ // The blog post has no title -- Focus the input
 		tInput.focus();
-		titleInterface.addClass('active'); 
+		titleInterface.addClass('active');
 	};
 	
 	// Title: On Change Compare
@@ -249,7 +249,6 @@ function aBlogUpdateSlug(slug)
 	};
 }
 
-
 function aBlogUpdateTitleAndSlug(title, slug)
 { // Update TitleAndSlug Function to save u time :D !
 	aBlogUpdateTitle(title);
@@ -278,42 +277,46 @@ function aBlogUpdateTemplate(template, feedback)
 	location.reload(true);
 }
 
-function aBlogUpdateMessage(msg, timestamp) // I don't think this is used anymore
+function aBlogTitleMessage(which)
 {
+	var msgContainer = $('#a-admin-title-sentence');
+	msgContainer.children(which).show();
+}
 
-	// alert('merde');
-	if (typeof msg == 'undefined') {
-		msg = 'Saved!';
-	};
-
-	var publishButton = $('#a-blog-publish-button');
-	var pUpdate = $('#a-blog-item-update');
-	var lastSaved = $('#post-last-saved');
-
-	if (pUpdate.data('animating') != 1) {
-		pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
-			publishButton.children().hide();
-			pUpdate.fadeTo(500,1, function(){
-				pUpdate.fadeOut(500, function(){
-					if (publishButton.hasClass('published')) 
-					{
-						publishButton.children('.unpublish').fadeIn(100);
-					}
-					else	
-					{
-						publishButton.children('.publish').fadeIn(100);					
-					}
-					lastSaved.find('span').text(timestamp);
-					lastSaved.fadeIn(2000, function(){
-						lastSaved.fadeTo(3000, 1, function(){
-							// lastSaved.fadeOut(); // Fade Out Message after some time
-						});
-					});					
-					pUpdate.data('animating', 0);
-				});
-			});
-		});
-	};	
+function aBlogUpdateMessage(msg, timestamp) // I don't think this is used anymore
+{	
+	// if (typeof msg == 'undefined') {
+	// 	msg = 'Saved!';
+	// };
+	// 
+	// var publishButton = $('#a-blog-publish-button');
+	// var pUpdate = $('#a-blog-item-update');
+	// var lastSaved = $('#post-last-saved');
+	// 
+	// if (pUpdate.data('animating') != 1) {
+	// 	pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
+	// 		publishButton.children().hide();
+	// 		pUpdate.fadeTo(500,1, function(){
+	// 			pUpdate.fadeOut(500, function(){
+	// 				if (publishButton.hasClass('published')) 
+	// 				{
+	// 					publishButton.children('.unpublish').fadeIn(100);
+	// 				}
+	// 				else	
+	// 				{
+	// 					publishButton.children('.publish').fadeIn(100);					
+	// 				}
+	// 				lastSaved.find('span').text(timestamp);
+	// 				lastSaved.fadeIn(2000, function(){
+	// 					lastSaved.fadeTo(3000, 1, function(){
+	// 						// lastSaved.fadeOut(); // Fade Out Message after some time
+	// 					});
+	// 				});					
+	// 				pUpdate.data('animating', 0);
+	// 			});
+	// 		});
+	// 	});
+	// };	
 }
 
 function aBlogSendMessage(label, desc)

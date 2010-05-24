@@ -584,24 +584,37 @@ font-size: 12px;
 
 
 
-/* Admin Filter Sentence */
+/* Admin Title Sentence */
 
 
-.a-admin-filter-sentence
+.a-admin-title-sentence
 {
 float: left;
 width: 100%;
 clear: both;
-margin: 10px 0;
+margin: 15px 0 5px;
 }
 
-.a-admin-filter-sentence a.selected
+.a-admin-title-sentence h3
+{
+font-size: 18px;
+color: #999;	
+}
+
+.a-admin-title-sentence h3.new-item,
+.a-admin-title-sentence h3.published-item,
+.a-admin-title-sentence h3.unpublished-item
+{
+display: none;	
+}
+
+.a-admin-title-sentence a.selected
 {
 position: relative;
 padding-right: 20px;
 }
 
-.a-admin-filter-sentence a.selected span.close
+.a-admin-title-sentence a.selected span.close
 {
 position: absolute;
 display: block;
@@ -613,13 +626,13 @@ right: 0;
 margin-top: -10px;
 }
 
-.a-admin-filter-sentence a.selected:hover
+.a-admin-title-sentence a.selected:hover
 {
 color: #333;
 text-decoration: underline;
 }
 
-.a-admin-filter-sentence a.selected:hover span.close
+.a-admin-title-sentence a.selected:hover span.close
 {
 background-position: 100% -20px;
 }
@@ -839,17 +852,4 @@ border-radius: 4px;
 	padding: 0 10px;
 	max-width: 460px;
 	color: #999;
-}
-
-#a-blog-item-status-indicator
-{
-	position: absolute;
-	right: 0;
-	top: 50%;
-	margin: -10px 10px 0 0;
-	float: right;
-	height: 20px;
-	width: 20px;
-	background: url('/apostrophePlugin/images/a-icon-loader-2.gif') center center no-repeat;
-	display: none;
 }
