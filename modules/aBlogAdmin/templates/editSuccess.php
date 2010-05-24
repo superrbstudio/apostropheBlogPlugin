@@ -28,6 +28,10 @@
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
 			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
+		  <ul class="a-controls blog-title">
+		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
+		    <li><a href="#" class="a-btn a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
+		  </ul>				
 		</div>		
 
 		<div id="a-blog-item-permalink-interface">
@@ -37,7 +41,7 @@
 			</div>
 			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_item_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_item_permalink_interface">
-			  <ul class="a-controls slug">
+			  <ul class="a-controls blog-slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
 			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
 			  </ul>				

@@ -34,9 +34,11 @@ function aBlogTitle(slug_url)
 {
 	// Title Interface 
 	// =============================================
-	var titleInterface = $('#a_blog_item_title_interface');
+	var titleInterface = $('#a-blog-item-title-interface');
 	var titlePlaceholder = $('#a-blog-item-title-placeholder');
-	var originalTitle = titleInterface.val();
+	var tInput = titleInterface.find('input');
+	var tControls = titleInterface.find('ul.a-controls');
+	var originalTitle = tInput.val();
 
 	if (originalTitle == 'untitled' || originalTitle == '') 
 	{ // The blog post has no title -- Focus the input		
@@ -44,33 +46,81 @@ function aBlogTitle(slug_url)
 	};
 	
 	// Title: On Change Compare
-	titleInterface.change(function(){
-		if ($(this).val() != '') 
-		{ // If the input is not empty
-			// Pass the value to the admin form and update
-			$('#a_blog_item_title').val($(this).val());
-			aBlogUpdateForm(slug_url);
-		};
-	});
+	// Turned this off for the 1.4 Release
+	// tInput.change(function(){
+	// 	save();
+	// });
 	
-	titleInterface.blur(function()
+	tInput.blur(function()
 	{ // Check for Empty Title Field			
-		if ($(this).val() == '') 
+		if (tInput.val() == '') 
 		{ 	
-			$(this).next().show(); 
+			tInput.next().show(); 
 		}
 	});
 
-	titleInterface.focus(function()
+	tInput.focus(function()
 	{	// Always hide the placeholder on focus
-		$(this).next().hide(); 
+		tInput.next().hide(); 
+		tInput.select();
+		tInput.keyup(function(event){
+			if (tInput.val().trim() != originalTitle.trim())
+			{
+				titleInterface.addClass('has-changes');
+				tControls.fadeIn();
+			}
+			if (event.keyCode == '13') {
+		    event.preventDefault();
+				save();
+			}
+		});
 	});
 		
 	titlePlaceholder.mousedown(function()
 	{	// If you click the placeholder text 
 		// focus the input (Mousedown is faster than click here)
-		titleInterface.focus(); 
+		tInput.focus(); 
 	}).hide();
+	
+
+	// Title Interface Controls: Save | Cancel
+	// =============================================
+	tControls.click(function(event)
+	{
+		event.preventDefault();
+		$target = $(event.target);
+									
+		if ($target.hasClass('a-save'))
+		{
+			if (tInput.val() == '') 
+			{ 	
+				tInput.val(originalTitle);
+				tControls.hide();							
+			}
+			if ((tInput.val() != '') && (tInput.val().trim() != originalTitle.trim())) 
+			{
+				save();
+			}										
+		}
+		
+		if ($target.hasClass('a-cancel'))
+		{
+			tInput.val(originalTitle);
+			tControls.hide();
+		}
+	});
+
+	// Save Blog Title
+	function save()
+	{
+		if (tInput.val() != '') 
+		{ // If the input is not empty
+			// Pass the value to the admin form and update
+			$('#a_blog_item_title').val(tInput.val());
+			aBlogUpdateForm(slug_url);
+		};
+		tControls.hide();				
+	}
 }
 
 function aBlogPermalink(slug_url)
@@ -84,9 +134,9 @@ function aBlogPermalink(slug_url)
 
 	// Permalink: On Focus Listen for Changes
 	pInput.focus(function(){
-		$(this).select();
-		$(this).keyup(function(){
-			if ($(this).val().trim() != originalSlug)
+		pInput.select();
+		pInput.keyup(function(){
+			if (pInput.val().trim() != originalSlug)
 			{
 				permalinkInterface.addClass('has-changes');
 				pControls.fadeIn();
@@ -106,21 +156,32 @@ function aBlogPermalink(slug_url)
 			if (pInput.val() == '') 
 			{ 	
 				pInput.val(originalSlug);
-				pControls.hide();
+				pControls.hide();								
 			}
 			if ((pInput.val() != '') && (pInput.val().trim() != originalSlug)) 
 			{
-				$('#a_blog_item_slug').val(pInput.val()); // Pass the value to the admin form and update
-					aBlogUpdateForm(slug_url);				
+				save();
 			}										
 		}
 		
 		if ($target.hasClass('a-cancel'))
 		{
 			pInput.val(originalSlug);
-			pControls.hide();
+			pControls.hide();					
 		}
 	});
+	
+	// Save Blog Title
+	function save()
+	{
+		if (pInput.val() != '') 
+		{ // If the input is not empty
+			// Pass the value to the admin form and update
+			$('#a_blog_item_slug').val(pInput.val());
+			aBlogUpdateForm(slug_url);
+			pControls.hide();
+		};		
+	}
 }
 
 
