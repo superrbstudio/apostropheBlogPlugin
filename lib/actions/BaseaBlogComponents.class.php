@@ -11,7 +11,17 @@
 abstract class BaseaBlogComponents extends sfComponents
 {
   protected $modelClass = 'aBlogPost';
-  
+
+  public function preExecute()
+  {
+    parent::preExecute();
+    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
+    {
+      $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
+      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
+    }
+  }
+
   public function executeSidebar()
   {
     if ($this->getRequestParameter('tag'))

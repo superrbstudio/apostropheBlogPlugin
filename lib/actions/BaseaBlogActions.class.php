@@ -15,10 +15,10 @@ abstract class BaseaBlogActions extends aEngineActions
   public function preExecute()
   {
     parent::preExecute();
-    $this->blogCategories = aTools::getCurrentPage()->BlogCategories;
-    if(count($this->blogCategories) == 0)
+    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
-      $this->blogCategories = array();
+      $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
+      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
     }
   }
 

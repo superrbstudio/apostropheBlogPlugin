@@ -24,20 +24,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     {
       $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
         'getGlobalButtons'));
-      $this->dispatcher->connect('view.configure_format', array($this, 'configureFormat'));
-      $this->dispatcher->connect('command.post_command', array('aBlogEvents',  'listenToCommandPostCommandEvent'));  
       self::$registered = true;
-    }
-  }
-
-  public function configureFormat(sfEvent $event)
-  {
-    $params = $event->getParameters();
-    $response = $params['response'];
-    if(sfConfig::get('aBlog', true)) //TODO: Add Bundled layout config to app.yml
-    {
-      $response->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
-      $response->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
     }
   }
   
