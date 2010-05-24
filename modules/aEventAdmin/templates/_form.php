@@ -38,6 +38,7 @@
 </div>
 
 
+
 <?php // Event Date Range ?>
 <hr />
 <div class="event-date section">
@@ -52,6 +53,7 @@
 		<?php echo $form['end_date']->renderError() ?>					
 	</div>
 </div>
+
 
 
 <?php // Author & Editors Section ?>
@@ -95,7 +97,7 @@
 <hr />
 <div class="categories section" id="categories-section">
 	<h4><?php echo __('Categories', array(), 'apostrophe_blog') ?></h4>
-	<?php // echo link_to('edit categories','@a_blog_category_admin', array('class' => 'edit-categories', )) ?>	
+	<?php echo link_to('edit categories','@a_blog_category_admin', array('class' => 'edit-categories', )) ?>	
 	<?php echo $form['categories_list']->render() ?>
 	<?php echo $form['categories_list']->renderError() ?>
 </div>

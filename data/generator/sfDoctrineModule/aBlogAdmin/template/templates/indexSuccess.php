@@ -26,16 +26,14 @@ $(document).ready(function(){
 			<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="all-posts-btn">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe-blog') ?]</a></li>	
       [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
+	  [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
   </div> 
 </div>
 [?php end_slot() ?]
 
 <div class="a-admin-container [?php echo $sf_params->get('module') ?]">
-
-  [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
  
 	<div class="a-admin-content main">
-
 
 		[?php include_partial('<?php echo $this->getModuleName() ?>/flashes') ?]
 		<?php if ($this->configuration->getValue('list.batch_actions')): ?>

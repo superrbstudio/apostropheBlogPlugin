@@ -2,7 +2,7 @@
   <!-- <h2 class="a-admin-title you-are-here"><?php echo __('Blog Post Admin', array(), 'messages') ?></h2> -->
 </div>
 
-<div class="a-admin-filter-sentence">
+<div class="a-admin-title-sentence">
 
 <h3> 	
 	<?php $appliedFilters = $filters->getAppliedFilters(); ?>

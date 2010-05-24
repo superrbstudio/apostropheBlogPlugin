@@ -9,21 +9,26 @@ function aBlogUpdateForm(slug_url, event)
 		{			
       if(textStatus == 'success')
       {
+			
       var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
       var data = eval('(' + json + ')');
 			
-      if ( typeof(data.modified.template) != "undefined" ) {
+      if (typeof(data.modified.template) != "undefined" ) {
         aBlogUpdateTemplate(data.template, data.feedback);
       };
 
-      if ( typeof(data.modified.allow_comments) != "undefined" ) {
+      if (typeof(data.modified.allow_comments) != "undefined" ) {
       	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
 			};
 
 			aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
       aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
+			// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
 			aUI('#a-admin-form');
+
+
+			aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.aBlogPost.updated_at);
+			
       }
 	 	},
 	 	url: slug_url
@@ -39,6 +44,7 @@ function aBlogPublishBtn(status, slug_url)
 
 	if (status == 'published') {
 		publishButton.addClass('published');
+		aBlogTitleMessage('.published-item'); // We are editing an existing post that is published;
 	};
 
 	publishButton.unbind('click').click(function(){
@@ -56,14 +62,21 @@ function aBlogPublishBtn(status, slug_url)
 		};
 		
 		// If slug_url
-		if (typeof slug_url != 'undefined') 
+		if (typeof(slug_url) != 'undefined') 
 		{
 			aBlogUpdateForm(slug_url);			
 		};
 	});			
 }
 
-function aBlogTitle(slug_url)
+function aBlogGetPostStatus()
+{
+	var postStatus = $('#a_blog_item_status');
+	return postStatus.val();
+}
+
+
+function aBlogItemTitle(slug_url)
 {
 	// Title Interface 
 	// =============================================
@@ -77,6 +90,17 @@ function aBlogTitle(slug_url)
 	{ // The blog post has no title -- Focus the input
 		tInput.focus();
 		titleInterface.addClass('active');
+		aBlogTitleMessage('.new-item'); // We are creating a new post so show us that title;
+	}
+	else
+	{
+		status = aBlogGetPostStatus();
+		if (status == "draft") {
+			aBlogTitleMessage('.draft-item');
+		};
+		if (status == "published") {
+			aBlogTitleMessage('.published-item');
+		};
 	};
 	
 	// Title: On Change Compare
@@ -160,7 +184,7 @@ function aBlogTitle(slug_url)
 	}
 }
 
-function aBlogPermalink(slug_url)
+function aBlogItemPermalink(slug_url)
 {
 	// Permalink Interface  
 	// =============================================
@@ -277,15 +301,31 @@ function aBlogUpdateTemplate(template, feedback)
 	location.reload(true);
 }
 
-function aBlogTitleMessage(which)
+function aBlogTitleMessage(status, timestamp)
 {
-	var msgContainer = $('#a-admin-title-sentence');
-	msgContainer.children(which).show();
+	var msgContainer = $('.a-admin-title-sentence');
+	
+	msgContainer.children().hide();
+	
+	// if (typeof(timestamp) == 'string')
+	// {
+	// 	flashMsg = 	msgContainer.children('.flash-message');
+	// 	flashMsg.hide();
+	// 
+	// 	// TODO: clone the save message, inject the timestamp, append it to the currently displayed message, have it countdown, then remove itself.
+	// 	var newMessage = flashMsg.clone();
+	// 	msgContainer.children(status).show().(newMessage.append(timestamp));
+	// 	newMessage.fadeIn('slow');
+	// }
+	// else
+	// {
+		msgContainer.children(status).show();		
+	// }
 }
 
 function aBlogUpdateMessage(msg, timestamp) // I don't think this is used anymore
 {	
-	// if (typeof msg == 'undefined') {
+	// if (typeof(msg) == 'undefined') {
 	// 	msg = 'Saved!';
 	// };
 	// 

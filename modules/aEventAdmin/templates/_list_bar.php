@@ -1,4 +1,4 @@
-<div class="a-admin-filter-sentence">
+<div class="a-admin-title-sentence">
 	<h3> 	
 		<?php $appliedFilters = $filters->getAppliedFilters(); ?>
 

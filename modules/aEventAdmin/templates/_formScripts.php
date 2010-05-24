@@ -32,8 +32,8 @@
 			});
 
 			aPopularTags($('#a_blog_item_tags'), $('#blog-tag-list .recommended-tag'));
-			aBlogTitle('<?php echo url_for('a_event_admin_update',$a_event) ?>');
-			aBlogPermalink('<?php echo url_for('a_event_admin_update',$a_event) ?>');
+			aBlogItemTitle('<?php echo url_for('a_event_admin_update',$a_event) ?>');
+			aBlogItemPermalink('<?php echo url_for('a_event_admin_update',$a_event) ?>');
 	    aBlogPublishBtn('<?php echo $a_event->status  ?>','<?php echo url_for('a_event_admin_update',$a_event) ?>');
 	    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>' <?php if($sf_user->hasCredential('admin')): ?>, 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>'<?php endif ?>, 'onChange': aBlogUpdateMulti });
 	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });

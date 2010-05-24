@@ -12,7 +12,12 @@
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
 			  <?php include_partial('aEventAdmin/form_bar') ?>				
-				<div id="a-blog-item-status-indicator"></div>
+				<div class="a-admin-title-sentence">
+					<h3 class="new-item"><?php echo __('You are creating a new event', array(), 'apostrophe_blog') ?></h3>
+					<h3 class="draft-item"><?php echo __('You are editing an unpublished event', array(), 'apostrophe_blog') ?></h3>					
+					<h3 class="published-item"><?php echo __('You are editing a published event', array(), 'apostrophe_blog') ?></h3>
+					<span class="flash-message"> <?php echo __('Event Saved', array(), 'apostrophe_blog') ?></span>
+				</div>
 			</div>
 	  </div>
 	<?php end_slot() ?>

@@ -603,7 +603,7 @@ color: #999;
 
 .a-admin-title-sentence h3.new-item,
 .a-admin-title-sentence h3.published-item,
-.a-admin-title-sentence h3.unpublished-item
+.a-admin-title-sentence h3.draft-item
 {
 display: none;	
 }
