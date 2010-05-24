@@ -38,4 +38,9 @@
     
 	 });
 
+	$(window).bind('beforeunload', function() {
+	<?php // We want to save the blog post editor when you close the browser window or navigate away from it ?>
+		aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
+	});
+
 </script>
