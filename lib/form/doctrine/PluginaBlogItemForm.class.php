@@ -39,7 +39,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))
     {
-      $q->addWhere('sfGuardUser.id = ?', $user->getGuardUser()->getId());
       unset($this['author_id']);
     }
 
@@ -65,8 +64,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['allow_comments']);
     }
 
-    if($user->hasCredential('admin'))
+    if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
     {
+      $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
+      
       $this->setWidget('editors_list',
         new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
       $this->setValidator('editors_list',
