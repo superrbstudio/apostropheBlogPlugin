@@ -720,6 +720,8 @@ border: 1px solid rgba(0,0,0,0.05);
 -moz-border-radius: 2px;
 -webkit-border-radius: 2px;
 border-radius: 2px;
+line-height: 1.2;
+width: 160px;
 }
 
 #a-blog-item-permalink-interface input:hover,
