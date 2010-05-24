@@ -5,7 +5,7 @@
 <?php $templateOptions = a_get_option($templateOptionsAll, $template, array()) ?>
 <?php $subtemplate = a_get_option($templateOptions, 'subtemplate', $subtemplate) ?>
 <?php if ($full): ?>
-	<?php $suffix == ''; ?>
+	<?php $suffix = ''; ?>
 <?php else: ?>
 	<?php $suffix = '_'.$subtemplate; ?>
 <?php endif ?>

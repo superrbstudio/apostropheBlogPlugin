@@ -278,8 +278,10 @@ function aBlogUpdateTemplate(template, feedback)
 	location.reload(true);
 }
 
-function aBlogUpdateMessage(msg, timestamp)
+function aBlogUpdateMessage(msg, timestamp) // I don't think this is used anymore
 {
+
+	// alert('merde');
 	if (typeof msg == 'undefined') {
 		msg = 'Saved!';
 	};
