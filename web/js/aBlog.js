@@ -178,6 +178,10 @@ function aBlogPermalink(slug_url)
 				permalinkInterface.addClass('has-changes');
 				pControls.fadeIn();
 			}
+			if (event.keyCode == '13') {
+		    event.preventDefault();
+				save();
+			}			
 		});
 	});
 
@@ -217,6 +221,7 @@ function aBlogPermalink(slug_url)
 			$('#a_blog_item_slug').val(pInput.val());
 			aBlogUpdateForm(slug_url);
 			pControls.hide();
+			pInput.effect('highlight', {}, 2000).blur();				
 		};		
 	}
 }

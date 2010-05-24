@@ -58,7 +58,7 @@
     </div>
   </div>
   
-<?php if (isset($a_blog_post['updated_at'])): ?>
+	<?php if (isset($a_blog_post['updated_at'])): ?>
 		<div id="post-last-saved" class="post-updated-at option">
 			<h6>
 					<b>Last Saved:</b>
