@@ -1,5 +1,5 @@
 <?php $full = a_get_option($options, 'full', false) ?>
-<?php $template = a_get_option($options, 'force_template', $aBlogItem['template']) ?>
+<?php $template = a_get_option($options, 'template', $aBlogItem['template']) ?>
 <?php $subtemplate = a_get_option($options, 'subtemplate', 'slot') ?>
 <?php $templateOptionsAll = a_get_option($options, 'template_options', array()) ?>
 <?php $templateOptions = a_get_option($templateOptionsAll, $template, array()) ?>

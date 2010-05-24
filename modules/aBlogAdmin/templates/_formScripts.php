@@ -1,7 +1,5 @@
-<script type="text/javascript" charset="utf-8">
-	
+<script type="text/javascript" charset="utf-8">	
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>'); }
-
 	$(document).ready(function(){
 		
 	    $('#a-admin-form').change(function(event) {
@@ -34,13 +32,11 @@
 			aBlogPermalink('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	    aBlogPublishBtn('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>' <?php if($sf_user->hasCredential('admin')): ?>, 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>'<?php endif ?>, 'onChange': aBlogUpdateMulti });
-	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });
-    
+	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });    
 	 });
 
 	$(window).bind('beforeunload', function() {
 	<?php // We want to save the blog post editor when you close the browser window or navigate away from it ?>
 		aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	});
-
 </script>
