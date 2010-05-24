@@ -81,7 +81,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
 		));
 
-    $this->getWidgetSchema()->setDefault('published_at', date('Y/m/d H:i'));
+    $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
     $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));

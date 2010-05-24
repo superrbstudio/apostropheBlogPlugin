@@ -29,8 +29,8 @@ abstract class PluginaEventForm extends BaseaEventForm
 
     $this->setValidator('end_date', new sfValidatorDateTime());
 
-    $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d H:i'));
-    $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d H:i'));
+    $this->getWidgetSchema()->setDefault('start_date',  date('Y-m-d H:i:s'));
+    $this->getWidgetSchema()->setDefault('end_date', date('Y-m-d H:i:s'));
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }
