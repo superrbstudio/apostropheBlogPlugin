@@ -11,9 +11,9 @@ abstract class BaseaEventComponents extends sfComponents
 {
   protected $modelClass = 'aEvent';
 
-  public function preExecute()
+  public function setup()
   {
-    parent::preExecute();
+    parent::setup();
     if(sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');

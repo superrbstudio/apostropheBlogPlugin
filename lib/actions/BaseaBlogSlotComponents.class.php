@@ -4,9 +4,9 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   protected $modelClass = 'aBlogPost';
   protected $formClass = 'aBlogSlotForm';
 
-  public function preExecute()
+  public function setup()
   {
-    parent::preExecute();
+    parent::setup();
     if(sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
@@ -18,7 +18,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   {
     // Must be at the start of both view components
     $this->setup();
-
+    
     // Careful, don't clobber a form object provided to us with validation errors
     // from an earlier pass
     if (!isset($this->form))
