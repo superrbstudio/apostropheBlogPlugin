@@ -634,9 +634,24 @@ background-position: 100% -20px;
 	width: 100%;
 	min-width:475px;
 	clear: both;
+	position: relative;
 }
 
 input#a_blog_item_title_interface
+{
+float: left;
+font-size: 18px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+width: 360px;
+padding: 3px;
+font-family: Arial, sans-serif;
+border: 1px solid rgba(0,0,0,0.125);
+}
+
+.active input#a_blog_item_title_interface,
+input#a_blog_item_title_interface:hover
 {
 float: left;
 font-size: 18px;
@@ -673,6 +688,8 @@ color: #999;
 margin-top: -30px;
 padding-left: 5px;
 display: none;
+float: left;
+clear: both;
 }
 
 #a-blog-item-permalink-interface,

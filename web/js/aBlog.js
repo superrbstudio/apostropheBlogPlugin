@@ -1,3 +1,36 @@
+// Ajax Update Blog Form
+function aBlogUpdateForm(slug_url, event)
+{
+	$.ajax({
+	  type:'POST',
+	  dataType:'text',
+	  data:jQuery('#a-admin-form').serialize(),
+	  complete:function(xhr, textStatus)
+		{			
+      if(textStatus == 'success')
+      {
+      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
+      var data = eval('(' + json + ')');
+			
+      if ( typeof(data.modified.template) != "undefined" ) {
+        aBlogUpdateTemplate(data.template, data.feedback);
+      };
+
+      if ( typeof(data.modified.allow_comments) != "undefined" ) {
+      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+			};
+
+			aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+			aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
+			aUI('#a-admin-form');
+      }
+	 	},
+	 	url: slug_url
+	});
+}
+
+// Pressing the Publish Button
 function aBlogPublishBtn(status, slug_url)
 {
 	//todo: use jq to get the action from the Form ID	for the slug_url
@@ -41,8 +74,9 @@ function aBlogTitle(slug_url)
 	var originalTitle = tInput.val();
 
 	if (originalTitle == 'untitled' || originalTitle == '') 
-	{ // The blog post has no title -- Focus the input		
-		titleInterface.focus(); 
+	{ // The blog post has no title -- Focus the input
+		tInput.focus();
+		titleInterface.addClass('active'); 
 	};
 	
 	// Title: On Change Compare
@@ -63,19 +97,20 @@ function aBlogTitle(slug_url)
 	{	// Always hide the placeholder on focus
 		tInput.next().hide(); 
 		tInput.select();
-		tInput.keyup(function(event){
-			if (tInput.val().trim() != originalTitle.trim())
-			{
-				titleInterface.addClass('has-changes');
-				tControls.fadeIn();
-			}
-			if (event.keyCode == '13') {
-		    event.preventDefault();
-				save();
-			}
-		});
 	});
 		
+	tInput.keyup(function(event){
+		if (tInput.val().trim() != originalTitle.trim())
+		{
+			titleInterface.addClass('has-changes');
+			tControls.fadeIn();
+		}
+		if (event.keyCode == '13') {
+	    event.preventDefault();
+			save();
+		}
+	});
+
 	titlePlaceholder.mousedown(function()
 	{	// If you click the placeholder text 
 		// focus the input (Mousedown is faster than click here)
@@ -119,7 +154,9 @@ function aBlogTitle(slug_url)
 			$('#a_blog_item_title').val(tInput.val());
 			aBlogUpdateForm(slug_url);
 		};
-		tControls.hide();				
+		tControls.hide();	
+		titleInterface.removeClass('active');		
+		tInput.effect('highlight', {}, 2000).blur();	
 	}
 }
 
@@ -183,40 +220,6 @@ function aBlogPermalink(slug_url)
 		};		
 	}
 }
-
-
-// Ajax Update Blog Form
-function aBlogUpdateForm(slug_url, event)
-{
-	$.ajax({
-	  type:'POST',
-	  dataType:'text',
-	  data:jQuery('#a-admin-form').serialize(),
-	  complete:function(xhr, textStatus)
-		{			
-      if(textStatus == 'success')
-      {
-      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
-      var data = eval('(' + json + ')');
-			
-      if ( typeof(data.modified.template) != "undefined" ) {
-        aBlogUpdateTemplate(data.template, data.feedback);
-      };
-
-      if ( typeof(data.modified.allow_comments) != "undefined" ) {
-      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
-			};
-
-			aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
-      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
-			aUI('#a-admin-form');
-      }
-	 	},
-	 	url: slug_url
-	});
-}
-
 
 function aBlogUpdateTitle(title)
 { // Update Title Function for Ajax calls when it is returned clean from Apostrophe
