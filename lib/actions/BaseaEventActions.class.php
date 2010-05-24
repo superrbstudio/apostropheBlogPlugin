@@ -33,9 +33,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
   protected function buildQuery($request)
   {
     $q = parent::buildQuery($request);
-    $q->addWhere('start_date > NOW()');
-    $q->orderBy('start_date asc');
-
+    Doctrine::getTable('aEvent')->addUpcoming($q);
     return $q;
   }
   
