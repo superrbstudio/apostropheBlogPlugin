@@ -28,7 +28,8 @@ abstract class BaseaBlogActions extends aEngineActions
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
     $categoryIds = array();
-    foreach($this->blogCategories as $blogCategory)
+    $this->blogCategories = $this->page->BlogCategories;
+    foreach($this->page->BlogCategories as $blogCategory)
     {
       $categoryIds[] = $blogCategory['id'];
     }
