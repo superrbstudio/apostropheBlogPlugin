@@ -53,7 +53,9 @@
 			</div>
 		</div>
 
-  	<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event, 'edit' => true)) ?>
+		<div class="a-blog-item event<?php echo ($a_event->hasMedia())? ' has-media':''; ?> <?php echo $a_event->getTemplate() ?>">
+  		<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event, 'edit' => true)) ?>
+		</div>
 
   </div>
 
