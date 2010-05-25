@@ -450,6 +450,11 @@ width: auto; /* ? For IE */
 clear: both;
 }
 
+.a-admin-sidebar .section.categories .edit-categories
+{
+	float: right;
+}
+
 .a-admin-sidebar .a-multiple-select-list
 {
 margin: 10px 0;
