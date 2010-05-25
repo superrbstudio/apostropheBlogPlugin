@@ -10,24 +10,22 @@ function aBlogUpdateForm(slug_url, event)
       if(textStatus == 'success')
       {
 			
-      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
-      var data = eval('(' + json + ')');
+	      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
+	      var data = eval('(' + json + ')');
 			
-      if (typeof(data.modified.template) != "undefined" ) {
-        aBlogUpdateTemplate(data.template, data.feedback);
-      };
+	      if (typeof(data.modified.template) != "undefined" ) {
+	        aBlogUpdateTemplate(data.template, data.feedback);
+	      };
 
-      if (typeof(data.modified.allow_comments) != "undefined" ) {
-      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
-			};
+	      if (typeof(data.modified.allow_comments) != "undefined" ) {
+	      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+				};
 
-			aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
-      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-			// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
-			aUI('#a-admin-form');
-
-
-			aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.aBlogPost.updated_at);
+				aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+	      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+				// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
+				aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.aBlogPost.updated_at);
+				aUI('#a-admin-form');
 			
       }
 	 	},
@@ -301,62 +299,64 @@ function aBlogUpdateTemplate(template, feedback)
 	location.reload(true);
 }
 
-function aBlogTitleMessage(status, timestamp)
+function aBlogTitleMessage(status, updated_at)
 {
 	var msgContainer = $('.a-admin-title-sentence');
 	
 	msgContainer.children().hide();
 	
-	// if (typeof(timestamp) == 'string')
-	// {
-	// 	flashMsg = 	msgContainer.children('.flash-message');
-	// 	flashMsg.hide();
-	// 
-	// 	// TODO: clone the save message, inject the timestamp, append it to the currently displayed message, have it countdown, then remove itself.
-	// 	var newMessage = flashMsg.clone();
-	// 	msgContainer.children(status).show().(newMessage.append(timestamp));
-	// 	newMessage.fadeIn('slow');
-	// }
-	// else
-	// {
+	if (typeof(updated_at) == 'string')
+	{
+		flashMsg = 	msgContainer.children('.flash-message'); flashMsg.hide();
+		var newMessage = flashMsg.clone(); var newMessageText = newMessage.text()+' <b>' + updated_at + '</b>';
+		newMessage.html(newMessageText);
+		msgContainer.children(status).children('.flash-message').remove(); // Remove old message		
+		msgContainer.children(status).show().append(newMessage); // Append new message
+		newMessage.fadeIn('slow');
+		// newMessage.fadeIn('slow').fadeTo(4000,1).fadeOut('fast', function(){
+		// 	$(this).remove();
+		// });
+	}
+	else
+	{
 		msgContainer.children(status).show();		
-	// }
+	}
 }
 
 function aBlogUpdateMessage(msg, timestamp) // I don't think this is used anymore
 {	
-	// if (typeof(msg) == 'undefined') {
-	// 	msg = 'Saved!';
-	// };
-	// 
-	// var publishButton = $('#a-blog-publish-button');
-	// var pUpdate = $('#a-blog-item-update');
-	// var lastSaved = $('#post-last-saved');
-	// 
-	// if (pUpdate.data('animating') != 1) {
-	// 	pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
-	// 		publishButton.children().hide();
-	// 		pUpdate.fadeTo(500,1, function(){
-	// 			pUpdate.fadeOut(500, function(){
-	// 				if (publishButton.hasClass('published')) 
-	// 				{
-	// 					publishButton.children('.unpublish').fadeIn(100);
-	// 				}
-	// 				else	
-	// 				{
-	// 					publishButton.children('.publish').fadeIn(100);					
-	// 				}
-	// 				lastSaved.find('span').text(timestamp);
-	// 				lastSaved.fadeIn(2000, function(){
-	// 					lastSaved.fadeTo(3000, 1, function(){
-	// 						// lastSaved.fadeOut(); // Fade Out Message after some time
-	// 					});
-	// 				});					
-	// 				pUpdate.data('animating', 0);
-	// 			});
-	// 		});
-	// 	});
-	// };	
+	if (typeof(msg) == 'undefined') {
+		msg = 'Saved!';
+	};
+	
+	var publishButton = $('#a-blog-publish-button');
+	var pUpdate = $('#a-blog-item-update');
+	var lastSaved = $('#post-last-saved');
+	
+	if (pUpdate.data('animating') != 1) {
+		pUpdate.data('animating',1).text(msg).fadeIn(100, function(){
+			publishButton.children().hide();
+			pUpdate.fadeTo(500,1, function(){
+				pUpdate.fadeOut(500, function(){
+					if (publishButton.hasClass('published')) 
+					{
+						publishButton.children('.unpublish').fadeIn(100);
+					}
+					else	
+					{
+						publishButton.children('.publish').fadeIn(100);					
+					}
+					lastSaved.find('span').text(timestamp);
+					lastSaved.fadeIn(2000, function(){
+						lastSaved.fadeTo(3000, 1, function(){
+							// lastSaved.fadeOut(); // Fade Out Message after some time
+						});
+					});					
+					pUpdate.data('animating', 0);
+				});
+			});
+		});
+	};	
 }
 
 function aBlogSendMessage(label, desc)

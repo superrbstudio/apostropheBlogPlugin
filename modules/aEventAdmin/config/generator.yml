@@ -41,13 +41,13 @@ generator:
             label: New Event
             action: new
             params:
-              class: a-btn big icon a-add alt
-          categories:
-            label: Categories
-            action: categories
-            params:
-              class: a-btn big alt
-            credentials: admin
+              class: a-btn big icon a-add
+          # categories:
+          #   label: Categories
+          #   action: categories
+          #   params:
+          #     class: a-btn big alt
+          #   credentials: admin
         batch_actions:
           delete:
             label: Delete

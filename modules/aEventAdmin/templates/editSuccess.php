@@ -8,14 +8,14 @@
 		<div class="a-subnav-wrapper blog">
 			<div class="a-subnav-inner">
 				<ul class="a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="all-posts-btn"><?php echo __('Event Admin', array(), 'apostrophe-blog') ?></a></li>
+					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="a-btn big alt"><?php echo __('View All Events', array(), 'apostrophe-blog') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
 			  <?php include_partial('aEventAdmin/form_bar') ?>				
 				<div class="a-admin-title-sentence">
-					<h3 class="new-item"><?php echo __('You are creating a new event', array(), 'apostrophe_blog') ?></h3>
-					<h3 class="draft-item"><?php echo __('You are editing an unpublished event', array(), 'apostrophe_blog') ?></h3>					
-					<h3 class="published-item"><?php echo __('You are editing a published event', array(), 'apostrophe_blog') ?></h3>
+					<h3 class="new-item"><?php echo __('You are creating a new event.', array(), 'apostrophe_blog') ?></h3>
+					<h3 class="draft-item"><?php echo __('You are working on a draft event.', array(), 'apostrophe_blog') ?></h3>					
+					<h3 class="published-item"><?php echo __('You are editing a published event.', array(), 'apostrophe_blog') ?></h3>
 					<span class="flash-message"> <?php echo __('Event Saved', array(), 'apostrophe_blog') ?></span>
 				</div>
 			</div>
