@@ -73,6 +73,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       // doesn't need the escaping
       $response['aBlogPost']['title'] = html_entity_decode($response['aBlogPost']['title'], ENT_COMPAT, 'UTF-8');
       $response['modified'] = $this->a_blog_post->getLastModified();
+      $response['time'] = aDate::time($this->a_blog_post['updated_at']);
       //Any additional messages can go here
       $output = json_encode($response);
       $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
