@@ -608,6 +608,11 @@ color: #999;
 display: none;	
 }
 
+.a-admin-title-sentence .flash-message b
+{
+	color: #800;
+}
+
 .a-admin-title-sentence a.selected
 {
 position: relative;

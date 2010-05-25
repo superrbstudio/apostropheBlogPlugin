@@ -24,7 +24,9 @@ function aBlogUpdateForm(slug_url, event)
 				aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
 	      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
 				// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
-				aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.aBlogPost.updated_at);
+				aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.time)	;
+				aBlogItemTitle();				
+
 				aUI('#a-admin-form');
 			
       }
@@ -84,7 +86,7 @@ function aBlogItemTitle(slug_url)
 	var tControls = titleInterface.find('ul.a-controls');
 	var originalTitle = tInput.val();
 
-	if (originalTitle == 'untitled' || originalTitle == '') 
+	if (originalTitle == '') 
 	{ // The blog post has no title -- Focus the input
 		tInput.focus();
 		titleInterface.addClass('active');
@@ -170,7 +172,7 @@ function aBlogItemTitle(slug_url)
 	// Save Blog Title
 	function save()
 	{
-		if (tInput.val() != '') 
+		if (typeof(slug_url) == 'string') 
 		{ // If the input is not empty
 			// Pass the value to the admin form and update
 			$('#a_blog_item_title').val(tInput.val());
@@ -308,7 +310,7 @@ function aBlogTitleMessage(status, updated_at)
 	if (typeof(updated_at) == 'string')
 	{
 		flashMsg = 	msgContainer.children('.flash-message'); flashMsg.hide();
-		var newMessage = flashMsg.clone(); var newMessageText = newMessage.text()+' <b>' + updated_at + '</b>';
+		var newMessage = flashMsg.clone(); var newMessageText = newMessage.text()+' <b>' + updated_at + '</b>.';
 		newMessage.html(newMessageText);
 		msgContainer.children(status).children('.flash-message').remove(); // Remove old message		
 		msgContainer.children(status).show().append(newMessage); // Append new message

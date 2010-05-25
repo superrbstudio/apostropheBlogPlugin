@@ -16,7 +16,7 @@
 					<h3 class="new-item"><?php echo __('You are creating a new event.', array(), 'apostrophe_blog') ?></h3>
 					<h3 class="draft-item"><?php echo __('You are working on a draft event.', array(), 'apostrophe_blog') ?></h3>					
 					<h3 class="published-item"><?php echo __('You are editing a published event.', array(), 'apostrophe_blog') ?></h3>
-					<span class="flash-message"> <?php echo __('Event Saved', array(), 'apostrophe_blog') ?></span>
+					<span class="flash-message"> <?php echo __('Event Saved at', array(), 'apostrophe_blog') ?></span>
 				</div>
 			</div>
 	  </div>
