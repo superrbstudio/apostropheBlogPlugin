@@ -54,6 +54,8 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
     if($request->isXmlHttpRequest())
     {
+      $this->setLayout(false);
+      $response = array();
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
       if ($this->form->isValid())
       {
@@ -62,8 +64,8 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
         $this->form = $this->configuration->getForm($this->a_event);
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
       }
-      $this->setLayout(false);
-      $response = array();
+
+      $response['errors'] = $this->form->getErrorSchema()->getErrors();
       aPageTable::queryWithTitles()
         ->addWhere('page_id = ?', $this->a_event['page_id'])
         ->execute();

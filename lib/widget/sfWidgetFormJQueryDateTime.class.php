@@ -1,7 +1,7 @@
 <?php
 
 
-class sfWidgetFormJQueryDateTime extends sfWidgetForm
+class sfWidgetFormJQueryDateTime extends sfWidgetFormDateTime
 {
   
   protected $dateWidget;
@@ -10,21 +10,62 @@ class sfWidgetFormJQueryDateTime extends sfWidgetForm
     
   protected function configure($options = array(), $attributes = array())
   {    
-
-    $this->addOption('image', false);
-    $this->addOption('config', '{}');
-    $this->addOption('culture', '');
-
-    $this->dateWidget = new sfWidgetFormJQueryDate($options, $attributes);
-    $this->timeWidget = new sfWidgetFormJQueryTime($options, $attributes);
+    $this->addOption('date', array());
+    $this->addOption('time', array());
+    $this->addOption('with_time', true);
+    $this->addOption('format', '%date% %time%');
   }
   
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     sfContext::getInstance()->getResponse()->addJavascript('/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js', 'last');
-    $date = $this->dateWidget->render($name, $value, $attributes, $errors);
-    $time = $this->timeWidget->render($name, $value, $attributes, $errors);
-    
-    return $date.$time;
+    $date = $this->getDateWidget($attributes)->render($name, $value);
+
+    if(!$this->getOption('with_time', true))
+    {
+      $value = '';
+    }
+    return strtr($this->getOption('format'), array(
+      '%date%' => $date,
+      '%time%' => $this->getTimeWidget($attributes)->render($name, $value),
+    ));
+  }
+
+  /**
+   * Returns the date widget.
+   *
+   * @param  array $attributes  An array of attributes
+   *
+   * @return sfWidgetForm A Widget representing the date
+   */
+  protected function getDateWidget($attributes = array())
+  {
+    return new sfWidgetFormJQueryDate($this->getOptionsFor('date'), $this->getAttributesFor('date', $attributes));
+  }
+  /**
+   * Returns the time widget.
+   *
+   * @param  array $attributes  An array of attributes
+   *
+   * @return sfWidgetForm A Widget representing the time
+   */
+  protected function getTimeWidget($attributes = array())
+  {
+    return new sfWidgetFormJQueryTime($this->getOptionsFor('time'), $this->getAttributesFor('time', $attributes));
+  }
+
+  /**
+   * Returns an array of HTML attributes for the given type.
+   *
+   * @param  string $type        The type (date or time)
+   * @param  array  $attributes  An array of attributes
+   *
+   * @return array  An array of HTML attributes
+   */
+  protected function getAttributesFor($type, $attributes)
+  {
+    $defaults = isset($this->attributes[$type]) ? $this->attributes[$type] : array();
+
+    return isset($attributes[$type]) ? array_merge($defaults, $attributes[$type]) : $defaults;
   }
 }

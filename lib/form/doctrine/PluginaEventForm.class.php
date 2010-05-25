@@ -18,19 +18,31 @@ abstract class PluginaEventForm extends BaseaEventForm
     parent::setup();
 
     $this->setWidget('start_date', new sfWidgetFormJQueryDateTime(
-			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
+			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		));
-
-    $this->setValidator('start_date', new sfValidatorDateTime());
+    
+    $this->setValidator('start_date', new sfValidatorDateTime(
+      array(
+        'required' => true,
+      )));
 
     $this->setWidget('end_date', new sfWidgetFormJQueryDateTime(
-			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
+			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		));
 
-    $this->setValidator('end_date', new sfValidatorDateTime());
+    $this->setValidator('end_date', new sfValidatorDateTime(
+      array(
+        'required' => true,
+      )));
 
-    $this->getWidgetSchema()->setDefault('start_date',  date('Y-m-d H:i:s'));
-    $this->getWidgetSchema()->setDefault('end_date', date('Y-m-d H:i:s'));
+    if($this->getObject()->getStartDate() == $this->getObject()->getEndDate())
+    {
+      $this->getWidget('start_date')->addOption('with_time', false);
+      $this->getWidget('end_date')->addOption('with_time', false);
+    }
+
+    $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
+    $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }

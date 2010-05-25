@@ -79,7 +79,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
-			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')
+			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		));
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
