@@ -36,7 +36,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         new sfValidatorString(array('required' => false)));
     }
          
-    $q = Doctrine::getTable('sfGuardUser')->createQuery();
     if(!$user->hasCredential('admin'))
     {
       unset($this['author_id']);
@@ -63,11 +62,21 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['allow_comments']);
     }
-
+    
+    // The candidates to edit pages are candidates to author blogs
+    $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
+    $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);
+    
     if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
     {
+      $q = Doctrine::getTable('sfGuardUser')->createQuery();
+      
       $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
       
+      if ($candidateGroup)
+      {
+        $q->innerJoin('sfGuardUser.groups g')->addWhere('g.name = ?', array($candidateGroup));
+      }
       $this->setWidget('editors_list',
         new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
       $this->setValidator('editors_list',
@@ -77,6 +86,17 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['editors_list']);
     }
+    
+    $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
+    
+    if ($candidateGroup && $sufficientGroup)
+    {
+      $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+    }
+    $this->setWidget('author_id',
+      new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
+    $this->setValidator('author_id',
+      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
     
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
