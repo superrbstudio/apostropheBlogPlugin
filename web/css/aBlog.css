@@ -770,6 +770,7 @@ height: 30px;
 line-height: 30px;
 margin-bottom: 10px;
 text-decoration: none !important;
+text-shadow:0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .a-btn.a-publish-post.published
@@ -784,7 +785,7 @@ background: #aaa;
 	left: 0;
 	background-color: #ac3;
 	color: #fff !important;
-	text-shadow: 0 1px rgba(0,0,0,0.55) !important;
+	text-shadow: 0 -1px rgba(0,0,0,0.2) !important;
 	display: none;
 }
 
