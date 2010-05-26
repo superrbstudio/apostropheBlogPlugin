@@ -24,6 +24,9 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     {
       $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
         'getGlobalButtons'));
+      // This was inadvertently removed just prior to 1.4. Now apostrophe:migrate hooks up properly again
+      $this->dispatcher->connect('command.post_command', array('aBlogEvents',  
+        'listenToCommandPostCommandEvent'));
       self::$registered = true;
     }
   }
