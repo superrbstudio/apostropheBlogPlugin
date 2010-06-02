@@ -114,7 +114,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
   public function postValidator($validator, $values)
   {
-    if(is_array($values['categories_list_add']))
+    if(isset($values['categories_list_add']) && is_array($values['categories_list_add']))
     {
       $stringValidator = new sfValidatorString();
       foreach($values['categories_list_add'] as $key => $value)
