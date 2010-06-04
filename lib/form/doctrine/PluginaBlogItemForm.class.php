@@ -11,6 +11,7 @@
 abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 {
   protected $engine = 'aBlog';
+  protected $categoryColumn = 'blog';
 
   public function setup()
   {
@@ -132,8 +133,17 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $values = array();
     foreach ($values as $value)
     {
-      $aBlogCategory = new aBlogCategory();
-      $aBlogCategory['name'] = $value;
+      $existing = Doctrine::getTable('aBlogCategory')->findOneBy('name', $value);
+      if($existing)
+      {
+        $aBlogCategory = $existing;
+      }
+      else
+      {
+        $aBlogCategory = new aBlogCategory();
+        $aBlogCategory['name'] = $value;
+      }
+      $aBlogCategory[$this->categoryColumn] = true;
       $aBlogCategory->save();
       $link[] = $aBlogCategory['id'];
     }
@@ -144,7 +154,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
   }
   
-  public function doSave($con = null)
+  protected function doSave($con = null)
   {
     $tags = $this->values['tags'];
     $tags = preg_replace('/\s\s+/', ' ', $tags);
