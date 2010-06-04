@@ -104,7 +104,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    if(!aPageTable::getFirstEnginePage('aBlog'))
+    if(!aPageTable::getFirstEnginePage('aEvent'))
     {
       $this->setTemplate('engineWarning');
     }
