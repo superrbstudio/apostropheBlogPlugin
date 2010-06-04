@@ -11,16 +11,17 @@
 abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 {
   protected $engine = 'aBlog';
+  protected $categoryColumn = 'blog';
 
   public function setup()
   {
     parent::setup();
     $user = sfContext::getInstance()->getUser();
-    
+
     unset(
       $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved']
     );
-    
+
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
     $this->setWidget('categories_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getModelName(), 'query' => $q)));
@@ -35,7 +36,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $this->setValidator('categories_list_add',
         new sfValidatorPass(array('required' => false)));
     }
-         
+
     if(!$user->hasCredential('admin'))
     {
       unset($this['author_id']);
@@ -62,17 +63,17 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['allow_comments']);
     }
-    
+
     // The candidates to edit pages are candidates to author blogs
     $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
     $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);
-    
+
     if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
     {
       $q = Doctrine::getTable('sfGuardUser')->createQuery();
-      
+
       $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
-      
+
       if ($candidateGroup)
       {
         $q->innerJoin('sfGuardUser.groups g')->addWhere('g.name = ?', array($candidateGroup));
@@ -86,9 +87,9 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['editors_list']);
     }
-    
+
     $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
-    
+
     if ($candidateGroup && $sufficientGroup)
     {
       $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
@@ -97,7 +98,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
     $this->setValidator('author_id',
       new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
-    
+
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		));
@@ -124,7 +125,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     return $values;
   }
-  
+
   public function updateCategoriesList($values)
   {
     $link = array();
@@ -132,8 +133,17 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $values = array();
     foreach ($values as $value)
     {
-      $aBlogCategory = new aBlogCategory();
-      $aBlogCategory['name'] = $value;
+      $existing = Doctrine::getTable('aBlogCategory')->findOneBy('name', $value);
+      if($existing)
+      {
+        $aBlogCategory = $existing;
+      }
+      else
+      {
+        $aBlogCategory = new aBlogCategory();
+        $aBlogCategory['name'] = $value;
+      }
+      $aBlogCategory[$this->categoryColumn] = true;
       $aBlogCategory->save();
       $link[] = $aBlogCategory['id'];
     }
@@ -143,8 +153,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
   }
-  
-  public function doSave($con = null)
+
+  protected function doSave($con = null)
   {
     $tags = $this->values['tags'];
     $tags = preg_replace('/\s\s+/', ' ', $tags);
@@ -157,7 +167,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     parent::doSave($con);
   }
-  
+
   public function saveCategoriesListAdd($con = null)
   {
     if (!$this->isValid())
@@ -170,18 +180,18 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       // somebody has unset this widget
       return;
     }
-    
+
     if (null === $con)
     {
       $con = $this->getConnection();
     }
-    
+
     $values = $this->getValue('categories_list_add');
     if (!is_array($values))
     {
       $values = array();
     }
-    
+
     $link = array();
     foreach ($values as $value)
     {
@@ -190,7 +200,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $aBlogCategory->save();
       $link[] = $aBlogCategory['id'];
     }
-    
+
     if (count($link))
     {
       $this->object->link('Categories', array_values($link));
