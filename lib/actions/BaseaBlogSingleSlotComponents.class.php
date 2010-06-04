@@ -26,6 +26,7 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
       $this->form = new $this->formClass($this->id, $this->slot->getArrayValue());
     }
   }
+  
   public function executeNormalView()
   {
     $this->setup();
