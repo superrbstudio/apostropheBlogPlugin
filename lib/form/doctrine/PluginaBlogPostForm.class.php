@@ -11,6 +11,7 @@
 abstract class PluginaBlogPostForm extends BaseaBlogPostForm
 {
   protected $engine = 'aBlog';
+  protected $categoryColumn = 'posts';
 
   public function setup()
   {

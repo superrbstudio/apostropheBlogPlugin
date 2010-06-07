@@ -11,7 +11,7 @@
 abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 {
   protected $engine = 'aBlog';
-  protected $categoryColumn = 'blog';
+  protected $categoryColumn = 'posts';
 
   public function setup()
   {
