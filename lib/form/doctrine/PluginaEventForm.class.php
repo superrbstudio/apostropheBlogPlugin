@@ -12,7 +12,7 @@ abstract class PluginaEventForm extends BaseaEventForm
 {
 
   protected $engine = 'aEvent';
-  protected $categoryColumn = 'event';
+  protected $categoryColumn = 'events';
 
   public function setup()
   {
