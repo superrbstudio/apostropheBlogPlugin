@@ -31,6 +31,7 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
+		$this->aBlogItem = new aBlogItem;
     if(isset($this->values['blog_item']))
     {
       $this->aBlogItem = Doctrine::getTable($this->modelClass)->findOneBy('id', $this->values['blog_item']);
