@@ -37,16 +37,20 @@ abstract class BaseaBlogActions extends aEngineActions
     {
       $q->whereIn('c.id', $categoryIds);
     }
-
-    $routingOptions = $this->getRoute()->getOptions();
-    if(isset($routingOptions['filters']))
+    
+    if($request->hasParameter('year') || $request->hasParameter('month') || $request->hasParameter('day'))
     {
-      foreach($routingOptions['filters'] as $method)
-      {
-        Doctrine::getTable($this->modelClass)->$method($q, $request);
-      }
-      $this->getResponse()->addMeta('robots', 'noarchive, nofollow');
+      Doctrine::getTable($this->modelClass)->filterByYMD($q, $request);
     }
+    if($request->hasParameter('cat'))
+    {
+      Doctrine::getTable($this->modelClass)->filterByCategory($q, $request);
+    }
+    if($request->hasParameter('tag'))
+    {
+      Doctrine::getTable($this->modelClass)->filterByTag($q, $request);
+    }
+
     Doctrine::getTable($this->modelClass)->addPublished($q);
     $q->orderBy('published_at desc');
     
