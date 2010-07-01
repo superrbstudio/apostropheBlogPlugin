@@ -69,6 +69,11 @@ abstract class BaseaBlogActions extends aEngineActions
 
     aBlogItemTable::populatePages($pager->getResults());
 
+    if($request->hasParameter('year') || $request->hasParameter('month') || $request->hasParameter('day') || $request->hasParameter('cat') || $request->hasParameter('tag'))
+    {
+      $this->getResponse()->addMeta('robots', 'noarchive, nofollow');
+    }
+
     if($this->getRequestParameter('feed', false))
     {
       $this->getFeed();
