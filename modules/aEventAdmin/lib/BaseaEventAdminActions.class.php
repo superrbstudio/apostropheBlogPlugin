@@ -130,6 +130,29 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   protected function buildQuery()
   {
+    if (is_null($this->filters))
+    {
+      $this->filters = $this->configuration->getFilterForm($this->getFilters());
+    }
+    $filters = $this->getFilters();
+    $resetFilters = false;
+    foreach($this->filters->getAppliedFilters() as $name => $field)
+    {
+      foreach($field as $key => $value)
+      {
+        if(is_null($value))
+        {
+          unset($filters[$name]);
+          $resetFilters = true;
+        }
+      }
+    }
+    if($resetFilters)
+    {
+      $this->getUser()->setAttribute('aBlogAdmin.filters', $filters, 'admin_module');
+      $this->filters = $this->configuration->getFilterForm($this->getFilters());
+    }
+
     $query = parent::buildQuery();
     $query->leftJoin($query->getRootAlias().'.Author')
       ->leftJoin($query->getRootAlias().'.Editors')
