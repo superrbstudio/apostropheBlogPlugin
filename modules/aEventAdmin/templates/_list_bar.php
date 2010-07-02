@@ -1,6 +1,7 @@
 <div class="a-admin-title-sentence">
 	<h3> 	
 		<?php $appliedFilters = $filters->getAppliedFilters(); ?>
+    <?php $fields = $configuration->getFormFilterFields($filters) ?>
 
 		<?php if ($appliedFilters): ?>
 			You are viewing events
@@ -8,15 +9,12 @@
 			You are viewing all events
 		<?php endif ?>	
 
-		<?php $n=1; foreach($configuration->getFormFields($filters, 'filter') as $fields): ?>
-		  <?php foreach ($fields as $name => $field): ?>
-		    <?php if(isset($appliedFilters[$name])): ?>
-		      <?php echo $field->getConfig('label', $name) ?>
-		      <?php foreach($appliedFilters[$name] as $value): ?>
-		        <?php echo link_to('<span class="close"></span>'.$value, "@a_event_admin_removeFilter?name=$name&value=$value", array('class' => 'selected')) ?><?php if ($n < count($appliedFilters)): ?>,<?php endif ?>
-		      <?php $n++; endforeach ?>
-		    <?php endif ?>
-			<?php endforeach ?>
-		<?php endforeach ?>
+  <?php $n=1; foreach($appliedFilters as $name => $values): ?>
+    <?php $field = $fields[$name] ?>
+    <?php echo $field->getConfig('label', $name) ?>
+    <?php foreach($values as $value): ?>
+      <?php echo link_to($value, "@a_blog_admin_removeFilter?name=$name&value=$value", array('class' => 'selected')) ?><?php if ($n < count($appliedFilters)): ?>,<?php endif ?>
+    <?php endforeach ?>
+	<?php endforeach ?>
 	</h3>
 </div>
