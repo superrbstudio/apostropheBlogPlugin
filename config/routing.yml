@@ -278,7 +278,7 @@ a_blog_admin_delete:
     id: \d+
       
 a_blog_admin_removeFilter:
-  url:   /admin/blog/remove_filter/:name/:value
+  url:   /admin/blog/remove_filter/:name/*
   param: { module: aBlogAdmin, action: removeFilter }
   class: sfRoute
   
@@ -349,7 +349,7 @@ a_event_admin_delete:
     id: \d+
 
 a_event_admin_removeFilter:
-  url:   /admin/event/remove_filter/:name/:value
+  url:   /admin/event/remove_filter/:name/*
   param: { module: aEventAdmin, action: removeFilter }
   class: sfRoute
 
