@@ -363,7 +363,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function getAreas()
   {
-    $templates = sfConfig::get('app_'.$this->engine.'_templates');
+    $templates = sfConfig::get('app_'.$this->engine.'_templates', self::getTemplateDefaults());
     return $templates[$this['template']]['areas'];
   }
 
