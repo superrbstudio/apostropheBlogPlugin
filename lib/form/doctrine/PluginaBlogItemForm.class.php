@@ -41,8 +41,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['author_id']);
     }
-    $object = $this->getObject();
-    $templates = sfConfig::get('app_'.$this->engine.'_templates', $object::getTemplateDefaults());
+
+    $templates = sfConfig::get('app_'.$this->engine.'_templates', $this->getObject()->getTemplateDefaults());
     $templateChoices = array();
 	  foreach ($templates as $key => $template)
 	  {
