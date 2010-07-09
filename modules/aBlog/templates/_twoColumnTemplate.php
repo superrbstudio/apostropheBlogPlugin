@@ -22,7 +22,7 @@
   'edit' => $edit, 'toolbar' => 'basic', 'slug' => $a_blog_post->Page->slug,
   'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
-    'aRichText' => array('tool' => 'Main'),   
+    'aRichText' => array('tool' => 'Sidebar'),   
     'aSlideshow' => array("width" => 180, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 180)),
 		'aVideo' => array('width' => 180, 'flexHeight' => true, 'resizeType' => 's'), 
 		'aPDF' => array('width' => 180, 'flexHeight' => true, 'resizeType' => 's'),				
