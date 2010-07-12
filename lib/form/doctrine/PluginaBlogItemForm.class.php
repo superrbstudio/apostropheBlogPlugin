@@ -58,7 +58,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['allow_comments']);
     }
-    
+
     // The candidates to edit pages are candidates to author blogs
     $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
     $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);

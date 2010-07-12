@@ -50,10 +50,8 @@ class PluginaBlogItemTable extends Doctrine_Table
     }
 
     $rootAlias = $q->getRootAlias();
-    $q->leftJoin($rootAlias.'.Categories c');
-    $q->leftJoin('c.Users u');
     $q->leftJoin($rootAlias.'.Editors e');
-    $q->addWhere('author_id = ? OR u.id = ? OR e.id = ?', array($user_id, $user_id, $user_id));
+    $q->addWhere('author_id = ? OR e.id = ?', array($user_id, $user_id));
   }
 
   public function addPublished(Doctrine_Query $q)
@@ -139,5 +137,4 @@ class PluginaBlogItemTable extends Doctrine_Table
       return Doctrine::getTable('aBlogItem')->createQuery('e')->whereIn('e.id', $ids)->execute(array(), Doctrine::HYDRATE_ARRAY);
     }
   }
-
 }

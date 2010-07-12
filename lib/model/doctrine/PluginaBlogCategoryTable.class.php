@@ -13,7 +13,7 @@ class PluginaBlogCategoryTable extends Doctrine_Table
     if(!$admin)
     {
       $q->innerJoin('aBlogCategory.Users')
-        ->andwhere('aBlogCategory.Users.id = ?', $user['id']);
+        ->andWhere('aBlogCategory.Users.id = ?', $user['id']);
     }
     return $q;
   }
