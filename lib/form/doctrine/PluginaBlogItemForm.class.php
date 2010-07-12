@@ -36,11 +36,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $this->setValidator('categories_list_add',
         new sfValidatorPass(array('required' => false)));
     }
-         
-    if(!$user->hasCredential('admin'))
-    {
-      unset($this['author_id']);
-    }
 
     $templates = sfConfig::get('app_'.$this->engine.'_templates', $this->getObject()->getTemplateDefaults());
     $templateChoices = array();
@@ -88,16 +83,23 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['editors_list']);
     }
     
-    $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
-    
-    if ($candidateGroup && $sufficientGroup)
+    if($user->hasCredential('admin'))
     {
-      $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+      $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
+    
+      if ($candidateGroup && $sufficientGroup)
+      {
+        $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+      }
+      $this->setWidget('author_id',
+        new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
+      $this->setValidator('author_id',
+        new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
     }
-    $this->setWidget('author_id',
-      new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
-    $this->setValidator('author_id',
-      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+    else
+    {
+      unset($this['author_id']);
+    }
     
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
