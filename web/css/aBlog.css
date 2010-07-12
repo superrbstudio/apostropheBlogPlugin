@@ -621,6 +621,7 @@ display: none;
 .a-admin-title-sentence a.selected
 {
 position: relative;
+float: none;
 padding-right: 20px;
 }
 
