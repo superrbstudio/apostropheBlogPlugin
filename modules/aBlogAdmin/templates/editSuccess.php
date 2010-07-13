@@ -77,6 +77,5 @@
   <div class="a-admin-footer">
     <?php include_partial('form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
-  </form>
 <?php //include_partial('form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
 </div>
