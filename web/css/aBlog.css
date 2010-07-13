@@ -327,12 +327,6 @@ border: 1px solid #ccc;
 overflow: hidden;
 }
 
-.a-admin-sidebar input,
-.a-admin-sidebar input.tag-input
-{
-width: 192px;
-}
-
 .a-admin .a-admin-sidebar a
 {
 color: #000 !important;
@@ -461,20 +455,23 @@ margin: 10px 0;
 font-size: 12px;
 }
 
+.a-admin-sidebar .section.categories .a-multiple-select-item span,
 .a-admin-sidebar .section.tags a
 {
 font-size: 11px;
 }
 
-.a-admin-sidebar .section.tags input
+.a-admin-sidebar input.add-text
 {
+float: left;
 font-family: Arial, sans-serif;
 border: 1px solid #ddd;
-padding: 4px;
+padding: 3px 4px;
 border: 1px solid rgba(0,0,0,0.2);
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
 border-radius: 3px;
+width: 118px
 }
 
 .a-admin-sidebar .section.tags .a-admin-form-field-tags

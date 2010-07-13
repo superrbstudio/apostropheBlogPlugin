@@ -19,7 +19,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $user = sfContext::getInstance()->getUser();
     
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved'], $this['tags']
     );
     
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
@@ -107,8 +107,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
-    $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
-    $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
+    //$this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
+    //$this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'postValidator')))
@@ -158,18 +158,13 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   
   protected function doSave($con = null)
   {
-    $tags = $this->values['tags'];
-    $tags = preg_replace('/\s\s+/', ' ', $tags);
-    $tags = str_replace(', ', ',', $tags);
-
-    $this->object->setTags($tags);
     if(isset($this['categories_list_add']))
     {
       $this->updateCategoriesList($this->values['categories_list_add']);
     }
     parent::doSave($con);
   }
-  
+
   public function saveCategoriesListAdd($con = null)
   {
     if (!$this->isValid())
