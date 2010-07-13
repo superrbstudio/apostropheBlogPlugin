@@ -17,11 +17,11 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   {
     parent::setup();
     $user = sfContext::getInstance()->getUser();
-    
+
     unset(
       $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved'], $this['tags']
     );
-    
+
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
     $this->setWidget('categories_list',
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => $this->getModelName(), 'query' => $q)));
@@ -37,7 +37,12 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         new sfValidatorPass(array('required' => false)));
     }
 
-    $templates = sfConfig::get('app_'.$this->engine.'_templates', $this->getObject()->getTemplateDefaults());
+    if(!$user->hasCredential('admin'))
+    {
+      unset($this['author_id']);
+    }
+
+    $templates = sfConfig::get('app_'.$this->engine.'_templates');
     $templateChoices = array();
 	  foreach ($templates as $key => $template)
 	  {
@@ -62,13 +67,13 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     // The candidates to edit pages are candidates to author blogs
     $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
     $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);
-    
+
     if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
     {
       $q = Doctrine::getTable('sfGuardUser')->createQuery();
-      
+
       $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
-      
+
       if ($candidateGroup)
       {
         $q->innerJoin('sfGuardUser.groups g')->addWhere('g.name = ?', array($candidateGroup));
@@ -82,33 +87,26 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['editors_list']);
     }
-    
-    if($user->hasCredential('admin'))
+
+    $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
+
+    if ($candidateGroup && $sufficientGroup)
     {
-      $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
-    
-      if ($candidateGroup && $sufficientGroup)
-      {
-        $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
-      }
-      $this->setWidget('author_id',
-        new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
-      $this->setValidator('author_id',
-        new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+      $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
     }
-    else
-    {
-      unset($this['author_id']);
-    }
-    
+    $this->setWidget('author_id',
+      new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
+    $this->setValidator('author_id',
+      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		));
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
-    //$this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
-    //$this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
+    // $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
+    // $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'postValidator')))
@@ -127,7 +125,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     return $values;
   }
-  
+
   public function updateCategoriesList($values)
   {
     $link = array();
@@ -155,9 +153,14 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
     $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
   }
-  
+
   protected function doSave($con = null)
   {
+    $tags = $this->values['tags'];
+    $tags = preg_replace('/\s\s+/', ' ', $tags);
+    $tags = str_replace(', ', ',', $tags);
+
+    $this->object->setTags($tags);
     if(isset($this['categories_list_add']))
     {
       $this->updateCategoriesList($this->values['categories_list_add']);
@@ -177,18 +180,18 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       // somebody has unset this widget
       return;
     }
-    
+
     if (null === $con)
     {
       $con = $this->getConnection();
     }
-    
+
     $values = $this->getValue('categories_list_add');
     if (!is_array($values))
     {
       $values = array();
     }
-    
+
     $link = array();
     foreach ($values as $value)
     {
@@ -197,7 +200,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $aBlogCategory->save();
       $link[] = $aBlogCategory['id'];
     }
-    
+
     if (count($link))
     {
       $this->object->link('Categories', array_values($link));
