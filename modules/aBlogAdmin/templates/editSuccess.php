@@ -42,7 +42,7 @@
 		<div id="a-blog-item-permalink-interface">
 			<h6>Permalink:</h6> 
 			<div class="a-blog-item-permalink-wrapper url">
-        <span><?php echo aTools::urlForPage($a_blog_post->findBestEngine()->getSlug()).'/' ?></span><?php // Dan, Can you echo the REAL URL prefix here -- I don't know how to build a URL based on the complex blog route business we are doing  ?>
+        <span><?php echo aTools::urlForPage($a_blog_post->findBestEngine()->getSlug()).'/' ?></span>
 			</div>
 			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_item_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_item_permalink_interface">
@@ -77,5 +77,5 @@
   <div class="a-admin-footer">
     <?php include_partial('form_footer', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration)) ?>
   </div>
-<?php //include_partial('form_actions', array('a_blog_post' => $a_blog_post, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?>
+
 </div>
