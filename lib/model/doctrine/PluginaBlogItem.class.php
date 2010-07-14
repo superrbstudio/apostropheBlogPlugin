@@ -102,12 +102,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
       if($this['slug_saved'] == false && array_key_exists('title', $this->getModified()))
       {
-        // If the slug hasn't been altered slugify the title to create the slug
-        $this['slug'] = aTools::slugify($this->_get('title'));
+        // If the slug hasn't been altered slugify the title to create the slug.
+        // Don't forget, title slots are preescaped HTML (very boring HTML with only entities),
+        // and the slugifier wants the unescaped string
+        $this['slug'] = aTools::slugify(html_entity_decode($this->_get('title'), ENT_COMPAT, 'UTF-8'));
       }
       else
       {
-        // Otherwise slugify the user entered value.
+        // Otherwise slugify the user entered value. (Why is this happening here and not in a form?)
         $this['slug'] = aTools::slugify($this['slug']);
       }
     }
