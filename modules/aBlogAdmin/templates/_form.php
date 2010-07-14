@@ -41,8 +41,9 @@
 <hr />
 <div class="author section">
 
+	<?php // Blog Post Author ?>
 	<div class="post-author">
-	  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>:
+  	<h4><?php echo __('Author', array(), 'apostrophe_blog') ?>:
 			<?php if (isset($form['author_id'])): ?>
 				</h4>	
 				<div class="author_id option">
@@ -52,7 +53,6 @@
 			<?php else: ?>
 				<span><?php echo $a_blog_post->Author ?></span></h4>	
 			<?php endif ?>
-
 	</div>
 
 	<?php // Blog Post Editors ?>
