@@ -440,7 +440,8 @@ clear: both;
 {
 width: 200px !important;
 width: auto; /* ? For IE */
-	float: right;
+float: left; /* Was float:right, but this broke in IE */
+display:inline;
 clear: both;
 }
 
@@ -466,7 +467,7 @@ font-size: 11px;
 float: left;
 font-family: Arial, sans-serif;
 border: 1px solid #ddd;
-padding: 3px 4px;
+padding: 3px 0px;
 border: 1px solid rgba(0,0,0,0.2);
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
