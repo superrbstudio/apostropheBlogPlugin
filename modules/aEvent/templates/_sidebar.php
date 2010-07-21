@@ -64,6 +64,7 @@
 <h5><?php echo link_to('RSS Feed',  aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
 
 <script type="text/javascript">
+//<![CDATA[
 $(document).ready(function() {
 	$('.a-tag-sidebar-title.all-tags').click(function(){
 		$('.a-tag-sidebar-list.all-tags').slideToggle();
@@ -77,6 +78,7 @@ $(document).ready(function() {
 		$(this).toggleClass('over');		
 	});	
 	
-	$('a.selected').prepend('<span class="close"></span>')
+	$('a.selected').prepend('<span class="close"></span>');
 });	
+ //]]>
 </script>

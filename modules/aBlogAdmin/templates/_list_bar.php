@@ -26,7 +26,9 @@
 </div>
 
 <script type="text/javascript">
+//<![CDATA[
 	$(document).ready(function() {
-	  $('a.selected').prepend('<span class="close"></span>')
+		$('a.selected').prepend('<span class="close"></span>');
 	});
+//]]>	
 </script>
