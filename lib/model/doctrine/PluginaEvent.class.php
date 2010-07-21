@@ -14,6 +14,16 @@ abstract class PluginaEvent extends BaseaEvent
 {
   public $engine = 'aEvent';
   
+  public static function getTemplateDefaults()
+  {
+    return array(
+      'singleColumnTemplate' => array(
+        'name' => 'Single Column',
+        'areas' => array('blog-body')
+      )
+    );
+  }
+  
   public function getVirtualPageSlug()
   {
     return '@a_event_search_redirect?id=' . $this->id;

@@ -74,6 +74,15 @@ class PluginaBlogCategoryTable extends Doctrine_Table
 
     return $tags;
   }
+  
+  public static function getCategoriesForPage($page)
+  {
+	    return Doctrine::getTable('aBlogCategory')->createQuery('c')
+	      ->innerJoin('c.Pages as p')
+	      ->where('p.id = ?', $page['id'])
+	      ->orderBy('c.name')
+	      ->execute();
+	}
 
 
 }

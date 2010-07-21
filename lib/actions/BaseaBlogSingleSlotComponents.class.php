@@ -26,12 +26,12 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
       $this->form = new $this->formClass($this->id, $this->slot->getArrayValue());
     }
   }
-  
+
   public function executeNormalView()
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-		$this->aBlogItem = new aBlogItem;
+		$this->aBlogItem = new $this->modelClass();
     if(isset($this->values['blog_item']))
     {
       $this->aBlogItem = Doctrine::getTable($this->modelClass)->findOneBy('id', $this->values['blog_item']);
@@ -45,5 +45,5 @@ abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
 
     $this->options['excerptLength'] = $this->getOption('excerptLength', 200);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
-  } 
+  }
 }

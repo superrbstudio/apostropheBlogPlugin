@@ -1,7 +1,7 @@
-<script type="text/javascript" charset="utf-8">	
+<script type="text/javascript" charset="utf-8">
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>'); }
 	$(document).ready(function(){
-		
+
 	    $('#a-admin-form').change(function(event) {
 		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' || event.target.name == 'a-ignored' ))
 				{
@@ -32,7 +32,7 @@
 			aBlogItemPermalink('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	    aBlogPublishBtn('<?php echo $a_blog_post->status  ?>','<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>');
 	    aMultipleSelect('#categories-section', { 'choose-one': '<?php echo __('Choose Categories', array(), 'apostrophe_blog') ?>' <?php if($sf_user->hasCredential('admin')): ?>, 'add': '<?php echo __('+ New Category', array(), 'apostrophe_blog') ?>'<?php endif ?>, 'onChange': aBlogUpdateMulti });
-	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });    
+	    aMultipleSelect('#editors-section', { 'choose-one': '<?php echo __('Choose Editors', array(), 'apostrophe_blog') ?>','onChange': aBlogUpdateMulti  });
 
 	 });
 

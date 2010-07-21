@@ -37,12 +37,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         new sfValidatorPass(array('required' => false)));
     }
 
-    if(!$user->hasCredential('admin'))
-    {
-      unset($this['author_id']);
-    }
-
-    $templates = sfConfig::get('app_'.$this->engine.'_templates');
+    $templates = sfConfig::get('app_'.$this->engine.'_templates', $this->getObject()->getTemplateDefaults());
     $templateChoices = array();
 	  foreach ($templates as $key => $template)
 	  {
@@ -88,16 +83,23 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['editors_list']);
     }
 
-    $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
-
-    if ($candidateGroup && $sufficientGroup)
+    if($user->hasCredential('admin'))
     {
-      $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+      $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
+
+      if ($candidateGroup && $sufficientGroup)
+      {
+        $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+      }
+      $this->setWidget('author_id',
+        new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
+      $this->setValidator('author_id',
+        new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
     }
-    $this->setWidget('author_id',
-      new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
-    $this->setValidator('author_id',
-      new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+    else
+    {
+      unset($this['author_id']);
+    }
 
     $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
@@ -105,8 +107,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
-    // $this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
-    // $this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
+    //$this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
+    //$this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'postValidator')))
@@ -156,11 +158,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
   protected function doSave($con = null)
   {
-    $tags = $this->values['tags'];
-    $tags = preg_replace('/\s\s+/', ' ', $tags);
-    $tags = str_replace(', ', ',', $tags);
-
-    $this->object->setTags($tags);
     if(isset($this['categories_list_add']))
     {
       $this->updateCategoriesList($this->values['categories_list_add']);

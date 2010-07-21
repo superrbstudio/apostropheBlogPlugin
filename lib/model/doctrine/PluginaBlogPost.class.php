@@ -14,6 +14,20 @@ abstract class PluginaBlogPost extends BaseaBlogPost
 {
   public $engine = 'aBlog';
   
+  public static function getTemplateDefaults()
+  {
+    return array(
+      'singleColumnTemplate' => array(
+        'name' => 'Single Column',
+        'areas' => array('blog-body')
+      ),
+      'twoColumnTemplate' => array(
+        'name' => 'Two Column',
+        'areas' => array('blog-body', 'blog-sidebar')
+      )
+    );
+  }
+  
   public function getVirtualPageSlug()
   {
     return '@a_blog_search_redirect?id=' . $this->id;

@@ -178,7 +178,7 @@ box-shadow: 0 0 6px rgba(0, 0, 0, 0.20);
 background-image: -moz-linear-gradient(
 	    center bottom,
 	    rgb(255,255,255) 0%,
-	    rgb(247,247,247) 100%	
+	    rgb(247,247,247) 100%
 	);
 background-image: -webkit-gradient(
 	    linear,
@@ -424,7 +424,7 @@ padding: 2px;
 
 .a-admin-sidebar .section.event-date div.start_date
 {
-	margin-bottom: 5px;	
+	margin-bottom: 5px;
 }
 
 .a-admin-sidebar .section.event-date div.start_date,
@@ -440,7 +440,8 @@ clear: both;
 {
 width: 200px !important;
 width: auto; /* ? For IE */
-	float: right;
+float: left; /* Was float:right, but this broke in IE */
+display:inline;
 clear: both;
 }
 
@@ -466,7 +467,7 @@ font-size: 11px;
 float: left;
 font-family: Arial, sans-serif;
 border: 1px solid #ddd;
-padding: 3px 4px;
+padding: 3px 0px;
 border: 1px solid rgba(0,0,0,0.2);
 -moz-border-radius: 3px;
 -webkit-border-radius: 3px;
@@ -606,14 +607,14 @@ margin: 15px 0 5px;
 .a-admin-title-sentence h3
 {
 font-size: 18px;
-color: #999;	
+color: #999;
 }
 
 .a-admin-title-sentence h3.new-item,
 .a-admin-title-sentence h3.published-item,
 .a-admin-title-sentence h3.draft-item
 {
-display: none;	
+display: none;
 }
 
 .a-admin-title-sentence .flash-message b
@@ -835,7 +836,7 @@ clear: both;
 
 #a-blog-item-status-messages
 {
-background: rgba(0,0,0,0.05);		
+background: rgba(0,0,0,0.05);
 line-height: 24px;
 font-size: 16px;
 padding: 10px 0;
