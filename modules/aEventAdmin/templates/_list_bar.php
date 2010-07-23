@@ -13,7 +13,7 @@
     <?php $field = $fields[$name] ?>
     <?php echo $field->getConfig('label', $name) ?>
     <?php foreach($values as $value): ?>
-      <?php echo link_to($value, "@a_blog_admin_removeFilter?name=$name&value=$value", array('class' => 'selected')) ?><?php if ($n < count($appliedFilters)): ?>,<?php endif ?>
+      <?php echo link_to($value, "@a_event_admin_removeFilter?name=$name&value=$value", array('class' => 'selected')) ?><?php if ($n < count($appliedFilters)): ?>,<?php endif ?>
     <?php endforeach ?>
 	<?php endforeach ?>
 	</h3>
