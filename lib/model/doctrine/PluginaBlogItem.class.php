@@ -79,6 +79,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this['slug'] = 'untitled-'.$this['id'];
     $this['title'] = 'untitled';
     $this['slug_saved'] = false;
+    $this['published_at'] = date('Y-m-d');
 
     // This prevents post preupdate from running after the next save
     $this->update = false;
