@@ -1,4 +1,6 @@
 <?php use_helper('I18N','jQuery') ?>
+<?php $sf_response->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last') ?>
+
 
 <?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'blog')) ?>
 
@@ -46,11 +48,15 @@
 	<div class="start_date">
 		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['start_date']->renderError() ?>
+    <?php echo $form['start_time'] ?>
+    <?php echo $form['start_time']->renderError() ?>
 	</div>
 	<h4>End Date</h4>
 	<div class="end_date">
 		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['end_date']->renderError() ?>
+    <?php echo $form['end_time'] ?>
+    <?php echo $form['end_time']->renderError() ?>
 	</div>
 </div>
 

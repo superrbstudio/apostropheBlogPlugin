@@ -18,29 +18,29 @@ abstract class PluginaEventForm extends BaseaEventForm
   {
     parent::setup();
 
-    $this->setWidget('start_date', new sfWidgetFormJQueryDateTime(
-			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
-		));
-    
-    $this->setValidator('start_date', new sfValidatorDateTime(
+    $this->setWidget('start_date', new sfWidgetFormJQueryDate(
+			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
+		);
+
+    $this->setValidator('start_date', new sfValidatorDate(
       array(
         'required' => true,
       )));
 
-    $this->setWidget('end_date', new sfWidgetFormJQueryDateTime(
-			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
-		));
+    $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('size' => 8)));
+    $this->setValidator('start_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
 
-    $this->setValidator('end_date', new sfValidatorDateTime(
+    $this->setWidget('end_date', new sfWidgetFormJQueryDate(
+			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
+		);
+
+    $this->setValidator('end_date', new sfValidatorDate(
       array(
         'required' => true,
       )));
 
-    if($this->getObject()->getStartDate() == $this->getObject()->getEndDate())
-    {
-      $this->getWidget('start_date')->addOption('with_time', false);
-      $this->getWidget('end_date')->addOption('with_time', false);
-    }
+    $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('size' => 8)));
+    $this->setValidator('end_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
 
     $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
     $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));

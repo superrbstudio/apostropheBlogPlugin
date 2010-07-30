@@ -869,3 +869,24 @@ border-radius: 4px;
 	max-width: 460px;
 	color: #999;
 }
+
+#timepicker
+{
+  position: absolute;
+  display: none;
+  padding: 0;
+  margin: 0;
+  float: left;
+  overflow: auto;
+  height: 100px;
+  background-color: #ffffff;
+}
+
+#timepicker .time-item
+{
+  padding: 3px;
+}
+#timepicker .time-item:hover
+{
+  background-color: #ddddff;
+}
