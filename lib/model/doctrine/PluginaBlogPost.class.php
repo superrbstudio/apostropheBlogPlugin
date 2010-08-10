@@ -14,7 +14,7 @@ abstract class PluginaBlogPost extends BaseaBlogPost
 {
   public $engine = 'aBlog';
   
-  public static function getTemplateDefaults()
+  public function getTemplateDefaults()
   {
     return array(
       'singleColumnTemplate' => array(

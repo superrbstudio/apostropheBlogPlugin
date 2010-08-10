@@ -14,7 +14,7 @@ abstract class PluginaEvent extends BaseaEvent
 {
   public $engine = 'aEvent';
   
-  public static function getTemplateDefaults()
+  public function getTemplateDefaults()
   {
     return array(
       'singleColumnTemplate' => array(
