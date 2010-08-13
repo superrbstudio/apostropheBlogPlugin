@@ -19,14 +19,16 @@
 <div id="a-blog-main" class="a-blog-main">
   <?php if ($sf_params->get('year')): ?>
   <h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
-  <ul class="a-controls a-blog-browser-controls">
+  <ul class="a-ui a-controls a-blog-browser-controls">
     <li><?php echo link_to('Previous', 'aBlog/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
     <li><?php echo link_to('Next', 'aBlog/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
   </ul>
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
-  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
+		<div class="a-ui">
+	  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
+		</div>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_blog_post): ?>

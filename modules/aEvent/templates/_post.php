@@ -4,7 +4,7 @@
 <div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
 
   <?php if($a_event->userHasPrivilege('edit')): ?>
-  <ul class="a-controls a-blog-post-controls">
+  <ul class="a-ui a-controls a-blog-post-controls">
 		<li><?php echo link_to('Edit', 'a_event_admin_edit', $a_event, array('class' => 'a-btn icon a-edit no-label', )) ?></li>
 	</ul>
 	<?php endif ?>

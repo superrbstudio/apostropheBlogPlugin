@@ -11,14 +11,16 @@
 <div id="a-blog-main" class="a-blog-main">
   <?php if ($sf_params->get('year')): ?>
   <h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
-  <ul class="a-controls a-blog-browser-controls">
+  <ul class="a-ui a-controls a-blog-browser-controls">
     <li><?php echo link_to('Previous', 'aEvent/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
     <li><?php echo link_to('Next', 'aEvent/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
   </ul>
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
+	<div class="a-ui">
   	<?php echo link_to('New Event', '@a_event_admin_new', array('class' => 'a-btn icon big a-add')) ?>
+	</div>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>

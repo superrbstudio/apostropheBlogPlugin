@@ -22,8 +22,8 @@ $(document).ready(function(){
 [?php slot('a-subnav') ?]
 <div class="a-subnav-wrapper blog">
   <div class="a-subnav-inner">
-    <ul class="a-admin-action-controls">
-			<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="all-posts-btn">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe-blog') ?]</a></li>	
+    <ul class="a-ui a-controls a-admin-action-controls">
+			<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="a-btn big nobg all-posts-btn alt">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe-blog') ?]</a></li>	
       [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
     </ul>
 	  [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
@@ -40,7 +40,7 @@ $(document).ready(function(){
 			<form action="[?php echo url_for('<?php echo $this->getUrlForAction('collection') ?>', array('action' => 'batch')) ?]" method="post" id="a-admin-batch-form">
 		<?php endif; ?>
 		[?php include_partial('<?php echo $this->getModuleName() ?>/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper, 'form' => $filters)) ?]
-				<ul class="a-admin-actions">
+				<ul class="a-ui a-controls a-admin-actions">
 		      [?php include_partial('<?php echo $this->getModuleName() ?>/list_batch_actions', array('helper' => $helper)) ?]
 		    </ul>
 		<?php if ($this->configuration->getValue('list.batch_actions')): ?>

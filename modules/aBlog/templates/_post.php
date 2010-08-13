@@ -3,7 +3,7 @@
 <div class="a-blog-item post <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
 
   <?php if($a_blog_post->userHasPrivilege('edit')): ?>
-  <ul class="a-controls a-blog-post-controls">
+  <ul class="a-ui a-controls a-blog-post-controls">
 		<li><?php echo link_to('Edit', 'a_blog_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-edit no-label', )) ?></li>
 	</ul>
 	<?php endif ?>

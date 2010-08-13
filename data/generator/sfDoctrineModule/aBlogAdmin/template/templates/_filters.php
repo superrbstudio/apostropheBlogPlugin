@@ -30,7 +30,7 @@
 
         [?php echo $form->renderHiddenFields() ?]
 				<div class="a-form-row submit">
-					<ul class="a-controls a-admin-filter-controls">
+					<ul class="a-ui a-controls">
 						<li>[?php echo jq_link_to_function('Filter<span></span>', '$("#a-admin-filters-form").submit();', array('class' => 'a-btn', )) ?]</li>
 						<li>[?php echo link_to(__('reset', array(), 'a-admin'), '<?php echo $this->getUrlForAction('collection') ?>', array('action' => 'filter'), array('query_string' => '_reset', 'method' => 'post', 'class' => 'a-btn icon a-cancel')) ?]</li>
 					</ul>

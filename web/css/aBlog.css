@@ -771,13 +771,14 @@ display: none;
 #a-blog-item-title-interface .a-controls
 {
 	float: left;
+	clear: none;
 	margin: 2px 0 -1px 4px !important;
 }
 
 .a-btn.a-publish-post,
 #a-blog-item-update
 {
-padding: 0;
+padding: 0 !important; 
 width: 100%;
 text-align: center;
 margin-left: -1px;
@@ -886,6 +887,7 @@ border-radius: 4px;
 {
   padding: 3px;
 }
+
 #timepicker .time-item:hover
 {
   background-color: #ddddff;

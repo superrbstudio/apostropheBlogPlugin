@@ -1,14 +1,14 @@
 <?php use_helper('I18N','jQuery') ?>
+
 <?php $sf_response->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last') ?>
 
-
-<?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'blog')) ?>
+<?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'a-ui blog')) ?>
 
 <?php if (!$form->getObject()->isNew()): ?><input type="hidden" name="sf_method" value="PUT" /><?php endif; ?>
 
+<div class="a-hidden">
 <?php echo $form->renderHiddenFields() ?>
-
-
+</div>
 
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
