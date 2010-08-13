@@ -7,7 +7,7 @@
     
     $filters[$name] = $value;
     $this->getUser()->setAttribute('<?php echo $this->getModuleName() ?>.filters', $filters, 'admin_module');
-    
+    $this->setPage(1);
     $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');    
   }
     
