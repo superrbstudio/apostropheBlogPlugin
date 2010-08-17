@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $aBlogItem = isset($aBlogItem) ? $sf_data->getRaw('aBlogItem') : null;
+  $options = isset($options) ? $sf_data->getRaw('options') : null;
+?>
 <?php $full = a_get_option($options, 'full', false) ?>
 <?php $template = a_get_option($options, 'template', $aBlogItem['template']) ?>
 <?php $subtemplate = a_get_option($options, 'subtemplate', 'slot') ?>

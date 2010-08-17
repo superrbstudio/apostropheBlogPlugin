@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_blog_post = isset($a_blog_post) ? $sf_data->getRaw('a_blog_post') : null;
+  $form = isset($form) ? $sf_data->getRaw('form') : null;
+?>
 <?php use_helper('I18N','jQuery') ?>
 
 <?php echo jq_form_remote_tag(array('url' => url_for('a_blog_admin_update',$a_blog_post) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'a-ui blog')) ?>

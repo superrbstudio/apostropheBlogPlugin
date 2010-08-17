@@ -1,3 +1,7 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $aBlogPost = isset($aBlogPost) ? $sf_data->getRaw('aBlogPost') : null;
+?>
 <?php if ($addthis_username = sfConfig::get('app_aBlog_add_this')): ?>
 	<!-- AddThis Button BEGIN -->
   <?php aRouteTools::pushTargetEnginePage($aBlogPost->findBestEngine()) ?>

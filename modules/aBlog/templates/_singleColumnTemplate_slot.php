@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $aBlogPost = isset($aBlogPost) ? $sf_data->getRaw('aBlogPost') : null;
+  $options = isset($options) ? $sf_data->getRaw('options') : null;
+?>
 <h3 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h3>
 
 <ul class="a-blog-item-meta">

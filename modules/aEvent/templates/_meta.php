@@ -1,3 +1,7 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $aEvent = isset($aEvent) ? $sf_data->getRaw('aEvent') : null;
+?>
 <?php 
 $startDate = aDate::dayMonthYear($aEvent->getStartDate());
 $endDate = aDate::dayMonthYear($aEvent->getEndDate());

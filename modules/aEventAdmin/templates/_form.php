@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
+  $form = isset($form) ? $sf_data->getRaw('form') : null;
+?>
 <?php use_helper('I18N','jQuery') ?>
 
 <?php $sf_response->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last') ?>

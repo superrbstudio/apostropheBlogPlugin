@@ -1,3 +1,9 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $configuration = isset($configuration) ? $sf_data->getRaw('configuration') : null;
+  $filters = isset($filters) ? $sf_data->getRaw('filters') : null;
+  $n = isset($n) ? $sf_data->getRaw('n') : null;
+?>
 <div class="a-admin-title-sentence">
 	<h3> 	
 		<?php $appliedFilters = $filters->getAppliedFilters(); ?>

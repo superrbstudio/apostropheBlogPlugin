@@ -1,3 +1,9 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $configuration = isset($configuration) ? $sf_data->getRaw('configuration') : null;
+  $filters = isset($filters) ? $sf_data->getRaw('filters') : null;
+  $n = isset($n) ? $sf_data->getRaw('n') : null;
+?>
 <div id="a-admin-bar" <?php if (count($sf_user->getAttribute('aBlogAdmin.filters', null, 'admin_module'))): ?>class="has-filters"<?php endif ?>>
   <!-- <h2 class="a-admin-title you-are-here"><?php echo __('Blog Post Admin', array(), 'messages') ?></h2> -->
 </div>

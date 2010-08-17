@@ -1,3 +1,10 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $blogCategories = isset($blogCategories) ? $sf_data->getRaw('blogCategories') : null;
+  $dateRange = isset($dateRange) ? $sf_data->getRaw('dateRange') : null;
+  $pager = isset($pager) ? $sf_data->getRaw('pager') : null;
+  $params = isset($params) ? $sf_data->getRaw('params') : null;
+?>
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>

@@ -1,3 +1,9 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
+  $n = isset($n) ? $sf_data->getRaw('n') : null;
+  $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
+?>
 <div class="a-admin-form-field-tags">
   <h5>Popular Tags</h5>
 

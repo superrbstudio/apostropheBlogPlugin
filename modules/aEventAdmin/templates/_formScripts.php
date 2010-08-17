@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
+  $form = isset($form) ? $sf_data->getRaw('form') : null;
+?>
 <script type="text/javascript" charset="utf-8">	
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>'); }
 	$(document).ready(function(){

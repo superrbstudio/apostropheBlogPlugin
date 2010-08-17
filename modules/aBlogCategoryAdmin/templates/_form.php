@@ -1,3 +1,10 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_blog_category = isset($a_blog_category) ? $sf_data->getRaw('a_blog_category') : null;
+  $configuration = isset($configuration) ? $sf_data->getRaw('configuration') : null;
+  $form = isset($form) ? $sf_data->getRaw('form') : null;
+  $helper = isset($helper) ? $sf_data->getRaw('helper') : null;
+?>
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 

@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
+  $edit = isset($edit) ? $sf_data->getRaw('edit') : null;
+?>
 <?php if ($sf_params->get('module') != 'aEventAdmin'): ?>
 <h3 class="a-blog-item-title">
   <?php echo link_to($a_event->getTitle(), 'a_event_post', $a_event) ?>

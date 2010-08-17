@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_blog_post = isset($a_blog_post) ? $sf_data->getRaw('a_blog_post') : null;
+  $form = isset($form) ? $sf_data->getRaw('form') : null;
+?>
 <script type="text/javascript" charset="utf-8">
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_blog_admin_update',$a_blog_post) ?>'); }
 	$(document).ready(function(){

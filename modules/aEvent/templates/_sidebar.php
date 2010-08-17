@@ -1,3 +1,12 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $categories = isset($categories) ? $sf_data->getRaw('categories') : null;
+  $n = isset($n) ? $sf_data->getRaw('n') : null;
+  $params = isset($params) ? $sf_data->getRaw('params') : null;
+  $popular = isset($popular) ? $sf_data->getRaw('popular') : null;
+  $tag = isset($tag) ? $sf_data->getRaw('tag') : null;
+  $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
+?>
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>

@@ -1,3 +1,8 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $a_blog_post = isset($a_blog_post) ? $sf_data->getRaw('a_blog_post') : null;
+  $edit = isset($edit) ? $sf_data->getRaw('edit') : null;
+?>
 <?php if ($sf_params->get('module') != 'aBlogAdmin'): ?>
 <h3 class="a-blog-item-title">
   <?php echo link_to($a_blog_post->getTitle(), 'a_blog_post', $a_blog_post) ?>

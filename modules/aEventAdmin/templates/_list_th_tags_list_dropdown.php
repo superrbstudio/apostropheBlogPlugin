@@ -1,3 +1,7 @@
+<?php
+  // Compatible with sf_escaping_strategy: true
+  $filters = isset($filters) ? $sf_data->getRaw('filters') : null;
+?>
 <?php //Popular tags will go here eventually ?>
 <?php $letter = ''; ?>
 <?php $choices = $filters['tags_list']->getWidget()->getChoices() ?>
