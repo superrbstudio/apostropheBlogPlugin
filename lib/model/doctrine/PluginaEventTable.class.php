@@ -8,6 +8,7 @@
 class PluginaEventTable extends aBlogItemTable
 {
   protected $categoryColumn = 'events';
+  private static $engineCategoryCache;
 
   /**
    * Returns an instance of this class.
