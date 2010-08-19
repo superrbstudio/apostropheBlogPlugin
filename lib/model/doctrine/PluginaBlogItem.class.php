@@ -13,6 +13,7 @@
 abstract class PluginaBlogItem extends BaseaBlogItem
 {
   protected $update = true;
+  protected $engineSlug;
   public $engine = 'aBlog';
 
   /**
@@ -464,43 +465,36 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function findBestEngine()
   {
-    $engines = Doctrine::getTable('aPage')->createQuery()
-      ->addWhere('engine = ?', $this->engine)
-      ->addWhere('admin != ?', true)
-      ->execute();
+    return Doctrine::getTable('aPage')->findOneBy('slug', $this->getEngineSlug());
+  }
 
-    if(count($engines) == 0)
-      return '';
-    else if(count($engines) == 1)
-      return $engines[0];
-
-    //When there are more than one engine page we need to use some heuristics to
-    //guess what the best page is.
-    $catIds = array();
-    foreach($this->Categories as $category)
+  public function getEngineSlug()
+  {
+    if(!isset($this->engineSlug))
     {
-      $catIds[$category['id']] = $category['id'];
+      $categories = array();
+      foreach($this->Categories as $category)
+      {
+        $categories[] = $category;
+      }
+      $engines = $this->getTable()->getEngineCategories();
+      $best = array('', -99);
+      foreach($engines as $engineSlug => $engineCategories)
+      {
+        $score = 0;
+        if(count($engines) == 0)
+        {
+          $score = 1;
+        }
+        $score = $score + count(array_intersect($categories, $engineCategories)) * 2 - count(array_diff($categories, $engineCategories));
+        if($score > $best[1])
+        {
+          $best = array($engineSlug, $score);
+        }
+      }
+      $this->engineSlug = $best[0];
     }
 
-    if(count($catIds) < 1)
-      return $engines[0];
-
-    $best = array(-1, '');
-    
-    foreach($engines as $engine)
-    {
-      $score = 0;
-      foreach($engine->BlogCategories as $category)
-      {
-        if(isset($catIds[$category['id']]))
-          $score = $score + 1;
-      }
-      if($score > $best[0])
-      {
-        $best = array($score, $engine);
-      }
-    }
-    
-    return $best[1];
+    return $this->engineSlug;
   }
 }
