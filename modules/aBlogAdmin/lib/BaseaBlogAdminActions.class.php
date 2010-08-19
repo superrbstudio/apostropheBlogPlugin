@@ -85,7 +85,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   public function executeRedirect()
   {
     $aBlogPost = $this->getRoute()->getObject();
-    aRouteTools::pushTargetEnginePage($aBlogPost->findBestEngine());
     $this->redirect($this->generateUrl('a_blog_post', $this->getRoute()->getObject()));
   }
 

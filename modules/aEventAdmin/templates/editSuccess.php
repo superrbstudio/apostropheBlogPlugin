@@ -42,7 +42,7 @@
 		<div id="a-blog-item-permalink-interface">
 			<h6>Permalink:</h6>
 			<div class="a-blog-item-permalink-wrapper url">
-        <span><?php echo aTools::urlForPage($a_event->findBestEngine()->getSlug()).'/' ?><?php echo date('Y/m/d/', strtotime($a_event->getStartDate())) ?></span>
+        <span><?php echo aTools::urlForPage($a_event->getEngineSlug()).'/' ?><?php echo date('Y/m/d/', strtotime($a_event->getStartDate())) ?></span>
 			</div>
 			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_item_interface" value="<?php echo $a_event->slug ?>" id="a_blog_item_permalink_interface">
