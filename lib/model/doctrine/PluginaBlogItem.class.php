@@ -14,6 +14,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 {
   protected $update = true;
   protected $engineSlug;
+  protected $bestEngine;
   public $engine = 'aBlog';
 
   /**
@@ -465,36 +466,32 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function findBestEngine()
   {
-    return Doctrine::getTable('aPage')->findOneBy('slug', $this->getEngineSlug());
-  }
-
-  public function getEngineSlug()
-  {
-    if(!isset($this->engineSlug))
+    if(!isset($this->bestEngine))
     {
       $categories = array();
       foreach($this->Categories as $category)
       {
-        $categories[] = $category;
+        $categories[] = $category->name;
       }
       $engines = $this->getTable()->getEngineCategories();
       $best = array('', -99);
-      foreach($engines as $engineSlug => $engineCategories)
+      foreach($engines as $engineInfo)
       {
+        $engineCategories = $engineInfo['categories'];
         $score = 0;
         if(count($engines) == 0)
         {
           $score = 1;
         }
-        $score = $score + count(array_intersect($categories, $engineCategories)) * 2 - count(array_diff($categories, $engineCategories));
+        $score = $score + count(array_intersect($categories, $engineCategories)) * 5 - count(array_diff($categories, $engineCategories));
         if($score > $best[1])
         {
-          $best = array($engineSlug, $score);
+          $best = array($engineInfo, $score);
         }
       }
-      $this->engineSlug = $best[0];
+      $this->bestEngine = $best[0]['engine'];
     }
-
-    return $this->engineSlug;
+    return $this->bestEngine;
   }
+  
 }
