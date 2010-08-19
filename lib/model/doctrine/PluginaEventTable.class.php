@@ -43,4 +43,27 @@ class PluginaEventTable extends aBlogItemTable
     if(!is_null($limit))
       $q->limit($limit);
   }
+
+  public function getEngineCategories()
+  {
+    if(!isset(self::$engineCategoryCache))
+    {
+      $engines = Doctrine::getTable('aPage')->createQuery()
+        ->leftJoin('aPage.BlogCategories Categories')
+        ->addWhere('engine = ?', 'aEvent')
+        ->addWhere('admin != ?', true)
+        ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
+
+      $engineCache = array();
+      foreach($engines as $engine)
+      {
+        $engineCache[$engine['slug']] = array();
+        foreach($engine['BlogCategories'] as $category)
+          $engineCache[$engine['slug']][] = $category['name'];
+      }
+      self::$engineCategoryCache = $engineCache;
+    }
+
+    return self::$engineCategoryCache;
+  }
 }
