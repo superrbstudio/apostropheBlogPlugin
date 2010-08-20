@@ -40,6 +40,18 @@ class aBlogEvents
 "        ALTER TABLE a_blog_page_category ADD CONSTRAINT a_blog_page_category_blog_category_id_a_blog_category_id FOREIGN KEY (blog_category_id) REFERENCES a_blog_category(id) ON DELETE CASCADE;"
       ));
     }
+    if (!$migrate->tableExists('a_blog_category_group'))
+    {
+      $migrate->sql(array(
+        "CREATE TABLE a_blog_category_group (
+          blog_category_id int(11) NOT NULL DEFAULT '0',
+          group_id int(11) NOT NULL DEFAULT '0',
+          PRIMARY KEY (blog_category_id,group_id),
+          KEY a_blog_category_group_group_id_sf_guard_group_id (group_id),
+          CONSTRAINT a_blog_category_group_blog_category_id_a_blog_category_id FOREIGN KEY (blog_category_id) REFERENCES a_blog_category (id) ON DELETE CASCADE,
+          CONSTRAINT a_blog_category_group_group_id_sf_guard_group_id FOREIGN KEY (group_id) REFERENCES sf_guard_group (id) ON DELETE CASCADE
+        ) ENGINE=InnoDB;"));
+    }
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");
