@@ -479,11 +479,11 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       {
         $engineCategories = $engineInfo['categories'];
         $score = 0;
-        if(count($engines) == 0)
+        if(count($engineInfo['categories']) == 0)
         {
           $score = 1;
         }
-        $score = $score + count(array_intersect($categories, $engineCategories)) * 5 - count(array_diff($categories, $engineCategories));
+        $score = $score + (count(array_intersect($categories, $engineCategories)) * 5) - count(array_diff($engineCategories, $categories));
         if($score > $best[1])
         {
           $best = array($engineInfo, $score);
