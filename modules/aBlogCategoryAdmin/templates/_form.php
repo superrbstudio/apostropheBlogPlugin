@@ -5,6 +5,7 @@
   $form = isset($form) ? $sf_data->getRaw('form') : null;
   $helper = isset($helper) ? $sf_data->getRaw('helper') : null;
 ?>
+<?php use_helper('a') ?>
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
@@ -24,6 +25,5 @@
   </form>
 </div>
 
-<script type="text/javascript">
-  aMultipleSelect('.a-admin-form-field-users_list', { 'choose-one': '<?php echo __('Choose Users', array(), 'apostrophe_blog') ?>' });
-</script>
+<?php a_js_call('aMultipleSelect(?, ?)', '.a-admin-form-field-users_list', array('choose-one' => a_('Choose Users'))) ?>
+<?php a_js_call('aMultipleSelect(?, ?)', '.a-admin-form-field-groups_list', array('choose-one' => a_('Choose Groups'))) ?>

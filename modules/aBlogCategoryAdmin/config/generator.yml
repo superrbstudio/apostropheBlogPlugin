@@ -14,7 +14,7 @@ generator:
       
       list:
         title: Categories Admin
-        display: [ _name, numBlogPosts, numEvents, _users ]
+        display: [ _name, numBlogPosts, numEvents, _users, _groups ]
         object_actions: []
         fields:
           name:
@@ -38,12 +38,12 @@ generator:
 
       
       form:
-        fields:   [ name, users_list, posts, events ]
-        display:  [ name, users_list, posts, events ]
+        fields:   [ name, groups_list, users_list, posts, events ]
+        display:  [ name, groups_list, users_list, posts, events ]
         
       filter:
-        fields:  [  users_list ]
-        display: [  users_list ]
+        fields:  [  groups_list, users_list ]
+        display: [  groups_list, users_list ]
         
       fields:
         numBlogPosts: { label: Number of Posts }
@@ -52,4 +52,7 @@ generator:
       
       edit:
         title: Edit Category
+        
+      new:
+        title: New Category
         

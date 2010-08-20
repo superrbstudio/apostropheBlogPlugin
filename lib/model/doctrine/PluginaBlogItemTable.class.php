@@ -45,13 +45,17 @@ class PluginaBlogItemTable extends Doctrine_Table
       $user_id = sfContext::getInstance()->getUser()->getGuardUser()->getId();
       if(sfContext::getInstance()->getUser()->hasCredential('admin'))
       {
-        return ;
+        return;
       }
     }
 
     $rootAlias = $q->getRootAlias();
     $q->leftJoin($rootAlias.'.Editors e');
-    $q->addWhere('author_id = ? OR e.id = ?', array($user_id, $user_id));
+    $q->leftJoin($rootAlias.'.Categories c');
+    $q->leftJoin('c.Users u');
+    $q->leftJoin('c.Groups g');
+    $q->leftJoin('g.users gu');
+    $q->andWhere('author_id = ? OR e.id = ? OR u.id = ? OR gu.id = ?', array($user_id, $user_id, $user_id, $user_id));
   }
 
   public function addPublished(Doctrine_Query $q)

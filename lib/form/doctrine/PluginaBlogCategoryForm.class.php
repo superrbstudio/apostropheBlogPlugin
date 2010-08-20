@@ -12,7 +12,7 @@ abstract class PluginaBlogCategoryForm extends BaseaBlogCategoryForm
 {
   protected function getUseFields()
   {
-    return array('name', 'users_list', 'posts', 'events');
+    return array('name', 'groups_list', 'users_list', 'posts', 'events');
   }
   public function setup()
   {

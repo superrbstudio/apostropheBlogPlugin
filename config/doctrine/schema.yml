@@ -130,6 +130,12 @@ aBlogCategory:
       refClass: aBlogCategoryUser
       local: blog_category_id
       foreign: user_id
+    Groups:
+      foreignAlias: BlogCategories
+      class: sfGuardGroup
+      refClass: aBlogCategoryGroup
+      local: blog_category_id
+      foreign: group_id      
     BlogItems:
       foreignAlias: BlogCategories
       class: aBlogItem
@@ -184,6 +190,26 @@ aBlogCategoryUser:
       local: user_id
       onDelete: CASCADE
     
+aBlogCategoryGroup:
+  columns:
+    blog_category_id:
+      type: integer(4)
+      primary: true
+    group_id:
+      type: integer(4)
+      primary: true
+  relations:
+    BlogCategory:
+      foreignAlias: BlogCategoryGroups
+      class: aBlogCategory
+      local: blog_category_id
+      onDelete: CASCADE
+    Group:
+      foreignAlias: BlogCategoryGroups
+      class: sfGuardGroup
+      local: group_id
+      onDelete: CASCADE
+
 aBlogPost:
   inheritance:
     extends: aBlogItem

@@ -6,18 +6,35 @@ class PluginaBlogCategoryTable extends Doctrine_Table
 
   public function addCategoriesForUser(sfGuardUser $user, $admin = false, Doctrine_Query $q = null)
   {
-    $q = clone $q;
-    if(is_null($q))
+    if (is_null($q))
+    {
       $q = $this->createQuery();
-
+    }
+    else
+    {
+      $q = clone $q;
+    }
     if(!$admin)
     {
-      $q->innerJoin('aBlogCategory.Users')
-        ->andWhere('aBlogCategory.Users.id = ?', $user['id']);
+      // This will perform well if the user is the current user and Doctrine has
+      // retained the relation to groups
+      $groups = $user->getGroups();
+      $groupIds = aArray::getIds($groups);
+      $q->leftJoin('aBlogCategory.Groups')
+        ->leftJoin('aBlogCategory.Users');
+      // This is necessary because Doctrine doesn't have proper grouping syntax
+      // available except via DQL
+      $where = '';
+      // Don't get burned by an empty IN clause matching everything
+      if (count($groupIds))
+      {
+        $where .= 'aBlogCategory.Groups.id IN (' . implode(',', $groupIds) . ') OR ';
+      }
+      $q->andWhere('(' . $where . 'aBlogCategory.Users.id = ?)', $user['id']);
     }
     return $q;
   }
-
+  
   public function getTagsForCategories($categoryIds, $model, $popular = false, $limit = null)
   {
     if(!is_array($categoryIds))
