@@ -29,7 +29,7 @@ abstract class BaseaBlogActions extends aEngineActions
       ->leftJoin($this->modelClass.'.Categories c');
     $categoryIds = array();
     $this->blogCategories = aBlogCategoryTable::getCategoriesForPage($this->page);
-    foreach($this->page->BlogCategories as $blogCategory)
+    foreach($this->blogCategories as $blogCategory)
     {
       $categoryIds[] = $blogCategory['id'];
     }
