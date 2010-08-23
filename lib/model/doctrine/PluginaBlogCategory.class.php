@@ -25,19 +25,19 @@ abstract class PluginaBlogCategory extends BaseaBlogCategory
 
   public function getNumBlogPosts()
   {
-    return Doctrine::getTable('aBlogCategory')->createQuery()
-      ->innerJoin('aBlogCategory.BlogItems')
-      ->addWhere('aBlogCategory.id = ?', $this['id'])
-      ->addWhere('aBlogCategory.BlogItems.type = ?', 'post')
+    return Doctrine::getTable('aBlogItem')->createQuery()
+      ->leftJoin('aBlogItem.Categories BlogCategory')
+      ->addWhere('BlogCategory.id = ?', $this->id)
+      ->addWhere('BlogCategory.BlogItems.type = ?', 'post')
       ->count();
   }
 
   public function getNumEvents()
   {
-    return Doctrine::getTable('aBlogCategory')->createQuery()
-      ->innerJoin('aBlogCategory.BlogItems')
-      ->addWhere('aBlogCategory.id = ?', $this['id'])
-      ->addWhere('aBlogCategory.BlogItems.type = ?', 'event')
+    return Doctrine::getTable('aBlogItem')->createQuery()
+      ->leftJoin('aBlogItem.Categories BlogCategory')
+      ->addWhere('BlogCategory.id = ?', $this->id)
+      ->addWhere('BlogCategory.BlogItems.type = ?', 'event')
       ->count();
   }
   
