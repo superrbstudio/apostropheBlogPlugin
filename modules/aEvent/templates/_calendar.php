@@ -26,7 +26,7 @@
 					<?php echo (date('mdy', strtotime($eventDate)) == date('mdy')) ? 'today':''; ?>
 					<?php echo (date('d', strtotime($eventDate)) == $sf_request->getParameter('day'))? 'selected':'' ?>">
 					<?php if (!empty($event)): ?>
-						<span class="has-events"><a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y', strtotime($eventDate)), 'month' => date('m', strtotime($eventDate)), 'day' => date('d', strtotime($eventDate))))) ?>"><?php echo date('d', strtotime($eventDate)) ?></span>
+						<span class="has-events"><a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y', strtotime($eventDate)), 'month' => date('m', strtotime($eventDate)), 'day' => date('d', strtotime($eventDate))))) ?>"><?php echo date('d', strtotime($eventDate)) ?></a></span>
 					<?php else: ?>
 						<span><?php echo date('d', strtotime($eventDate)) ?></span>
 					<?php endif ?>					
@@ -35,4 +35,11 @@
 		</tr>
 	<?php $w++; endforeach ?>
 	</tbody>
+	<tfoot>
+		<tr>
+			<td colspan="7">
+				<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y'), 'month' => date('m'), 'day' => date('d')))) ?>" class="a-btn icon a-events day-<?php echo date('d') ?> mini nobg"><span class="day"></span>Today</a>
+			</td>
+		</tr>
+	</tfoot>
 </table>

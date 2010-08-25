@@ -1,5 +1,7 @@
 <?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
 
+<hr />
+
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
