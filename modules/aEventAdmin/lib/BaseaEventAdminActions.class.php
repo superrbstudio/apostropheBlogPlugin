@@ -91,8 +91,10 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeRedirect()
   {
-    $aEvent = $this->getRoute()->getObject();
-    $this->redirect($this->generateUrl('a_event_post', $aEvent));
+    aRouteTools::pushTargetEnginePage($this->getRoute()->getObject()->findBestEngine());
+    $url = $this->generateUrl('a_event_post', $this->getRoute()->getObject());
+    aRoutetools::popTargetEnginePage('aEvent');
+    $this->redirect($url);
   }
 
   public function executeCategories()

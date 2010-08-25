@@ -1,3 +1,5 @@
+<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
+
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
@@ -12,17 +14,6 @@
 
 <hr />
 <?php endif ?>
-
-<div class='a-subnav-section range'>
-  <h4>Browse by</h4>
-  <ul class="a-filter-options blog">
-    <li class="a-filter-option"><?php echo link_to('Day', 'aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day']), array('class' => ($dateRange == 'day') ? 'selected' : '')) ?></li>
-    <li class="a-filter-option"><?php echo link_to('Month', 'aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month']), array('class' => ($dateRange == 'month') ? 'selected' : '')) ?></li>
-    <li class="a-filter-option"><?php echo link_to('Year', 'aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></li>
-  </ul>
-</div>
-
-<hr />
 
 <?php if(count($tags)): ?>
 <div class="a-subnav-section tags">  

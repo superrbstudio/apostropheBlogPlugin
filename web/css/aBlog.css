@@ -870,3 +870,61 @@ border-radius: 4px;
 	max-width: 460px;
 	color: #999;
 }
+
+
+/* Calendar */
+
+.a-calendar
+{
+	position: relative;
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+.a-calendar th,
+.a-calendar td
+{
+	position: relative;
+	cursor: default;
+	padding: 2px;	
+}
+
+.a-calendar .title
+{
+	float: left;
+	width: auto;
+width: 100%;
+text-align: center;
+z-index: 1;
+}
+
+.a-calendar .previous-month
+{
+	position: relative;
+	margin-right: -20px;
+	z-index: 2;
+}
+
+.a-calendar .next-month
+{
+	position: relative;
+	margin-left: -20px;
+	z-index: 2;
+}
+
+.a-calendar .day
+{
+	vertical-align: middle;
+	text-align: center;
+}
+
+.a-calendar th.day
+{
+	color: #000;
+	background: rgba(255,255,255,0.25);
+}
+
+.a-calendar .day.not-current-month
+{
+	opacity: 0.35;
+}
