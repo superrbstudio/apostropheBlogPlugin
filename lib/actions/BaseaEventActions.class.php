@@ -23,12 +23,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		parent::executeIndex($request);	
-		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
-		$monthRequest = clone $request;
-		$monthRequest->getParameterHolder()->remove('day');
-		$query = $this->buildQuery($monthRequest);
-		$events = $query->execute();
-		$this->calendar = $this->buildCalendar($events, $date);
+		$this->calendar = $this->buildCalendar($request);
 	}
   
   public function executeShow(sfWebRequest $request)
@@ -40,6 +35,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent);
     $this->forward404Unless($this->aEvent['status'] == 'published');
     aBlogItemTable::populatePages(array($this->aEvent));
+		$this->calendar = $this->buildCalendar($request);
   }
 
   protected function buildQuery($request)
@@ -70,8 +66,15 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->getResponse()->setContent($this->feed->asXml());
   }
 
-	public function buildCalendar($aEvents, $date)
-	{
+	public function buildCalendar($request)
+	{	
+		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
+		
+		$monthRequest = clone $request;
+		$monthRequest->getParameterHolder()->remove('day');
+		$query = $this->buildQuery($monthRequest);
+		$aEvents = $query->execute();
+			
 		$calendar['events'] = new sfEventCalendar('month', $date);
 		
 		foreach ($aEvents as $aEvent)

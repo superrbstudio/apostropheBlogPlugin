@@ -3,7 +3,7 @@
 <?php slot('a-subnav') ?>
 	<div class="a-subnav-wrapper blog">
 		<div class="a-subnav-inner">
-	    <?php include_component('aEvent', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories, 'reset' => true, 'noFeed' => true)) ?>
+	    <?php include_component('aEvent', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories, 'reset' => true, 'noFeed' => true, 'calendar' => $calendar)) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>
