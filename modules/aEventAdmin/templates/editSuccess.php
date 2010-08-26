@@ -42,7 +42,7 @@
 			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe') ?></div>
 		  <ul class="a-ui a-controls blog-title">
 		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-		    <li><a href="#" class="a-btn a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+		    <li><a href="#" class="a-btn icon a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
 		  </ul>				
 		</div>
 
@@ -55,7 +55,7 @@
 				<input type="text" name="a_blog_item_interface" value="<?php echo $a_event->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-ui a-controls blog-slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
 			  </ul>
 			</div>
 		</div>
