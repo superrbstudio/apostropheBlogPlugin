@@ -918,44 +918,11 @@ clear: none;
 	text-align: center;
 }
 
-.a-calendar th.day
-{
-	color: #000;
-	background: rgba(255,255,255,0.25);
-}
-
 .a-calendar .day a,
 .a-calendar .day span
 {
 	display: block;
 	height: 100%;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-}
-
-.a-calendar .day.today a,
-.a-calendar .day.today span	
-{
-	border: 1px solid #999;
-}
-
-.a-calendar .day.selected a
-{
-	color: #333;
-	background: rgba(255,255,255,0.25);
-}
-
-.a-calendar .day a:hover
-{
-	text-decoration: none;
-	background: #000;
-	color: #fff;
-}
-
-.a-calendar .day.not-current-month
-{
-	opacity: 0.35;
 }
 
 .a-calendar .a-calendar-today
@@ -965,18 +932,4 @@ clear: none;
 	font-size: 11px;
 	text-decoration: none;
 	padding-right: 4px;
-	-moz-border-radius: 2px;
-	-webkit-border-radius: 2px;
-	border-radius: 2px;
-	background-color: #ccc;	
-}
-
-.a-calendar .a-calendar-today:hover
-{
-	background-color: #999;
-}
-
-.a-calendar .day .event-count
-{
-	display: none;
 }
