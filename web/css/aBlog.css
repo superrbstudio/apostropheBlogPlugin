@@ -890,11 +890,12 @@ border-radius: 4px;
 
 .a-calendar .title
 {
-	float: left;
-	width: auto;
+float: left;
+width: auto;
 width: 100%;
 text-align: center;
 z-index: 1;
+clear: none;
 }
 
 .a-calendar .previous-month
