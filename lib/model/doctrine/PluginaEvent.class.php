@@ -28,4 +28,20 @@ abstract class PluginaEvent extends BaseaEvent
   {
     return '@a_event_search_redirect?id=' . $this->id;
   }
+
+  public function getYear()
+  {
+    return date('Y', strtotime($this->getStartDate()));
+  }
+
+  public function getMonth()
+  {
+    return date('m', strtotime($this->getStartDate()));
+  }
+
+  public function getDay()
+  {
+    return date('d', strtotime($this->getStartDate()));
+  }
+
 }

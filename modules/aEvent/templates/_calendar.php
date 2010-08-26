@@ -45,7 +45,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="7">
-				<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y'), 'month' => date('m'), 'day' => date('d')))) ?>" class="icon a-events day-<?php echo date('d') ?> alt a-calendar-today"><span class="day"></span>Today</a>
+				<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y'), 'month' => date('m'), 'day' => date('d')))) ?>" class="icon a-events day-<?php echo date('d') ?> alt a-calendar-today"><span class="icon"></span>Today</a>
 			</td>
 		</tr>
 	</tfoot>
