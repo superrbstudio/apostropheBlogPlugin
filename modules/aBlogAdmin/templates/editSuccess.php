@@ -15,15 +15,15 @@
 		<div class="a-subnav-wrapper blog">
 			<div class="a-subnav-inner">
 				<ul class="a-ui a-controls a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="a-btn big alt"><?php echo __('View All Posts', array(), 'apostrophe-blog') ?></a></li>
+					<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="a-btn big alt"><?php echo __('View All Posts', array(), 'apostrophe') ?></a></li>
 	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
 				</ul>
 			  <?php include_partial('aBlogAdmin/form_bar') ?>
 				<div class="a-admin-title-sentence">
-					<h3 class="new-item"><?php echo __('You are creating a new post.', array(), 'apostrophe_blog') ?></h3>
-					<h3 class="draft-item"><?php echo __('You are working on a draft post.', array(), 'apostrophe_blog') ?></h3>
-					<h3 class="published-item"><?php echo __('You are editing a published post.', array(), 'apostrophe_blog') ?></h3>
-					<span class="flash-message"> <?php echo __('Post Saved at', array(), 'apostrophe_blog') ?></span>
+					<h3 class="new-item"><?php echo __('You are creating a new post.', array(), 'apostrophe') ?></h3>
+					<h3 class="draft-item"><?php echo __('You are working on a draft post.', array(), 'apostrophe') ?></h3>
+					<h3 class="published-item"><?php echo __('You are editing a published post.', array(), 'apostrophe') ?></h3>
+					<span class="flash-message"> <?php echo __('Post Saved at', array(), 'apostrophe') ?></span>
 				</div>
 			</div>
 	  </div>
@@ -39,10 +39,10 @@
 
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
-			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe-blog') ?></div>
+			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe') ?></div>
 		  <ul class="a-ui a-controls blog-title">
-		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
-		    <li><a href="#" class="a-btn a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
+		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
+		    <li><a href="#" class="a-btn a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
 		  </ul>
 		</div>
 
@@ -54,8 +54,8 @@
 			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_item_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-ui a-controls blog-slug">
-			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe_blog') ?></a></li>
-			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a></li>
+			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
+			    <li><a href="#" class="a-btn a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
 			  </ul>
 			</div>
 		</div>

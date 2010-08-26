@@ -6,10 +6,10 @@
 
 <?php echo $form->renderHiddenFields() ?>
 
-<h4 class="a-slot-form-title">Events</h4>
+<h4 class="a-slot-form-title"><?php echo __('Events', null, 'apostrophe') ?></h4>
 
 <div class="a-form-row count">
-	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe_blog')) ?>
+	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['count']->render() ?>
 		<?php echo $form['count']->renderHelp() ?>
@@ -18,7 +18,7 @@
 </div>
 
 <div class="a-form-row categories">
-	<?php echo $form['categories_list']->renderLabel(__('Category', array(), 'apostrophe_blog')) ?>
+	<?php echo $form['categories_list']->renderLabel(__('Category', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderHelp() ?>
@@ -27,7 +27,7 @@
 </div>
 
 <div class="a-form-row tags">
-	<?php echo $form['tags_list']->renderLabel(__('Tags', array(), 'apostrophe_blog')) ?>
+	<?php echo $form['tags_list']->renderLabel(__('Tags', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['tags_list']->render() ?>
 		<?php echo $form['tags_list']->renderHelp() ?>

@@ -21,6 +21,6 @@ $endTime = aDate::time($aEvent->getEndDate());
 
 	<?php if (0): ?>
 	<?php // Events authors are not important to end users, turned off for now ?>
-  	<li class="author"><?php echo __('Posted By:', array(), 'apostrophe_blog') ?> <?php echo $aEvent->getAuthor() ?></li>   			
+  	<li class="author"><?php echo __('Posted By:', array(), 'apostrophe') ?> <?php echo $aEvent->getAuthor() ?></li>   			
 	<?php endif ?>
 </ul>

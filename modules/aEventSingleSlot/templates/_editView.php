@@ -8,7 +8,7 @@
 <?php echo $form->renderHiddenFields() ?>
 
 <div class="a-form-row search">
-	<?php echo $form['search']->renderLabel(__('Search by Title', array(), 'apostrophe_blog')) ?>
+	<?php echo $form['search']->renderLabel(__('Search by Title', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['search']->render(array('class' => 'a-blogsingle-input', )) ?>
 		<?php echo $form['search']->renderHelp() ?>

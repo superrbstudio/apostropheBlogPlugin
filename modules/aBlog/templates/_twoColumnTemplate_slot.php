@@ -7,7 +7,7 @@
 
 <ul class="a-blog-item-meta">
 	<li class="date"><?php echo aDate::long($aBlogPost['published_at']) ?></li>
-	<li class="author"><?php echo __('Posted By:', array(), 'apostrophe_blog') ?> <?php echo $aBlogPost->getAuthor() ?></li>   			
+	<li class="author"><?php echo __('Posted By:', array(), 'apostrophe') ?> <?php echo $aBlogPost->getAuthor() ?></li>   			
 </ul>
 
 <?php if($options['maxImages'] && $aBlogPost->hasMedia()): ?>
