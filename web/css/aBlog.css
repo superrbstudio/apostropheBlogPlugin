@@ -961,6 +961,19 @@ clear: none;
 .a-calendar .a-calendar-today
 {
 	float: right;
+	line-height: 18px;
+	font-size: 11px;
+	text-decoration: none;
+	padding-right: 4px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+	background-color: #ccc;	
+}
+
+.a-calendar .a-calendar-today:hover
+{
+	background-color: #999;
 }
 
 .a-calendar .day .event-count
