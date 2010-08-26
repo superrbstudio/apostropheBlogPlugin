@@ -7,6 +7,12 @@
   $tag = isset($tag) ? $sf_data->getRaw('tag') : null;
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
 ?>
+
+<?php if (sfConfig::get('app_aEvents_display_calendar')): ?>
+	<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
+	<hr />
+<?php endif ?>
+
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
@@ -22,6 +28,7 @@
 <hr />
 <?php endif ?>
 
+<?php if (!sfConfig::get('app_aEvents_display_calendar')): ?>
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>
   <div class="a-filter-options blog">
@@ -30,8 +37,8 @@
     <div class="a-filter-option"><?php echo link_to('Year', 'aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></div>
   </div>
 </div>
-
 <hr />
+<?php endif ?>
 
 <?php if(count($tags)): ?>
 <div class="a-subnav-section tags">  

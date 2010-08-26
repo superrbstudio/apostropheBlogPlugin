@@ -20,6 +20,17 @@ abstract class BaseaEventActions extends BaseaBlogActions
     }
   }
   
+	public function executeIndex(sfWebRequest $request)
+	{
+		parent::executeIndex($request);	
+		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
+		$monthRequest = clone $request;
+		$monthRequest->getParameterHolder()->remove('day');
+		$query = $this->buildQuery($monthRequest);
+		$events = $query->execute();
+		$this->calendar = $this->buildCalendar($events, $date);
+	}
+
   public function executeShow(sfWebRequest $request)
   {
     $this->buildParams();
@@ -58,4 +69,26 @@ abstract class BaseaEventActions extends BaseaBlogActions
     
     $this->getResponse()->setContent($this->feed->asXml());
   }
+
+	public function buildCalendar($aEvents, $date)
+	{
+		$calendar['events'] = new sfEventCalendar('month', $date);
+		
+		foreach ($aEvents as $aEvent)
+		{
+			$calendar['events']->addEvent($aEvent->getStartDate(), array('event' => $aEvent));
+		}
+		
+		$calendar['month'] = date('F', strtotime($date));
+		$calendar['year'] = date('Y', strtotime($date));
+			
+		$next = strtotime('next month', strtotime($date));
+    $calendar['params']['next'] = array('year' => date('Y', $next), 'month' => date('m', $next));
+    
+    $prev = strtotime('last month', strtotime($date));
+    $calendar['params']['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev));
+
+		return $calendar;	
+	}
+
 }
