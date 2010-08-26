@@ -73,17 +73,12 @@ abstract class BaseaEventActions extends BaseaBlogActions
 	public function buildCalendar($aEvents, $date)
 	{
 		$calendar['events'] = new sfEventCalendar('month', $date);
+		
 		foreach ($aEvents as $aEvent)
 		{
-			$calendar['events']->addEvent($aEvent->getStartDate(), array(
-				'event' => true,
-				'title' => $aEvent->getTitle(), 
-				'pubdate' => $aEvent->getStartDate(), 
-				'link' => url_for('a_event_post', $aEvent),
-				'description' => $aEvent->getTextForArea('blog-body'),				
-				'permalink' => url_for('a_event_post', $aEvent),			
-			));
+			$calendar['events']->addEvent($aEvent->getStartDate(), array('event' => $aEvent));
 		}
+		
 		$calendar['month'] = date('F', strtotime($date));
 		$calendar['year'] = date('Y', strtotime($date));
 			

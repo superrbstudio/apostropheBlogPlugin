@@ -878,7 +878,6 @@ border-radius: 4px;
 {
 	position: relative;
 	width: 100%;
-	margin-bottom: 10px;
 }
 
 .a-calendar th,
@@ -924,7 +923,46 @@ z-index: 1;
 	background: rgba(255,255,255,0.25);
 }
 
+.a-calendar .day a,
+.a-calendar .day span
+{
+	display: block;
+	height: 100%;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	border-radius: 2px;
+}
+
+.a-calendar .day.today a,
+.a-calendar .day.today span	
+{
+	border: 1px solid #999;
+}
+
+.a-calendar .day.selected a
+{
+	color: #333;
+	background: rgba(255,255,255,0.25);
+}
+
+.a-calendar .day a:hover
+{
+	text-decoration: none;
+	background: #000;
+	color: #fff;
+}
+
 .a-calendar .day.not-current-month
 {
 	opacity: 0.35;
+}
+
+.a-calendar .a-calendar-today
+{
+	float: right;
+}
+
+.a-calendar .day .event-count
+{
+	display: none;
 }

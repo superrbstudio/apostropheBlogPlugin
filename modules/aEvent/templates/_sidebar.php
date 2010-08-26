@@ -1,6 +1,7 @@
-<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
-
-<hr />
+<?php if (sfConfig::get('app_aEvents_display_calendar')): ?>
+	<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
+	<hr />
+<?php endif ?>
 
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
@@ -14,6 +15,18 @@
   </ul>	
 </div>
 
+<hr />
+<?php endif ?>
+
+<?php if (!sfConfig::get('app_aEvents_display_calendar')): ?>
+<div class='a-subnav-section range'>
+  <h4>Browse by</h4>
+  <ul class="a-filter-options blog">
+    <li class="a-filter-option"><?php echo link_to('Day', 'aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day']), array('class' => ($dateRange == 'day') ? 'selected' : '')) ?></li>
+    <li class="a-filter-option"><?php echo link_to('Month', 'aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month']), array('class' => ($dateRange == 'month') ? 'selected' : '')) ?></li>
+   <li class="a-filter-option"><?php echo link_to('Year', 'aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></li>
+  </ul>
+</div>
 <hr />
 <?php endif ?>
 
