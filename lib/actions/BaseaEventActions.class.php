@@ -23,7 +23,10 @@ abstract class BaseaEventActions extends BaseaBlogActions
 	public function executeIndex(sfWebRequest $request)
 	{
 		parent::executeIndex($request);	
-		$this->calendar = $this->buildCalendar($request);
+		if (sfConfig::get('app_aEvents_display_calendar'))
+		{
+			$this->calendar = $this->buildCalendar($request);			
+		}
 	}
 
   public function executeShow(sfWebRequest $request)
@@ -35,7 +38,10 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent);
     $this->forward404Unless($this->aEvent['status'] == 'published');
     aBlogItemTable::populatePages(array($this->aEvent));
-		$this->calendar = $this->buildCalendar($request);
+		if (sfConfig::get('app_aEvents_display_calendar'))
+		{
+			$this->calendar = $this->buildCalendar($request);			
+		}
   }
 
   protected function buildQuery($request)
