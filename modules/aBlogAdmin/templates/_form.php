@@ -130,7 +130,7 @@
 	<?php if($a_blog_post->userHasPrivilege('delete')): ?>
 		<hr />
 		<div class="delete section">
-			<?php echo link_to('Delete this post', 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete nobg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
+			<?php echo link_to('Delete this post', 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete no-bg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
 		</div>
 	<?php endif ?>
 
