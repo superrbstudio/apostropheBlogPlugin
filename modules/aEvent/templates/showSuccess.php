@@ -10,6 +10,3 @@
 
 <?php echo include_partial('aEvent/post', array('a_event' => $aEvent)) ?>
 
-<?php if($aEvent['allow_comments']): ?><?php endif ?>
-
-

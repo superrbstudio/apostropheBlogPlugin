@@ -1,4 +1,4 @@
-<?php if (sfConfig::get('app_aEvents_display_calendar')): ?>
+<?php if ($calendar): ?>
 	<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
 	<hr />
 <?php endif ?>
@@ -18,7 +18,7 @@
 <hr />
 <?php endif ?>
 
-<?php if (!sfConfig::get('app_aEvents_display_calendar')): ?>
+<?php if (!$calendar): ?>
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>
   <ul class="a-filter-options blog">

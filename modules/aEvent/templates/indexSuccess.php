@@ -10,14 +10,13 @@
 
 <div id="a-blog-main" class="a-blog-main">
   <?php if ($sf_params->get('year')): ?>
-  <h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
-
-	<?php if (!sfConfig::get('app_aEvents_display_calendar')): ?>
+	<div class="a-blog-heading">
+  	<h2><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h2>
 	  <ul class="a-controls a-blog-browser-controls">
 	    <li><?php echo link_to('Previous', 'aEvent/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
 	    <li><?php echo link_to('Next', 'aEvent/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
 	  </ul>
-	<?php endif ?>
+	</div>
   <?php endif ?>
   
   <?php if($sf_user->isAuthenticated()): ?>
