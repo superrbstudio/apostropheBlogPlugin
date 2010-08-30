@@ -27,6 +27,10 @@ abstract class BaseaEventActions extends BaseaBlogActions
 		{
 			$this->calendar = $this->buildCalendar($request);			
 		}
+		else
+		{
+			$this->calendar = false;
+		}
 	}
   
   public function executeShow(sfWebRequest $request)
@@ -41,6 +45,10 @@ abstract class BaseaEventActions extends BaseaBlogActions
 		if (sfConfig::get('app_aEvents_display_calendar'))
 		{
 			$this->calendar = $this->buildCalendar($request);			
+		}
+		else
+		{
+			$this->calendar = false;
 		}
   }
 
