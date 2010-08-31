@@ -32,7 +32,7 @@
 	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 
 	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
+	  <?php echo $form['published_at']->render(array('date' => array('onClose' => 'aBlogUpdateMulti'))) ?>
 	  <?php echo $form['published_at']->renderError() ?>
 	</div>
 </div>
@@ -44,12 +44,12 @@
 <div class="event-date section">
 	<h4>Start Date</h4>
 	<div class="start_date">
-		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['start_date']->render(array('date' => array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti'))) ?>
 		<?php echo $form['start_date']->renderError() ?>					
 	</div>
 	<h4>End Date</h4>
 	<div class="end_date">
-		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['end_date']->render(array('date' => array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti'))) ?>
 		<?php echo $form['end_date']->renderError() ?>					
 	</div>
 </div>
