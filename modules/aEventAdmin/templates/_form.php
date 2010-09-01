@@ -1,4 +1,4 @@
-<?php use_helper('I18N','jQuery') ?>
+<?php use_helper('a','I18N','jQuery') ?>
 
 <?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'blog')) ?>
 
@@ -6,15 +6,12 @@
 
 <?php echo $form->renderHiddenFields() ?>
 
-
-
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
 <div class="post-title post-slug option">
   <?php echo $form['title']->render() ?>
   <?php echo $form['slug']->render() ?>
   <?php echo $form['slug']->renderError() ?>
 </div>
-
 
 <?php // Huge Publish Button and Publish Date ?>
 <div class="published section">
@@ -29,7 +26,12 @@
   	<?php echo $form['status']->render() ?>
 	</div>
 
-	<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
+	<?php if ($a_event['status'] != 'published'): ?>
+		<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
+	<?php else: ?>
+		<?php echo __('Published on '.date('D, M d Y', strtotime($a_event['published_at'])), array(), 'apostrophe_blog') ?><br/>
+		<a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>		
+	<?php endif ?>
 
 	<div class="post-published-at option">
 	  <?php echo $form['published_at']->render(array('date' => array('onClose' => 'aBlogUpdateMulti'))) ?>
@@ -38,16 +40,15 @@
 </div>
 
 
-
 <?php // Event Date Range ?>
 <hr />
 <div class="event-date section">
-	<h4>Start Date</h4>
+	<h4><?php echo __('Event Start', array(),'apostrophe_blog') ?></h4>
 	<div class="start_date">
 		<?php echo $form['start_date']->render(array('date' => array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti'))) ?>
 		<?php echo $form['start_date']->renderError() ?>					
 	</div>
-	<h4>End Date</h4>
+	<h4><?php echo __('Event End', array(), 'apostrophe_blog') ?></h4>
 	<div class="end_date">
 		<?php echo $form['end_date']->render(array('date' => array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti'))) ?>
 		<?php echo $form['end_date']->renderError() ?>					
