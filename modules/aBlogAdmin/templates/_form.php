@@ -33,10 +33,10 @@
 	  <?php echo $form['status']->render() ?>
 	</div>
 
-	<?php if ($a_event['status'] != 'published'): ?>
+	<?php if ($a_blog_post['status'] != 'published'): ?>
 		<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
 	<?php else: ?>
-		<?php echo __('Published on '.date('D, M d Y', strtotime($a_event['published_at'])), array(), 'apostrophe_blog') ?><br/>
+		<?php echo __('Published on '.aDate::medium(strtotime($a_blog_post['published_at'])), array(), 'apostrophe_blog') ?><br/>
 		<a href="#" onclick="return false;" class="post-date-toggle a-sidebar-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>		
 	<?php endif ?>
 
