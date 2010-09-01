@@ -404,6 +404,18 @@ color: #999;
 background: none !important;
 }
 
+.a-admin-sidebar .post-published.published span.draft,
+.a-admin-sidebar .post-published.draft span.published
+{
+	display: none;
+}
+
+.a-admin-sidebar .post-published.draft span.draft,
+.a-admin-sidebar .post-published.published span.published
+{
+	display: block;
+}
+
 .a-admin-sidebar .section.author .author_id.option,
 .a-admin-sidebar .section.author #a_blog_item_editors_list
 {

@@ -24,6 +24,7 @@ function aBlogUpdateForm(slug_url, event)
 				aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
 	      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
 				// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
+				aBlogPublishedAt(data.aBlogPost.status);
 				aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.time)	;
 				aBlogItemTitle();				
 
@@ -394,6 +395,10 @@ function aBlogSetDateRange(a)
 	return {  
 		 minDate: c  
 	}  	
+}
+
+function aBlogPublishedAt(status) {
+ $('.post-published').removeClass('published').removeClass('draft').addClass(status);
 }
 
 function aPopularTags(tagList, recommendedTags)

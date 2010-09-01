@@ -28,6 +28,10 @@
 	      $(this).toggleClass('open').next().toggle();
 	    })
 
+			$('.post-date-toggle').click(function(){
+	      $(this).toggleClass('open').parent().siblings('.option').toggle();				
+			});
+
 			// Comments Toggle
 			// =============================================
 			$('.section.comments a.allow_comments_toggle').click(function(event){

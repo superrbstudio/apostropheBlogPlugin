@@ -23,6 +23,10 @@
 	    $('.a-sidebar-toggle').click(function(){
 	      $(this).toggleClass('open').next().toggle();
 	    })
+	
+			$('.post-date-toggle').click(function(){
+	      $(this).toggleClass('open').parent().siblings('.option').toggle();				
+			});
 
 			// Comments Toggle
 			// =============================================
