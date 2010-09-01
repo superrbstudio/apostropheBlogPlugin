@@ -396,6 +396,10 @@ function aBlogSetDateRange(a)
 	}  	
 }
 
+function aBlogPublishedAt(status) {
+ $('.post-published').removeClass('published').removeClass('draft').addClass(status);
+}
+
 function aPopularTags(tagList, recommendedTags)
 {
 	// tagList is a jquery object for the input that contains the list of tags
