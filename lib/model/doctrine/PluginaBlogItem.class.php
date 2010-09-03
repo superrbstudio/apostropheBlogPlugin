@@ -497,4 +497,13 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
     return $this->engineSlug;
   }
+
+  public function getRoutingParams($bestEngine = true)
+  {
+    $params = array('year' => $this->getYear(), 'month' => $this->getMonth(), 'day' => $this->getDay(), 'slug' => $this->getSlug());
+    if($bestEngine)
+      $params['engine-slug'] = $this->getEngineSlug();
+
+    return $params;
+  }
 }

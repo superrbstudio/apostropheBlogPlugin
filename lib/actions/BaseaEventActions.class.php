@@ -22,7 +22,12 @@ abstract class BaseaEventActions extends BaseaBlogActions
   
 	public function executeIndex(sfWebRequest $request)
 	{
-		parent::executeIndex($request);	
+		parent::executeIndex($request);
+    if($this->getRequestParameter('feed', false))
+    {
+      $this->getFeed();
+      return sfView::NONE;
+    }
 		if (sfConfig::get('app_aEvents_display_calendar'))
 		{
 			$this->calendar = $this->buildCalendar($request);			
@@ -46,8 +51,19 @@ abstract class BaseaEventActions extends BaseaBlogActions
 
   protected function buildQuery($request)
   {
-    $q = parent::buildQuery($request);
-    Doctrine::getTable('aEvent')->addUpcoming($q);
+    $q = $this->filterByPageCategory();
+
+    if($request->hasParameter('year'))
+      Doctrine::getTable($this->modelClass)->filterByYMD($request->getParameter('year'), $request->getParameter('month'), $request->getParameter('day'), $q);
+    else
+      Doctrine::getTable('aEvent')->addUpcoming($q);
+    if($request->hasParameter('cat'))
+      Doctrine::getTable($this->modelClass)->filterByCategory($request->getParameter('cat'), $q);
+    if($request->hasParameter('tag'))
+      Doctrine::getTable($this->modelClass)->filterByTag($request->getParameter('tag'), $q);
+    Doctrine::getTable($this->modelClass)->addPublished($q);
+    $q->orderBy('published_at desc');
+
     return $q;
   }
   

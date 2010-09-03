@@ -10,32 +10,34 @@ class PluginaBlogItemTable extends Doctrine_Table
     return Doctrine_Core::getTable('aBlogItem');
   }
   
-  public function filterByYMD(Doctrine_Query $q, sfWebRequest $request)
+  public function filterByYMD($year=null, $month=null, $day=null, $q=null)
   {
+    if(!$year && !$month && !$day)
+      return $q;
+    
     $rootAlias = $q->getRootAlias();
     
-    $sYear = $request->getParameter('year', 0);
-    $sMonth = $request->getParameter('month', 0);
-    $sDay = $request->getParameter('day', 0);
+    $sYear = isset($year)? $year : 0;
+    $sMonth = isset($month)? $month : 0;
+    $sDay = isset($day)? $day : 0;
     $startDate = "$sYear-$sMonth-$sDay 00:00:00";
     
-    $eYear = $request->getParameter('year', 3000);
-    $eMonth = $request->getParameter('month', 12);
-    $eDay = $request->getParameter('day', 31);
+    $eYear = isset($year)? $year : 3000;
+    $eMonth = isset($month)? $month : 12;
+    $eDay = isset($day)? $day : 31;
     $endDate = "$eYear-$eMonth-$eDay 23:59:59";
     
     $q->addWhere($rootAlias.'.published_at BETWEEN ? AND ?', array($startDate, $endDate));
   }
   
-  public function filterByCategory(Doctrine_Query $q, sfWebRequest $request)
+  public function filterByCategory($category_id, Doctrine_Query $q)
   {
-    $rootAlias = $q->getRootAlias();
-    $q->addWhere('c.name = ?', $request->getParameter('cat'));
+    $q->addWhere('c.name = ?', $category_id);
   }
   
-  public function filterByTag(Doctrine_Query $q, sfWebRequest $request)
+  public function filterByTag($tag, Doctrine_Query $q)
   {
-    PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $request->getParameter('tag'), $q, array('nb_common_tag' => 1));
+    PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $tag, $q, array('nb_common_tag' => 1));
   }
 
   public function filterByEditable(Doctrine_Query $q, $user_id = null)
@@ -70,13 +72,26 @@ class PluginaBlogItemTable extends Doctrine_Table
     return Doctrine::getTable('aBlogCategory')->addCategoriesForUser($user, $admin, $q);
   }
 
-
   public function addCategories(Doctrine_Query $q=null)
   {
     if(is_null($q))
       $q = Doctrine::getTable('aBlogCategory')->createQuery();
       
     $q->andwhere('aBlogCategory.'.$this->categoryColumn .'= ?', true);
+    return $q;
+  }
+
+  public function filterByCategories($categories, $q)
+  {
+    $categoryIds = array();
+    foreach($categories as $blogCategory)
+    {
+      $categoryIds[] = $blogCategory['id'];
+    }
+    if(count($categoryIds))
+    {
+      $q->whereIn('c.id', $categoryIds);
+    }
     return $q;
   }
 

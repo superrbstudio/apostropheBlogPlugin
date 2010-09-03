@@ -15,6 +15,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function preExecute()
   {
     parent::preExecute();
+    $this->blogCategories = aBlogCategoryTable::getCategoriesForPage($this->page);
     if(sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
@@ -22,35 +23,26 @@ abstract class BaseaBlogActions extends aEngineActions
     }
   }
 
-  protected function buildQuery($request)
+  protected function filterByPageCategory()
   {
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
-    $categoryIds = array();
-    $this->blogCategories = aBlogCategoryTable::getCategoriesForPage($this->page);
-    foreach($this->page->BlogCategories as $blogCategory)
-    {
-      $categoryIds[] = $blogCategory['id'];
-    }
-    if(count($categoryIds))
-    {
-      $q->whereIn('c.id', $categoryIds);
-    }
+    Doctrine::getTable($this->modelClass)->filterByCategories($this->blogCategories, $q);
+    
+    return $q;
+  }
 
-    if($request->hasParameter('year') || $request->hasParameter('month') || $request->hasParameter('day'))
-    {
-      Doctrine::getTable($this->modelClass)->filterByYMD($q, $request);
-    }
+  protected function buildQuery($request)
+  {
+    $q = $this->filterByPageCategory();
+
+    if($request->hasParameter('year'))
+      Doctrine::getTable($this->modelClass)->filterByYMD($request->getParameter('year'), $request->getParameter('month'), $request->getParameter('day'), $q);
     if($request->hasParameter('cat'))
-    {
-      Doctrine::getTable($this->modelClass)->filterByCategory($q, $request);
-    }
+      Doctrine::getTable($this->modelClass)->filterByCategory($request->getParameter('cat'), $q);
     if($request->hasParameter('tag'))
-    {
-      Doctrine::getTable($this->modelClass)->filterByTag($q, $request);
-    }
-
+      Doctrine::getTable($this->modelClass)->filterByTag($request->getParameter('tag'), $q);
     Doctrine::getTable($this->modelClass)->addPublished($q);
     $q->orderBy('published_at desc');
 

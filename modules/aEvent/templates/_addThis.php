@@ -4,7 +4,7 @@
 ?>
 <?php if ($addthis_username = sfConfig::get('app_aBlog_add_this')): ?>
 	<!-- AddThis Button BEGIN -->
-  <?php aRouteTools::pushTargetEnginePage($aEvent->findBestEngine()) ?>
+  <?php aRouteTools::pushTargetEngineSlug($aEvent->getEngineSlug(), 'aEvent') ?>
 	<div class="addthis_toolbox addthis_default_style">
 		<a href="http://addthis.com/bookmark.php?v=250&amp;username=<?php echo $addthis_username ?>" class="addthis_button_compact"
 			addthis:url="<?php echo url_for('a_event', $aEvent, true) ?>"
