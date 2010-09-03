@@ -55,7 +55,8 @@ abstract class BaseaEventActions extends BaseaBlogActions
   protected function buildQuery($request)
   {
     $q = parent::buildQuery($request);
-    Doctrine::getTable('aEvent')->addUpcoming($q);
+    if(!$request->hasParameter('year', false))
+      Doctrine::getTable('aEvent')->addUpcoming($q);
     return $q;
   }
   
