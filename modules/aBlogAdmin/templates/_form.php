@@ -36,15 +36,12 @@
 			<a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>		
 		</span>
 		<div class="post-published-at option">
-		  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
-		  <?php echo $form['published_at']->renderError() ?>
+	  <?php echo $form['published_at']->render(array('date' => array('onClose' => 'aBlogUpdateMulti'))) ?>
+	  <?php echo $form['published_at']->renderError() ?>
 		</div>
 	</div>
 
-	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render(array('date' => array('onClose' => 'aBlogUpdateMulti'))) ?>
-	  <?php echo $form['published_at']->renderError() ?>
-	</div>
+	
 </div>
 
 
