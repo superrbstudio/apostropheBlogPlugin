@@ -965,3 +965,7 @@ clear: none;
 	text-decoration: none;
 	padding-right: 4px;
 }
+
+/* This fixes a bug where the area div covers the elements above it 
+	causing edit buttons to be not clickable */
+.a-blog.index .a-content .a-area { display: inline-block !important; }
