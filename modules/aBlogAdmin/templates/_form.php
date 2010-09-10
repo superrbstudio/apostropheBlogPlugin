@@ -60,10 +60,8 @@
   	<h4><?php echo __('Author', array(), 'apostrophe') ?>:
 			<?php if (isset($form['author_id'])): ?>
 				</h4>
-				<div class="author_id option">
 				<?php echo $form['author_id']->render() ?>
 				<?php echo $form['author_id']->renderError() ?>
-				</div>
 			<?php else: ?>
 				<span><?php echo $a_blog_post->Author ?></span></h4>
 			<?php endif ?>

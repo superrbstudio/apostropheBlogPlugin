@@ -23,8 +23,10 @@ width: 100%;
 width: 720px;
 }
 
-.a-admin.a-blog-admin .a-subnav-wrapper
+.a-admin.a-blog-admin .a-admin-navigation
 {
+overflow: hidden;
+clear: both;
 width: 100%;
 background: none;
 -moz-box-shadow: none;
@@ -33,7 +35,7 @@ box-shadow: none;
 margin: 0 0 10px 0;
 }
 
-.a-admin.a-blog-admin.edit  .a-subnav-wrapper
+.a-admin.a-blog-admin.edit  .a-admin-navigation
 {
 	padding-bottom: 20px;
 	background: transparent url(/apostropheBlogPlugin/images/a-blog-td-bg.png) 0 bottom repeat-x;
@@ -45,12 +47,6 @@ margin: 0 0 10px 0;
 {
 	margin-top: -8px;
 	padding-top: 20px;
-}
-
-.a-admin.a-blog-admin .a-subnav-inner
-{
-	width: auto;
-	padding: 0;
 }
 
 a.all-posts-btn
