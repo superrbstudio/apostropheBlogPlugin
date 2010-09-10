@@ -12,19 +12,17 @@
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 
 	<?php slot('a-subnav') ?>
-		<div class="a-subnav-wrapper blog">
-			<div class="a-subnav-inner">
-				<ul class="a-ui a-controls a-admin-action-controls">
-					<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="a-btn big alt"><?php echo __('View All Events', array(), 'apostrophe') ?></a></li>
-	         <?php include_partial('list_actions', array('helper' => $helper)) ?>
-				</ul>
-			  <?php include_partial('aEventAdmin/form_bar') ?>				
-				<div class="a-admin-title-sentence">
-					<h3 class="new-item"><?php echo __('You are creating a new event.', array(), 'apostrophe') ?></h3>
-					<h3 class="draft-item"><?php echo __('You are working on a draft event.', array(), 'apostrophe') ?></h3>					
-					<h3 class="published-item"><?php echo __('You are editing a published event.', array(), 'apostrophe') ?></h3>
-					<span class="flash-message"> <?php echo __('Event Saved at', array(), 'apostrophe') ?></span>
-				</div>
+		<div class="a-admin-navigation">
+			<ul class="a-ui a-controls a-admin-action-controls">
+				<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="a-btn big"><?php echo __('View All Events', array(), 'apostrophe') ?></a></li>
+         <?php include_partial('list_actions', array('helper' => $helper)) ?>
+			</ul>
+		  <?php include_partial('aEventAdmin/form_bar') ?>				
+			<div class="a-admin-title-sentence">
+				<h3 class="new-item"><?php echo __('You are creating a new event.', array(), 'apostrophe') ?></h3>
+				<h3 class="draft-item"><?php echo __('You are working on a draft event.', array(), 'apostrophe') ?></h3>					
+				<h3 class="published-item"><?php echo __('You are editing a published event.', array(), 'apostrophe') ?></h3>
+				<span class="flash-message"> <?php echo __('Event Saved at', array(), 'apostrophe') ?></span>
 			</div>
 	  </div>
 	<?php end_slot() ?>
@@ -66,10 +64,12 @@
 
   </div>
 
-  <div class="a-admin-sidebar">
-    <div id='a-ui a-admin-blog-post-form'>
-    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form)) ?>
-    </div>
+  <div class="a-subnav-wrapper a-admin-sidebar">
+		<div class="a-subnav-inner">
+	    <div id='a-ui a-admin-blog-post-form'>
+	    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form)) ?>
+	    </div>
+		</div>
   </div>
 
 	<?php if (isset($a_event['updated_at'])): ?>

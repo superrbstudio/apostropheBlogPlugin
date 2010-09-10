@@ -12,7 +12,7 @@
 <div class="a-admin-container <?php echo $sf_params->get('module') ?>">
 
 	<?php slot('a-subnav') ?>
-		<div class="a-admin-navigation blog">
+		<div class="a-admin-navigation">
 			<ul class="a-ui a-controls a-admin-action-controls">
 				<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="a-btn big"><?php echo __('View All Posts', array(), 'apostrophe') ?></a></li>
          <?php include_partial('list_actions', array('helper' => $helper)) ?>
