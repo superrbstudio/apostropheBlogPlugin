@@ -9,31 +9,37 @@
 <?php include_partial('assets') ?>
 <?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
 
-<div class="a-admin-container <?php echo $sf_params->get('module') ?>">
+<?php slot('a-subnav') ?>
+<div class="a-subnav-wrapper a-admin-sidebar">
+	<div class="a-subnav-inner">
+  	<div id='a-ui a-admin-blog-post-form'>
+    <?php include_partial('form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
+    </div>
+	</div>
+</div>
+<?php end_slot() ?>
 
-	<?php slot('a-subnav') ?>
-		<div class="a-admin-navigation">
-			<ul class="a-ui a-controls a-admin-action-controls">
-				<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="a-btn big"><?php echo __('View All Posts', array(), 'apostrophe') ?></a></li>
-         <?php include_partial('list_actions', array('helper' => $helper)) ?>
-			</ul>
-		  <?php include_partial('aBlogAdmin/form_bar') ?>
-			<div class="a-admin-title-sentence">
-				<h3 class="new-item"><?php echo __('You are creating a new post.', array(), 'apostrophe') ?></h3>
-				<h3 class="draft-item"><?php echo __('You are working on a draft post.', array(), 'apostrophe') ?></h3>
-				<h3 class="published-item"><?php echo __('You are editing a published post.', array(), 'apostrophe') ?></h3>
-				<span class="flash-message"> <?php echo __('Post Saved at', array(), 'apostrophe') ?></span>
-			</div>
-	  </div>
-	<?php end_slot() ?>
+<?php slot('a-page-header') ?>
+<div class="a-admin-header">
+	<ul class="a-ui a-controls a-admin-controls">
+		<li><a href="<?php echo url_for('@a_blog_admin'); ?>" class="a-btn big"><?php echo __('View All Posts', array(), 'apostrophe') ?></a></li>
+       <?php include_partial('list_actions', array('helper' => $helper)) ?>
+	</ul>
+  <?php include_partial('aBlogAdmin/form_bar') ?>
+	<div class="a-admin-title-sentence">
+		<h3 class="new-item"><?php echo __('You are creating a new post.', array(), 'apostrophe') ?></h3>
+		<h3 class="draft-item"><?php echo __('You are working on a draft post.', array(), 'apostrophe') ?></h3>
+		<h3 class="published-item"><?php echo __('You are editing a published post.', array(), 'apostrophe') ?></h3>
+		<span class="flash-message"> <?php echo __('Post Saved at', array(), 'apostrophe') ?></span>
+	</div>
+ </div>
+<?php end_slot() ?>
+
+<div class="a-ui a-admin-container <?php echo $sf_params->get('module') ?>">
 
   <?php include_partial('flashes') ?>
 
 	<div class="a-admin-content main">
-
-		<?php if (0): ?> <?php // We aren't using status messages right now ?>
-			<dl id="a-blog-item-status-messages"></dl>
-		<?php endif ?>
 
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
@@ -64,13 +70,6 @@
 
   </div>
 
-  <div class="a-subnav-wrapper a-admin-sidebar">
-		<div class="a-subnav-inner">
-    	<div id='a-ui a-admin-blog-post-form'>
-	    <?php include_partial('form', array('a_blog_post' => $a_blog_post, 'form' => $form)) ?>
-	    </div>
-		</div>
-  </div>
 
 	<?php if (isset($a_blog_post['updated_at'])): ?>
 		<div id="post-last-saved" class="post-updated-at option">

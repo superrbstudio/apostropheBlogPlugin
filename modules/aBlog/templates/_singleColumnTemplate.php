@@ -18,9 +18,9 @@
   'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
   'type_options' => array(
     'aRichText' => array('tool' => 'Main'),   
-    'aSlideshow' => array("width" => 680, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 680)),
-		'aVideo' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'), 
-		'aPDF' => array('width' => 680, 'flexHeight' => true, 'resizeType' => 's'),				
+    'aSlideshow' => array("width" => 720, "flexHeight" => true, 'resizeType' => 's', 'constraints' => array('minimum-width' => 720)),
+		'aVideo' => array('width' => 720, 'flexHeight' => true, 'resizeType' => 's'), 
+		'aPDF' => array('width' => 720, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
 <?php include_partial('aBlog/addThis', array('aBlogPost' => $a_blog_post)) ?>
