@@ -20,14 +20,12 @@ $(document).ready(function(){
 </script>
 
 [?php slot('a-subnav') ?]
-<div class="a-subnav-wrapper blog">
-  <div class="a-subnav-inner">
-    <ul class="a-ui a-controls a-admin-action-controls">
-			<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="a-btn big all-posts-btn">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe') ?]</a></li>	
-      [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
-    </ul>
-	  [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
-  </div> 
+<div class="a-admin-navigation">
+	<ul class="a-ui a-controls a-admin-action-controls">
+		<li><a href="[?php echo url_for('@<?php echo $this->params['route_prefix']; ?>'); ?]" class="a-btn big all-posts-btn">[?php echo __('<?php echo $this->configuration->getValue('list.title') ?>', array(), 'apostrophe') ?]</a></li>	
+    [?php include_partial('<?php echo $this->getModuleName() ?>/list_actions', array('helper' => $helper)) ?]   
+  </ul>
+  [?php include_partial('<?php echo $this->getModuleName() ?>/list_bar', array('filters' => $filters, 'configuration' => $configuration)) ?]
 </div>
 [?php end_slot() ?]
 
