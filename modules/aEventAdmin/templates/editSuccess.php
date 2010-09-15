@@ -13,7 +13,7 @@
   <div class="a-subnav-wrapper a-admin-sidebar">
 		<div class="a-subnav-inner">
 	    <div id='a-ui a-admin-blog-post-form'>
-	    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form)) ?>
+	    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form, 'popularTags' => $popularTags, 'existingTags' => $existingTags)) ?>	
 	    </div>
 		</div>
   </div>

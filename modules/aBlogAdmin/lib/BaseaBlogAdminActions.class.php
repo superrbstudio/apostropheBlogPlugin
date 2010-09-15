@@ -107,6 +107,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
+		$this->getResponse()->addJavascript('/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js','last');
+	
     if($this->getUser()->hasCredential('admin'))
     {
       $this->a_blog_post = $this->getRoute()->getObject();
@@ -117,6 +119,11 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
     $this->forward404Unless($this->a_blog_post);
     $this->form = $this->configuration->getForm($this->a_blog_post);
+
+		// Retrieve the tags currently assigned to the blog post for the inlineTaggableWidget
+		$this->existingTags = $this->form->getObject()->getTags();
+		// Retrieve the 10 most popular tags for the inlineTaggableWidget
+    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true, 'limit' => 10));
 
     aBlogItemTable::populatePages(array($this->a_blog_post));
   }

@@ -107,8 +107,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
-    //$this->widgetSchema['tags']       = new sfWidgetFormInput(array('default' => implode(', ', $this->getObject()->getTags())), array('class' => 'tag-input', 'autocomplete' => 'off'));
-    //$this->validatorSchema['tags']    = new sfValidatorString(array('required' => false));
+		$tagstring = implode(', ', $this->getObject()->getTags());  // added a space after the comma for readability
+		// class tag-input enabled for typeahead support
+    $this->widgetSchema['tags'] = new sfWidgetFormInput(array('default' => $tagstring), array('class' => 'tags-input', 'autocomplete' => 'off', 'id' => 'a-blog-post-tags-input'));
+    $this->validatorSchema['tags'] = new sfValidatorString(array('required' => false));
 
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'postValidator')))

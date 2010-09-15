@@ -115,6 +115,9 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
+		$this->getResponse()->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last');
+		$this->getResponse()->addJavascript('/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js','last');
+
     if($this->getUser()->hasCredential('admin'))
     {
       $this->a_event = $this->getRoute()->getObject();
@@ -125,6 +128,12 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
     $this->forward404Unless($this->a_event);
     $this->form = $this->configuration->getForm($this->a_event);
+
+		// Retrieve the tags currently assigned to the event for the inlineTaggableWidget
+		$this->existingTags = $this->form->getObject()->getTags();
+		// Retrieve the 10 most popular tags for the inlineTaggableWidget
+    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aEvent', 'sort_by_popularity' => true, 'limit' => 10));
+
     aBlogItemTable::populatePages(array($this->a_event));
   }
 

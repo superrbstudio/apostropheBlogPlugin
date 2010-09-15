@@ -2,17 +2,18 @@
   // Compatible with sf_escaping_strategy: true
   $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
   $form = isset($form) ? $sf_data->getRaw('form') : null;
+  $popularTags = isset($popularTags) ? $sf_data->getRaw('popularTags') : null;
+  $existingTags = isset($existingTags) ? $sf_data->getRaw('existingTags') : null;
 ?>
-<?php use_helper('I18N','jQuery') ?>
 
-<?php $sf_response->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last') ?>
+<?php use_helper('a') ?>
 
 <?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'a-ui blog')) ?>
 
 <?php if (!$form->getObject()->isNew()): ?><input type="hidden" name="sf_method" value="PUT" /><?php endif; ?>
 
 <div class="a-hidden">
-<?php echo $form->renderHiddenFields() ?>
+	<?php echo $form->renderHiddenFields() ?>
 </div>
 
 <?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
@@ -22,9 +23,8 @@
   <?php echo $form['slug']->renderError() ?>
 </div>
 
-
 <?php // Huge Publish Button and Publish Date ?>
-<div class="published section">
+<div class="published section a-form-row">
 	<a href="#" class="a-btn big a-publish-post <?php echo ($a_event['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
 	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe') ?></span>
 	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe') ?></span>
@@ -60,7 +60,7 @@
 
 <?php // Event Date Range ?>
 <hr />
-<div class="event-date section">
+<div class="event-date section a-form-row">
 	<h4>Start Date</h4>
 	<div class="start_date">
 		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
@@ -81,7 +81,7 @@
 
 <?php // Author & Editors Section ?>
 <hr />
-<div class="author section">
+<div class="author section a-form-row">
 
 	<?php // Blog Post Author ?>
 	<div class="post-author">
@@ -144,7 +144,7 @@
 
 	<?php // Blog Post Categories ?>
 	<hr />
-	<div class="categories section" id="categories-section">
+	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo __('Categories', array(), 'apostrophe') ?></h4>
 		<?php if($sf_user->hasCredential('admin')): ?>
 			<?php echo link_to('edit categories','@a_blog_category_admin', array('class' => 'edit-categories', )) ?>
@@ -152,20 +152,21 @@
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
 	</div>
-</form>
 
-	<?php // Event Tags ?>
-	<hr/>
-	<div class="tags section">
-		<?php include_component('taggableComplete','tagWidget', array('object' => $form->getObject())) ?>
+	<?php // Blog Post Tags ?>
+	<hr />
+	<div class="tags section a-form-row">
+		<?php echo $form['tags']->render() ?>
+		<?php echo $form['tags']->renderError() ?>
+		<?php a_js_call('aInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tagsLabel' => 'Tags')) ?>
 	</div>
 
 	<?php if($a_event->userHasPrivilege('delete')): ?>
-	<hr />
-	<div class="delete section">
-	<?php echo link_to('Delete this event', 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete no-bg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this event?', array(), 'apostrophe'), )) ?>
-	</div>
+		<hr />
+		<div class="delete section a-form-row">
+		<?php echo link_to('Delete this event', 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete no-bg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this event?', array(), 'apostrophe'), )) ?>
+		</div>
 	<?php endif ?>
 
-
+</form>
 <?php include_partial('formScripts', array('a_event' => $a_event, 'form' => $form)) ?>
