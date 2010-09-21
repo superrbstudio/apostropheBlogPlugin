@@ -24,6 +24,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     {
       $this->dispatcher->connect('a.getGlobalButtons', array('apostropheBlogPluginConfiguration', 
         'getGlobalButtons'));
+      $this->dispatcher->connect('command.post_command', array('aBlogEvents',  'listenToCommandPostCommandEvent'));
       self::$registered = true;
     }
   }
