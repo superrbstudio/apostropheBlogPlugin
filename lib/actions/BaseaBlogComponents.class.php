@@ -31,7 +31,7 @@ abstract class BaseaBlogComponents extends sfComponents
 
     if(is_null($this->categories) || !count($this->categories))
     {
-      $this->categories = Doctrine::getTable('aBlogCategory')
+      $this->categories = Doctrine::getTable('aCategory')
         ->createQuery('c')
         ->addWhere('c.posts = ?', true)
         ->orderBy('c.name')
@@ -44,8 +44,8 @@ abstract class BaseaBlogComponents extends sfComponents
       $categoryIds[] = $category['id'];
     }
 
-    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
-    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
+    $this->popular = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
+    $this->tags = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aBlogPost');
 
     if($this->reset == true)
     {

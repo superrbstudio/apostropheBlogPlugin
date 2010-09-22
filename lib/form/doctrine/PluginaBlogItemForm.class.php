@@ -137,19 +137,19 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $values = array();
     foreach ($values as $value)
     {
-      $existing = Doctrine::getTable('aBlogCategory')->findOneBy('name', $value);
+      $existing = Doctrine::getTable('aCategory')->findOneBy('name', $value);
       if($existing)
       {
-        $aBlogCategory = $existing;
+        $aCategory = $existing;
       }
       else
       {
-        $aBlogCategory = new aBlogCategory();
-        $aBlogCategory['name'] = $value;
+        $aCategory = new aCategory();
+        $aCategory['name'] = $value;
       }
-      $aBlogCategory[$this->categoryColumn] = true;
-      $aBlogCategory->save();
-      $link[] = $aBlogCategory['id'];
+      $aCategory[$this->categoryColumn] = true;
+      $aCategory->save();
+      $link[] = $aCategory['id'];
     }
     if(!is_array($this->values['categories_list']))
     {
@@ -194,10 +194,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $link = array();
     foreach ($values as $value)
     {
-      $aBlogCategory = new aBlogCategory();
-      $aBlogCategory['name'] = $value;
-      $aBlogCategory->save();
-      $link[] = $aBlogCategory['id'];
+      $aCategory = new aCategory();
+      $aCategory['name'] = $value;
+      $aCategory->save();
+      $link[] = $aCategory['id'];
     }
 
     if (count($link))

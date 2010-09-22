@@ -27,9 +27,36 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
       // This was inadvertently removed just prior to 1.4. Now apostrophe:migrate hooks up properly again
       $this->dispatcher->connect('command.post_command', array('aBlogEvents',  
         'listenToCommandPostCommandEvent'));
+      $this->dispatcher->connect('apostrophe.get_categorizables', array($this, 'listenToGetCategorizables'));
+      $this->dispatcher->connect('apostrophe.get_count_by_category', array($this, 'listenToGetCountByCategory'));
+      
       self::$registered = true;
     }
   }
+
+  public function listenToGetCategorizables($event, $results)
+  {
+    // You must play nice and append to what is already there
+    $results['aEvent'] = array('class' => 'aEvent', 'name' => 'Events');
+    $results['aBlogPost'] = array('class' => 'aBlogPost', 'name' => 'Blog Posts');
+    return $results;
+  }
+  
+  // Also includes the above info so we know what the result is referring to
+  public function listenToGetCountByCategory($event, $results)
+  {
+    // You must play nice and append to what is already there
+    $info = array('class' => 'aEvent', 'name' => 'Events');
+    $counts = Doctrine::getTable('aEvent')->getCountByCategory();
+    $info['counts'] = $counts;
+    $results['aEvent'] = $info;
+    $info = array('class' => 'aBlogPost', 'name' => 'Blog Posts');
+    $counts = Doctrine::getTable('aBlogPost')->getCountByCategory();
+    $info['counts'] = $counts;
+    $results['aBlogPost'] = $info;
+    return $results;
+  }
+
   
   static public function getGlobalButtons()
   {

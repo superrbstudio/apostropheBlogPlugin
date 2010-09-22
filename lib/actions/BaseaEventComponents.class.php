@@ -30,7 +30,7 @@ abstract class BaseaEventComponents extends sfComponents
     
     if(!count($this->categories) || is_null($this->categories))
     {
-      $this->categories = Doctrine::getTable('aBlogCategory')
+      $this->categories = Doctrine::getTable('aCategory')
         ->createQuery('c')
         ->orderBy('c.name')
         ->where('c.events = ?', true)
@@ -43,8 +43,8 @@ abstract class BaseaEventComponents extends sfComponents
       $categoryIds[] = $category['id'];
     }
 
-    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aEvent', true, 10);
-    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aEvent');
+    $this->popular = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aEvent', true, 10);
+    $this->tags = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aEvent');
 
     if($this->reset == true)
     {

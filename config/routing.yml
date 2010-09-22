@@ -287,19 +287,6 @@ a_blog_admin_addFilter:
   param: { module: aBlogAdmin, action: addFilter }
   class: sfRoute
 
-a_blog_category_admin:
-  class: sfDoctrineRouteCollection
-  options:
-    model:               aBlogCategory
-    module:              aBlogCategoryAdmin
-    prefix_path:         admin/blog_categories
-    column:              id
-    with_wildcard_routes: true
-    collection_actions:
-      posts: get
-      events: get
-
-
 ################
 # event admin routes #
 ################

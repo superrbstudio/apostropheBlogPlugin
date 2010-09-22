@@ -1,13 +1,13 @@
 <?php
 
 /**
- * PluginaBlogCategoryUser form.
+ * PluginaCategory form.
  *
  * @package    ##PROJECT_NAME##
  * @subpackage form
  * @author     ##AUTHOR_NAME##
  * @version    SVN: $Id: sfDoctrineFormPluginTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-abstract class PluginaBlogCategoryUserForm extends BaseaBlogCategoryUserForm
+abstract class PluginaCategoryForm extends BaseaCategoryForm
 {
 }

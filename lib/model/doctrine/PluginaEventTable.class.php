@@ -49,7 +49,7 @@ class PluginaEventTable extends aBlogItemTable
     if(!isset(self::$engineCategoryCache))
     {
       $engines = Doctrine::getTable('aPage')->createQuery()
-        ->leftJoin('aPage.BlogCategories Categories')
+        ->leftJoin('aPage.Categories Categories')
         ->addWhere('engine = ?', 'aEvent')
         ->addWhere('admin != ?', true)
         ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
@@ -58,12 +58,23 @@ class PluginaEventTable extends aBlogItemTable
       foreach($engines as $engine)
       {
         $engineCache[$engine['slug']] = array();
-        foreach($engine['BlogCategories'] as $category)
+        foreach($engine['Categories'] as $category)
           $engineCache[$engine['slug']][] = $category['name'];
       }
       self::$engineCategoryCache = $engineCache;
     }
 
     return self::$engineCategoryCache;
+  }
+  
+  public function getCountByCategory()
+  {
+    $raw = Doctrine::getTable('aCategory')->createQuery('c')->innerJoin('c.aBlogItemToCategory etc')->innerJoin('etc.BlogItem b WITH b.type = ?', 'event')->select('c.name, c.slug, count(etc.blog_item_id) as num')->groupBy('etc.category_id')->orderBy('c.name ASC')->execute(array(), Doctrine::HYDRATE_ARRAY);
+    $results = array();
+    foreach ($raw as $info)
+    {
+      $results[$info['id']] = array('name' => $info['name'], 'slug' => $info['slug'], 'count' => $info['num']);
+    }
+    return $results;
   }
 }

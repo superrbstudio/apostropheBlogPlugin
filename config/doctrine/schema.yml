@@ -59,12 +59,10 @@ aBlogItem:
       onDelete: CASCADE
     Categories:
       foreignAlias: BlogItems
-      class: aBlogCategory
-      refClass: aBlogItemCategory
+      class: aCategory
+      refClass: aBlogItemToCategory
       local: blog_item_id
-      foreign: blog_category_id
-
-      
+      foreign: category_id
       
 aBlogEditor:
   columns:
@@ -86,12 +84,12 @@ aBlogEditor:
       local: user_id
       onDelete: CASCADE
       
-aBlogItemCategory:
+aBlogItemToCategory:
   columns:
     blog_item_id:
       type: integer(4)
       primary: true
-    blog_category_id:
+    category_id:
       type: integer(4)
       primary: true
   relations:
@@ -100,23 +98,17 @@ aBlogItemCategory:
       class: aBlogItem
       local: blog_item_id
       onDelete: CASCADE
-    BlogCategory:
+    Category:
       foreignAlias: BlogItemCategories
-      class: aBlogCategory
-      local: blog_category_id
+      class: aCategory
+      local: category_id
       onDelete: CASCADE
-      
-aBlogCategory:
+
+# Extend with more columns.
+# This plugin must now be loaded AFTER
+# the main apostrophePlugin
+aCategory:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    name:
-      type: string(255)
-      unique: true
-    description:
-      type: string
     posts:
       type: boolean
       default: false
@@ -124,92 +116,13 @@ aBlogCategory:
       type: boolean
       default: false
   relations:
-    Users:
-      foreignAlias: BlogCategories
-      class: sfGuardUser
-      refClass: aBlogCategoryUser
-      local: blog_category_id
-      foreign: user_id
-    Groups:
-      foreignAlias: BlogCategories
-      class: sfGuardGroup
-      refClass: aBlogCategoryGroup
-      local: blog_category_id
-      foreign: group_id      
     BlogItems:
       foreignAlias: BlogCategories
       class: aBlogItem
-      refClass: aBlogItemCategory
-      local: blog_category_id
+      refClass: aBlogItemToCategory
+      local: category_id
       foreign: blog_item_id
-    Pages:
-      class: aPage
-      local: blog_category_id
-      foreign: page_id
-      foreignAlias: BlogCategories
-      refClass: aBlogPageCategory
-      
-aBlogPageCategory:
-  tableName: a_blog_page_category
-  options:
-    symfony:
-      form:   false
-      filter: false
-  columns:
-    page_id:
-      type: integer(4)
-      primary: true
-    blog_category_id:
-      type: integer(4)
-      primary: true
-  relations:
-    aBlogCategory:
-      local: blog_category_id
-      onDelete: CASCADE
-    aPage:
-      local: page_id
-      onDelete: CASCADE
           
-aBlogCategoryUser:
-  columns:
-    blog_category_id:
-      type: integer(4)
-      primary: true
-    user_id:
-      type: integer(4)
-      primary: true
-  relations:
-    BlogCategory:
-      foreignAlias: BlogCategoryUsers
-      class: aBlogCategory
-      local: blog_category_id
-      onDelete: CASCADE
-    User:
-      foreignAlias: BlogCategoryUsers
-      class: sfGuardUser
-      local: user_id
-      onDelete: CASCADE
-    
-aBlogCategoryGroup:
-  columns:
-    blog_category_id:
-      type: integer(4)
-      primary: true
-    group_id:
-      type: integer(4)
-      primary: true
-  relations:
-    BlogCategory:
-      foreignAlias: BlogCategoryGroups
-      class: aBlogCategory
-      local: blog_category_id
-      onDelete: CASCADE
-    Group:
-      foreignAlias: BlogCategoryGroups
-      class: sfGuardGroup
-      local: group_id
-      onDelete: CASCADE
-
 aBlogPost:
   inheritance:
     extends: aBlogItem

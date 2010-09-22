@@ -91,7 +91,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
   public function executeCategories()
   {
-    $this->redirect('@a_blog_category_admin');
+    $this->redirect('@a_category_admin');
   }
 
   public function executeIndex(sfWebRequest $request)

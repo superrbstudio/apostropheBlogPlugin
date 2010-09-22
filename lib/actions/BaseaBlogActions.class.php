@@ -15,7 +15,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function preExecute()
   {
     parent::preExecute();
-    $this->blogCategories = aBlogCategoryTable::getCategoriesForPage($this->page);
+    $this->categories = aCategoryTable::getCategoriesForPage($this->page);
     if(sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
@@ -28,7 +28,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
-    Doctrine::getTable($this->modelClass)->filterByCategories($this->blogCategories, $q);
+    Doctrine::getTable($this->modelClass)->filterByCategories($this->categories, $q);
     
     return $q;
   }
@@ -79,7 +79,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aBlogPost = $this->getRoute()->getObject();
-    $this->blogCategories = $this->page->BlogCategories;
+    $this->categories = $this->page->Categories;
     $this->forward404Unless($this->aBlogPost);
     $this->forward404Unless($this->aBlogPost['status'] == 'published');
     aBlogItemTable::populatePages(array($this->aBlogPost));
