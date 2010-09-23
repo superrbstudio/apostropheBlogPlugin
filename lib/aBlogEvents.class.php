@@ -38,23 +38,32 @@ class aBlogEvents
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_category_id_a_category_id FOREIGN KEY (category_id) REFERENCES a_category(id) ON DELETE CASCADE;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id) ON DELETE CASCADE;"
         ));
-      $oldCategories = $migrate->query('SELECT name, description, slug, posts, events FROM a_blog_category');
-      $newCategories = $migrate->query('SELECT id, name, description, slug FROM a_category');
+      $oldCategories = $migrate->query('SELECT * FROM a_blog_category');
+      $newCategories = $migrate->query('SELECT * FROM a_category');
       $nc = array();
       foreach ($newCategories as $newCategory)
       {
         $nc[$newCategory['slug']] = $newCategory;
       }
+      $oldIdToNewId = array();
       foreach ($oldCategories as $category)
       {
         if (isset($nc[$category['slug']]))
         {
           $migrate->query('UPDATE a_category SET posts = :posts, events = :events WHERE slug = :slug', $category);
+          $oldIdtoNewId[$category['id']] = $nc[$category['slug']]['id'];
         }
         else
         {
           $migrate->query('INSERT INTO a_category (name, description, slug, posts, events) VALUES (:name, :description, :slug, :posts, :events)', $category);
+          $oldIdToNewId[$category['id']] = $migrate->lastInsertId();
         }
+      }
+      $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
+      foreach ($oldMappings as $info)
+      {
+        $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
+        $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
       }
     }
     
