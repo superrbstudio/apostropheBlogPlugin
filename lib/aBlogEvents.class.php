@@ -27,38 +27,60 @@ class aBlogEvents
 "        ALTER TABLE a_blog_editor ADD CONSTRAINT a_blog_editor_user_id_sf_guard_user_id FOREIGN KEY (user_id) REFERENCES sf_guard_user(id);",
 "        ALTER TABLE a_blog_editor ADD CONSTRAINT a_blog_editor_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id);",
 "        ALTER TABLE a_blog_item ADD CONSTRAINT a_blog_item_page_id_a_page_id FOREIGN KEY (page_id) REFERENCES a_page(id) ON DELETE CASCADE;",
-"        ALTER TABLE a_blog_item ADD CONSTRAINT a_blog_item_author_id_sf_guard_user_id FOREIGN KEY (author_id) REFERENCES sf_guard_user(id) ON DELETE SET NULL;",
+"        ALTER TABLE a_blog_item ADD CONSTRAINT a_blog_item_author_id_sf_guard_user_id FOREIGN KEY (author_id) REFERENCES sf_guard_user(id) ON DELETE SET NULL;"
+      ));
+    }
+    
+    if (!$migrate->columnExists('a_blog_item', 'start_time'))
+    {
+      $migrate->sql(array(
+        'ALTER TABLE a_blog_item ADD COLUMN start_time TIME',
+        'ALTER TABLE a_blog_item ADD COLUMN end_time TIME'));
+    }
+    
+    if (!$migrate->tableExists('a_page_to_category'))
+    {
+      $migrate->sql(array(
+        "CREATE TABLE a_page_to_category (page_id INT, category_id INT, PRIMARY KEY(page_id, category_id)) ENGINE = INNODB;"
       ));
     }
     
     if (!$migrate->tableExists('a_blog_item_to_category'))
     {
       $migrate->sql(array(
+        "ALTER TABLE a_category ADD COLUMN posts TINYINT default false;",
+        "ALTER TABLE a_category ADD COLUMN events TINYINT default false;",
         "CREATE TABLE a_blog_item_to_category (blog_item_id INT, category_id INT, PRIMARY KEY(blog_item_id, category_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = INNODB;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_category_id_a_category_id FOREIGN KEY (category_id) REFERENCES a_category(id) ON DELETE CASCADE;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id) ON DELETE CASCADE;"
         ));
+      echo("Migrating blog categories to Apostrophe categories...\n");
+        
       $oldCategories = $migrate->query('SELECT * FROM a_blog_category');
       $newCategories = $migrate->query('SELECT * FROM a_category');
       $nc = array();
       foreach ($newCategories as $newCategory)
       {
-        $nc[$newCategory['slug']] = $newCategory;
+        $nc[$newCategory['name']] = $newCategory;
       }
       $oldIdToNewId = array();
       foreach ($oldCategories as $category)
       {
-        if (isset($nc[$category['slug']]))
+        if (isset($nc[$category['name']]))
         {
-          $migrate->query('UPDATE a_category SET posts = :posts, events = :events WHERE slug = :slug', $category);
-          $oldIdtoNewId[$category['id']] = $nc[$category['slug']]['id'];
+          $migrate->query('UPDATE a_category SET posts = :posts, events = :events WHERE name = :name', $category);
+          $oldIdToNewId[$category['id']] = $nc[$category['name']]['id'];
         }
         else
         {
+          // Blog categories didn't have slugs
+          $category['slug'] = aTools::slugify($category['name']);
           $migrate->query('INSERT INTO a_category (name, description, slug, posts, events) VALUES (:name, :description, :slug, :posts, :events)', $category);
           $oldIdToNewId[$category['id']] = $migrate->lastInsertId();
         }
       }
+      echo("Migrating from aBlogItemCategory to aBlogItemToCategory...\n");
+      
       $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
       foreach ($oldMappings as $info)
       {
