@@ -52,7 +52,7 @@ class PluginaEventTable extends aBlogItemTable
       $engines = Doctrine::getTable('aPage')->createQuery()
         ->leftJoin('aPage.BlogCategories Categories')
         ->addWhere('engine = ?', 'aEvent')
-        ->addWhere('admin != ?', true)
+        ->addWhere('admin <> ? OR admin IS NULL', true)
         ->execute();
 
       $engineCache = array();
