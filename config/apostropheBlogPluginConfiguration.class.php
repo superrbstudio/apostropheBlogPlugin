@@ -27,8 +27,8 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
       // This was inadvertently removed just prior to 1.4. Now apostrophe:migrate hooks up properly again
       $this->dispatcher->connect('command.post_command', array('aBlogEvents',  
         'listenToCommandPostCommandEvent'));
-      $this->dispatcher->connect('apostrophe.get_categorizables', array($this, 'listenToGetCategorizables'));
-      $this->dispatcher->connect('apostrophe.get_count_by_category', array($this, 'listenToGetCountByCategory'));
+      $this->dispatcher->connect('a.get_categorizables', array($this, 'listenToGetCategorizables'));
+      $this->dispatcher->connect('a.get_count_by_category', array($this, 'listenToGetCountByCategory'));
       
       self::$registered = true;
     }
