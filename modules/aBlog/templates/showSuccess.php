@@ -15,7 +15,7 @@
 	</div>
 <?php end_slot() ?>
 
-<?php echo include_partial('aBlog/post', array('a_blog_post' => $aBlogPost)) ?>
+<?php echo include_partial('aBlog/post', array('a_blog_post' => $aBlogPost, 'preview' => $preview)) ?>
 
 <?php  if (sfConfig::get('app_aBlog_disqus_enabled', true)): ?>
 <?php include_partial('aBlog/disqus', array('id' => $aBlogPost->getId(), )) ?>

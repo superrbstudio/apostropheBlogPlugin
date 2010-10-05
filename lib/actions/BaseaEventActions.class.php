@@ -39,9 +39,10 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aEvent = $this->getRoute()->getObject();
-    $this->categories = $this->page->Categories;
-    $this->forward404Unless($this->aEvent);
-    $this->forward404Unless($this->aEvent['status'] == 'published');
+		$this->categories = aCategoryTable::getCategoriesForPage($this->page);
+		$this->forward404Unless($this->aEvent);
+    $this->forward404Unless($this->aEvent['status'] == 'published' || $this->getUser()->isAuthenticated());
+		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aEvent));
 		if (sfConfig::get('app_aEvents_display_calendar'))
 		{

@@ -6,6 +6,9 @@
 <?php if ($sf_params->get('module') != 'aEventAdmin'): ?>
 <h3 class="a-blog-item-title">
   <?php echo link_to($a_event->getTitle(), 'a_event_post', $a_event) ?>
+	<?php if ($a_blog_post['status'] == 'draft'): ?>
+		<span class="a-blog-item-status">&ndash; <?php echo a_('Draft') ?></span>
+	<?php endif ?>
 </h3>
 <?php include_partial('aEvent/meta', array('aEvent' => $a_event)) ?>
 

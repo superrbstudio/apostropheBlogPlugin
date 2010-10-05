@@ -109,8 +109,8 @@
 	<div class="comments section a-form-row">
 		<h4><a href="#" class="allow_comments_toggle <?php echo ($a_blog_post['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo __('Click to disable comments', array(), 'apostrophe') ?>"><?php echo __('Comments are enabled', array(), 'apostrophe') ?></span><span class="disabled" title="<?php echo __('Click to enable comments', array(), 'apostrophe') ?>"><?php echo __('Comments are disabled', array(), 'apostrophe') ?></span></a></h4>
 		<div class="allow_comments option">
-		<?php echo $form['allow_comments']->render() ?>
-		<?php echo $form['allow_comments']->renderError() ?>
+			<?php echo $form['allow_comments']->render() ?>
+			<?php echo $form['allow_comments']->renderError() ?>
 		</div>
 
 	</div>
@@ -139,8 +139,11 @@
 
 	<?php if($a_blog_post->userHasPrivilege('delete')): ?>
 		<hr />
-		<div class="delete section a-form-row">
-			<?php echo link_to('<span class="icon"></span>'.__('Delete this post', array(), 'apostrophe'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete no-bg', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
+		<div class="delete preview section a-form-row">
+			<?php $engine = $a_blog_post->findBestEngine(); ?>
+	    <?php aRouteTools::pushTargetEnginePage($engine) ?>
+			<?php echo link_to('<span class="icon"></span>'.__('Preview', array(), 'apostrophe'), 'a_blog_post', array('preview' => 1) + $a_blog_post->getRoutingParams(), array('class' => 'a-btn icon a-search lite', 'rel' => 'external')) ?>
+			<?php echo link_to('<span class="icon"></span>'.__('Delete', array(), 'apostrophe'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete lite', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
 		</div>
 	<?php endif ?>
 

@@ -79,12 +79,12 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aBlogPost = $this->getRoute()->getObject();
-    $this->categories = $this->page->Categories;
+		$this->categories = aCategoryTable::getCategoriesForPage($this->page);
     $this->forward404Unless($this->aBlogPost);
-    $this->forward404Unless($this->aBlogPost['status'] == 'published');
+    $this->forward404Unless($this->aBlogPost['status'] == 'published' || $this->getUser()->isAuthenticated());
+		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aBlogPost));
   }
-
 
   public function buildParams()
   {
