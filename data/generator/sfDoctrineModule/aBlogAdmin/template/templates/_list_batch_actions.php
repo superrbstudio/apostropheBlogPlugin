@@ -9,6 +9,6 @@
 [?php $form = new BaseForm(); if ($form->isCSRFProtected()): ?]
   <input type="hidden" name="[?php echo $form->getCSRFFieldName() ?]" value="[?php echo $form->getCSRFToken() ?]" />
 [?php endif; ?]
-	[?php echo jq_link_to_function('Go', '$("#a-admin-batch-form").submit();', array('class' => 'a-btn', )) ?]
+	[?php echo jq_link_to_function('<span class="icon"></span>'.'Go', '$("#a-admin-batch-form").submit();', array('class' => 'a-btn', )) ?]
 </li>
 <?php endif; ?>

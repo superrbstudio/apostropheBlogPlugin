@@ -43,10 +43,10 @@
 
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_blog_post->title == 'untitled')? '':$a_blog_post->title ?>" />
-			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe') ?></div>
+			<div id="a-blog-item-title-placeholder"><?php echo a_('Title your post...') ?></div>
 		  <ul class="a-ui a-controls blog-title">
-		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-		    <li><a href="#" class="a-btn icon a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+		    <li><a href="#" class="a-btn a-save big"><?php echo a_('Save') ?></a></li>
+		    <li><a href="#" class="a-btn icon a-cancel no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
 		  </ul>
 		</div>
 

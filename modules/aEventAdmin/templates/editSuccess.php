@@ -43,10 +43,10 @@
 
 		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
 			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_event->title == 'untitled')? '':$a_event->title ?>" />
-			<div id="a-blog-item-title-placeholder"><?php echo __('Title your post...', array(), 'apostrophe') ?></div>
+			<div id="a-blog-item-title-placeholder"><?php echo a_('Title your event...') ?></div>
 		  <ul class="a-ui a-controls blog-title">
-		    <li><a href="#" class="a-btn a-save big"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-		    <li><a href="#" class="a-btn icon a-cancel no-label big"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+		    <li><a href="#" class="a-btn a-save big"><?php echo a_('Save') ?></a></li>
+		    <li><a href="#" class="a-btn icon a-cancel no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
 		  </ul>				
 		</div>
 
@@ -58,8 +58,8 @@
 			<div class="a-blog-item-permalink-wrapper slug">
 				<input type="text" name="a_blog_item_interface" value="<?php echo $a_event->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-ui a-controls blog-slug">
-			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+			    <li><a href="#" class="a-btn a-save mini"><?php echo a_('Save') ?></a></li>
+			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
 			  </ul>
 			</div>
 		</div>

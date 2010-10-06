@@ -36,7 +36,7 @@
   
   <?php if($sf_user->isAuthenticated()): ?>
 		<div class="a-ui">
-	  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
+	  	<?php echo link_to('<span class="icon"></span>'.a_('New Post'), 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
 		</div>
   <?php endif ?>
 
