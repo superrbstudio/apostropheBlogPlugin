@@ -19,7 +19,10 @@ class aBlogEvents
     $blogIsNew = false;
     echo("Migrating apostropheBlogPlugin...\n");
     
-    if (!$migrate->tableExists('a_blog_item'))
+		// Don't look for a_blog_item, that might be around if we're migrating from 
+		// 1.3 or pre-1.3 blog plugin, ugh. We'll get an error recreating it but 
+		// true migration from 1.3 blog is something we just don't have yet
+    if (!$migrate->tableExists('a_blog_category_user'))
     {
       $migrate->sql(array(
 "        CREATE TABLE a_blog_category (id INT AUTO_INCREMENT, name VARCHAR(255) UNIQUE, description TEXT, posts TINYINT(1) DEFAULT '0', events TINYINT(1) DEFAULT '0', PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = INNODB;",
