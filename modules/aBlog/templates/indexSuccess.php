@@ -15,14 +15,6 @@
 	</div>
 <?php end_slot() ?>
 
-<?php a_area('blog-header', array(
-	'allowed_types' => array(
-		'aRichText',
-	),
-  'type_options' => array(
-		'aRichText' => array('tool' => 'Main'),
-	))) ?>
-
 <div id="a-blog-main" class="a-blog-main">
   <?php if ($sf_params->get('year')): ?>
 	<div class="a-blog-heading"> 
