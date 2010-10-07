@@ -12,7 +12,7 @@
 	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['count']->render() ?>
-		<div class="a-form-help"><?php echo $form['count']->renderHelp() ?></div>
+		<div class="a-form-help collapsed"><?php echo $form['count']->renderHelp() ?></div>
 	</div>
 	<div class="a-form-error"><?php echo $form['count']->renderError() ?></div>
 </div>
@@ -21,7 +21,7 @@
 	<?php echo $form['categories_list']->renderLabel(__('Category', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['categories_list']->render() ?>
-		<div class="a-form-help"><?php echo $form['categories_list']->renderHelp() ?></div>
+		<div class="a-form-help collapsed"><?php echo $form['categories_list']->renderHelp() ?></div>
 	</div>
 	<div class="a-form-error"><?php echo $form['categories_list']->renderError() ?></div>
 </div>
@@ -30,7 +30,7 @@
 	<?php echo $form['tags_list']->renderLabel(__('Tags', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['tags_list']->render() ?>
-		<div class="a-form-help"><?php echo $form['tags_list']->renderHelp() ?></div>
+		<div class="a-form-help collapsed"><?php echo $form['tags_list']->renderHelp() ?></div>
 	</div>
 	<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
 </div>
