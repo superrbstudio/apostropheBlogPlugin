@@ -347,7 +347,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     {
       foreach($this->Page->getArea($area) as $slot)
       {
-        foreach($slot->MediaItems as $aMediaItem)
+        foreach($slot->getOrderedMediaItems() as $aMediaItem)
         {
           if(is_null($type) || $aMediaItem['type'] == $type)
           {
