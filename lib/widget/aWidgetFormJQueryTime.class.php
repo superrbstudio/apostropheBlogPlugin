@@ -28,7 +28,7 @@ class aWidgetFormJQueryTime extends sfWidgetFormInputText
 
     $attributes['id'] = $this->generateId($name);
     $html = parent::render($name, $value, $attributes, $errors);
-    $html.= "<script type='text/javascript'>bindTimepicker('#".$attributes['id']."')</script>";
+    $html.= "<script type='text/javascript'>timepicker2('#".$attributes['id']."', {'minutes-increment' : 30, 'twenty-four-hour' : true})</script>";
 
     return $html;
   }
