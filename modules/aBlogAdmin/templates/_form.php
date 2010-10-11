@@ -142,8 +142,8 @@
 		<div class="delete preview section a-form-row">
 			<?php $engine = $a_blog_post->findBestEngine(); ?>
 	    <?php aRouteTools::pushTargetEnginePage($engine) ?>
-			<?php echo link_to('<span class="icon"></span>'.__('Preview', array(), 'apostrophe'), 'a_blog_post', array('preview' => 1) + $a_blog_post->getRoutingParams(), array('class' => 'a-btn icon a-search lite', 'rel' => 'external')) ?>
-			<?php echo link_to('<span class="icon"></span>'.__('Delete', array(), 'apostrophe'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete lite', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
+			<?php echo link_to('<span class="icon"></span>'.__('Preview', array(), 'apostrophe'), 'a_blog_post', array('preview' => 1) + $a_blog_post->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
+			<?php echo link_to('<span class="icon"></span>'.__('Delete', array(), 'apostrophe'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => __('Are you sure you want to delete this post?', array(), 'apostrophe'), )) ?>
 		</div>
 	<?php endif ?>
 
