@@ -56,7 +56,7 @@ class PluginaBlogItemTable extends Doctrine_Table
     $q->leftJoin($rootAlias.'.Categories c');
     $q->leftJoin('c.Users u');
     $q->leftJoin('c.Groups g');
-    $q->leftJoin('g.users gu');
+    $q->leftJoin('g.Users gu');
     $q->andWhere('author_id = ? OR e.id = ? OR u.id = ? OR gu.id = ?', array($user_id, $user_id, $user_id, $user_id));
   }
 
