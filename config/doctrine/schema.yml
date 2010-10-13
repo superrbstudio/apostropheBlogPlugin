@@ -10,13 +10,13 @@ aBlogItem:
       builder: [ aTools, slugify ]
   columns:
     id:
-      type: integer(4)
+      type: integer
       primary: true
       autoincrement: true
     author_id:
-      type: integer(4)
+      type: integer
     page_id:
-      type: integer(4)
+      type: integer
     title:
       type: string(255)
       notnull: true
@@ -67,10 +67,10 @@ aBlogItem:
 aBlogEditor:
   columns:
     blog_item_id: 
-      type: integer(4)
+      type: integer
       primary: true
     user_id:
-      type: integer(4)
+      type: integer
       primary: true
   relations:
     BlogItem:
@@ -87,10 +87,10 @@ aBlogEditor:
 aBlogItemToCategory:
   columns:
     blog_item_id:
-      type: integer(4)
+      type: integer
       primary: true
     category_id:
-      type: integer(4)
+      type: integer
       primary: true
   relations:
     BlogItem:
