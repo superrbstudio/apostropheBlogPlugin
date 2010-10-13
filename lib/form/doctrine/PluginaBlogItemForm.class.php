@@ -89,7 +89,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
       if ($candidateGroup && $sufficientGroup)
       {
-        $q->leftJoin('u.groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+        $q->leftJoin('u.Groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
       }
       $this->setWidget('author_id',
         new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
