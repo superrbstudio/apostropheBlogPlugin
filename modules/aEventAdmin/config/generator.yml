@@ -38,7 +38,7 @@ generator:
             label:  Date
         actions:
           new:
-            label: New Event
+            label: '<span class="icon"></span>New Event'
             action: new
             params:
               class: a-btn big icon a-add
