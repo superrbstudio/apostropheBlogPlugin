@@ -25,6 +25,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $this->a_blog_post = new aBlogPost();
     $this->a_blog_post->Author = $this->getUser()->getGuardUser();
     $this->a_blog_post->save();
+    $this->getUser()->setFlash('new_post', true);
     $this->redirect('a_blog_admin_edit', $this->a_blog_post);
   }
     

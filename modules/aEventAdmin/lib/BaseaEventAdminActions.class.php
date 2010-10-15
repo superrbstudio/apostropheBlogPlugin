@@ -26,6 +26,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $this->a_event = new aEvent();
     $this->a_event->Author = $this->getUser()->getGuardUser();
     $this->a_event->save();
+    $this->getUser()->setFlash('new_post', true);
     $this->redirect('a_event_admin_edit',$this->a_event);
   }
     
