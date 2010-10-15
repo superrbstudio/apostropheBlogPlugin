@@ -122,7 +122,7 @@
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo __('Categories', array(), 'apostrophe') ?></h4>
 		<?php if($sf_user->hasCredential('admin')): ?>
-			<?php echo link_to('edit categories','@a_category_admin', array('class' => 'edit-categories', )) ?>
+			<?php echo link_to('<span class="icon"></span>'.a_('edit categories'),'@a_category_admin', array('class' => 'a-btn icon a-edit no-label lite edit-categories', 'title' => a_('edit categories'))) ?>
 	  <?php endif ?>
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
