@@ -13,22 +13,31 @@ function aBlogUpdateForm(slug_url, event)
 	      var json = xhr.getResponseHeader('X-Json'); //data is a JSON object, we can handle any updates with it
 	      var data = eval('(' + json + ')');
 			
-	      if (typeof(data.modified.template) != "undefined" ) {
-	        aBlogUpdateTemplate(data.template, data.feedback);
-	      };
+				if (data)
+				{
+		      if (typeof(data.modified.template) != "undefined" ) {
+		        aBlogUpdateTemplate(data.template, data.feedback);
+		      };
 
-	      if (typeof(data.modified.allow_comments) != "undefined" ) {
-	      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
-				};
+		      if (typeof(data.modified.allow_comments) != "undefined" ) {
+		      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
+					};
 
-				aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
-	      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-				// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
-				aBlogPublishedAt(data.aBlogPost.status);
-				aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.time)	;
-				aBlogItemTitle();				
+					apostrophe.log(data.aBlogPost.title);
 
-				aUI('#a-admin-form');
+					aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
+		      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
+					// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
+					aBlogPublishedAt(data.aBlogPost.status);
+					aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.time)	;
+					aBlogItemTitle();				
+
+					aUI('#a-admin-form');					
+				}
+				else
+				{
+					apostrophe.log('aBlogUpdateForm -- data is null');
+				}
 			
       }
 	 	},
