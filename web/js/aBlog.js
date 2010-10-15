@@ -22,23 +22,17 @@ function aBlogUpdateForm(slug_url, event)
 		      if (typeof(data.modified.allow_comments) != "undefined" ) {
 		      	aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
 					};
-
-					apostrophe.log(data.aBlogPost.title);
-
 					aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
 		      aBlogUpdateTitleAndSlug(data.aBlogPost.title, data.aBlogPost.slug); // Update Title and Slug after ajax
-					// aBlogUpdateMessage('Saved!', data.aBlogPost.updated_at);
 					aBlogPublishedAt(data.aBlogPost.status);
 					aBlogTitleMessage('.'+data.aBlogPost.status+'-item', data.time)	;
 					aBlogItemTitle();				
-
 					aUI('#a-admin-form');					
 				}
 				else
 				{
 					apostrophe.log('aBlogUpdateForm -- data is null');
 				}
-			
       }
 	 	},
 	 	url: slug_url
