@@ -134,7 +134,7 @@
 	<div class="tags section a-form-row">
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
-		<?php a_js_call('aInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tagsLabel' => 'Tags')) ?>
+		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tagsLabel' => 'Tags')) ?>
 	</div>
 
 	<?php if($a_blog_post->userHasPrivilege('delete')): ?>
