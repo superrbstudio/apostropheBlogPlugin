@@ -59,13 +59,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this->Page = $page;
 
     // Create a slot for the title and add to the virtual page
-    $title = $page->createSlot('aText');
-    $title->value = 'Untitled';
-    $title->save();
-    $page->newAreaVersion('title', 'add',
-      array(
-        'permid' => 1,
-        'slot' => $title));
+    $this->Page->setTitle('Untitled');
 
     // Create a slot to index the tags and categories in search.
     $catTag = $page->createSlot('aText');
@@ -143,14 +137,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function postUpdate($event)
   {
-    $title = $this->Page->createSlot('aText');
-    $title->value = $this->_get('title');
-    $title->save();
-    $this->Page->newAreaVersion('title', 'update',
-      array(
-        'permid' => 1,
-        'slot' => $title));
-
+    if($this->update)
+    {
+      $this->Page->setTitle($this->_get('title'));
+    }
     $catTag = $this->Page->createSlot('aText');
     $s = '';
     foreach($this->Categories as $category)
