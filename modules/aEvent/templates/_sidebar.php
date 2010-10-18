@@ -8,9 +8,7 @@
   <h4>Categories</h4>
   <ul class="a-filter-options blog">
   <?php foreach ($categories as $category): ?>
-    <li class="a-filter-option"><?php echo link_to($category, aUrl::addParams(($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.urlencode($category->getName()), $params['cat']), array(
-      'class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '', 
-    )) ?></li>
+    <li class="a-filter-option"><?php echo link_to($category, ($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.$category->getName(), array('class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '')) ?></li>
   <?php endforeach ?>
   </ul>	
 </div>
@@ -36,7 +34,7 @@
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
 	<ul class="a-blog-selected-tag">
-		<li><?php echo link_to($tag, aUrl::addParams('aEvent/index', $params['tag']), array('class' => 'selected', )) ?></li>
+		<li><?php echo link_to($tag, 'aEvent/index', array('class' => 'selected', )) ?></li>
   </ul>
 	<?php endif ?>
   
@@ -45,7 +43,7 @@
 	<ul class="a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>
 	  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aEvent/index?tag='.$tag, $params['tag'])) ?></span>
+			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, 'aEvent/index?tag='.$tag) ?></span>
 			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
 		</li>
 		<?php $n++; endforeach ?>
@@ -56,18 +54,20 @@
 	<ul class="a-tag-sidebar-list all-tags">
 		<?php $n=1; foreach ($tags as $tag => $count): ?>
 	  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, aUrl::addParams('aEvent/index?tag='.$tag, $params['tag'])) ?></span>
+			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, 'aEvent/index?tag='.$tag) ?></span>
 			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
 		</li>
 		<?php $n++; endforeach ?>
 	</ul>
 	
 </div>
-
-<hr />
 <?php endif ?>
 
-<h5><?php echo link_to('RSS Feed',  aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
+<?php if(!isset($noFeed)): ?>
+<hr />
+<h5><?php echo link_to(__('RSS Feed &ndash; Full', array(), 'apostrophe'), 'aEvent/index?feed=rss') ?></h5>
+<h5><?php echo link_to(__('RSS Feed &ndash; Filtered', array(), 'apostrophe'), aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
+<?php endif ?>
 
 <script type="text/javascript">
 //<![CDATA[
