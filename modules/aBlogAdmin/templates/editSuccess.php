@@ -59,7 +59,7 @@
 				<input type="text" name="a_blog_item_permalink_interface" value="<?php echo $a_blog_post->slug ?>" id="a_blog_item_permalink_interface">
 			  <ul class="a-ui a-controls blog-slug">
 			    <li><a href="#" class="a-btn a-save mini"><?php echo __('Save', array(), 'apostrophe') ?></a></li>
-			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
+			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><span class="icon"></span><?php echo __('Cancel', array(), 'apostrophe') ?></a></li>
 			  </ul>
 			</div>
 		</div>
