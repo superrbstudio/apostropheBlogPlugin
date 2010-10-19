@@ -20,13 +20,29 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
   }
 
+  // You must create with at least a title
   public function executeNew(sfWebRequest $request)
   {
-    $this->a_blog_post = new aBlogPost();
-    $this->a_blog_post->Author = $this->getUser()->getGuardUser();
-    $this->a_blog_post->save();
-    $this->getUser()->setFlash('new_post', true);
-    $this->redirect('a_blog_admin_edit', $this->a_blog_post);
+    $this->forward404();
+  }
+  
+  // Doctrine collection routes make it a pain to change the settings
+  // of the standard routes fundamentally, so we provide another route
+  public function executeNewWithTitle(sfWebRequest $request)
+  {
+    $this->form = new aBlogNewPostForm();
+    $this->form->bind($request->getParameter('a_blog_new_post'));
+    if ($this->form->isValid())
+    {
+      $this->a_blog_post = new aBlogPost();
+      $this->a_blog_post->Author = $this->getUser()->getGuardUser();
+      $this->a_blog_post->setTitle($this->form->getValue('title'));
+      $this->a_blog_post->save();
+      $this->getUser()->setFlash('new_post', true);
+      $this->postUrl = $this->generateUrl('a_blog_admin_edit', $this->a_blog_post);
+      return 'Success';
+    }
+    return 'Error';
   }
     
   public function executeAutocomplete(sfWebRequest $request)

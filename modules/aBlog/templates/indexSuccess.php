@@ -26,9 +26,13 @@
 	</div>
   <?php endif ?>
   
-  <?php if($sf_user->isAuthenticated()): ?>
+  <?php if (aBlogItemTable::userCanPost()): ?>
 		<div class="a-ui">
-	  	<?php echo link_to('<span class="icon"></span>'.a_('New Post'), 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
+		  <?php echo a_js_button(a_('New Post'), array('big', 'icon', 'a-add', 'a-blog-new-post-button')) ?>
+      <div class="a-blog-admin-new-ajax">
+        <?php include_component('aBlogAdmin', 'newPost') ?>
+      </div>
+      <?php a_js_call('aBlogEnableNewPostButtons()') ?>
 		</div>
   <?php endif ?>
 

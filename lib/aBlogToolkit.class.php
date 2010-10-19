@@ -52,5 +52,5 @@ class aBlogToolkit {
     if(is_null($id)) return null;
     $choices = $field->getWidget()->getChoices();
     return $choices[$id];
-  }
+  }  
 }

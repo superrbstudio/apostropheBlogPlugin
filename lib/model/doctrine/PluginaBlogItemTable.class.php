@@ -224,4 +224,14 @@ class PluginaBlogItemTable extends Doctrine_Table
 
     return $tags;
   }
+  
+  // Don't guess at what the current credentials regime is, call this
+  static public function userCanPost($user = false)
+  {
+    if ($user === false)
+    {
+      $user = sfContext::getInstance()->getUser();
+    }
+    return ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'));
+  }
 }

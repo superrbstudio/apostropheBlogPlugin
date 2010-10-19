@@ -13,4 +13,9 @@ abstract class BaseaBlogAdminComponents extends sfComponents
   {
     $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true, 'limit' => 10));
   }
+  
+  public function executeNewPost()
+  {
+    $this->form = new aBlogNewPostForm();
+  }
 }

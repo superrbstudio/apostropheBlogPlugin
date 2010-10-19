@@ -25,11 +25,15 @@
 	  </ul>
 	</div>
   <?php endif ?>
-  
-  <?php if($sf_user->isAuthenticated()): ?>
-	<div class="a-ui">
-  	<?php echo link_to('<span class="icon"></span>'.a_('New Event'), '@a_event_admin_new', array('class' => 'a-btn icon big a-add')) ?>
-	</div>
+
+  <?php if (aBlogItemTable::userCanPost()): ?>
+		<div class="a-ui">
+		  <?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-event-button')) ?>
+      <div class="a-blog-admin-new-ajax">
+        <?php include_component('aEventAdmin', 'newEvent') ?>
+      </div>
+      <?php a_js_call('aBlogEnableNewPostButtons()') ?>
+		</div>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>

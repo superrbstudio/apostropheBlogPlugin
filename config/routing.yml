@@ -244,6 +244,7 @@ a_blog_admin:
     with_show:            false
     collection_actions:
       categories: get
+      new_with_title: post
 
 a_blog_admin_autocomplete:
   url:   /admin/blog/autocomplete

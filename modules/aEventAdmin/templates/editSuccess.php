@@ -84,5 +84,3 @@
   </div>
 
 </div>
-
-<?php echo link_to('Event', 'a_event_post', $a_event->getRoutingParams()) ?>

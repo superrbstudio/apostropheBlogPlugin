@@ -21,13 +21,29 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
   }
 
+  // You must create with at least a title
   public function executeNew(sfWebRequest $request)
   {
-    $this->a_event = new aEvent();
-    $this->a_event->Author = $this->getUser()->getGuardUser();
-    $this->a_event->save();
-    $this->getUser()->setFlash('new_post', true);
-    $this->redirect('a_event_admin_edit',$this->a_event);
+    $this->forward404();
+  }
+  
+  // Doctrine collection routes make it a pain to change the settings
+  // of the standard routes fundamentally, so we provide another route
+  public function executeNewWithTitle(sfWebRequest $request)
+  {
+    $this->form = new aNewEventForm();
+    $this->form->bind($request->getParameter('a_new_event'));
+    if ($this->form->isValid())
+    {
+      $this->a_event = new aEvent();
+      $this->a_event->Author = $this->getUser()->getGuardUser();
+      $this->a_event->setTitle($this->form->getValue('title'));
+      $this->a_event->save();
+      $this->getUser()->setFlash('new_post', true);
+      $this->eventUrl = $this->generateUrl('a_event_admin_edit', $this->a_event);
+      return 'Success';
+    }
+    return 'Error';
   }
     
   public function executeAutocomplete(sfWebRequest $request)

@@ -42,6 +42,15 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this->Page->delete();
   }
 
+  public function preInsert($event)
+  {
+    // If the slug hasn't been altered slugify the title to create the slug.
+    if (!strlen($this['slug']))
+    {
+      $this['slug'] = $this->uniqueSlugFromTitle($this->_get('title'));
+    }
+  }
+  
   /**
    * Listener to setup blog item and its virtual page
    * @param <type> $event
@@ -58,8 +67,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page->save();
     $this->Page = $page;
 
-    // Create a slot for the title and add to the virtual page
-    $this->Page->setTitle('Untitled');
+    // Create a slot for the title and add to the virtual page.
+    // We now have an actual title right off owing to the special form for
+    // creating a new post which won't let you slide by without one
+    $this->Page->setTitle($this->_get('title'));
 
     // Create a slot to index the tags and categories in search.
     $catTag = $page->createSlot('aText');
@@ -71,8 +82,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
         'slot' => $catTag));
 
     // Make default values for this item
-    $this['slug'] = 'untitled-'.$this['id'];
-    $this['title'] = 'untitled';
+    
     $this['slug_saved'] = false;
     $this['published_at'] = date('Y-m-d');
 
@@ -99,29 +109,37 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       if($this['slug_saved'] == false && array_key_exists('title', $this->getModified()))
       {
         // If the slug hasn't been altered slugify the title to create the slug.
-        // Don't forget, title slots are preescaped HTML (very boring HTML with only entities),
-        // and the slugifier wants the unescaped string
-        $this['slug'] = aTools::slugify(html_entity_decode($this->_get('title'), ENT_COMPAT, 'UTF-8'));
+        $this['slug'] = $this->uniqueSlugFromTitle($this->_get('title'));
       }
       else
       {
         // Otherwise slugify the user entered value. (Why is this happening here and not in a form?)
-        $this['slug'] = aTools::slugify($this['slug']);
+        $this['slug'] = $this->uniqueifySlug(aTools::slugify($this['slug']));
       }
     }
 
-    $this->Page['view_is_secure'] = ($this['status'] == 'published')? false: true;
+    $this->Page['view_is_secure'] = ($this['status'] == 'published') ? false: true;
 
-    // Check if a blog post or event already has this slug
-    $i = 1;
-    $slug = $this['slug'];
-    while($this->findConflictingItem())
-    {
-      $this['slug'] = $slug.'-'.$i;
-      $i++;
-    }
   }
 
+  protected function uniqueSlugFromTitle($title)
+  {
+    return $this->uniqueifySlug(aTools::slugify(html_entity_decode($title, ENT_COMPAT, 'UTF-8')));
+  }
+  
+  protected function uniqueifySlug($slug)
+  {
+    $cslug = $slug;
+    // Check if a blog post or event already has this slug
+    $i = 1;
+    while($this->findConflictingItem())
+    {
+      $slug = $cslug.'-'.$i;
+      $i++;
+    }
+    return $slug;
+  }
+  
   public function findConflictingItem()
   {
     return Doctrine::getTable(get_class($this))->createQuery()

@@ -13,4 +13,9 @@ abstract class BaseaEventAdminComponents extends sfComponents
   {
     $this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aEvent', 'sort_by_popularity' => true, 'limit' => 10));
   }
+  
+  public function executeNewEvent()
+  {
+    $this->form = new aNewEventForm();
+  }
 }
