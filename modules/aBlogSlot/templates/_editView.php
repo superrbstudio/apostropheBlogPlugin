@@ -40,7 +40,6 @@
 $(document).ready(function() {
     pkTagahead(<?php echo json_encode(url_for("taggableComplete/complete")) ?>);
     aMultipleSelect('#a-<?php echo $form->getName() ?>', { 'choose-one': 'Add Categories' });
-		$('#a-<?php echo $form->getName() ?>').addClass('a-options dropshadow');			
   });
 </script>
 
