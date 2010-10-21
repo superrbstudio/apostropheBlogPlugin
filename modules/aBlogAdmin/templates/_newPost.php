@@ -1,4 +1,4 @@
-<?php use_helper('a') ?>
+<?php use_helper("a") ?>
 <form class="a-blog-admin-new-form" method="POST" action="<?php echo url_for('aBlogAdmin/newWithTitle') ?>">
   <?php echo $form ?>
   <div class="a-form-row">

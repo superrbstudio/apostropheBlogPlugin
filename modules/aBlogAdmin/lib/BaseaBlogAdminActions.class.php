@@ -13,7 +13,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   public function preExecute()
   {
     parent::preExecute();
-    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
+    if (sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addStylesheet('/apostropheBlogPlugin/css/aBlog.css');
       $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');

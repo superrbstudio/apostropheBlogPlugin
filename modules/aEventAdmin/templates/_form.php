@@ -6,9 +6,10 @@
   $existingTags = isset($existingTags) ? $sf_data->getRaw('existingTags') : null;
 ?>
 
-<?php use_helper('a') ?>
+<?php use_helper("a") ?>
 
-<?php echo jq_form_remote_tag(array('url' => url_for('a_event_admin_update',$a_event) , 'update' => 'a-admin-blog-post-form'), array('id'=>'a-admin-form', 'class' => 'a-ui blog')) ?>
+<form method="POST" action="<?php echo url_for('a_event_admin_update',$a_event) ?>" id="a-admin-form" class="a-ui blog">
+<?php a_js_call('apostrophe.formUpdates(?)', array('selector' => '#a-admin-form', 'update' => 'a-admin-blog-post-form')) ?>
 
 <?php if (!$form->getObject()->isNew()): ?><input type="hidden" name="sf_method" value="PUT" /><?php endif; ?>
 

@@ -2,7 +2,7 @@
   // Compatible with sf_escaping_strategy: true
   $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
 ?>
-<?php use_helper('a', 'I18N') ?>
+<?php use_helper("a") ?>
 <?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 
 <div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">

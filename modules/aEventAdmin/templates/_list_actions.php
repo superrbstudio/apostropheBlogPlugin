@@ -1,4 +1,4 @@
-<?php use_helper('a') ?>
+<?php use_helper("a") ?>
 <li class="a-admin-action-new"><?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-event-button')) ?>
   <div class="a-blog-admin-new-ajax">
     <?php include_component('aEventAdmin', 'newEvent') ?>

@@ -18,13 +18,20 @@ class aBlogSlotForm extends BaseForm
 		{
       $this->setDefault('count', 1);
     }
+
+    $choices = array('title' => 'By Title', 'tags' => 'By Category And Tag');
+    $this->setWidget('title_or_tag', new sfWidgetFormChoice(array('choices' => $choices)));
+    $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices)));
+    
+    $this->setWidget('blog_items', new sfWidgetFormChoice(array('multiple' => true, 'compact' => true)));
+    $this->validatorSchema['blog_items'] = new sfValidatorDoctrineChoice(array('model' => $this->model, 'multiple' => true, 'required' => false));
     
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));
     $this->validatorSchema['categories_list'] =
       new sfValidatorDoctrineChoice(array('model' => 'aCategory', 'multiple' => true, 'required' => false));
 		$this->widgetSchema->setHelp('categories_list', '<span class="a-help-arrow"></span> Filter Posts by Category');
-    
+        
     $this->widgetSchema['tags_list']       = new sfWidgetFormInput(array(), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags_list']    = new sfValidatorString(array('required' => false));
 		$this->widgetSchema->setHelp('tags_list','<span class="a-help-arrow"></span> Filter Posts by Tag');

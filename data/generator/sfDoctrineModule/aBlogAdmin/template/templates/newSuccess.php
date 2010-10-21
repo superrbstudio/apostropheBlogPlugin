@@ -1,4 +1,4 @@
-[?php use_helper('I18N', 'Date', 'jQuery') ?]
+[?php use_helper("a") ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
 [?php slot('a-page-header')?]

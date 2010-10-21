@@ -2,7 +2,7 @@
   // Compatible with sf_escaping_strategy: true
   $a_blog_post = isset($a_blog_post) ? $sf_data->getRaw('a_blog_post') : null;
 ?>
-<?php use_helper('a') ?>
+<?php use_helper("a") ?>
 <?php $catClass = ""; foreach ($a_blog_post->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 <div class="a-blog-item post <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
 

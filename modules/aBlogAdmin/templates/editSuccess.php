@@ -5,7 +5,7 @@
   $form = isset($form) ? $sf_data->getRaw('form') : null;
   $helper = isset($helper) ? $sf_data->getRaw('helper') : null;
 ?>
-<?php use_helper('I18N', 'Date', 'jQuery', 'a') ?>
+<?php use_helper("a") ?>
 <?php include_partial('assets') ?>
 <?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_blog_post['template'] ?><?php end_slot() ?>
 
