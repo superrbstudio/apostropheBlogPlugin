@@ -1,7 +1,7 @@
 <?php
 
 
-class sfWidgetFormJQueryDateTime extends sfWidgetFormDateTime
+class aWidgetFormJQueryDateTime extends sfWidgetFormDateTime
 {
   
   protected $dateWidget;
@@ -27,7 +27,7 @@ class sfWidgetFormJQueryDateTime extends sfWidgetFormDateTime
     }
     return strtr($this->getOption('format'), array(
       '%date%' => $date,
-      '%time%' => $this->getTimeWidget($attributes)->render($name, $value),
+      '%time%' => $this->getTimeWidget()->render($name, $value, $this->getAttributesFor('time', $attributes)),
     ));
   }
 
@@ -51,7 +51,7 @@ class sfWidgetFormJQueryDateTime extends sfWidgetFormDateTime
    */
   protected function getTimeWidget($attributes = array())
   {
-    return new sfWidgetFormJQueryTime($this->getOptionsFor('time'), $this->getAttributesFor('time', $attributes));
+    return new aWidgetFormJQueryTime($this->getOptionsFor('time'), $this->getAttributesFor('time', $attributes));
   }
 
   /**

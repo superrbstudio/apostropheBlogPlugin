@@ -1,12 +1,13 @@
 <?php
 
-class aWidgetFormJQueryTime extends sfWidgetFormInputText
+class aWidgetFormJQueryTime extends sfWidgetFormTime
 {
-
   protected function configure($options = array(), $attributes = array())
   {
+		use_javascript('/apostropheBlogPlugin/js/timepicker.js');
+		
     parent::configure($options, $attributes);
-    
+
     $this->addOption('format', 'g:iA');
 
   }
@@ -23,13 +24,21 @@ class aWidgetFormJQueryTime extends sfWidgetFormInputText
    */
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
+	
     if(!empty($value))
       $value = date($this->getOption('format'), strtotime($value));
 
     $attributes['id'] = $this->generateId($name);
     $html = parent::render($name, $value, $attributes, $errors);
-    $html.= "<script type='text/javascript'>timepicker2('#".$attributes['id']."', {'minutes-increment' : 30, 'twenty-four-hour' : true})</script>";
+		$wrapperID = $attributes['id'] . rand(0, 10000);
+		$html = $this->wrapInDiv($html, $wrapperID);
+    $html.= "<script type='text/javascript'>$(document).ready(function() { console.log('" . $wrapperID . "'); timepicker2('#" . $wrapperID . "', " . json_encode($attributes) . ") });</script>";
 
     return $html;
   }
+
+	protected function wrapInDiv($html, $id)
+	{
+		return '<div id="' . $id . '">' . $html . '</div>';
+	}
 }

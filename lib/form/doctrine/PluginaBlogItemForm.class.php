@@ -101,8 +101,9 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['author_id']);
     }
 
-    $this->setWidget('published_at', new sfWidgetFormJQueryDateTime(
-			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
+    $this->setWidget('published_at', new aWidgetFormJQueryDateTime(
+			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')),
+			array('time' => array('twenty-four-hour' => 'false', 'minutes-increment' => 30))
 		));
 
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));

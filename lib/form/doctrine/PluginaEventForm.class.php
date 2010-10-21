@@ -27,7 +27,7 @@ abstract class PluginaEventForm extends BaseaEventForm
         'required' => true,
       )));
 
-    $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('size' => 8)));
+    $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
     $this->setValidator('start_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
 
     $this->setWidget('end_date', new sfWidgetFormJQueryDate(
@@ -39,7 +39,7 @@ abstract class PluginaEventForm extends BaseaEventForm
         'required' => true,
       )));
 
-    $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('size' => 8)));
+    $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
     $this->setValidator('end_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
 
     $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
