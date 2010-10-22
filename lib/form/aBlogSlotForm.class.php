@@ -21,7 +21,7 @@ class aBlogSlotForm extends BaseForm
 
     $choices = array('title' => 'By Title', 'tags' => 'By Category And Tag');
     $this->setWidget('title_or_tag', new sfWidgetFormChoice(array('choices' => $choices)));
-    $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices)));
+    $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices))));
     
     $this->setWidget('blog_items', new sfWidgetFormChoice(array('multiple' => true, 'compact' => true)));
     $this->validatorSchema['blog_items'] = new sfValidatorDoctrineChoice(array('model' => $this->model, 'multiple' => true, 'required' => false));

@@ -6,7 +6,7 @@
 
 <?php echo $form->renderHiddenFields() ?>
 
-<h4 class="a-slot-form-title"><?php echo __('Events', null, 'apostrophe') ?></h4>
+<h4 class="a-slot-form-title"><?php echo a_('Events') ?></h4>
 
 <div class="a-form-row count">
 	<?php echo $form['count']->renderLabel(__('Posts', array(), 'apostrophe')) ?>
