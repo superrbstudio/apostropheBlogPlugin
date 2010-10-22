@@ -1,3 +1,4 @@
+<?php use_helper('Date') ?>
 <?php
   // Compatible with sf_escaping_strategy: true
   $a_event = isset($a_event) ? $sf_data->getRaw('a_event') : null;
