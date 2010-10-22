@@ -52,7 +52,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    $pager = new sfDoctrinePager($this->modelClass, 10);
+    $pager = new sfDoctrinePager($this->modelClass, $request->getParameter('per_page', 10));
     $pager->setQuery($this->buildQuery($request));
     $pager->setPage($this->getRequestParameter('page', 1));
     $pager->init();
@@ -142,6 +142,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->addFilterParams('cat');
     $this->addFilterParams('tag');
     $this->addFilterParams('search');
+    $this->addFilterParams('per_page');
   }
 
   public function addFilterParams($name)
