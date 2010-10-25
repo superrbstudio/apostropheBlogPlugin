@@ -84,7 +84,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // Make default values for this item
     
     $this['slug_saved'] = false;
-    $this['published_at'] = date('Y-m-d');
+    $this['published_at'] = date('Y-m-d H:i:s');
 
     // This prevents post preupdate from running after the next save
     $this->update = false;

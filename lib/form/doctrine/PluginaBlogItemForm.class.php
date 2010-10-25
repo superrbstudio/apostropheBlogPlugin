@@ -103,9 +103,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     $this->setWidget('published_at', new aWidgetFormJQueryDateTime(
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')),
-			array('time' => array('twenty-four-hour' => 'false', 'minutes-increment' => 30))
+			array('time' => array('twenty-four-hour' => false, 'minutes-increment' => 30))
 		));
-
     $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
 
 		$tagstring = implode(', ', $this->getObject()->getTags());  // added a space after the comma for readability
