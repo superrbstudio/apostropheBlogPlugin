@@ -45,23 +45,34 @@
 	</div>
 
 	<div class="post-published <?php echo ($a_event['status'] != 'published')? 'draft':'published' ?>">
-		<span class="draft">
-			<?php echo __('Publish now or', array(), 'apostrophe_blog') ?>  <a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('set a date', array(), 'apostrophe_blog') ?></a>
-		</span>		
-		<span class="published">
-			<?php echo __('Published on '.aDate::medium(strtotime($a_event['published_at'])), array(), 'apostrophe_blog') ?><br/>
-			<a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>		
-		</span>
+		<div class="post-published-sentence-toggle">
+			<span class="draft">
+				<?php echo __('Scheduled for '.aDate::medium(strtotime($a_event['published_at'])), array(), 'apostrophe_blog') ?><br/>
+				<a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>
+			</span>		
+			<span class="published">
+				<?php echo __('Published on '.aDate::medium(strtotime($a_event['published_at'])), array(), 'apostrophe_blog') ?><br/>
+				<a href="#" onclick="return false;" class="post-date-toggle"><?php echo __('change date', array(), 'apostrophe_blog') ?></a>		
+			</span>
+		</div>
 		<div class="post-published-at option">
 		  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
 		  <?php echo $form['published_at']->renderError() ?>
 		</div>
-	</div>
-
-	<div class="post-published-at option">
-	  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
-	  <?php echo $form['published_at']->renderError() ?>
-	</div>
+		
+		<div class="post-published-at option">
+			<span class="draft">
+				<a href="#" onclick="return false;" class="post-date-published-at-cancel"><?php echo __('Cancel', array(), 'apostrophe_blog') ?></a>
+			</span>		
+		</div>
+		
+		<div class="post-published-at option">
+			<a href="#" class="a-save-event post-date-published-at-save-link">
+	  		<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+			</a>
+		</div>
+		
+	</div>	
 </div>
 
 
@@ -92,6 +103,12 @@
 		<?php echo $form['all_day']->renderLabel() ?>
 		<?php echo $form['all_day']->render() ?>
 		<?php echo $form['all_day']->renderError() ?>
+	</div>
+	
+	<div class="post-event-times">
+		<a href="#" class="a-save-event">
+  		<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+		</a>
 	</div>
 	
 </div>
@@ -136,7 +153,6 @@
   </div>
   <?php endif ?>
 
-
 	<?php // Blog Post Templates ?>
 	<?php if(isset($form['template'])): ?>
 	<hr />
@@ -159,7 +175,12 @@
 		</div>
 	</div>
 	<?php endif ?>
-
+	
+	<div class="post-author-section">
+		<a href="#" class="a-save-event">
+  		<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+		</a>
+	</div>
 
 	<?php // Blog Post Categories ?>
 	<hr />
@@ -170,6 +191,12 @@
 	  <?php endif ?>
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
+		
+		<div class="post-categories-section">
+			<a href="#" class="a-save-event">
+	  		<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+			</a>
+		</div>
 	</div>
 
 	<?php // Blog Post Tags ?>
@@ -178,6 +205,12 @@
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
 		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tagsLabel' => 'Tags')) ?>
+		
+		<div class="post-tags-section">
+			<a href="#" class="a-save-event">
+	  		<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+			</a>
+		</div>
 	</div>
 
 	<?php if($a_event->userHasPrivilege('delete')): ?>

@@ -24,9 +24,15 @@
 			}, 30000);
 
 			// Save button
-			$('#a-event-save-button').bind('click', function(event) {
-					aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
-					return false;
+			//$('#a-event-save-button').bind('click', function(event) {
+			//		aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+			//		return false;
+			//});
+			
+			// Save Links
+			$('.a-save-event').bind('click', function(event) {
+				aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+				return false;
 			});
 
 			// Date change
@@ -43,8 +49,8 @@
 			// =============================================
 			function toggleAllDay(checkbox) {
 				$(checkbox).toggleClass('all_day_enabled');
-				$('.start_time').toggleClass('time_disabled');
-				$('.end_time').toggleClass('time_disabled');
+				$('.start_time').toggleClass('time_disabled').toggle();
+				$('.end_date').toggleClass('time_disabled').toggle();
 			}
 			
 			$('#<?php echo $form['all_day']->renderId() ?>').bind('click', function() {
@@ -65,7 +71,13 @@
 	    });
 
 			$('.post-date-toggle').click(function(){
-	      $(this).toggleClass('open').parent().siblings('.option').toggle();
+	      $(this).toggleClass('open').closest('.post-published').children('.option').toggle();
+				$('.post-published-sentence-toggle').toggle();
+			});
+			
+			$('.post-date-published-at-cancel').click(function() {
+				$(this).closest('.post-published').children('.option').toggle();
+				$('.post-published-sentence-toggle').toggleClass('open').toggle();
 			});
 
 			// Comments Toggle
