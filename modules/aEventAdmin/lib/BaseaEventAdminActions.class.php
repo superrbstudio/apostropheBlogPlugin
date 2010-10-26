@@ -79,9 +79,19 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
       $response = array();
       $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
       if ($this->form->isValid())
-      {
+      {	
         $this->a_event = $this->form->save();
-        //We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
+       	
+				$values = $this->form->getValues();
+				if (isset($values['all_day']) && $values['all_day'])
+				{
+					$this->a_event->end_date = date('Y-m-d', strtotime("+1 day", strtotime($this->a_event->start_date)));
+					$this->a_event->start_time = $this->a_event->end_time = date('H:i:s', strtotime("today", strtotime($this->a_event->start_date)));
+					
+					$this->a_event->save();
+				}
+
+ 				//We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
         $this->form = $this->configuration->getForm($this->a_event);
         $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
       }

@@ -26,10 +26,17 @@
 
 <?php // Huge Publish Button and Publish Date ?>
 <div class="published section a-form-row">
-	<a href="#" class="a-btn big a-publish-post <?php echo ($a_event['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
-	  <span class="publish"><?php echo __('Publish', array(), 'apostrophe') ?></span>
-	  <span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe') ?></span>
-	</a>
+	
+	<div class="a-form-row">
+		<a href="#" class="a-btn big a-publish-post <?php echo ($a_event['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
+	  	<span class="publish"><?php echo __('Publish', array(), 'apostrophe') ?></span>
+	  	<span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe') ?></span>
+		</a>
+	
+		<a href="#" class="a-btn big a-save-event" id="a-event-save-button">
+	  	<span class="unpublish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+		</a>
+	</div>
 
 	<div id="a-blog-item-update" class="a-btn big a-publish-post">Saved</div>
 
@@ -66,16 +73,27 @@
 	<div class="start_date">
 		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['start_date']->renderError() ?>
-    <?php echo $form['start_time'] ?>
-    <?php echo $form['start_time']->renderError() ?>
+		
+		<div class="start_time">
+    	<?php echo $form['start_time'] ?>
+    	<?php echo $form['start_time']->renderError() ?>
+		</div>
 	</div>
-	<h4>End Date</h4>
 	<div class="end_date">
+		<h4>End Date</h4>
 		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['end_date']->renderError() ?>
     <?php echo $form['end_time'] ?>
     <?php echo $form['end_time']->renderError() ?>
 	</div>
+
+	<div class="all_day">
+		<h4>All Day Event</h4>
+		<?php echo $form['all_day']->renderLabel() ?>
+		<?php echo $form['all_day']->render() ?>
+		<?php echo $form['all_day']->renderError() ?>
+	</div>
+	
 </div>
 
 

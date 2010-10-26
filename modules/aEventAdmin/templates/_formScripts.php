@@ -6,14 +6,22 @@
 <script type="text/javascript" charset="utf-8">	
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>'); }
 	$(document).ready(function(){
-		
-	    $('#a-admin-form').change(function(event) {
-		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' || event.target.name == 'a-ignored' ))
-				{
-		      aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
-				}
-	    });
+	
+			// Save functions
+			// ==============================================
+			
+			// Time interval
+			setInterval(function() {
+				aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+			}, 30000);
 
+			// Save button
+			$('#a-event-save-button').bind('click', function(event) {
+					aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
+					return false;
+			});
+
+			// Date change
       $('#<?php echo $form['start_date']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
         aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
       });
@@ -21,6 +29,37 @@
       $('#<?php echo $form['end_date']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
         aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
       });
+
+			
+			// All Day Toggle
+			// =============================================
+			function toggleAllDay(checkbox) {
+				if ($(checkbox).hasClass('all_day_enabled'))
+				{
+					$(checkbox).removeClass('all_day_enabled');
+					
+					$('.start_time').slideDown();
+					$('.end_date').slideDown();
+				}
+				else
+				{
+					$(checkbox).addClass('all_day_enabled');
+					
+					$('.start_time').slideUp();
+					$('.end_date').slideUp();
+				}
+			}
+			
+			$('#<?php echo $form['all_day']->renderId() ?>').bind('click', function() {
+				toggleAllDay($(this));
+			});
+			
+			if ($('#<?php echo $form['all_day']->renderId() ?>').is(':checked'))
+			{
+				toggleAllDay($('#<?php echo $form['all_day']->renderId() ?>'));
+			}
+			
+
 
 			// Sidebar Toggle
 			// =============================================

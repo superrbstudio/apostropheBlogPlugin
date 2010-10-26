@@ -45,6 +45,15 @@ abstract class PluginaEventForm extends BaseaEventForm
     $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
     $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
 
+		$this->setWidget('all_day', new sfWidgetFormInputCheckbox(array('label' => 'All Day')));
+		$this->setValidator('all_day', new sfValidatorBoolean());
+		
+
+		if ((strtotime($this->object->start_time) == strtotime($this->object->end_time)) && (strtotime("+1 day", strtotime($this->object->start_date)) == strtotime($this->object->end_date)))
+		{
+			$this->getWidgetSchema()->setDefault('all_day', true);
+		}
+
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }
 }
