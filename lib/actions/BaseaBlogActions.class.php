@@ -183,4 +183,103 @@ abstract class BaseaBlogActions extends aEngineActions
 
     $this->getResponse()->setContent($this->feed->asXml());
   }
+  
+  public function executeSearch(sfWebRequest $request)
+  {
+    $this->buildParams();
+    
+    $now = date('YmdHis');
+    
+    // TODO: pay attention to the category restrictions of the current blog engine page.
+    // That means getting them into the blog page object
+    
+    // create the array of pages matching the query
+    $q = $request->getParameter('q');
+    
+    if ($request->hasParameter('x'))
+    {
+      // We sometimes like to use input type="image" for presentation reasons, but it generates
+      // ugly x and y parameters with click coordinates. Get rid of those and come back.
+      return $this->redirect(sfContext::getInstance()->getController()->genUrl('aBlog/search', true) . '?' . http_build_query(array("q" => $q)));
+    }
+    
+    $key = strtolower(trim($q));
+    $key = preg_replace('/\s+/', ' ', $key);
+    $replacements = sfConfig::get('app_a_search_refinements', array());
+    if (isset($replacements[$key]))
+    {
+      $q = $replacements[$key];
+    }
+
+    try
+    {
+      $q = "($q) AND slug:@a_blog_redirect";
+      $values = aZendSearch::searchLuceneWithValues(Doctrine::getTable('aPage'), $q, aTools::getUserCulture());
+    } catch (Exception $e)
+    {
+      // Lucene search error. TODO: display it nicely if they are always safe things to display. For now: just don't crash
+      $values = array();
+    }
+    $nvalues = array();
+
+    // The truth is that Zend cannot do all of our filtering for us, especially
+    // permissions-based. So we can do some other filtering as well, although it
+    // would be bad not to have Zend take care of the really big cuts (if 99% are
+    // not being prefiltered by Zend, and we have a Zend max results of 1000, then 
+    // we are reduced to working with a maximum of 10 real results).
+
+    foreach ($values as $value)
+    {
+      // 1.5: the names under which we store columns in Zend Lucene have changed to
+      // avoid conflict with also indexing them
+      $info = unserialize($value->info_stored);
+      
+      // Filtering categories this way is not ideal, we could drown in 1000 results for
+      // an unrelated category and not get a chance to winnow out the handful for this
+      // category. Think about a way to get Lucene to do it. However that is tricky 
+      // because we do a lot of gnarly things like merging categories
+      if (count($this->page->getCategories()))
+      {
+        $good = false;
+        $categories = aArray::listToHashById($this->page->getCategories());
+        $ids = preg_split('/,/', $value->category_ids);
+        foreach ($ids as $id)
+        {
+          if (isset($categories[$id]))
+          {
+            $good = true;
+          }
+        }
+        if (!$good)
+        {
+          continue;
+        }
+      }
+      if ($value->published_at > $now)
+      {
+        continue;
+      }
+      if (!aPageTable::checkPrivilege('view', $info))
+      {
+        continue;
+      }
+      $nvalue = $value;
+      $nvalue->slug = $nvalue->slug_stored;
+      $nvalue->title = $nvalue->title_stored;
+      $nvalue->summary = $nvalue->summary_stored;
+      // Virtual page slug is a named Symfony route, it wants search results to go there
+      $nvalue->url = $this->getController()->genUrl($nvalue->slug, true);
+      $nvalue->class = 'aBlog';
+      $nvalues[] = $nvalue;
+    }
+    $values = $nvalues;
+    $this->pager = new aArrayPager(null, sfConfig::get('app_a_search_results_per_page', 10));    
+    $this->pager->setResultArray($values);
+    $this->pager->setPage($request->getParameter('page', 1));
+    $this->pager->init();
+    $this->pagerUrl = "aBlog/search?" . http_build_query(array("q" => $q));
+    // setTitle takes care of escaping things
+    $this->getResponse()->setTitle(aTools::getOptionI18n('title_prefix') . 'Search for ' . $q . aTools::getOptionI18n('title_suffix'));
+    $this->results = $this->pager->getResults();
+  }
 }

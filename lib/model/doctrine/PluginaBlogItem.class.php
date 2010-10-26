@@ -64,7 +64,13 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $page['view_is_secure'] = false;
     // ... But not if we're unpublished
     $page->archived = !($this->status === 'published');
-    $page->save();
+
+    // Make default values for this item
+    
+    $this['slug_saved'] = false;
+    $this['published_at'] = date('Y-m-d H:i:s');
+    $page->published_at = $this['published_at'];
+
     $this->Page = $page;
 
     // Create a slot for the title and add to the virtual page.
@@ -72,19 +78,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // creating a new post which won't let you slide by without one
     $this->Page->setTitle($this->_get('title'));
 
-    // Create a slot to index the tags and categories in search.
-    $catTag = $page->createSlot('aText');
-    $catTag->value = '';
-    $catTag->save();
     $page->newAreaVersion('catTag', 'add',
       array(
         'permid' => 1,
         'slot' => $catTag));
-
-    // Make default values for this item
-    
-    $this['slug_saved'] = false;
-    $this['published_at'] = date('Y-m-d H:i:s');
 
     // This prevents post preupdate from running after the next save
     $this->update = false;
@@ -159,25 +156,25 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     {
       $this->Page->setTitle($this->_get('title'));
     }
-    $catTag = $this->Page->createSlot('aText');
-    $s = '';
-    foreach($this->Categories as $category)
-    {
-      $s.= $category['name'].' ';
-    }
-    foreach($this->getTags() as $tag)
-    {
-      $s.= $tag.' ';
-    }
-    $catTag->value = $s;
-    $catTag->save();
     $this->Page->newAreaVersion('catTag', 'update',
       array(
         'permid' => 1,
         'slot' => $catTag));
     $this->Page->archived = !($this->status === 'published');
+    $this->Page->published_at = $this->published_at;
     // Search is good, let it happen
     $this->Page->view_is_secure = false;
+    $this->Page->save();
+  }
+  
+  // This is always invoked, new or updated, when the form is saved -
+  // even if only relations are updated. That's not true for postUpdate
+  public function postSave($event)
+  {
+    // The page can index its own categories and tags if we let it
+    $this->Page->setTags($this->getTags());
+    $this->Page->unlink('Categories');
+    $this->Page->link('Categories', aArray::getIds($this->getCategories()));
     $this->Page->save();
   }
 

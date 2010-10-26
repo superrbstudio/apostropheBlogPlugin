@@ -9,6 +9,11 @@ a_blog_post:
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class:   aDoctrineRoute
 
+a_blog_search:
+  url: /search
+  param: { module: aBlog, action: search }
+  class: aRoute
+  
 a_blog_cat_tag_year_month_day:
   url:   /:cat/tag/:tag/:year/:month/:day
   param: { module: aBlog, action: index }

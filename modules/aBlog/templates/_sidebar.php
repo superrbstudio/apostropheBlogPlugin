@@ -8,6 +8,21 @@
   $tag = isset($tag) ? $sf_data->getRaw('tag') : null;
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
 ?>
+
+<div class="a-subnav-section search">
+  <h4>Search</h4>
+  <div class="a-search a-search-blog">
+    <form action="<?php echo url_for('aBlog/search') ?>" method="get">
+  		<div class="a-form-row"> <?php // div is for page validation ?>
+  			<label for="a-search-blog-field" style="display:none;">Search</label><?php // label for accessibility ?>
+  			<input type="text" name="q" value="<?php echo htmlspecialchars($sf_params->get('q', ESC_RAW)) ?>" class="a-search-field" id="a-search-blog-field"/>
+  			<input type="image" src="<?php echo image_path('/apostrophePlugin/images/a-special-blank.gif') ?>" class="submit a-search-submit" value="Search Pages" alt="Search" title="Search"/>
+  		</div>
+    </form>
+  </div>
+  <?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => a_('Search'), 'focus' => true )) ?>
+</div>
+
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
