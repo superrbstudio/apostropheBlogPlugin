@@ -49,7 +49,7 @@ abstract class PluginaEventForm extends BaseaEventForm
 		$this->setValidator('all_day', new sfValidatorBoolean());
 		
 
-		if ((strtotime($this->object->start_time) == strtotime($this->object->end_time)) && (strtotime("+1 day", strtotime($this->object->start_date)) == strtotime($this->object->end_date)))
+		if ((strtotime("today", strtotime($this->object->start_date)) == strtotime($this->object->end_time)) && (strtotime("+1 day", strtotime($this->object->start_date)) == strtotime($this->object->end_date)))
 		{
 			$this->getWidgetSchema()->setDefault('all_day', true);
 		}

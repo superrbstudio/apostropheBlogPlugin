@@ -34,7 +34,7 @@
 		</a>
 	
 		<a href="#" class="a-btn big a-save-event" id="a-event-save-button">
-	  	<span class="unpublish"><?php echo __('Save', array(), 'apostrophe') ?></span>
+	  	<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
 		</a>
 	</div>
 

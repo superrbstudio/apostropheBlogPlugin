@@ -9,10 +9,18 @@
 	
 			// Save functions
 			// ==============================================
+			var changed = true;
+			
+			$('#a-admin-form').change(function(event) {
+				changed = true;
+			});
 			
 			// Time interval
 			setInterval(function() {
-				aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+				if (changed) {
+					aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+					changed = false;
+				}
 			}, 30000);
 
 			// Save button
@@ -34,20 +42,9 @@
 			// All Day Toggle
 			// =============================================
 			function toggleAllDay(checkbox) {
-				if ($(checkbox).hasClass('all_day_enabled'))
-				{
-					$(checkbox).removeClass('all_day_enabled');
-					
-					$('.start_time').slideDown();
-					$('.end_date').slideDown();
-				}
-				else
-				{
-					$(checkbox).addClass('all_day_enabled');
-					
-					$('.start_time').slideUp();
-					$('.end_date').slideUp();
-				}
+				$(checkbox).toggleClass('all_day_enabled');
+				$('.start_time').toggleClass('time_disabled');
+				$('.end_time').toggleClass('time_disabled');
 			}
 			
 			$('#<?php echo $form['all_day']->renderId() ?>').bind('click', function() {
@@ -68,7 +65,7 @@
 	    });
 
 			$('.post-date-toggle').click(function(){
-	      $(this).toggleClass('open').parent().siblings('.option').toggle();				
+	      $(this).toggleClass('open').parent().siblings('.option').toggle();
 			});
 
 			// Comments Toggle
