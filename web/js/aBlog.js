@@ -440,23 +440,12 @@ function aPopularTags(tagList, recommendedTags)
 
 function aBlogEnableNewForm()
 {
-	$('.a-blog-admin-new-form').submit(function() {
+	var newForm = $('.a-blog-admin-new-form');
+	newForm.submit(function() {
 		var form = $(this);
 		$.post(form.attr('action'), $(this).serialize(), function(data) {
 			form.parents('.a-blog-admin-new-ajax').html(data);	
 		});
-		return false;
-	});
-	$('.a-blog-admin-new-form .a-cancel').click(function() {
-		$(this).parents('.a-blog-admin-new-ajax').hide();
-		return false;
-	});
-}
-
-function aBlogEnableNewPostButtons()
-{
-	$('.a-blog-new-post-button,.a-blog-new-event-button').click(function() {
-		$('.a-blog-admin-new-ajax').show();
 		return false;
 	});
 }

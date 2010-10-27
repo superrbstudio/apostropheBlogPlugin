@@ -28,11 +28,10 @@
 
   <?php if (aBlogItemTable::userCanPost()): ?>
 		<div class="a-ui">
-		  <?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-event-button')) ?>
-      <div class="a-blog-admin-new-ajax">
+		  <?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-event-button'), 'a-blog-new-event-button') ?>
+      <div class="a-options a-blog-admin-new-ajax dropshadow">
         <?php include_component('aEventAdmin', 'newEvent') ?>
       </div>
-      <?php a_js_call('aBlogEnableNewPostButtons()') ?>
 		</div>
   <?php endif ?>
 
@@ -46,3 +45,4 @@
   <?php endif ?>
 </div>
   
+<?php a_js_call('apostrophe.menuToggle(?)', array('button' => '.a-blog-new-event-button', 'classname' => 'a-options-open', 'overlay' => false)) ?>	
