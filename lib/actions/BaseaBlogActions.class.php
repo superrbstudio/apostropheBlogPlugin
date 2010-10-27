@@ -190,12 +190,9 @@ abstract class BaseaBlogActions extends aEngineActions
     
     $now = date('YmdHis');
     
-    // TODO: pay attention to the category restrictions of the current blog engine page.
-    // That means getting them into the blog page object
-    
     // create the array of pages matching the query
-    $q = $request->getParameter('q');
     
+    $q = $request->getParameter('q');
     if ($request->hasParameter('x'))
     {
       // We sometimes like to use input type="image" for presentation reasons, but it generates

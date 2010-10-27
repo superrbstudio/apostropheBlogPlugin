@@ -19,6 +19,9 @@ abstract class BaseaBlogSlotActions extends BaseaSlotActions
     $this->editSetup();
 
     $value = $this->getRequestParameter('slot-form-' . $this->id);
+    ob_start();
+    var_dump($value);
+    error_log(ob_get_clean());
     $this->form = new $this->formClass($this->id, array());
     $this->form->bind($value);
     if ($this->form->isValid())

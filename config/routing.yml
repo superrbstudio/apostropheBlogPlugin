@@ -13,7 +13,7 @@ a_blog_search:
   url: /search
   param: { module: aBlog, action: search }
   class: aRoute
-  
+
 a_blog_cat_tag_year_month_day:
   url:   /:cat/tag/:tag/:year/:month/:day
   param: { module: aBlog, action: index }
@@ -250,6 +250,7 @@ a_blog_admin:
     collection_actions:
       categories: get
       new_with_title: post
+      search: get
 
 a_blog_admin_autocomplete:
   url:   /admin/blog/autocomplete

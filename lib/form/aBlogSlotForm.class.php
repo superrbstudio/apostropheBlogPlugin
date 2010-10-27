@@ -23,8 +23,10 @@ class aBlogSlotForm extends BaseForm
     $this->setWidget('title_or_tag', new sfWidgetFormChoice(array('choices' => $choices)));
     $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices))));
     
-    $this->setWidget('blog_items', new sfWidgetFormChoice(array('multiple' => true, 'compact' => true)));
-    $this->validatorSchema['blog_items'] = new sfValidatorDoctrineChoice(array('model' => $this->model, 'multiple' => true, 'required' => false));
+    // We'll progressively enhance this with autocomplete so no data is needed here
+    $this->setWidget('blog_posts', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => array())));
+    // TODO: really should be specific to posts, requires adding a custom query
+    $this->validatorSchema['blog_posts'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
     
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));

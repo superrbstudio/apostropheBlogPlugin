@@ -12,5 +12,4 @@ require_once dirname(__FILE__).'/../lib/BaseaBlogAdminActions.class.php';
  */
 class aBlogAdminActions extends BaseaBlogAdminActions
 {
-  
 }

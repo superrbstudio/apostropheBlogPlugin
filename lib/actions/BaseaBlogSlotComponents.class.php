@@ -34,17 +34,27 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       ->leftJoin($this->modelClass.'.Author a')
       ->leftJoin($this->modelClass.'.Categories c');
     Doctrine::getTable($this->modelClass)->addPublished($q);
-    if (isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
+    if (isset($this->values['title_or_tag']) && ($this->values['title_or_tag'] === 'title'))
     {
-      $q->andWhereIn('c.id', $this->values['categories_list']);
+      if (isset($this->values['blog_posts']) && count($this->values['blog_posts']))
+      {
+        $q->andWhereIn('id', $this->values['blog_posts']);
+      }
     }
-    if (isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
+    else
     {
-      PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tags' => 1));
-    }
-    if (isset($this->values['count']))
-    {
-      $q->limit($this->values['count']);
+      if (isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
+      {
+        $q->andWhereIn('c.id', $this->values['categories_list']);
+      }
+      if (isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
+      {
+        PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tags' => 1));
+      }
+      if (isset($this->values['count']))
+      {
+        $q->limit($this->values['count']);
+      }
     }
     $q->orderBy('published_at desc');
     
