@@ -68,20 +68,22 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // Make default values for this item
     
     $this['slug_saved'] = false;
-    $this['published_at'] = date('Y-m-d H:i:s');
+    if (is_null($this['published_at']))
+    {
+      $this['published_at'] = date('Y-m-d H:i:s');
+    }
     $page->published_at = $this['published_at'];
 
     $this->Page = $page;
-
+    
+    // For consistency with the way the page creation form does it, and to fix a bug
+    // in generate-test-posts, we save the page before setting its title slot
+    $this->Page->save();
+    
     // Create a slot for the title and add to the virtual page.
     // We now have an actual title right off owing to the special form for
     // creating a new post which won't let you slide by without one
     $this->Page->setTitle($this->_get('title'));
-
-    $page->newAreaVersion('catTag', 'add',
-      array(
-        'permid' => 1,
-        'slot' => $catTag));
 
     // This prevents post preupdate from running after the next save
     $this->update = false;
@@ -156,10 +158,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     {
       $this->Page->setTitle($this->_get('title'));
     }
-    $this->Page->newAreaVersion('catTag', 'update',
-      array(
-        'permid' => 1,
-        'slot' => $catTag));
     $this->Page->archived = !($this->status === 'published');
     $this->Page->published_at = $this->published_at;
     // Search is good, let it happen
