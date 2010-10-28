@@ -33,7 +33,7 @@
 	  	<span class="unpublish"><?php echo __('Unpublish', array(), 'apostrophe') ?></span>
 		</a>
 	
-		<a href="#" class="a-btn big a-save-event" id="a-event-save-button">
+		<a href="#" class="a-btn big a-save-post" id="a-event-save-button">
 	  	<span class="publish"><?php echo __('Save', array(), 'apostrophe') ?></span>
 		</a>
 	</div>
@@ -79,9 +79,11 @@
 
 <?php // Event Date Range ?>
 <hr />
+
 <div class="event-date section a-form-row">
-	<h4>Start Date</h4>
+
 	<div class="start_date">
+		<h4>Start Date</h4>
 		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['start_date']->renderError() ?>
 		
@@ -90,12 +92,17 @@
     	<?php echo $form['start_time']->renderError() ?>
 		</div>
 	</div>
+	
 	<div class="end_date">
 		<h4>End Date</h4>
 		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
 		<?php echo $form['end_date']->renderError() ?>
-    <?php echo $form['end_time'] ?>
-    <?php echo $form['end_time']->renderError() ?>
+
+		<div class="end_time">
+    	<?php echo $form['end_time'] ?>
+    	<?php echo $form['end_time']->renderError() ?>
+		</div>
+		
 	</div>
 
 	<div class="all_day">
