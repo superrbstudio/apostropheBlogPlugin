@@ -10,8 +10,7 @@
 ?>
 
 <div class="a-subnav-section search">
-  <h4>Search</h4>
-  <div class="a-search a-search-blog">
+  <div class="a-search a-search-sidebar blog">
     <form action="<?php echo url_for('aBlog/search') ?>" method="get">
   		<div class="a-form-row"> <?php // div is for page validation ?>
   			<label for="a-search-blog-field" style="display:none;">Search</label><?php // label for accessibility ?>
@@ -20,7 +19,6 @@
   		</div>
     </form>
   </div>
-  <?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => a_('Search'), 'focus' => true )) ?>
 </div>
 
 <?php if(count($categories)): ?>
@@ -106,3 +104,5 @@ $(document).ready(function() {
 });	
 //]]>
 </script>
+
+<?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => a_('Search'), 'focus' => false )) ?>

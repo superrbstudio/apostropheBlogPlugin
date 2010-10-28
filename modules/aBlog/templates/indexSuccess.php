@@ -43,5 +43,3 @@
   <?php include_partial('aBlog/pager', array('pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])), 'max_per_page' => $max_per_page)) ?>
   
 </div>
-  
-<?php a_js_call('apostrophe.menuToggle(?)', array('button' => '.a-blog-new-post-button', 'classname' => 'a-options-open', 'overlay' => false)) ?>	

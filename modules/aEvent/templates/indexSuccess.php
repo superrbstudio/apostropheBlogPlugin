@@ -44,5 +44,3 @@
  		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aEvent/index?'. http_build_query($params['pagination'])))); ?>
   <?php endif ?>
 </div>
-  
-<?php a_js_call('apostrophe.menuToggle(?)', array('button' => '.a-blog-new-event-button', 'classname' => 'a-options-open', 'overlay' => false)) ?>	
