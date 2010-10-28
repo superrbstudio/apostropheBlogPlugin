@@ -21,6 +21,10 @@ class aBlogSlotForm extends BaseForm
 
     $choices = array('title' => 'By Title', 'tags' => 'By Category And Tag');
     $this->setWidget('title_or_tag', new sfWidgetFormChoice(array('choices' => $choices)));
+    if (!$this->hasDefault('title_or_tag'))
+    {
+      $this->setDefault('title_or_tag', 'title');
+    }
     $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices))));
     
     // We'll progressively enhance this with autocomplete so no data is needed here

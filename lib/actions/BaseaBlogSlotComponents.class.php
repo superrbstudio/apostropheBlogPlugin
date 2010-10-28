@@ -25,7 +25,18 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
     {
       $this->form = new $this->formClass($this->id, $this->slot->getArrayValue());
     }
+    
+    $this->popularTags = PluginTagTable::getPopulars(null, array(), false, 10);
+  	if (sfConfig::get('app_a_all_tags', true))
+  	{
+  	  $this->allTags = PluginTagTable::getAllTagNameWithCount();
+    }
+    else
+    {
+      $this->allTags = array();
+    }
   }
+  
   public function executeNormalView()
   {
     $this->setup();
