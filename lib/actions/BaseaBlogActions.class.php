@@ -52,7 +52,13 @@ abstract class BaseaBlogActions extends aEngineActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    $pager = new sfDoctrinePager($this->modelClass, $request->getParameter('per_page', 10));
+    if ($request->hasParameter('max_per_page'))
+    {
+      $this->getUser()->setAttribute('max_per_page', $request->getParameter('max_per_page'), 'apostropheBlog_prefs');
+    }
+    $this->max_per_page = $this->getUser()->getAttribute('max_per_page', 20, 'apostropheBlog_prefs');
+    $pager = new sfDoctrinePager($this->modelClass);
+    $pager->setMaxPerPage($this->max_per_page);
     $pager->setQuery($this->buildQuery($request));
     $pager->setPage($this->getRequestParameter('page', 1));
     $pager->init();
@@ -142,7 +148,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->addFilterParams('cat');
     $this->addFilterParams('tag');
     $this->addFilterParams('search');
-    $this->addFilterParams('per_page');
+    $this->addFilterParams('max_per_page');
   }
 
   public function addFilterParams($name)
@@ -270,7 +276,7 @@ abstract class BaseaBlogActions extends aEngineActions
       $nvalues[] = $nvalue;
     }
     $values = $nvalues;
-    $this->pager = new aArrayPager(null, sfConfig::get('app_a_search_results_per_page', 10));    
+    $this->pager = new aArrayPager(null, sfConfig::get('app_a_search_results_max_per_page', 10));    
     $this->pager->setResultArray($values);
     $this->pager->setPage($request->getParameter('page', 1));
     $this->pager->init();
