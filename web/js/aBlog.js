@@ -14,11 +14,11 @@ function aBlogUpdateForm(slug_url, event)
 			
 				if (data)
 				{
-		      		if (typeof(data.modified.template) != "undefined" ) {
+		      		if (data.modified.template !== undefined ) {
 		        		aBlogUpdateTemplate(data.template, data.feedback);
 		      		};
 
-		      		if (typeof(data.modified.allow_comments) != "undefined" ) {
+		      		if (data.modified.allow_comments !== undefined ) {
 		      			aBlogUpdateComments(data.aBlogPost.allow_comments); // Update Comments after ajax
 					};
 					aBlogPublishBtn(data.aBlogPost.status, slug_url); // Re-set Publish button after ajax
