@@ -5,7 +5,9 @@
   $n = isset($n) ? $sf_data->getRaw('n') : null;
 ?>
 <div id="a-admin-bar" <?php if (count($sf_user->getAttribute('aBlogAdmin.filters', null, 'admin_module'))): ?>class="has-filters"<?php endif ?>>
-  <!-- <h2 class="a-admin-title you-are-here"><?php echo __('Blog Post Admin', array(), 'messages') ?></h2> -->
+  <?php if (0): ?>
+    <h2 class="a-admin-title you-are-here"><?php echo __('Blog Post Admin', array(), 'messages') ?></h2>
+  <?php endif ?>
 </div>
 
 <div class="a-admin-title-sentence">

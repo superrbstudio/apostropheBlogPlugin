@@ -10,4 +10,9 @@
  */
 abstract class PluginaEventFormFilter extends BaseaEventFormFilter
 {
+  public function setup()
+  {
+    parent::setup();
+    $this->widgetSchema->setLabel('categories_list', 'Categories');
+  }
 }

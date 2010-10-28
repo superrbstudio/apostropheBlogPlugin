@@ -10,4 +10,8 @@
  */
 abstract class PluginaBlogPostFormFilter extends BaseaBlogPostFormFilter
 {
+  public function setup()
+  {
+    parent::setup();
+  }
 }
