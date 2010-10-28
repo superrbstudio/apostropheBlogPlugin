@@ -2,12 +2,18 @@
 	function aBlogUpdateMulti() { aBlogUpdateForm('<?php echo url_for('a_event_admin_update',$a_event) ?>'); }
 	$(document).ready(function(){
 		
+			var changed = true;
 	    $('#a-admin-form').change(function(event) {
-		    if (!( event.target.className == 'a-multiple-select-input' && event.target.options[0].selected == true || event.target.name == 'add-text' || event.target.name == 'a-ignored' ))
-				{
-		      aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
-				}
+				changed = true;
 	    });
+	
+			setInterval(function(){
+				if (changed == true)
+				{
+					changed = false;
+					aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>');
+				}
+			}, 15000);
 
       $('#<?php echo $form['start_date']->renderId() ?>-ui').bind('aTimeUpdated',function(event){
         aBlogUpdateForm('<?php echo url_for('a_event_admin_update', $a_event) ?>', event);
