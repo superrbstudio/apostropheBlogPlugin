@@ -1,6 +1,6 @@
 <div class="a-admin-list">
   [?php if (!$pager->getNbResults()): ?]
-    <p>[?php echo __('No result', array(), 'a-admin') ?]</p>
+    <p>[?php echo __('No result', array(), 'apostrophe') ?]</p>
   [?php else: ?]
     <table cellspacing="0" class="a-admin-list-table">
       <thead>
@@ -10,7 +10,7 @@
 					<?php endif; ?>
           	[?php include_partial('<?php echo $this->getModuleName() ?>/list_th_<?php echo $this->configuration->getValue('list.layout') ?>', array('sort' => $sort, 'form' => $form, 'filters' => $form)) ?]
 					<?php if ($this->configuration->getValue('list.object_actions')): ?>
-          	<th id="a-admin-list-th-actions">[?php echo __('Actions', array(), 'a-admin') ?]</th>
+          	<th id="a-admin-list-th-actions">[?php echo __('Actions', array(), 'apostrophe') ?]</th>
 					<?php endif; ?>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
 						<h6 class="a-admin-list-results">
 	            [?php echo format_number_choice('[0] no result|[1] 1 result|(1,+Inf] %1% results', array('%1%' => $pager->getNbResults()), $pager->getNbResults(), 'a-admin') ?]
 	            [?php if ($pager->haveToPaginate()): ?]
-	              [?php // echo __('(page %%page%%/%%nb_pages%%)', array('%%page%%' => $pager->getPage(), '%%nb_pages%%' => $pager->getLastPage()), 'a-admin') ?]
+	              [?php // echo __('(page %%page%%/%%nb_pages%%)', array('%%page%%' => $pager->getPage(), '%%nb_pages%%' => $pager->getLastPage()), 'apostrophe') ?]
 	            [?php endif; ?]
 						</h6>
             [?php if ($pager->haveToPaginate()): ?]
