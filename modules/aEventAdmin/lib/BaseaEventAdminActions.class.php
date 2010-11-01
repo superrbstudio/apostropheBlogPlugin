@@ -158,7 +158,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 		// Retrieve the tags currently assigned to the event for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();
 		// Retrieve the 10 most popular tags for the inlineTaggableWidget
-    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aEvent', 'sort_by_popularity' => true, 'limit' => 10));
+    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aEvent', 'sort_by_popularity' => true), false, 10);
 
     aBlogItemTable::populatePages(array($this->a_event));
   }

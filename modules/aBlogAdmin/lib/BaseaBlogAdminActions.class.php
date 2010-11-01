@@ -140,7 +140,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 		// Retrieve the tags currently assigned to the blog post for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();
 		// Retrieve the 10 most popular tags for the inlineTaggableWidget
-    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true, 'limit' => 10));
+    $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true), false, 10);
 
     aBlogItemTable::populatePages(array($this->a_blog_post));
   }
