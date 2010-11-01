@@ -91,7 +91,6 @@ abstract class BaseaEventActions extends BaseaBlogActions
 	public function buildCalendar($request)
 	{
 		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
-		
 		$monthRequest = clone $request;
 		$monthRequest->getParameterHolder()->remove('day');
 		$query = $this->buildQuery($monthRequest);

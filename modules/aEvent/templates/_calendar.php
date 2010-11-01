@@ -1,3 +1,5 @@
+<?php // http_build_query wants a real array, not a decorated array ?>
+<?php $calendar = $sf_data->getRaw('calendar') ?>
 <table class="a-calendar">
 	<thead>
 	<tr class="month">
@@ -24,7 +26,6 @@
 	<?php $w=0; $d=0; foreach ($calendar['events']->getEventCalendar() as $week): ?>
 		<tr class="week-<?php echo $w; ?>">
 			<?php foreach ($week as $eventDate => $event): ?>
-
 				<?php $day_class = (date('m', strtotime($eventDate)) == date('m', strtotime($calendar['month']))) ? ' current-month':' not-current-month'; ?>
 				<?php $day_class .= (date('mdy', strtotime($eventDate)) == date('mdy')) ? ' today':''; ?>
 				<?php $day_class .= (date('d', strtotime($eventDate)) == $sf_request->getParameter('day'))? ' selected':'' ?>
@@ -32,7 +33,7 @@
 				<?php $day_title = (date('mdy', strtotime($eventDate)) == date('mdy')) ? 'Today':''; ?>
 
 				<td class="day day-<?php echo $d; ?><?php echo $day_class ?>" title="<?php echo $day_title ?>">
-					<?php if (!empty($event)): ?>
+					<?php if (count($event)): ?>
 						<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => date('Y', strtotime($eventDate)), 'month' => date('m', strtotime($eventDate)), 'day' => date('d', strtotime($eventDate))))) ?>" title="<?php echo (count($event) > 1)? count($event).' Events':count($event).' Event' ?>"><?php echo date('d', strtotime($eventDate)) ?></a>
 					<?php else: ?>
 						<span><?php echo date('d', strtotime($eventDate)) ?></span>
