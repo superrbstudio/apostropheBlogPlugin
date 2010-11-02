@@ -17,28 +17,21 @@
 <div class="a-hidden">
 	<?php echo $form->renderHiddenFields() ?>
 </div>
+
 <div class="published section a-form-row">
-  <div class="post-save">
-  	<?php echo a_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
+  <div class="post-save clearfix">
+  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
   </div>
-  <hr />
+ 	<h4><?php echo a_('Status') ?></h4>
   <div class="a-form-row">
     <?php echo $form['publication']->render() ?>
   </div>
   <div class="a-published-at-container">
-    <?php echo $form['published_at']->renderRow() ?>
+		<div class="a-form-row">
+    <?php echo $form['published_at']->render() ?>
+		</div>
+   	<?php echo $form['published_at']->renderError() ?>
   </div>  
-</div>
-
-<hr />
-<div class="delete preview section a-form-row">
-	<?php $engine = $a_blog_post->findBestEngine(); ?>
-  <?php aRouteTools::pushTargetEnginePage($engine) ?>
-	<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_blog_post->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
-  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
-  <?php if($a_blog_post->userHasPrivilege('delete')): ?>
-	  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this post?'), )) ?>
-  <?php endif ?>
 </div>
 
 <?php // Author & Editors Section ?>
@@ -55,7 +48,6 @@
 				<?php echo $form['author_id']->renderError() ?>
 				</div>
 			<?php else: ?>: <span><?php echo $a_blog_post->Author ?></span></h4><?php endif ?>
-
 	</div>
 
 	<?php // Blog Post Editors ?>
@@ -84,7 +76,9 @@
 	<hr />
 	<div class="template section">
 		<h4><?php echo a_('Template') ?></h4>
+		<div class="a-form-row">
 		<?php echo $form['template']->render() ?>
+		</div>
 		<?php echo $form['template']->renderError() ?>
 	</div>
 	<?php endif ?>
@@ -124,6 +118,18 @@
 		<?php echo $form['tags']->renderError() ?>
 		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>
 				
+	</div>
+
+
+	<hr />
+	<div class="delete preview section a-form-row">
+		<?php $engine = $a_blog_post->findBestEngine(); ?>
+	  <?php aRouteTools::pushTargetEnginePage($engine) ?>
+		<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_blog_post->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
+	  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
+	  <?php if($a_blog_post->userHasPrivilege('delete')): ?>
+		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_blog_admin_delete', $a_blog_post, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this post?'), )) ?>
+	  <?php endif ?>
 	</div>
 
 </form>
