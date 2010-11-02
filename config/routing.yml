@@ -266,13 +266,34 @@ a_blog_admin_edit:
     sf_method: GET
     id: \d+
 
+# We still want slug here because we sometimes allow this to be a full page refresh
 a_blog_admin_update:
   url: /admin/blog/:id/update/:slug
   options: { model: aBlogPost, type: object, method: findOne }
   param: { module: aBlogAdmin, action: update }
   class: sfDoctrineRoute
   requirements:
-    sf_method: PUT
+    sf_method: [GET, POST]
+    id: \d+
+
+# No slugs here, they make it tougher to edit slugs
+a_blog_admin_updateTitle:
+  url: /admin/blog/:id/updateTitle
+  options: { model: aBlogPost, type: object, method: findOne }
+  param: { module: aBlogAdmin, action: updateTitle }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: [GET, POST]
+    id: \d+
+
+# No slugs here, they make it tougher to edit slugs
+a_blog_admin_updateSlug:
+  url: /admin/blog/:id/updateSlug
+  options: { model: aBlogPost, type: object, method: findOne }
+  param: { module: aBlogAdmin, action: updateSlug }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: [GET, POST]
     id: \d+
 
 a_blog_admin_delete:
@@ -325,12 +346,30 @@ a_event_admin_edit:
     id: \d+
 
 a_event_admin_update:
-  url: /admin/event/:id/update/:slug
+  url: /admin/event/:id/updateTitle/:slug
   options: { model: aEvent, type: object, method: findOne }
   param: { module: aEventAdmin, action: update }
   class: sfDoctrineRoute
   requirements:
-    sf_method: PUT
+    sf_method: [GET, POST]
+    id: \d+
+
+a_event_admin_updateTitle:
+  url: /admin/event/:id/updateSlug/:slug
+  options: { model: aEvent, type: object, method: findOne }
+  param: { module: aEventAdmin, action: updateTitle }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: [GET, POST]
+    id: \d+
+
+a_event_admin_updateSlug:
+  url: /admin/event/:id/updateSlug/:slug
+  options: { model: aEvent, type: object, method: findOne }
+  param: { module: aEventAdmin, action: updateSlug }
+  class: sfDoctrineRoute
+  requirements:
+    sf_method: [GET, POST]
     id: \d+
 
 a_event_admin_delete:

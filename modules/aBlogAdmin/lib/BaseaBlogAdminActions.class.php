@@ -37,7 +37,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->a_blog_post->Author = $this->getUser()->getGuardUser();
       $this->a_blog_post->setTitle($this->form->getValue('title'));
       $this->a_blog_post->save();
-      $this->getUser()->setFlash('new_post', true);
       $this->postUrl = $this->generateUrl('a_blog_admin_edit', $this->a_blog_post);
       return 'Success';
     }
@@ -53,7 +52,61 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    if($this->getUser()->hasCredential('admin'))
+    error_log("In executeUpdate");
+    $this->setABlogPostForUser();
+    $this->form = new aBlogPostForm($this->a_blog_post);
+    if ($request->getMethod() === 'POST')
+    {
+      $this->form->bind($request->getParameter($this->form->getName()));
+      if ($this->form->isValid())
+      {
+        $this->a_blog_post = $this->form->save();
+        // Recreate the form to get rid of bound values for the publication field,
+        // so we can see the new setting
+        $this->form = new aBlogPostForm($this->a_blog_post);
+      }
+    }
+    if (!$request->isXmlHttpRequest())
+    {
+      $this->setTemplate('edit');
+    }
+  }
+  
+  public function executeUpdateTitle(sfWebRequest $request)
+  {
+    $this->setABlogPostForUser();
+    $title = trim($request->getParameter('title'));
+    if (strlen($title))
+    {
+      // The preUpdate method takes care of updating the slug from the title as needed
+      $this->a_blog_post->setTitle($title);
+      $this->a_blog_post->save();
+    }
+    $this->setTemplate('titleAndSlug');
+  }
+
+  public function executeUpdateSlug(sfWebRequest $request)
+  {
+    $this->setABlogPostForUser();
+    $slug = trim($request->getParameter('slug'));
+    if (strlen($slug))
+    {
+      error_log("Setting the slug to $slug");
+      // "OMG, aren't you going to slugify this?" The preUpdate method of the
+      // PluginaBlogItem class takes care of slugifying and uniqueifying the slug.
+      $this->a_blog_post->setSlug($slug);
+      $this->a_blog_post->save();
+    }
+    else
+    {
+      error_log("Not setting the slug");
+    }
+    $this->setTemplate('titleAndSlug');
+  }
+  
+  protected function setABlogPostForUser()
+  {
+    if ($this->getUser()->hasCredential('admin'))
     {
       $this->a_blog_post = $this->getRoute()->getObject();
     }
@@ -61,42 +114,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     {
       $this->a_blog_post = Doctrine::getTable('aBlogPost')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
     }
-    $this->forward404Unless($this->a_blog_post);
-    $this->form = $this->configuration->getForm($this->a_blog_post);
-
-    if($request->isXmlHttpRequest())
-    {
-      $this->setLayout(false);
-      $response = array();
-      $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
-      if ($this->form->isValid())
-      {
-        $this->a_blog_post = $this->form->save();
-        //We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
-        $this->form = $this->configuration->getForm($this->a_blog_post);
-        $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_blog_post)));
-      }
-      
-      $response['errors'] = $this->form->getErrorSchema()->getErrors();
-      aPageTable::queryWithTitles()
-        ->addWhere('page_id = ?', $this->a_blog_post['page_id'])
-        ->execute();
-      $response['aBlogPost'] = $this->a_blog_post->toArray();
-      // We need to decode the title because jQuery will be stuffing it in with .value, which
-      // doesn't need the escaping
-      $response['aBlogPost']['title'] = html_entity_decode($response['aBlogPost']['title'], ENT_COMPAT, 'UTF-8');
-      $response['modified'] = $this->a_blog_post->getLastModified();
-      $response['time'] = aDate::time($this->a_blog_post['updated_at']);
-      //Any additional messages can go here
-      $output = json_encode($response);
-      $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
-      return sfView::HEADER_ONLY;
-    }
-    else
-    {
-      $this->processForm($request, $this->form);
-    }
-    $this->setTemplate('edit');
   }
 
   public function executeRedirect()
@@ -135,7 +152,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->a_blog_post = Doctrine::getTable('aBlogPost')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
     }
     $this->forward404Unless($this->a_blog_post);
-    $this->form = $this->configuration->getForm($this->a_blog_post);
+    // Separate forms for separately saved fields
+    $this->form = new aBlogPostForm($this->a_blog_post);
 
 		// Retrieve the tags currently assigned to the blog post for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();

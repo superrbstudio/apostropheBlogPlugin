@@ -50,6 +50,10 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       {
         $q->andWhereIn('id', $this->values['blog_posts']);
       }
+      else
+      {
+        $q->andWhere('0 <> 0');
+      }
     }
     else
     {

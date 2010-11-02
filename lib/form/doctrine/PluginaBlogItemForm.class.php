@@ -19,7 +19,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $user = sfContext::getInstance()->getUser();
 
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved'], $this['tags']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved'], $this['tags'], $this['title'], $this['status']
     );
 
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
@@ -105,8 +105,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 			array('date' => array('image' => '/apostrophePlugin/images/a-icon-datepicker.png')),
 			array('time' => array('twenty-four-hour' => false, 'minutes-increment' => 30))
 		));
-    $this->getWidgetSchema()->setDefault('published_at', date('Y-m-d H:i:s'));
-
+		
+    // DON'T set a default for the date/time widget. If you do, for some reason it wins even though
+    // the object already exists. A reasonable default is already in the object anyway by now
+    
 		$tagstring = implode(', ', $this->getObject()->getTags());  // added a space after the comma for readability
 		// class tag-input enabled for typeahead support
     $this->widgetSchema['tags'] = new sfWidgetFormInput(array('default' => $tagstring), array('class' => 'tags-input', 'autocomplete' => 'off', 'id' => 'a-blog-post-tags-input'));
@@ -115,6 +117,8 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'postValidator')))
     );
+    
+    $this->configurePublication();
   }
 
   public function postValidator($validator, $values)
@@ -204,5 +208,74 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $this->object->link('Categories', array_values($link));
     }
+  }
+  
+  public function updateObject($values = null)
+  {
+    $object = $this->getObject();
+    error_log("START: status is " . $object->status);
+    if (is_null($values))
+    {
+      $values = $this->getValues();
+    }
+    $object = parent::updateObject($values);
+    error_log("AFTER PARENT: status is " . $object->status);
+    $this->updatePublication($values);
+    error_log("AFTER updatePublication: status is " . $object->status);
+    return $object;
+  }
+  
+  // Implement's John's combined dropdown for publication status (along with
+  // a little help from javascript as per always)
+  
+  public function updatePublication($values)
+  {
+    $object = $this->getObject();
+    if ($values['publication'] === 'schedule')
+    {
+      $object->status = 'published';
+      // published_at comes from corresponding field naturally
+    }
+    elseif ($values['publication'] === 'publish')
+    {
+      $object->status = 'published';
+      // Override field, publish now
+      $object->published_at = aDate::mysql();
+    }
+    elseif ($values['publication'] === 'draft')
+    {
+      $object->status = 'draft';
+    }
+  }
+  
+  // Implement's John's combined dropdown for publication status (along with
+  // a little help from javascript as per always)
+  
+  public function configurePublication()
+  {
+    $choices = array();
+    $o = $this->getObject();
+    $now = aDate::mysql();
+    if ($o->status === 'draft')
+    {
+      $choices = array('draft' => 'Draft',
+        'publish' => 'Publish',
+        'schedule' => 'Schedule'
+      );
+      $default = 'draft';
+    } elseif (($o->status === 'published') && ($o->published_at <= $now))
+    {
+      $choices = array('nochange' => 'Published',
+        'draft' => 'Draft',
+        'schedule' => 'Schedule'
+      );
+      $default = 'nochange';
+    } elseif (($o->status === 'published') && ($o->published_at > $now))
+    {
+      $choices = array('schedule' => 'Scheduled', 'publish' => 'Publish', 'draft' => 'Draft');
+      $default = 'schedule';
+    }
+    $this->setWidget('publication', new sfWidgetFormChoice(array('choices' => $choices, 'default' => $default)));
+    $this->setValidator('publication', new sfValidatorChoice(array('choices' => array_keys($choices))));
   }
 }

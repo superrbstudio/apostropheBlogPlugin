@@ -16,7 +16,6 @@ abstract class PluginaBlogPostForm extends BaseaBlogPostForm
   public function setup()
   {
     parent::setup();
-    
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
   }
 }

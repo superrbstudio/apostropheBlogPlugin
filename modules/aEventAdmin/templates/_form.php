@@ -8,74 +8,41 @@
 
 <?php use_helper("a") ?>
 
-<form method="POST" action="<?php echo url_for('a_event_admin_update',$a_event) ?>" id="a-admin-form" class="a-ui blog">
-<?php a_js_call('apostrophe.formUpdates(?)', array('selector' => '#a-admin-form', 'update' => 'a-admin-blog-post-form')) ?>
-
-<?php if (!$form->getObject()->isNew()): ?><input type="hidden" name="sf_method" value="PUT" /><?php endif; ?>
-
+<?php $v = $form['publication']->getValue() ?>
+<?php $saveLabels = array('nochange' => a_('Update'), 'draft' => a_('Save'), 'publish' => a_('Publish'), 'schedule' => a_('Update')) ?>
+<?php $saveLabel = $saveLabels[$form['publication']->getValue()] ?>
+<?php // One tiny difference: if we move from something else *TO* schedule, label it 'Schedule' ?>
+<?php $updateLabels = array('nochange' => a_('Update'), 'draft' => a_('Save'), 'publish' => a_('Publish'), 'schedule' => a_('Schedule')) ?>
+<?php // Invoked by include_partial in the initial load of the form partial and also directly on AJAX updates of this section ?>
 <div class="a-hidden">
 	<?php echo $form->renderHiddenFields() ?>
 </div>
-
-<?php // Title and Slug are hidden and handled with inputs in the editSuccess ?>
-<div class="post-title post-slug option">
-  <?php echo $form['title']->render() ?>
-  <?php echo $form['slug']->render() ?>
-  <?php echo $form['slug']->renderError() ?>
-</div>
-
-<?php // Huge Publish Button and Publish Date ?>
 <div class="published section a-form-row">
-	
-	<div class="a-form-row">
-		<a href="#" class="a-btn big a-publish-post <?php echo ($a_event['status'] == 'published')? 'published':'' ?>" onclick="return false;" id="a-blog-publish-button">
-	  	<span class="publish"><?php echo a_('Publish') ?></span>
-	  	<span class="unpublish"><?php echo a_('Unpublish') ?></span>
-		</a>
-	
-		<a href="#" class="a-btn big a-save-post" id="a-event-save-button">
-	  	<span class="publish"><?php echo a_('Save') ?></span>
-		</a>
-	</div>
-
-	<div id="a-blog-item-update" class="a-btn big a-publish-post">Saved</div>
-
-	<div class="post-status option">
-  	<?php echo $form['status']->render() ?>
-	</div>
-
-	<div class="post-published <?php echo ($a_event['status'] != 'published')? 'draft':'published' ?>">
-		<div class="post-published-sentence-toggle">
-			<span class="draft">
-				<?php echo a_('Scheduled for '.aDate::medium(strtotime($a_event['published_at']))) ?><br/>
-				<a href="#" onclick="return false;" class="post-date-toggle"><?php echo a_('change date') ?></a>
-			</span>		
-			<span class="published">
-				<?php echo a_('Published on '.aDate::medium(strtotime($a_event['published_at']))) ?><br/>
-				<a href="#" onclick="return false;" class="post-date-toggle"><?php echo a_('change date') ?></a>		
-			</span>
-		</div>
-		
-		<div class="post-published-at option">
-		  <?php echo $form['published_at']->render(array('onClose' => 'aBlogUpdateMulti')) ?>
-		  <?php echo $form['published_at']->renderError() ?>		
-			<ul class="a-ui a-controls">
-				<li>
-	     		<?php echo a_js_button(a_('Save'), array('a-save', 'a-save-event', 'post-date-published-at-save-link', 'mini')) ?>							
-				</li>
-				<li>
-	      	<?php echo a_js_button(a_('Cancel'), array('a-cancel','icon','post-date-published-at-cancel', 'mini')) ?>
-				</li>
-			</ul>
-		</div>
-				
-	</div>	
+  <div class="post-save">
+  	<?php echo a_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
+  </div>
+  <hr />
+  <div class="a-form-row">
+    <?php echo $form['publication']->render() ?>
+  </div>
+  <div class="a-published-at-container">
+    <?php echo $form['published_at']->renderRow() ?>
+  </div>  
 </div>
 
-
+<hr />
+<div class="delete preview section a-form-row">
+	<?php $engine = $a_event->findBestEngine(); ?>
+  <?php aRouteTools::pushTargetEnginePage($engine) ?>
+	<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_event->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
+  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
+  <?php if($a_event->userHasPrivilege('delete')): ?>
+	  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
+  <?php endif ?>
+</div>
+<hr />
 
 <?php // Event Date Range ?>
-<hr />
 
 <div class="event-date section a-form-row">
 
@@ -88,7 +55,7 @@
 			<?php echo $form['all_day']->renderLabel() ?>
 			<?php echo $form['all_day']->renderError() ?>
 		</div>		
-		<?php echo $form['start_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['start_date']->render() ?>
 		<?php echo $form['start_date']->renderError() ?>
 		<div class="start_time">
     	<?php echo $form['start_time'] ?>
@@ -98,25 +65,14 @@
 	
 	<div class="end_date">
 		<h4>End Date</h4>
-		<?php echo $form['end_date']->render(array('beforeShow' => 'aBlogSetDateRange', 'onClose' => 'aBlogUpdateMulti')) ?>
+		<?php echo $form['end_date']->render() ?>
 		<?php echo $form['end_date']->renderError() ?>
 		<div class="end_time">
     	<?php echo $form['end_time'] ?>
     	<?php echo $form['end_time']->renderError() ?>
 		</div>
 	</div>
-
-
-	
-	<?php if (0): ?>
-	<div class="post-event-times">
- 		<?php  echo a_js_button(a_('Save'), array('a-save', 'a-save-event', 'mini')) ?>							
-	</div>
-	<?php endif ?>
-		
 </div>
-
-
 
 <?php // Author & Editors Section ?>
 <hr />
@@ -179,12 +135,6 @@
 	</div>
 	<?php endif ?>
 	
-	<?php if (0): ?>
-	<div class="post-author">
- 		<?php  echo a_js_button(a_('Save'), array('a-save', 'a-save-event', 'mini')) ?>							
-	</div>
-	<?php endif ?>
-	
 	<?php // Blog Post Categories ?>
 	<hr />
 	<div class="categories section a-form-row" id="categories-section">
@@ -194,39 +144,19 @@
 	  <?php endif ?>
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
-		
-		<?php if (0): ?>
-		<div class="post-categories-section">
-	 		<?php echo a_js_button(a_('Save'), array('a-save', 'a-save-event', 'mini')) ?>							
-		</div>
-		<?php endif ?>
-				
 	</div>
 
 	<?php // Blog Post Tags ?>
 	<hr />
 	<div class="tags section a-form-row">
+	  <?php // Without this we can't tell what it's for at all unless there are popular tags to be shown. If you ?>
+	  <?php // remove this think it through. ?>
+	  <h4><?php echo a_('Tags') ?></h4>
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
 		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>
-		
-		<?php if (0): ?>
-		<div class="post-tags-section">
-	 		<?php echo a_js_button(a_('Save'), array('a-save', 'a-save-event', 'mini')) ?>							
-		</div>
-		<?php endif ?>
 				
 	</div>
 
-	<?php if($a_event->userHasPrivilege('delete')): ?>
-		<hr />
-		<div class="delete preview section a-form-row">
-			<?php $engine = $a_event->findBestEngine(); ?>
-	    <?php aRouteTools::pushTargetEnginePage($engine) ?>
-			<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_event->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
-			<?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
-		</div>
-	<?php endif ?>
-
 </form>
-<?php include_partial('formScripts', array('a_event' => $a_event, 'form' => $form)) ?>
+<?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_event_admin_update?' . http_build_query(array('id' => $a_event->id, 'slug' => $a_event->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>

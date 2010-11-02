@@ -12,8 +12,10 @@
 <?php slot('a-subnav') ?>
   <div class="a-subnav-wrapper a-admin-sidebar">
 		<div class="a-subnav-inner">
-	    <div id='a-ui a-admin-blog-post-form'>
-	    <?php include_partial('form', array('a_event' => $a_event, 'form' => $form, 'popularTags' => $popularTags, 'existingTags' => $existingTags)) ?>	
+	    <div id="a-ui a-admin-blog-post-form">
+	      <form method="POST" action="<?php echo url_for('a_event_admin_update', $a_event) ?>" id="a-admin-form" class="a-ui blog">
+          <?php include_partial('aEventAdmin/form', array('form' => $form, 'a_event' => $a_event)) ?>
+        </form>
 	    </div>
 		</div>
   </div>
@@ -26,58 +28,22 @@
      <?php include_partial('list_actions', array('helper' => $helper)) ?>
 	</ul>
   <?php include_partial('aEventAdmin/form_bar') ?>				
-	<div class="a-admin-title-sentence">
-		<h3 class="new-item"><?php echo __('You are creating a new event.', array(), 'apostrophe') ?></h3>
-		<h3 class="draft-item"><?php echo __('You are working on a draft event.', array(), 'apostrophe') ?></h3>					
-		<h3 class="published-item"><?php echo __('You are editing a published event.', array(), 'apostrophe') ?></h3>
-		<span class="flash-message"> <?php echo __('Event Saved at', array(), 'apostrophe') ?></span>
-	</div>
 </div>
 <?php end_slot() ?>
 
 <div class="a-ui a-admin-container <?php echo $sf_params->get('module') ?>">
 
-  <?php include_partial('flashes') ?>
-
 	<div class="a-admin-content main">
 
-		<div id="a-blog-item-title-interface" class="a-blog-item-title-interface">
-			<input type="text" id="a_blog_item_title_interface" value="<?php echo ($a_event->title == 'untitled')? '':$a_event->title ?>" />
-			<div id="a-blog-item-title-placeholder"><?php echo a_('Title your event...') ?></div>
-		  <ul class="a-ui a-controls blog-title">
-		    <li><a href="#" class="a-btn a-save big"><?php echo a_('Save') ?></a></li>
-		    <li><a href="#" class="a-btn icon a-cancel no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
-		  </ul>				
-		</div>
-
-		<div id="a-blog-item-permalink-interface">
-			<h6>Permalink:</h6>
-			<div class="a-blog-item-permalink-wrapper url">
-        <span><?php echo aTools::urlForPage($a_event->findBestEngine()->getSlug()).'/' ?><?php echo date('Y/m/d/', strtotime($a_event->getStartDate())) ?></span>
-			</div>
-			<div class="a-blog-item-permalink-wrapper slug">
-				<input type="text" name="a_blog_item_interface" value="<?php echo $a_event->slug ?>" id="a_blog_item_permalink_interface">
-			  <ul class="a-ui a-controls blog-slug">
-			    <li><a href="#" class="a-btn a-save mini"><?php echo a_('Save') ?></a></li>
-			    <li><a href="#" class="a-btn icon a-cancel no-label mini"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
-			  </ul>
-			</div>
-		</div>
+    <div id="a-blog-title-and-slug">
+      <?php include_partial('aEventAdmin/titleAndSlug', array('a_event' => $a_event)) ?>
+    </div>
 
 		<div class="a-blog-item event<?php echo ($a_event->hasMedia())? ' has-media':''; ?> <?php echo $a_event->getTemplate() ?>">
   		<?php include_partial('aEvent/'.$a_event->getTemplate(), array('a_event' => $a_event, 'edit' => true)) ?>
 		</div>
 
   </div>
-
-	<?php if (isset($a_event['updated_at'])): ?>
-		<div id="post-last-saved" class="post-updated-at option">
-			<h6>
-					<b>Last Saved:</b>
-					<span></span>
-			</h6>		
-		</div>
-	<?php endif ?>
 
   <div class="a-admin-footer">
     <?php include_partial('form_footer', array('a_event' => $a_event, 'form' => $form, 'configuration' => $configuration)) ?>

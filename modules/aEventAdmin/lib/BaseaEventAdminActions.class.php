@@ -61,7 +61,64 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    if($this->getUser()->hasCredential('admin'))
+    error_log("In executeUpdate");
+    $this->setAEventForUser();
+    $this->form = new aEventForm($this->a_event);
+    if ($request->getMethod() === 'POST')
+    {
+      $this->form->bind($request->getParameter($this->form->getName()));
+      if ($this->form->isValid())
+      {
+        $this->a_event = $this->form->save();
+        error_log($this->a_event->end_date);
+        // Recreate the form to get rid of bound values for the publication field,
+        // so we can see the new setting
+        $this->form = new aEventForm($this->a_event);
+        // Do we need this? Why? Pretty sure changing the date/time in updateObject was sufficient
+        // $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
+      }
+    }
+    if (!$request->isXmlHttpRequest())
+    {
+      $this->setTemplate('edit');
+    }
+  }
+  
+  public function executeUpdateTitle(sfWebRequest $request)
+  {
+    $this->setABlogPostForUser();
+    $title = trim($request->getParameter('title'));
+    if (strlen($title))
+    {
+      // The preUpdate method takes care of updating the slug from the title as needed
+      $this->a_blog_post->setTitle($title);
+      $this->a_blog_post->save();
+    }
+    $this->setTemplate('titleAndSlug');
+  }
+
+  public function executeUpdateSlug(sfWebRequest $request)
+  {
+    $this->setABlogPostForUser();
+    $slug = trim($request->getParameter('slug'));
+    if (strlen($slug))
+    {
+      error_log("Setting the slug to $slug");
+      // "OMG, aren't you going to slugify this?" The preUpdate method of the
+      // PluginaBlogItem class takes care of slugifying and uniqueifying the slug.
+      $this->a_blog_post->setSlug($slug);
+      $this->a_blog_post->save();
+    }
+    else
+    {
+      error_log("Not setting the slug");
+    }
+    $this->setTemplate('titleAndSlug');
+  }
+
+  protected function setAEventForUser()
+  {
+    if ($this->getUser()->hasCredential('admin'))
     {
       $this->a_event = $this->getRoute()->getObject();
     }
@@ -69,52 +126,8 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     {
       $this->a_event = Doctrine::getTable('aEvent')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
     }
-    $this->forward404Unless($this->a_event);
-    $this->form = $this->configuration->getForm($this->a_event);
-
-    if($request->isXmlHttpRequest())
-    {
-      $this->setLayout(false);
-      $response = array();
-      $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
-      if ($this->form->isValid())
-      {	
-        $this->a_event = $this->form->save();
-       	
-				$values = $this->form->getValues();
-				if (isset($values['all_day']) && $values['all_day'])
-				{
-					$this->a_event->end_date = date('Y-m-d', strtotime("+1 day", strtotime($this->a_event->start_date)));
-					$this->a_event->start_time = $this->a_event->end_time = date('H:i:s', strtotime("today", strtotime($this->a_event->start_date)));
-					
-					$this->a_event->save();
-				}
-
- 				//We need to recreate the form to handle the fact that it is not possible to change the value of a sfFormField
-        $this->form = $this->configuration->getForm($this->a_event);
-        $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
-      }
-
-      $response['errors'] = $this->form->getErrorSchema()->getErrors();
-      aPageTable::queryWithTitles()
-        ->addWhere('page_id = ?', $this->a_event['page_id'])
-        ->execute();
-      $response['aBlogPost'] = $this->a_event->toArray();
-      $response['aBlogPost']['title'] = html_entity_decode($response['aBlogPost']['title'], ENT_COMPAT, 'UTF-8');
-      $response['modified'] = $this->a_event->getLastModified();
-      $response['time'] = aDate::time($this->a_event['updated_at']);
-      //Any additional messages can go here
-      $output = json_encode($response);
-      $this->getResponse()->setHttpHeader("X-JSON", '('.$output.')');
-      return sfView::HEADER_ONLY;
-    }
-    else
-    {
-      $this->processForm($request, $this->form);
-    }
-    $this->setTemplate('edit');
   }
-
+  
   public function executeRedirect()
   {
     $aEvent = $this->getRoute()->getObject();
@@ -141,20 +154,9 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
-		$this->getResponse()->addJavascript('/apostropheBlogPlugin/js/timepicker.js', 'last');
-		$this->getResponse()->addJavascript('/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js','last');
-
-    if($this->getUser()->hasCredential('admin'))
-    {
-      $this->a_event = $this->getRoute()->getObject();
-    }
-    else
-    {
-      $this->a_event = Doctrine::getTable('aEvent')->findOneEditable($request->getParameter('id'), $this->getUser()->getGuardUser()->getId());
-    }
+    $this->setAEventForUser();
     $this->forward404Unless($this->a_event);
-    $this->form = $this->configuration->getForm($this->a_event);
-
+    $this->form = new aEventForm($this->a_event);
 		// Retrieve the tags currently assigned to the event for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();
 		// Retrieve the 10 most popular tags for the inlineTaggableWidget

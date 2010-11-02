@@ -28,7 +28,7 @@ abstract class PluginaEventForm extends BaseaEventForm
       )));
 
     $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
-    $this->setValidator('start_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
+    $this->setValidator('start_time', new sfValidatorTime(array('required' => false)));
 
     $this->setWidget('end_date', new sfWidgetFormJQueryDate(
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
@@ -40,20 +40,39 @@ abstract class PluginaEventForm extends BaseaEventForm
       )));
 
     $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
-    $this->setValidator('end_time', new sfValidatorTime(array('required' => false, 'time_output' => 'g:iA')));
+    $this->setValidator('end_time', new sfValidatorTime(array('required' => false)));
 
     $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
     $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
 
 		$this->setWidget('all_day', new sfWidgetFormInputCheckbox(array('label' => 'All Day')));
 		$this->setValidator('all_day', new sfValidatorBoolean());
-		
 
-		if ((strtotime("today", strtotime($this->object->start_date)) == strtotime($this->object->end_time)) && (strtotime("+1 day", strtotime($this->object->start_date)) == strtotime($this->object->end_date)))
+		$start = strtotime(aDate::mysql($this->object->start_date));
+		$end = strtotime(aDate::mysql($this->object->end_date));
+    if (($this->object->start_time === '00:00:00') && ($this->object->end_time === '00:00:00') && (strtotime('+1 day', $start) === $end))
 		{
 			$this->getWidgetSchema()->setDefault('all_day', true);
 		}
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
+  }
+  
+  public function updateObject($values = null)
+  {
+    if (is_null($values))
+    {
+      $values = $this->getValues();
+    }
+    
+    error_log($values['start_date'] . ',' . $values['start_time'] . ',' . $values['end_date'] . ',' . $values['end_time']);
+
+    if ($values['all_day'])
+    {
+      $values['start_time'] = '00:00:00';
+      $values['end_time'] = '00:00:00';
+      $values['end_date'] = date('Y-m-d', strtotime('+1 day', strtotime($values['start_date'])));
+    }
+    return parent::updateObject($values);
   }
 }
