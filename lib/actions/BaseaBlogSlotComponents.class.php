@@ -40,15 +40,19 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
+    // Explicit select() mandatory with orderByList
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c');
+      ->leftJoin($this->modelClass.'.Categories c')
+      ->select($this->modelClass . '.*, a.*, c.*');
     Doctrine::getTable($this->modelClass)->addPublished($q);
     if (isset($this->values['title_or_tag']) && ($this->values['title_or_tag'] === 'title'))
     {
       if (isset($this->values['blog_posts']) && count($this->values['blog_posts']))
       {
         $q->andWhereIn('id', $this->values['blog_posts']);
+        // 
+        $q = aDoctrine::orderByList($q, $this->values['blog_posts']);
       }
       else
       {
@@ -65,12 +69,13 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       {
         PluginTagTable::getObjectTaggedWithQuery($q->getRootAlias(), $this->values['tags_list'], $q, array('nb_common_tags' => 1));
       }
-      if (isset($this->values['count']))
+      if (!isset($this->values['count']))
       {
-        $q->limit($this->values['count']);
+        $this->values['count'] = 3;
       }
+      $q->limit($this->values['count']);
+      $q->orderBy('published_at desc');
     }
-    $q->orderBy('published_at desc');
     
 		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
 		$this->options['slideshowOptions']['height'] = ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100);

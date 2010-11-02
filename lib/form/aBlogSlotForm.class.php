@@ -7,23 +7,23 @@ class aBlogSlotForm extends BaseForm
     $this->id = $id;
     parent::__construct($defaults, $options, $CSRFSecret);
   }
+  
   public function configure()
   {
     // ADD YOUR FIELDS HERE
-    
     $this->widgetSchema['count'] = new sfWidgetFormInput(array(), array('size' => 2));
     $this->validatorSchema['count'] = new sfValidatorNumber(array('min' => 1, 'max' => 10));
 		$this->widgetSchema->setHelp('count', '<span class="a-help-arrow"></span> Set the number of posts to display – 10 max.');
     if(!$this->hasDefault('count'))
 		{
-      $this->setDefault('count', 1);
+      $this->setDefault('count', 3);
     }
 
     $choices = array('title' => 'By Title', 'tags' => 'By Category And Tag');
     $this->setWidget('title_or_tag', new sfWidgetFormChoice(array('choices' => $choices)));
     if (!$this->hasDefault('title_or_tag'))
     {
-      $this->setDefault('title_or_tag', 'title');
+      $this->setDefault('title_or_tag', 'tags');
     }
     $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices))));
     

@@ -54,7 +54,6 @@
 
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-    pkInlineTaggableWidget(<?php echo json_encode(url_for("taggableComplete/complete")) ?>);
     aMultipleSelect('#a-<?php echo $form->getName() ?> .blog-posts', { 'autocomplete': <?php echo json_encode(url_for("aBlogAdmin/search")) ?> });
     aMultipleSelect('#a-<?php echo $form->getName() ?> .categories', { 'choose-one': 'Add Categories' });
 	});
