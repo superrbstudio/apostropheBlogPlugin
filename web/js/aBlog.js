@@ -63,8 +63,9 @@ function aBlogEnableNewForm()
 	var newForm = $('.a-blog-admin-new-form');
 	newForm.submit(function() {
 		var form = $(this);
+		apostrophe.updating('.a-blog-admin-new-ajax');
 		$.post(form.attr('action'), $(this).serialize(), function(data) {
-			form.parents('.a-blog-admin-new-ajax').html(data);	
+			form.closest('.a-blog-admin-new-ajax').html(data);	
 		});
 		return false;
 	});
