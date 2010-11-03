@@ -17,29 +17,23 @@
 <div class="a-hidden">
 	<?php echo $form->renderHiddenFields() ?>
 </div>
+
 <div class="published section a-form-row">
-  <div class="post-save">
-  	<?php echo a_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
+  <div class="post-save clearfix">
+  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
   </div>
-  <hr />
+ 	<h4><?php echo a_('Status') ?></h4>
   <div class="a-form-row">
     <?php echo $form['publication']->render() ?>
   </div>
   <div class="a-published-at-container">
-    <?php echo $form['published_at']->renderRow() ?>
+		<div class="a-form-row">
+    <?php echo $form['published_at']->render() ?>
+		</div>
+   	<?php echo $form['published_at']->renderError() ?>
   </div>  
 </div>
 
-<hr />
-<div class="delete preview section a-form-row">
-	<?php $engine = $a_event->findBestEngine(); ?>
-  <?php aRouteTools::pushTargetEnginePage($engine) ?>
-	<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_event->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
-  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
-  <?php if($a_event->userHasPrivilege('delete')): ?>
-	  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
-  <?php endif ?>
-</div>
 <hr />
 
 <?php // Event Date Range ?>
@@ -158,5 +152,15 @@
 				
 	</div>
 
+	<hr />
+	<div class="delete preview section a-form-row">
+		<?php $engine = $a_event->findBestEngine(); ?>
+	  <?php aRouteTools::pushTargetEnginePage($engine) ?>
+		<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_event->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
+	  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
+	  <?php if($a_event->userHasPrivilege('delete')): ?>
+		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
+	  <?php endif ?>
+	</div>
 </form>
 <?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_event_admin_update?' . http_build_query(array('id' => $a_event->id, 'slug' => $a_event->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>
