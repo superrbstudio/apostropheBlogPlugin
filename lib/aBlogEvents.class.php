@@ -56,7 +56,11 @@ class aBlogEvents
         ));
       echo("Migrating blog categories to Apostrophe categories...\n");
         
-      $oldCategories = $migrate->query('SELECT * FROM a_blog_category');
+      if ($migrate->tableExists('a_blog_category'))
+      {
+        $oldCategories = $migrate->query('SELECT * FROM a_blog_category');
+      }
+      $oldCategories = array();
       $newCategories = $migrate->query('SELECT * FROM a_category');
       $nc = array();
       foreach ($newCategories as $newCategory)
