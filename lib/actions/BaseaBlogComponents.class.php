@@ -29,8 +29,11 @@ abstract class BaseaBlogComponents extends sfComponents
       $this->tag = Doctrine::getTable('Tag')->findOrCreateByTagname($this->getRequestParameter('tag'));
     }
 
+		$uncategorized = false;
+		
     if(is_null($this->categories) || !count($this->categories))
     {
+			$uncategorized = true;
       $this->categories = Doctrine::getTable('aBlogCategory')
         ->createQuery('c')
         ->addWhere('c.posts = ?', true)
@@ -43,10 +46,20 @@ abstract class BaseaBlogComponents extends sfComponents
     {
       $categoryIds[] = $category['id'];
     }
-
-    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
-    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
-
+		
+		// Tags that are applied to uncategorized blog posts are allowed if there
+		// is no category for this engine page
+		if ($uncategorized)
+		{
+			$this->popular = TagTable::getAllTagNameWithCount(null, array('limit' => 10, 'model' => 'aBlogPost', 'sort_by_popularity' => true));
+			$this->tags = TagTable::getAllTagNameWithCount(null, array('model' => 'aBlogPost', 'sort_by_popularity' => false));
+		}
+		else
+		{
+	    $this->popular = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
+	    $this->tags = Doctrine::getTable('aBlogCategory')->getTagsForCategories($categoryIds, 'aBlogPost');
+		}
+		
     if($this->reset == true)
     {
       $this->params['cat'] = array();
