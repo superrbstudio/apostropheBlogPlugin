@@ -97,6 +97,14 @@ class PluginaBlogItemTable extends Doctrine_Table
     }
   }
 
+  public static function cachePages($blogItems)
+  {
+    foreach($blogItems as $blogItem)
+    {
+      aTools::cacheVirtualPages($blogItem->Page);
+    }
+  }
+
   public static function findOne($params)
   {
     return self::getInstance()->findOneBy('id', $params['id']);
@@ -137,4 +145,24 @@ class PluginaBlogItemTable extends Doctrine_Table
       return Doctrine::getTable('aBlogItem')->createQuery('e')->whereIn('e.id', $ids)->execute(array(), Doctrine::HYDRATE_ARRAY);
     }
   }
+
+  public function queryWithPage()
+  {
+    $culture = aTools::getUserCulture();
+
+    $query = $this->createQuery();
+
+    $query->leftJoin($query->getRootAlias().'.Author au')
+      ->leftJoin($query->getRootAlias().'.Categories c')
+      ->leftJoin($query->getRootAlias().'.Page p')
+      ->leftJoin('p.Areas a WITH a.culture = ?', array($culture))
+      ->leftJoin('a.AreaVersions v WITH (a.latest_version = v.version)')
+      ->leftJoin('v.AreaVersionSlots avs')
+      ->leftJoin('avs.Slot s')
+      ->leftJoin('s.MediaItems m')
+      ->orderBy('avs.rank asc');
+
+    return $query;
+  }
+
 }

@@ -30,9 +30,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-    $q = Doctrine::getTable($this->modelClass)->createQuery()
-      ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c');
+    $q = Doctrine::getTable($this->modelClass)->queryWithPage();
     Doctrine::getTable($this->modelClass)->addPublished($q);
     if (isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
     {
@@ -56,6 +54,6 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
 
     $this->aBlogPosts = $q->execute();
-    aBlogItemTable::populatePages($this->aBlogPosts);
+    aBlogItemTable::cachePages($this->aBlogPosts);
   }
 }

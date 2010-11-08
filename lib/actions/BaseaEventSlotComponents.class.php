@@ -30,9 +30,7 @@ abstract class BaseaEventSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
-    $q = Doctrine::getTable($this->modelClass)->createQuery()
-      ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c');
+    $q = Doctrine::getTable($this->modelClass)->queryWithPage();
     Doctrine::getTable($this->modelClass)->addPublished($q);
     if(isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
       $q->andWhereIn('c.id', $this->values['categories_list']);
@@ -52,7 +50,7 @@ abstract class BaseaEventSlotComponents extends BaseaSlotComponents
 
     $this->aEvents = $q->execute();
 
-    aBlogItemTable::populatePages($this->aEvents);
+    aBlogItemTable::cachePages($this->aEvents);
 
   }
 }
