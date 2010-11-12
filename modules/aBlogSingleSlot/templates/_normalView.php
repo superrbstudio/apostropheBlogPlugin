@@ -8,6 +8,8 @@
   $slot = isset($slot) ? $sf_data->getRaw('slot') : null;
 ?>
 <?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
+
 <?php if ($aBlogItem): ?>
+	<?php $options['slideshowOptions']['idSuffix'] = 'aBlogSingleSlot-'.$permid.'-'.$slot.'-'.$aBlogItem->getId(); ?>	
   <?php include_partial('aBlogSingleSlot/post', array('aBlogItem' => $aBlogItem, 'options' => $options)) ?>
 <?php endif ?>

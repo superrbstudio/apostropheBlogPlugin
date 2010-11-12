@@ -10,5 +10,6 @@
 <?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
 
 <?php if ($aBlogItem): ?>
+	<?php $options['slideshowOptions']['idSuffix'] = 'aEventSingleSlot-'.$permid.'-'.$slot.'-'.$aBlogItem->getId(); ?>			
   <?php include_partial('aEventSingleSlot/post', array('aBlogItem' => $aBlogItem, 'options' => $options)) ?>
 <?php endif ?>
