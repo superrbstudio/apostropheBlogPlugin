@@ -28,7 +28,7 @@
   
   [?php if ('<?php echo $name ?>' == $sort[0]): ?]
 
-		[?php ($sort[1] == 'asc')? $sortLabel = __("Descending", array(), 'a-admin'): $sortLabel = __("Ascending", array(), 'a-admin'); ?]
+		[?php ($sort[1] == 'asc')? $sortLabel = __('<span class="icon"></span>Descending', array(), 'a-admin'): $sortLabel = __('<span class="icon"></span>Ascending', array(), 'a-admin'); ?]
 
     [?php echo link_to(
 			$sortLabel,
@@ -39,7 +39,7 @@
     [?php else: ?]
 
     [?php echo link_to(
-      __("Ascending", array(), 'a-admin'),
+      __('<span class="icon"></span>Ascending', array(), 'a-admin'),
       '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type=asc', 
 			array('class' => 'a-btn flag flag-right no-bg icon a-sort-arrow asc', 'title' => __('Ascending', array(), 'a-admin'))) 
 		?]
