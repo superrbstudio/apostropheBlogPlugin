@@ -65,7 +65,7 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
     if(count($categories) > 0)
     {
       $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $categories);
-      $q->whereIn('a.Category.id', $categoryIds);
+      $q->whereIn('aBlogPost.Category.id', $categoryIds);
     }
     
     $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
