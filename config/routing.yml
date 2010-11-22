@@ -278,12 +278,12 @@ a_blog_admin_delete:
     id: \d+
       
 a_blog_admin_removeFilter:
-  url:   /admin/blog/remove_filter/:name/*
+  url:   /admin/blog/remove_filter
   param: { module: aBlogAdmin, action: removeFilter }
   class: sfRoute
   
 a_blog_admin_addFilter:
-  url:   /admin/blog/add_filter/:name/:value
+  url:   /admin/blog/add_filter
   param: { module: aBlogAdmin, action: addFilter }
   class: sfRoute
       
@@ -349,11 +349,11 @@ a_event_admin_delete:
     id: \d+
 
 a_event_admin_removeFilter:
-  url:   /admin/event/remove_filter/:name/*
+  url:   /admin/event/remove_filter
   param: { module: aEventAdmin, action: removeFilter }
   class: sfRoute
 
 a_event_admin_addFilter:
-  url:   /admin/event/add_filter/:name/:value
+  url:   /admin/event/add_filter
   param: { module: aEventAdmin, action: addFilter }
   class: sfRoute
