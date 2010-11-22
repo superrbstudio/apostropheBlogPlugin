@@ -18,7 +18,7 @@ abstract class PluginaEventForm extends BaseaEventForm
   {
     parent::setup();
 
-    $this->setWidget('start_date', new sfWidgetFormJQueryDate(
+    $this->setWidget('start_date', new aWidgetFormJQueryDate(
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		);
 
@@ -30,7 +30,7 @@ abstract class PluginaEventForm extends BaseaEventForm
     $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
     $this->setValidator('start_time', new sfValidatorTime(array('required' => false)));
 
-    $this->setWidget('end_date', new sfWidgetFormJQueryDate(
+    $this->setWidget('end_date', new aWidgetFormJQueryDate(
 			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
 		);
 

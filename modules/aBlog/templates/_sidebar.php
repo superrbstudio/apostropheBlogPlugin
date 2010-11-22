@@ -80,11 +80,16 @@
 <?php endif ?>
 
 <?php if(!isset($noFeed)): ?>
-<hr />
-<h5><?php echo link_to(__('RSS Feed &ndash; Full', array(), 'apostrophe'), 'aBlog/index?feed=rss') ?></h5>
-<h5><?php echo link_to(__('RSS Feed &ndash; Filtered', array(), 'apostrophe'), aUrl::addParams('aBlog/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
+  <hr />
+  <?php $full = url_for('aBlog/index?feed=rss') ?>
+  <?php $filtered = url_for(aUrl::addParams('aBlog/index?feed=rss', $params['tag'], $params['cat'])) ?>
+  <?php if ($full === $filtered): ?>
+    <h5><?php echo link_to(__('RSS Feed', array(), 'apostrophe'), $full) ?></h5>
+  <?php else: ?>
+    <h5><?php echo link_to(__('RSS Feed &ndash; Full', array(), 'apostrophe'), $full) ?></h5>
+    <h5><?php echo link_to(__('RSS Feed &ndash; Filtered', array(), 'apostrophe'), $filtered) ?></h5>
+  <?php endif ?>
 <?php endif ?>
-
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function() {
