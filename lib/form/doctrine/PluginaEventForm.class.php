@@ -56,7 +56,26 @@ abstract class PluginaEventForm extends BaseaEventForm
 		}
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
+    
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorCallback(array('callback' => array($this, 'validateEndDate')))
+    );
   }
+  
+  public function validateEndDate($validator, $values)
+  {
+    $start = $values['start_date'] . ' ' . $values['start_time'];
+    $end = $values['end_date'] . ' ' . $values['end_time'];
+    if ($end < $start)
+    {
+      // Technically the problem might be the date but we show them on one row
+      // anyway so always attach the error to the time which is easier to style
+      $error = new sfValidatorError($validator, 'Ends before it begins!');
+      throw new sfValidatorErrorSchema($validator, array('end_time' => $error));
+    }
+    return $values;
+  }
+  
   
   public function updateObject($values = null)
   {
@@ -65,8 +84,6 @@ abstract class PluginaEventForm extends BaseaEventForm
       $values = $this->getValues();
     }
     
-    error_log($values['start_date'] . ',' . $values['start_time'] . ',' . $values['end_date'] . ',' . $values['end_time']);
-
     if ($values['all_day'])
     {
       $values['start_time'] = '00:00:00';
