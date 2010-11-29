@@ -131,7 +131,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $cslug = $slug;
     // Check if a blog post or event already has this slug
     $i = 1;
-    while($this->findConflictingItem())
+    while($this->findConflictingItem($slug))
     {
       $slug = $cslug.'-'.$i;
       $i++;
@@ -139,12 +139,17 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $slug;
   }
   
-  public function findConflictingItem()
+  public function findConflictingItem($slug)
   {
-    return Doctrine::getTable(get_class($this))->createQuery()
-        ->addWhere('slug = ?', $this['slug'])
-        ->addWhere('id != ?', $this['id'])
-        ->fetchOne();
+    $q = Doctrine::getTable(get_class($this))->createQuery()
+        ->addWhere('slug = ?', $slug);
+    // Don't fail to return anything when id is null
+    if ($this['id'])
+    {
+      $q->addWhere('id != ?', $this['id']);
+    }
+    $result = $q->fetchOne();
+    return $result;
   }
 
   /**
