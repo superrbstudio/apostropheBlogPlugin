@@ -73,6 +73,7 @@ class PluginaBlogItemTable extends Doctrine_Table
       $q = Doctrine::getTable('aBlogCategory')->createQuery();
       
     $q->andwhere('aBlogCategory.'.$this->categoryColumn .'= ?', true);
+    $q->addOrderBy('aBlogCategory.name');
     return $q;
   }
 
