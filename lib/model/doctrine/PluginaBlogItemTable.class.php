@@ -78,6 +78,7 @@ class PluginaBlogItemTable extends Doctrine_Table
       $q = Doctrine::getTable('aCategory')->createQuery();
       
     $q->andwhere('aCategory.'.$this->categoryColumn .'= ?', true);
+    $q->addOrderBy('aCategory.name');
     return $q;
   }
   
@@ -119,6 +120,14 @@ class PluginaBlogItemTable extends Doctrine_Table
       $q->whereIn('id', $pageIds);
       $pages = $q->execute();
       aTools::cacheVirtualPages($pages);
+    }
+  }
+
+  public static function cachePages($blogItems)
+  {
+    foreach($blogItems as $blogItem)
+    {
+      aTools::cacheVirtualPages($blogItem->page);
     }
   }
 
@@ -234,4 +243,30 @@ class PluginaBlogItemTable extends Doctrine_Table
     }
     return ($user->hasCredential('blog_author') || $user->hasCredential('blog_admin'));
   }
+
+  public function createQueryWithAll($alias = '')
+  {
+    $query = $this->createQuery($alias);
+
+    $query->leftJoin($query->getRootAlias().'.Author au')
+      ->leftJoin($query->getRootAlias().'.Categories c')
+      ->leftJoin($query->getRootAlias().'.Page p');
+
+    $query = $this->queryWithPages($query);
+
+    return $query;
+  }
+
+  public function queryWithPages($query = null)
+  {
+    if(is_null($query))
+    {
+      $query = $this->createQuery();
+    }
+
+    $query = aPageTable::queryWithSlots(false, null, $query);
+
+    return $query;
+  }
+
 }
