@@ -36,4 +36,6 @@
 		'aPDF' => array('width' => 220, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
-<?php include_partial('aBlog/addThis', array('aBlogPost' => $a_blog_post)) ?>
+<?php include_partial('aBlog/tags', array('aBlogPost' => $a_blog_post)) ?>
+
+<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_blog_post, 'module' => 'aBlog')) ?>

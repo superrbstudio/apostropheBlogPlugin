@@ -14,18 +14,6 @@
 	
 	<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post, 'edit' => false)) ?>
 
-
-	<div class="tags">
-		<?php if ((count($a_blog_post->getTags()) != 0)): ?>
-			Tags:
-			<?php $i = 1?>
-			<?php foreach ($a_blog_post->getTags() as $tag): ?>
-				<?php echo link_to($tag, aUrl::addParams('aBlog/index?tag='.$tag, $tag)) ?><?php if($i < count($a_blog_post->getTags())):?>, <?php endif ?>
-				<?php $i++ ?>
-			<?php endforeach ?>
-		<?php endif ?>
-	</div>
-	
 </div>
 
 

@@ -24,4 +24,4 @@
 		'aPDF' => array('width' => 720, 'flexHeight' => true, 'resizeType' => 's'),				
 ))) ?>
 
-<?php include_partial('aEvent/addThis', array('aEvent' => $a_event)) ?>
+<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_event, 'module' => 'aEvent')) ?>
