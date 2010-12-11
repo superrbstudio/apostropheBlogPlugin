@@ -44,4 +44,21 @@ abstract class PluginaEvent extends BaseaEvent
     return date('d', strtotime($this->getStartDate()));
   }
 
+  public function getUTCDateRange()
+  {
+    if ($this->getStartTime())
+    {
+      $when = gmdate('Ymd\THis', strtotime($this->getStartDate() . ' ' . $this->getStartTime())) . 'Z/' . gmdate('Ymd\THis', strtotime($this->getEndDate() . ' ' . $this->getEndTime())) . 'Z';
+    }
+    else
+    {
+      $when = gmdate('Ymd', strtotime($this->getStartDate())) . 'Z/' . gmdate('Ymd', strtotime($this->getEndDate())) . 'Z';
+    }
+    return $when;
+  }
+  
+  public function isAllDay()
+  {
+    return (is_null($this->start_time) && is_null($this->end_time));
+  }  
 }

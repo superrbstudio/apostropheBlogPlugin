@@ -7,5 +7,6 @@
 <?php include_partial('aEvent/meta', array('aEvent' => $aEvent)) ?>
 <br/><br/>
 <?php foreach($aEvent->Page->getArea('blog-body') as $slot): ?>
-<?php echo $slot->getText() ?>
+<?php // getBasicHtml has basic formatting, which RSS does allow ?>
+<?php echo $slot->getBasicHtml() ?>
 <?php endforeach ?>
