@@ -68,6 +68,14 @@
 	</div>
 </div>
 
+<?php // Location ?>
+<hr />
+<div class="location section a-form-row" id="location-section">
+	<h4><?php echo a_('Location') ?></h4>
+	<?php echo $form['location']->render() ?>
+	<?php echo $form['location']->renderError() ?>
+</div>
+
 <?php // Author & Editors Section ?>
 <hr />
 <div class="author section a-form-row">

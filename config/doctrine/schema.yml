@@ -163,6 +163,7 @@ aEvent:
     start_time: time
     end_date: date
     end_time: time
+    location: string(300)
     
 aEventSlot:
   options:

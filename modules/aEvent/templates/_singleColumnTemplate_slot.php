@@ -11,6 +11,8 @@
 
 <h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event_post', $aEvent) ?></h3>
 
+<?php include_partial('aEvent/addToGoogleCalendar', array('a_event' => $a_event)) ?>  
+
 <?php include_partial('aEvent/meta', array('aEvent' => $aEvent)) ?>
 
 <?php if($options['maxImages'] && $aEvent->hasMedia()): ?>		

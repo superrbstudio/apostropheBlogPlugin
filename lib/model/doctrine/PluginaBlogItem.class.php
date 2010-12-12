@@ -514,4 +514,11 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
     return $params;
   }
+  
+  // This allows sfFeed2Plugin to provide valid publication dates
+  public function getPubdate()
+  {
+    return aDate::normalize($this->published_at);
+    return $this->published_at;
+  }
 }
