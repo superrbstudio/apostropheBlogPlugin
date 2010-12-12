@@ -42,6 +42,9 @@ abstract class PluginaEventForm extends BaseaEventForm
     $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
     $this->setValidator('end_time', new sfValidatorTime(array('required' => false)));
 
+    $this->setWidget('location', new sfWidgetFormTextarea());
+    $this->setValidator('location', new sfValidatorString(array('required' => false)));
+
     $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
     $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
 

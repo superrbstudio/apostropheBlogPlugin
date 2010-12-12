@@ -12,8 +12,6 @@
 	<?php endif ?>
 </h3>
 
-<?php include_partial('aEvent/addToGoogleCalendar', array('a_event' => $a_event)) ?>  
-
 <?php include_partial('aEvent/meta', array('aEvent' => $a_event)) ?>
 
 <?php endif ?>

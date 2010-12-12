@@ -31,6 +31,13 @@ class aBlogEvents
       ));
     }
     
+    if (!$migrate->columnExists('a_blog_item', 'location'))
+    {
+      $migrate->sql(array(
+        'ALTER TABLE a_blog_item ADD COLUMN location varchar(300)'
+      ));
+    }
+    
     if (!$migrate->columnExists('a_blog_item', 'start_time'))
     {
       $migrate->sql(array(
@@ -53,7 +60,8 @@ class aBlogEvents
         "CREATE TABLE a_blog_item_to_category (blog_item_id BIGINT, category_id BIGINT, PRIMARY KEY(blog_item_id, category_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = INNODB;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_category_id_a_category_id FOREIGN KEY (category_id) REFERENCES a_category(id) ON DELETE CASCADE;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id) ON DELETE CASCADE;"
-        ));
+        ));  
+      
       echo("Migrating blog categories to Apostrophe categories...\n");
         
       $oldCategories = array();
