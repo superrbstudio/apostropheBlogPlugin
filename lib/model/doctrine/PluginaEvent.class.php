@@ -44,19 +44,41 @@ abstract class PluginaEvent extends BaseaEvent
     return date('d', strtotime($this->getStartDate()));
   }
 
-  public function getUTCDateRange()
+  // Per the vCal/iCal specs and Google Calendars, if the times are null
+  // they are not included
+  
+  public function getVcalStartDateTime()
   {
-    if ($this->getStartTime())
+    if (!is_null($this->getStartTime()))
     {
       $start = aDate::normalize($this->getStartDate()) + aDate::normalize($this->getStartTime(), true);
-      $end = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
-      $when = gmdate('Ymd\THis', $start) . 'Z/' . gmdate('Ymd\THis', $end) . 'Z';
+      $when = gmdate('Ymd\THis', $start) . 'Z';
     }
     else
     {
-      $when = gmdate('Ymd', aDate::normalize($this->getStartDate())) . 'Z/' . gmdate('Ymd', aDate::normalize($this->getEndDate())) . 'Z';
+      $when = gmdate('Ymd', aDate::normalize($this->getStartDate())) . 'Z';
     }
     return $when;
+  }
+
+  public function getVcalEndDateTime()
+  {
+    if (!is_null($this->getEndTime()))
+    {
+      $start = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
+      $when = gmdate('Ymd\THis', $start) . 'Z';
+    }
+    else
+    {
+      $when = gmdate('Ymd', aDate::normalize($this->getEndDate())) . 'Z';
+    }
+    return $when;
+  }
+
+  // Google Calendar
+  public function getUTCDateRange()
+  {
+    return $this->getVcalStartDateTime() . '/' . $this->getVcalEndDateTime();
   }
   
   public function isAllDay()

@@ -123,6 +123,13 @@ a_blog_search_redirect:
 # aEvent routes #
 #################
 
+a_event_post_ical:
+  url:     /ical/:year/:month/:day/:slug
+  param:   { module: aEvent, action: ical }
+  options: { model: aEvent, type: object }
+  requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
+  class:   aDoctrineRoute
+
 a_event_post:
   url:     /:year/:month/:day/:slug
   param:   { module: aEvent, action: show }
