@@ -48,11 +48,13 @@ abstract class PluginaEvent extends BaseaEvent
   {
     if ($this->getStartTime())
     {
-      $when = gmdate('Ymd\THis', strtotime($this->getStartDate() . ' ' . $this->getStartTime())) . 'Z/' . gmdate('Ymd\THis', strtotime($this->getEndDate() . ' ' . $this->getEndTime())) . 'Z';
+      $start = aDate::normalize($this->getStartDate()) + aDate::normalize($this->getStartTime(), true);
+      $end = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
+      $when = gmdate('Ymd\THis', $start) . 'Z/' . gmdate('Ymd\THis', $end) . 'Z';
     }
     else
     {
-      $when = gmdate('Ymd', strtotime($this->getStartDate())) . 'Z/' . gmdate('Ymd', strtotime($this->getEndDate())) . 'Z';
+      $when = gmdate('Ymd', aDate::normalize($this->getStartDate())) . 'Z/' . gmdate('Ymd', aDate::normalize($this->getEndDate())) . 'Z';
     }
     return $when;
   }
