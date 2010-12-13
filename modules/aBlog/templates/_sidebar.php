@@ -26,7 +26,7 @@
   <h4>Categories</h4>
   <div class="a-filter-options blog">
 	  <?php foreach ($categories as $category): ?>
-	    <div class="a-filter-option"><?php echo link_to($category, ($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aBlog/index?cat='.$category->getName(), array('class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '')) ?></div>
+	    <div class="a-filter-option"><?php echo link_to($category, ($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName(), array('class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '')) ?></div>
 	  <?php endforeach ?>
   </div>	
 </div>
