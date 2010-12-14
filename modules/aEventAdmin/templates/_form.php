@@ -20,7 +20,7 @@
 
 <div class="published section a-form-row">
   <div class="post-save clearfix">
-  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-save-blog-main', 'big')) ?>							
+  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button a-save-blog-main', 'big')) ?>							
   </div>
  	<h4><?php echo a_('Status') ?></h4>
   <div class="a-form-row">

@@ -8,6 +8,16 @@
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
 ?>
 
+<?php if (aBlogItemTable::userCanPost()): ?>
+	<div class="a-ui clearfix a-subnav-section">
+	  <?php echo a_js_button(a_('New Event'), array('big', 'a-add', 'a-blog-new-event-button', 'a-sidebar-button'), 'a-blog-new-event-button') ?>
+    <div class="a-options a-blog-admin-new-ajax dropshadow">
+      <?php include_component('aEventAdmin', 'newEvent') ?>
+    </div>
+	</div>
+	<?php // TODO: make this button wide like in the admin ?>
+<?php endif ?>
+
 <?php if ($calendar): ?>
 	<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
 	<hr />
@@ -47,7 +57,6 @@
 		<div class="selected"><?php echo link_to($tag, 'aEvent/index', $params['tag'], array('class' => 'selected', )) ?></div>
   </div>
 	<?php endif ?>
-  
   
 	<h4 class="a-tag-sidebar-title popular">Popular Tags</h4>  			
 	<ul class="a-ui a-tag-sidebar-list popular">

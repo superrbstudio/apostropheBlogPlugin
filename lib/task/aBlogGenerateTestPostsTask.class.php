@@ -20,14 +20,15 @@ class aBlogGenerateTestPostsTask extends sfBaseTask
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('dictionary', null, sfCommandOption::PARAMETER_REQUIRED, 'The dictionary file', '/usr/share/dict/words'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The database connection', 'doctrine'),
+      new sfCommandOption('amount', null, sfCommandOption::PARAMETER_REQUIRED, 'The number of events to be generated', '50'),
     ));
 
 
     $this->namespace        = 'apostrophe-blog';
     $this->name             = 'generate-test-posts';
-    $this->briefDescription = 'Adds 100 random test posts to the blog';
+    $this->briefDescription = 'Adds 50 random test posts to the blog';
     $this->detailedDescription = <<<EOF
-This task adds 100 test posts with more or less random content to the blog for test purposes.
+This task adds 50 test posts with more or less random content to the blog for test purposes.
 Words for those posts come from /usr/share/dict/words. If you don't have that file this task
 won't work for you. (It's mainly a testing tool for us, but I'd accept a patch to take the
 dictionary name from a file.)
@@ -44,9 +45,9 @@ EOF;
 
     $admin = Doctrine::getTable('sfGuardUser')->findOneByUsername('admin');
     
-    for ($i = 0; ($i < 100); $i++)
+    for ($i = 0; ($i < $options['amount']); $i++)
     {
-      echo("Creating post " . ($i + 1) . " of 100...\n");
+      echo("Creating post " . ($i + 1) . " of ".$options['amount']."...\n");
       $post = new aBlogPost();
       
       $post->author_id = $admin->id;

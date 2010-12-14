@@ -26,15 +26,6 @@
 	</div>
   <?php endif ?>
 
-  <?php if (aBlogItemTable::userCanPost()): ?>
-		<div class="a-ui">
-		  <?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-event-button'), 'a-blog-new-event-button') ?>
-      <div class="a-options a-blog-admin-new-ajax dropshadow">
-        <?php include_component('aEventAdmin', 'newEvent') ?>
-      </div>
-		</div>
-  <?php endif ?>
-
   <?php foreach ($pager->getResults() as $a_event): ?>
   	<?php echo include_partial('aEvent/post', array('a_event' => $a_event, 'edit' => false, )) ?>
   	<hr />

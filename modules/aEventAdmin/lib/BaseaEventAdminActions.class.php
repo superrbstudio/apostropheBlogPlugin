@@ -37,6 +37,17 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
       $this->a_event = new aEvent();
       $this->a_event->Author = $this->getUser()->getGuardUser();
       $this->a_event->setTitle($this->form->getValue('title'));
+			// Reasonable default: event starts at the top of the next half hour, and runs for one hour
+			$now = time();
+			$halfHours = floor($now / (30 * 60));
+			$halfHours ++;
+			$now = $halfHours * (30 * 60);
+			$later = $now + 60 * 60;
+			
+			$this->a_event->start_date = date('Y-m-d', $now);
+			$this->a_event->end_date = date('Y-m-d', $later);
+			$this->a_event->start_time = date('H:i:s', $now);
+			$this->a_event->end_time = date('H:i:s', $later);
       $this->a_event->save();
       $this->getUser()->setFlash('new_post', true);
       $this->eventUrl = $this->generateUrl('a_event_admin_edit', $this->a_event);

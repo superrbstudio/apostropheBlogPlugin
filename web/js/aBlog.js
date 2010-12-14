@@ -133,7 +133,7 @@ function aBlogEnableForm(options)
 	function toggleAllDay(checkbox) {
 		$(checkbox).toggleClass('all_day_enabled');
 		find('.start_time').toggleClass('time_disabled').toggle();
-		find('.end_date').toggleClass('time_disabled').toggle();
+		find('.end_time').toggleClass('time_disabled').toggle();
 	}
 	
 	find('.all_day input[type=checkbox]').bind('click', function() {
