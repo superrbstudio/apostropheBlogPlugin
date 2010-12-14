@@ -36,7 +36,7 @@
 	<div class="a-admin-content main">
 
     <div id="a-blog-title-and-slug">
-      <?php include_partial('aEventAdmin/titleAndSlug', array('a_event' => $a_event)) ?>
+      <?php include_partial('aBlogAdmin/titleAndSlug', array('a_blog_item' => $a_event)) ?>
     </div>
 
 		<div class="a-blog-item event<?php echo ($a_event->hasMedia())? ' has-media':''; ?> <?php echo $a_event->getTemplate() ?>">

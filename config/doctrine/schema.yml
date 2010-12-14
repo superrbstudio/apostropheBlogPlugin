@@ -5,9 +5,9 @@ aBlogItem:
   actAs:
     Timestampable: ~
     Taggable: ~
-    Sluggable:
-      fields: [ title ]
-      builder: [ aTools, slugify ]
+    # The sluggable behavior seems to have trouble with inheritance (?) when
+    # asked to uniqueify something, and we have our own implementation worked out
+    # Do NOT invoke the Sluggable behavior here.
   columns:
     id:
       type: integer
@@ -19,6 +19,9 @@ aBlogItem:
       type: integer
     title:
       type: string(255)
+      notnull: true
+    slug:
+      type: varchar(255)
       notnull: true
     slug_saved:
       type: boolean

@@ -53,4 +53,11 @@ class aBlogToolkit {
     $choices = $field->getWidget()->getChoices();
     return $choices[$id];
   }  
+ 
+  // If we use aTools::slugify directly it gets confused by additional
+  // parameters passed to the slug builder by the behavior
+  public static function slugify($s, $item)
+  {
+    return aTools::slugify($s);
+  }
 }
