@@ -44,20 +44,18 @@ abstract class PluginaEvent extends BaseaEvent
     return date('d', strtotime($this->getStartDate()));
   }
 
-  // Per the vCal/iCal specs and Google Calendars, if the times are null
-  // they are not included
-  
+  // leaving off the time is not universally supported (Outlook 2003, for one)
   public function getVcalStartDateTime()
   {
     if (!is_null($this->getStartTime()))
     {
       $start = aDate::normalize($this->getStartDate()) + aDate::normalize($this->getStartTime(), true);
-      $when = gmdate('Ymd\THis', $start) . 'Z';
     }
     else
     {
-      $when = gmdate('Ymd', aDate::normalize($this->getStartDate())) . 'Z';
+      $start = aDate::normalize($this->getStartDate());
     }
+    $when = gmdate('Ymd\THis', $start) . 'Z';
     return $when;
   }
 
@@ -65,14 +63,21 @@ abstract class PluginaEvent extends BaseaEvent
   {
     if (!is_null($this->getEndTime()))
     {
-      $start = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
-      $when = gmdate('Ymd\THis', $start) . 'Z';
+      $end = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
     }
     else
     {
-      $when = gmdate('Ymd', aDate::normalize($this->getEndDate())) . 'Z';
+      // Ends at 11:59:59
+      $end = aDate::normalize($this->getEndDate()) + 60 * 3600 + 59 * 60 + 59;
     }
+    $when = gmdate('Ymd\THis', $end) . 'Z';
     return $when;
+  }
+
+  public function getVcalPublishedAtDateTime()
+  {
+    $when = aDate::normalize($this->getPublishedAt());
+    return gmdate('Ymd\THis', $when) . 'Z';
   }
 
   // Google Calendar

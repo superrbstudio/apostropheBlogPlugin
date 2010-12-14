@@ -60,21 +60,33 @@ abstract class BaseaEventActions extends BaseaBlogActions
     aBlogItemTable::populatePages(array($this->aEvent));
 		
 		header("Content-type: text/calendar");
-    header('Content-disposition: attachment; filename=' . str_replace('.', '-', $this->getRequest()->getHost() . '-' . $this->aEvent->id) . '.ics');
+    header('Content-disposition: attachment; filename=' . str_replace('.', '-', $this->getRequest()->getHost() . '-' . $this->aEvent->id) . '.vcs');
+    $published_at = $this->aEvent->getVcalPublishedAtDateTime();
     $start = $this->aEvent->getVcalStartDateTime();
     $end = $this->aEvent->getVcalEndDateTime();
     $title = aString::toVcal(aHtml::toPlaintext($this->aEvent->getTitle()));
     $body = aString::toVcal(aHtml::toPlaintext($this->aEvent->Page->getAreaText('blog-body')));
+    $location = aString::toVcal($this->aEvent->getLocation());
+    // This has to be valid hex or Outlook will wig out. (Valid decimal also happens to be valid hex)
+    $uid = $this->aEvent->id;
+    // ACHTUNG: this was formatted with considerable care to be compatible with
+    // Outlook 2003 for Windows. If you make pretty much any change here, make
+    // very sure it still works with Outlook 2003 for Windows, which is
+    // quite picky and requires some "optional" things too
     echo(<<<EOM
 BEGIN:VCALENDAR
-VERSION:2.0
+PRODID:-//punkave//apostrophe 1.x//EN
+VERSION:1.0
+TZ:0
 BEGIN:VEVENT
 CATEGORIES:MEETING
 DTSTART:$start
 DTEND:$end
+DTSTAMP:$published_at
 SUMMARY:$title
 DESCRIPTION:$body
-CLASS:PRIVATE
+LOCATION:$location
+UID:$uid
 END:VEVENT
 END:VCALENDAR
 EOM
