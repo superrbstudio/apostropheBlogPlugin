@@ -44,19 +44,46 @@ abstract class PluginaEvent extends BaseaEvent
     return date('d', strtotime($this->getStartDate()));
   }
 
-  public function getUTCDateRange()
+  // leaving off the time is not universally supported (Outlook 2003, for one)
+  public function getVcalStartDateTime()
   {
-    if ($this->getStartTime())
+    if (!is_null($this->getStartTime()))
     {
       $start = aDate::normalize($this->getStartDate()) + aDate::normalize($this->getStartTime(), true);
-      $end = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
-      $when = gmdate('Ymd\THis', $start) . 'Z/' . gmdate('Ymd\THis', $end) . 'Z';
     }
     else
     {
-      $when = gmdate('Ymd', aDate::normalize($this->getStartDate())) . 'Z/' . gmdate('Ymd', aDate::normalize($this->getEndDate())) . 'Z';
+      $start = aDate::normalize($this->getStartDate());
     }
+    $when = gmdate('Ymd\THis', $start) . 'Z';
     return $when;
+  }
+
+  public function getVcalEndDateTime()
+  {
+    if (!is_null($this->getEndTime()))
+    {
+      $end = aDate::normalize($this->getEndDate()) + aDate::normalize($this->getEndTime(), true);
+    }
+    else
+    {
+      // Ends at 11:59:59
+      $end = aDate::normalize($this->getEndDate()) + 60 * 3600 + 59 * 60 + 59;
+    }
+    $when = gmdate('Ymd\THis', $end) . 'Z';
+    return $when;
+  }
+
+  public function getVcalPublishedAtDateTime()
+  {
+    $when = aDate::normalize($this->getPublishedAt());
+    return gmdate('Ymd\THis', $when) . 'Z';
+  }
+
+  // Google Calendar
+  public function getUTCDateRange()
+  {
+    return $this->getVcalStartDateTime() . '/' . $this->getVcalEndDateTime();
   }
   
   public function isAllDay()

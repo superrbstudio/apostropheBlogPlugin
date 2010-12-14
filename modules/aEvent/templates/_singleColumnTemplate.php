@@ -16,6 +16,8 @@
 
 <?php endif ?>
 
+<?php // Events should always have a blog-body area, and the main description of ?>
+<?php // the event (beyond the title) should be there ?>
 <?php a_area('blog-body', array(
   'edit' => $edit, 'toolbar' => 'basic', 'slug' => $a_event->Page->slug,
   'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),

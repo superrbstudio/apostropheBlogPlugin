@@ -41,3 +41,4 @@
 </ul>
 
 <?php include_partial('aEvent/addToGoogleCalendar', array('a_event' => $aEvent)) ?>  
+<?php include_partial('aEvent/addIcal', array('a_event' => $aEvent)) ?>  
