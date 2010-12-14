@@ -59,7 +59,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent['status'] == 'published' || $this->getUser()->isAuthenticated());
     aBlogItemTable::populatePages(array($this->aEvent));
 		
-		header("Content-type: text/calendar");
+		header("Content-type: text/x-vcalendar");
     header('Content-disposition: attachment; filename=' . str_replace('.', '-', $this->getRequest()->getHost() . '-' . $this->aEvent->id) . '.vcs');
     $published_at = $this->aEvent->getVcalPublishedAtDateTime();
     $start = $this->aEvent->getVcalStartDateTime();
