@@ -15,5 +15,6 @@
 	</div>
 <?php end_slot() ?>
 
-<?php echo include_partial('aEvent/post', array('a_event' => $aEvent, 'preview' => $preview)) ?>
-
+<div id="a-blog-main" class="a-blog-main">
+	<?php echo include_partial('aEvent/post', array('a_event' => $aEvent, 'preview' => $preview)) ?>
+</div>

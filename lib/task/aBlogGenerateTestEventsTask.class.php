@@ -11,7 +11,7 @@
  * @author     Tom Boutell <tom@punkave.com>
  */
 
-class aBlogGenerateTestPostsTask extends sfBaseTask
+class aBlogGenerateTestEventsTask extends sfBaseTask
 {
   protected function configure()
   {
@@ -25,10 +25,10 @@ class aBlogGenerateTestPostsTask extends sfBaseTask
 
 
     $this->namespace        = 'apostrophe-blog';
-    $this->name             = 'generate-test-posts';
-    $this->briefDescription = 'Adds 50 random test posts to the blog';
+    $this->name             = 'generate-test-events';
+    $this->briefDescription = 'Adds 50 random test events to the blog';
     $this->detailedDescription = <<<EOF
-This task adds 50 test posts with more or less random content to the blog for test purposes.
+This task adds 50 test events with more or less random content to the blog for test purposes.
 Words for those posts come from /usr/share/dict/words. If you don't have that file this task
 won't work for you. (It's mainly a testing tool for us, but I'd accept a patch to take the
 dictionary name from a file.)
@@ -47,11 +47,17 @@ EOF;
     
     for ($i = 0; ($i < $options['amount']); $i++)
     {
-      echo("Creating post " . ($i + 1) . " of ".$options['amount']."...\n");
-      $post = new aBlogPost();
-      
+      echo("Creating event " . ($i + 1) . " of ".$options['amount']."...\n");
+
+      $post = new aEvent();
       $post->author_id = $admin->id;
       $post->status = 'published';
+			$post->start_date = aDate::mysql(strtotime(($i + 1) . ' days'));
+			$post->start_time	= date('H:i:s', rand(0, time()));
+			$post->end_date = aDate::mysql(strtotime(($i + rand(1,14)) . ' days'));
+			$post->end_time = date('H:i:s', rand(0, time()));
+			$post->excerpt = '';
+			$post->location = "1168 E. Passyunk Avenue\nPhiladelphia PA 19147";
       $post->published_at = aDate::mysql(strtotime('-' . ($i + 1) . ' days'));
       $title = implode(' ', $this->getWords(mt_rand(5, 10), $options));
       $body = implode(' ', $this->getWords(mt_rand(20, 100), $options));

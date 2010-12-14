@@ -53,7 +53,7 @@ abstract class PluginaEventForm extends BaseaEventForm
 
 		$start = strtotime(aDate::mysql($this->object->start_date));
 		$end = strtotime(aDate::mysql($this->object->end_date));
-    if (($this->object->start_time === '00:00:00') && ($this->object->end_time === '00:00:00') && (strtotime('+1 day', $start) === $end))
+    if (is_null($this->object->start_time) && is_null($this->object->end_time))
 		{
 			$this->getWidgetSchema()->setDefault('all_day', true);
 		}
@@ -89,9 +89,8 @@ abstract class PluginaEventForm extends BaseaEventForm
     
     if ($values['all_day'])
     {
-      $values['start_time'] = '00:00:00';
-      $values['end_time'] = '00:00:00';
-      $values['end_date'] = date('Y-m-d', strtotime('+1 day', strtotime($values['start_date'])));
+      $values['start_time'] = null;
+      $values['end_time'] = null;
     }
     return parent::updateObject($values);
   }

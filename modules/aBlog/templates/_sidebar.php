@@ -9,6 +9,15 @@
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
 ?>
 
+<?php if (aBlogItemTable::userCanPost()): ?>
+	<div class="a-ui clearfix a-subnav-section">
+	  <?php echo a_js_button(a_('New Post'), array('big', 'a-add', 'a-blog-new-post-button', 'a-sidebar-button'), 'a-blog-new-post-button') ?>
+    <div class="a-options a-blog-admin-new-ajax dropshadow">
+      <?php include_component('aBlogAdmin', 'newPost') ?>
+    </div>
+	</div>
+<?php endif ?>
+
 <div class="a-subnav-section search">
   <div class="a-search a-search-sidebar blog">
     <form action="<?php echo url_for('aBlog/search') ?>" method="get">

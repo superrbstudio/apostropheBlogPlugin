@@ -26,15 +26,6 @@
 	</div>
   <?php endif ?>
   
-  <?php if (aBlogItemTable::userCanPost()): ?>
-		<div class="a-ui">
-		  <?php echo a_js_button(a_('New Post'), array('big', 'icon', 'a-add', 'a-blog-new-post-button'), 'a-blog-new-post-button') ?>
-      <div class="a-options a-blog-admin-new-ajax dropshadow">
-        <?php include_component('aBlogAdmin', 'newPost') ?>
-      </div>
-		</div>
-  <?php endif ?>
-
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
   	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
   	<hr />
