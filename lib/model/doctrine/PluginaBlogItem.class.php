@@ -141,14 +141,20 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   
   public function findConflictingItem($slug)
   {
-    $q = Doctrine::getTable(get_class($this))->createQuery()
+    // Slugs are unique at the database level, so we have to uniqueify them
+    // across both posts and events. If we use the posts or events table we
+    // will always miss those conflicts
+    $q = Doctrine::getTable('aBlogItem')->createQuery()
         ->addWhere('slug = ?', $slug);
     // Don't fail to return anything when id is null
     if ($this['id'])
     {
       $q->addWhere('id != ?', $this['id']);
     }
-    $result = $q->fetchOne();
+    // Don't hydrate objects just for a test like this. With 500 "Monday Fourteen"
+    // posts (to take an example of my own) you'd wind up running out of memory
+    // due to Doctrine's memory leaks
+    $result = $q->fetchOne(array(), Doctrine::HYDRATE_NONE);
     return $result;
   }
 

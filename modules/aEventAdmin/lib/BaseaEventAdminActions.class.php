@@ -84,38 +84,6 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
   }
   
-  public function executeUpdateTitle(sfWebRequest $request)
-  {
-    $this->setABlogPostForUser();
-    $title = trim($request->getParameter('title'));
-    if (strlen($title))
-    {
-      // The preUpdate method takes care of updating the slug from the title as needed
-      $this->a_blog_post->setTitle($title);
-      $this->a_blog_post->save();
-    }
-    $this->setTemplate('titleAndSlug');
-  }
-
-  public function executeUpdateSlug(sfWebRequest $request)
-  {
-    $this->setABlogPostForUser();
-    $slug = trim($request->getParameter('slug'));
-    if (strlen($slug))
-    {
-      error_log("Setting the slug to $slug");
-      // "OMG, aren't you going to slugify this?" The preUpdate method of the
-      // PluginaBlogItem class takes care of slugifying and uniqueifying the slug.
-      $this->a_blog_post->setSlug($slug);
-      $this->a_blog_post->save();
-    }
-    else
-    {
-      error_log("Not setting the slug");
-    }
-    $this->setTemplate('titleAndSlug');
-  }
-
   protected function setAEventForUser()
   {
     if ($this->getUser()->hasCredential('admin'))

@@ -74,6 +74,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdateTitle(sfWebRequest $request)
   {
+    // Actually it might be either a post or an event, and that's OK, we
+    // reuse this action
     $this->setABlogPostForUser();
     $title = trim($request->getParameter('title'));
     if (strlen($title))
@@ -87,6 +89,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
   public function executeUpdateSlug(sfWebRequest $request)
   {
+    // Actually it might be either a post or an event, and that's OK, we
+    // reuse this action
     $this->setABlogPostForUser();
     $slug = trim($request->getParameter('slug'));
     if (strlen($slug))
