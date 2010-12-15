@@ -38,7 +38,7 @@
 	  <?php foreach ($categories as $category): ?>
 	    <div class="a-filter-option">
 				<?php $selected_category = ($category->getName() == $sf_params->get('cat')) ? $selected : array() ?>
-				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName()), array_merge(array('alt','no-bg'),$selected_category)) ?>
+				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName()), array_merge(array('a-link'),$selected_category)) ?>
 			</div>
 	  <?php endforeach ?>
   </div>	
@@ -52,15 +52,15 @@
   <div class="a-filter-options blog clearfix">
     <div class="a-filter-option">
 			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
-			<?php echo a_button('Day', url_for('aBlog/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('alt','no-bg'),$selected_day)) ?>
+			<?php echo a_button('Day', url_for('aBlog/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
 		</div>
     <div class="a-filter-option">
 			<?php $selected_month = ($dateRange == 'month') ? $selected : array() ?>
-			<?php echo a_button('Month', url_for('aBlog/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('alt','no-bg'),$selected_month)) ?>
+			<?php echo a_button('Month', url_for('aBlog/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('a-link'),$selected_month)) ?>
 		</div>
     <div class="a-filter-option">
 			<?php $selected_year = ($dateRange == 'year') ? $selected : array() ?>
-			<?php echo a_button('Year', url_for('aBlog/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('alt','no-bg'),$selected_year)) ?>
+			<?php echo a_button('Year', url_for('aBlog/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('a-link'),$selected_year)) ?>
 		</div>
   </div>
 </div>
@@ -73,7 +73,7 @@
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
 	<div class="a-blog-selected-tag">
-		<?php echo a_button($tag, url_for('aBlog/index', $params['tag']), array('alt','no-bg','icon','a-selected')) ?>
+		<?php echo a_button($tag, url_for('aBlog/index', $params['tag']), array('a-link','icon','a-selected')) ?>
   </div>
 	<?php endif ?>
   
@@ -81,10 +81,9 @@
 	<h4 class="a-tag-sidebar-title popular">Popular Tags</h4>  			
 	<ul class="a-ui a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>
-	  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
-			<span class="a-tag"><?php echo a_button($tag, url_for('aBlog/index?tag='.$tag), array('alt','no-bg')) ?></span>
-			<span class="a-tag-count"><?php echo $count ?></span>
-		</li>
+		  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
+				<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aBlog/index?tag='.$tag, $params['tag']), array('a-link','a-tag')) ?>
+			</li>
 		<?php $n++; endforeach ?>
 	</ul>
 
@@ -92,10 +91,9 @@
 	<h4 class="a-tag-sidebar-title all-tags">All Tags <span class="a-tag-sidebar-tag-count"><?php echo count($tags) ?></span></h4>
 	<ul class="a-ui a-tag-sidebar-list all-tags">
 		<?php $n=1; foreach ($tags as $tag => $count): ?>
-	  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
-			<span class="a-tag"><?php echo a_button($tag, url_for('aBlog/index?tag='.$tag), array('alt','no-bg')) ?></span>
-			<span class="a-tag-count"><?php echo $count ?></span>
-		</li>
+		  <li <?php echo ($n == count($tags) ? 'class="last"':'') ?>>
+				<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aBlog/index?tag='.$tag), array('a-link','a-tag')) ?>
+			</li>
 		<?php $n++; endforeach ?>
 	</ul>
 	
