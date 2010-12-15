@@ -16,15 +16,21 @@
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main clearfix">
-  <?php if ($sf_params->get('year')): ?>
-	<div class="a-blog-heading">
-  	<h3><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h3>
-	  <ul class="a-controls a-blog-browser-controls">
-	    <li><?php echo link_to('<span class="icon"></span>'.a_('Previous'), 'aEvent/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
-	    <li><?php echo link_to('<span class="icon"></span>'.a_('Next'), 'aEvent/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
-	  </ul>
+	<div class="a-blog-heading"> 
+	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Heading Content'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+	  <?php if ($page->userHasPrivilege('edit')): ?>
+	    <div class="a-help">
+	      The heading appears before the actual events. Use the "New Event" button to add events.
+	    </div>
+	  <?php endif ?>
+    <?php if ($sf_params->get('year')): ?>
+  		<h3><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h3>
+  	  <ul class="a-ui a-controls a-blog-browser-controls">
+  	    <li><?php echo link_to('<span class="icon"></span>'.a_('Previous'), 'aEvent/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
+  	    <li><?php echo link_to('<span class="icon"></span>'.a_('Next'), 'aEvent/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
+  	  </ul>
+  	<?php endif ?>
 	</div>
-  <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>
   	<?php echo include_partial('aEvent/post', array('a_event' => $a_event, 'edit' => false, )) ?>
