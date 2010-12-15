@@ -39,7 +39,7 @@
     <li class="post-location">
 			<?php echo aString::firstLine($aEvent['location']) ?>
   		<?php if (sfConfig::get('app_events_google_maps', true)): ?>
-				<?php echo link_to('<span class="icon"></span>'.a_('Google Maps'), 'http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location']))), array('title' => a_('View this location with Google Maps.'), 'class' => 'a-btn lite alt mini icon a-google-maps', )) ?>
+				<?php echo link_to('<span class="icon"></span>'.a_('Google Maps'), 'http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location']))), array('title' => a_('View with Google Maps.'), 'class' => 'a-btn lite alt mini icon a-google-maps', 'rel' => 'external')) ?>
 		  <?php endif ?>
 		</li>
 	<?php endif ?>

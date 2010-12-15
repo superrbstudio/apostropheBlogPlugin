@@ -10,15 +10,15 @@
 <?php slot('body_class') ?>a-search-results<?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-subnav-wrapper blog">
+	<div class="a-subnav-wrapper blog a-ui clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories)) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>
 
-<div class="a-search-results-container">
-
+<div class="a-blog-main clearfix a-search-results-container">
+	
 	<h2><?php echo __('Search: "%phrase%"', array('%phrase%' =>  htmlspecialchars($sf_request->getParameter('q', ESC_RAW))), 'apostrophe') ?></h2>
 	
 	<h4 class="a-search-results-count">

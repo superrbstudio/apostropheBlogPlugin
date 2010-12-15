@@ -29,7 +29,7 @@
 
 	<?php if (!$admin): ?>
 		<?php include_partial('aBlog/tags', array('aBlogItem' => $a_blog_post)) ?>
-		<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_blog_post, 'module' => 'aBlog')) ?>
+		<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_blog_post)) ?>
 	<?php endif ?>
 
 </div>

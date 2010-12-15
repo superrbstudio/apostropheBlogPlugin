@@ -8,14 +8,14 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-subnav-wrapper blog">
+	<div class="a-subnav-wrapper blog a-ui clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aEvent', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories, 'calendar' => $calendar, )) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>
 
-<div id="a-blog-main" class="a-blog-main">
+<div id="a-blog-main" class="a-blog-main clearfix">
   <?php if ($sf_params->get('year')): ?>
 	<div class="a-blog-heading">
   	<h3><?php echo $sf_params->get('day') ?> <?php echo ($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '' ?> <?php echo $sf_params->get('year') ?></h3>
