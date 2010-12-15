@@ -28,7 +28,10 @@
   <h4>Categories</h4>
   <div class="a-filter-options blog">
 	  <?php foreach ($categories as $category): ?>
-	    <div class="a-filter-option"><?php echo link_to($category, ($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.$category->getName(), array('class' => ($category->getName() == $sf_params->get('cat')) ? 'selected' : '')) ?></div>
+	    <div class="a-filter-option">
+				<?php $selected_category = ($category->getName() == $sf_params->get('cat')) ? $selected : array() ?>
+				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.$category->getName()), array_merge(array('a-link'),$selected_category)) ?>
+			</div>
 	  <?php endforeach ?>
   </div>	
 </div>
@@ -39,10 +42,19 @@
 <?php if (!$calendar): ?>
 <div class='a-subnav-section range'>
   <h4>Browse by</h4>
-  <div class="a-filter-options blog">
-    <div class="a-filter-option"><?php echo link_to('Day', 'aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day']), array('class' => ($dateRange == 'day') ? 'selected' : '')) ?></div>
-    <div class="a-filter-option"><?php echo link_to('Month', 'aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month']), array('class' => ($dateRange == 'month') ? 'selected' : '')) ?></div>
-    <div class="a-filter-option"><?php echo link_to('Year', 'aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year']), array('class' => ($dateRange == 'year') ? 'selected' : '')) ?></div>
+  <div class="a-filter-options blog clearfix">
+    <div class="a-filter-option">
+			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
+			<?php echo a_button('Day', url_for('aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
+		</div>
+    <div class="a-filter-option">
+			<?php $selected_month = ($dateRange == 'month') ? $selected : array() ?>
+			<?php echo a_button('Month', url_for('aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('a-link'),$selected_month)) ?>
+		</div>
+    <div class="a-filter-option">
+			<?php $selected_year = ($dateRange == 'year') ? $selected : array() ?>
+			<?php echo a_button('Year', url_for('aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('a-link'),$selected_year)) ?>
+		</div>
   </div>
 </div>
 <hr />
@@ -54,7 +66,7 @@
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
 	<div class="a-blog-selected-tag">
-		<div class="selected"><?php echo link_to($tag, 'aEvent/index', $params['tag'], array('class' => 'selected', )) ?></div>
+		<?php echo a_button($tag, url_for('aEvent/index', $params['tag']), array('a-link','icon','a-selected')) ?>
   </div>
 	<?php endif ?>
   
@@ -62,8 +74,7 @@
 	<ul class="a-ui a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>
 	  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, 'aEvent/index?tag='.$tag, $params['tag']) ?></span>
-			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
+			<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aEvent/index?tag='.$tag, $params['tag']), array('a-link','a-tag')) ?>
 		</li>
 		<?php $n++; endforeach ?>
 	</ul>
@@ -73,8 +84,7 @@
 	<ul class="a-ui a-tag-sidebar-list all-tags">
 		<?php $n=1; foreach ($tags as $tag => $count): ?>
 	  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
-			<span class="a-tag-sidebar-tag"><?php echo link_to($tag, 'aEvent/index?tag='.$tag) ?></span>
-			<span class="a-tag-sidebar-tag-count"><?php echo $count ?></span>
+			<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aEvent/index?tag='.$tag), array('a-link','a-tag')) ?>
 		</li>
 		<?php $n++; endforeach ?>
 	</ul>

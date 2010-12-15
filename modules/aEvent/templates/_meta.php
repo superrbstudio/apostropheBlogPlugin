@@ -36,10 +36,10 @@
 	  <?php // 'Blockley Hall' since the user's location is often known to Google Maps. However ?>
 	  <?php // it is less useful if all of your locations are 'room 150', etc. with no further ?>
 	  <?php // information. Naturally full addresses work best ?>
-    <li class="post-location">
+    <li class="post-location a-ui">
 			<?php echo aString::firstLine($aEvent['location']) ?>
   		<?php if (sfConfig::get('app_events_google_maps', true)): ?>
-				<?php echo link_to('<span class="icon"></span>'.a_('Google Maps'), 'http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location']))), array('title' => a_('View this location with Google Maps.'), 'class' => 'a-btn lite alt mini icon a-google-maps', )) ?>
+				<?php echo a_button(a_('Google Maps'), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('no-bg', 'alt', 'icon', 'a-google-maps')) ?>
 		  <?php endif ?>
 		</li>
 	<?php endif ?>
@@ -51,11 +51,8 @@
 	</li>   			
 	<?php //*/ ?>
 	
-	<li class="post-extra">
+	<li class="post-extra a-ui">
 		<?php include_partial('aEvent/addToGoogleCalendar', array('a_event' => $aEvent)) ?> 
-	</li>
-
-	<li class="post-extra">
 		<?php include_partial('aEvent/addIcal', array('a_event' => $aEvent)) ?>  
 	</li>
 	

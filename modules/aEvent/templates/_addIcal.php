@@ -1,1 +1,1 @@
-<?php echo link_to('Add to Outlook, iCal, etc.', 'a_event_post_ical', $a_event) ?>
+<?php echo a_button(a_('Add to Outlook, iCal, etc.'), url_for('a_event_post_ical', $a_event), array('icon','no-bg','a-events','alt')) ?>

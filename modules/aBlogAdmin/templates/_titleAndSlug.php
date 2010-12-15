@@ -1,7 +1,7 @@
 <?php $a_blog_item = $sf_data->getRaw('a_blog_item') ?>
 <?php // Saving either of these forms updates both (because title can affect slug) ?>
 <?php use_helper('a') ?>
-<form method="POST" action="<?php echo url_for('a_blog_admin_updateTitle', $a_blog_item) ?>" id="a-blog-item-title-interface">
+<form method="POST" action="<?php echo url_for('a_blog_admin_updateTitle', $a_blog_item) ?>" id="a-blog-item-title-interface" class="a-blog-item-title-interface a-ui clearfix">
 	<input type="text" name="title" class="a-title" value="<?php echo a_entities(($a_blog_item->title == 'untitled')? '':$a_blog_item->title) ?>" />
   <ul class="a-ui a-controls blog-title">
     <li><?php echo a_anchor_submit_button(a_('Save'), array('a-save', 'big')) ?></li>
@@ -9,8 +9,7 @@
   </ul>
 </form>
 
-<form method="POST" action="<?php echo url_for('a_blog_admin_updateSlug', $a_blog_item) ?>" id="a-blog-item-permalink-interface">
-	<h6>Permalink:</h6>
+<form method="POST" action="<?php echo url_for('a_blog_admin_updateSlug', $a_blog_item) ?>" id="a-blog-item-permalink-interface" class="a-blog-item-permalink-interface a-ui clearfix">
 	<div class="a-blog-item-permalink-wrapper url">
     <span><?php echo aTools::urlForPage($a_blog_item->findBestEngine()->getSlug()).'/' ?><?php echo date('Y/m/d/', strtotime($a_blog_item->getPublishedAt())) ?></span>
 	</div>
@@ -22,5 +21,6 @@
 	  </ul>
 	</div>
 </form>
+
 <?php a_js_call('aBlogEnableTitle()') ?>
 <?php a_js_call('aBlogEnableSlug()') ?>

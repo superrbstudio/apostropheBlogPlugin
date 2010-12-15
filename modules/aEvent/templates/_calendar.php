@@ -4,12 +4,12 @@
 	<thead>
 	<tr class="month">
 		<th colspan="7">
-			<a href="<?php echo url_for('aEvent/index?'.http_build_query($calendar['params']['prev'])) ?>" class="a-arrow-btn icon a-arrow-left previous-month"/><span class="icon"></span>Previous</a>
+			<?php echo a_button(a_('Previous'), url_for('aEvent/index?'.http_build_query($calendar['params']['prev'])), array('a-arrow-btn', 'icon', 'a-arrow-left', 'previous-month', 'alt')) ?>
 			<h4 class="title">
 				<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => $calendar['year'], 'month' => date('m', strtotime($calendar['month']))))) ?>"><?php echo $calendar['month'] ?></a>
 				<a href="<?php echo url_for('aEvent/index?'. http_build_query(array('year' => $calendar['year']))) ?>"><?php echo $calendar['year'] ?></a>
 			</h4>
-			<a href="<?php echo url_for('aEvent/index?'.http_build_query($calendar['params']['next'])) ?>" class="a-arrow-btn icon a-arrow-right next-month"><span class="icon"></span>Next</a>
+			<?php echo a_button(a_('Next'), url_for('aEvent/index?'.http_build_query($calendar['params']['next'])), array('a-arrow-btn','icon','a-arrow-right','next-month','alt')) ?>
 		</th>
 	</tr>
 	<tr class="days">
