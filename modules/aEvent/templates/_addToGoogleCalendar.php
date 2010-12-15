@@ -3,4 +3,4 @@
 <?php // The byte limit was chosen to avoid creating a URL that the browser won't accept, ?>
 <?php // even when Google double-encodes it in some situations ?>
 <?php $a_event = $sf_data->getRaw('a_event') ?>
-<?php echo link_to('Add to Google Calendar', 'http://www.google.com/calendar/event?' . http_build_query(array('action' => 'TEMPLATE', 'text' => $a_event->getTitle(), 'dates' => $a_event->getUTCDateRange(), 'location' => preg_replace('/\s+/', ' ', $a_event['location']), 'sprop' => 'website:' . $sf_request->getHost(), 'details' => aHtml::toPlaintext($a_event->getTextForArea('blog-body', 500))))) ?>
+<?php echo a_button(a_('Add to Google Calendar'), url_for('http://www.google.com/calendar/event?' . http_build_query(array('action' => 'TEMPLATE', 'text' => $a_event->getTitle(), 'dates' => $a_event->getUTCDateRange(), 'location' => preg_replace('/\s+/', ' ', $a_event['location']), 'sprop' => 'website:' . $sf_request->getHost(), 'details' => aHtml::toPlaintext($a_event->getTextForArea('blog-body', 500))))), array('icon','no-bg','alt','a-events')) ?>
