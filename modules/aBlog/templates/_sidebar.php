@@ -7,11 +7,11 @@
   $popular = isset($popular) ? $sf_data->getRaw('popular') : null;
   $tag = isset($tag) ? $sf_data->getRaw('tag') : null;
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
-	$selected = array('icon','a-selected');
+	$selected = array('icon','a-selected'); // Class names for selected filters
 ?>
 
 <?php if (aBlogItemTable::userCanPost()): ?>
-	<div class="a-ui clearfix a-subnav-section">
+	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
 	  <?php echo a_js_button(a_('New Post'), array('big', 'a-add', 'a-blog-new-post-button', 'a-sidebar-button'), 'a-blog-new-post-button') ?>
     <div class="a-options a-blog-admin-new-ajax dropshadow">
       <?php include_component('aBlogAdmin', 'newPost') ?>
@@ -31,24 +31,9 @@
   </div>
 </div>
 
-<?php if(count($categories)): ?>
-<div class="a-subnav-section categories">
-  <h4>Categories</h4>
-  <div class="a-filter-options blog clearfix">
-	  <?php foreach ($categories as $category): ?>
-	    <div class="a-filter-option">
-				<?php $selected_category = ($category->getName() == $sf_params->get('cat')) ? $selected : array() ?>
-				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName()), array_merge(array('a-link'),$selected_category)) ?>
-			</div>
-	  <?php endforeach ?>
-  </div>	
-</div>
-
 <hr class="a-hr" />
-<?php endif ?>
-
 <div class='a-subnav-section range'>
-  <h4>Browse by</h4>
+  <h4><?php echo a_('Browse by') ?></h4>
   <div class="a-filter-options blog clearfix">
     <div class="a-filter-option">
 			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
@@ -65,20 +50,33 @@
   </div>
 </div>
 
+<?php if(count($categories) > 1): ?>
 <hr class="a-hr" />
+<div class="a-subnav-section categories">
+  <h4><?php echo a_('Categories') ?></h4>
+  <div class="a-filter-options blog clearfix">
+	  <?php foreach ($categories as $category): ?>
+	    <div class="a-filter-option">
+				<?php $selected_category = ($category->getName() == $sf_params->get('cat')) ? $selected : array() ?>
+				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aBlog/index' : 'aBlog/index?cat='.$category->getName()), array_merge(array('a-link'),$selected_category)) ?>
+			</div>
+	  <?php endforeach ?>
+  </div>	
+</div>
+<?php endif ?>
 
 <?php if(count($tags)): ?>
+<hr class="a-hr" />
 <div class="a-subnav-section tags">  
 
 	<?php if (isset($tag)): ?>
-	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
-	<div class="a-blog-selected-tag">
+	<div class="a-tag-sidebar-selected-tag clearfix">
+		<h4 class="a-tag-sidebar-title selected-tag"><?php echo a_('Selected Tag') ?></h4>  
 		<?php echo a_button($tag, url_for('aBlog/index', $params['tag']), array('a-link','icon','a-selected')) ?>
-  </div>
-	<?php endif ?>
+	</div>
+	<?php endif ?>  
   
-  
-	<h4 class="a-tag-sidebar-title popular">Popular Tags</h4>  			
+	<h4 class="a-tag-sidebar-title popular"><?php echo a_('Popular Tags') ?></h4>  			
 	<ul class="a-ui a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>
 		  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
@@ -87,8 +85,7 @@
 		<?php $n++; endforeach ?>
 	</ul>
 
-	<br class="c"/>
-	<h4 class="a-tag-sidebar-title all-tags">All Tags <span class="a-tag-sidebar-tag-count"><?php echo count($tags) ?></span></h4>
+	<h4 class="a-tag-sidebar-title all-tags"><?php echo a_('All Tags') ?> <span class="a-tag-sidebar-tag-count"><?php echo count($tags) ?></span></h4>
 	<ul class="a-ui a-tag-sidebar-list all-tags">
 		<?php $n=1; foreach ($tags as $tag => $count): ?>
 		  <li <?php echo ($n == count($tags) ? 'class="last"':'') ?>>
@@ -115,4 +112,4 @@
 <?php endif ?>
 
 <?php a_js_call('aBlog.sidebarEnhancements(?)', array()) ?>
-<?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => a_('Search'), 'focus' => false )) ?>
+<?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => a_('Search Posts'), 'focus' => false )) ?>

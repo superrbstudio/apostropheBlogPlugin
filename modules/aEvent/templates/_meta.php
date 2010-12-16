@@ -52,8 +52,8 @@
 	<?php //*/ ?>
 	
 	<li class="post-extra a-ui">
-		<?php include_partial('aEvent/addToGoogleCalendar', array('a_event' => $aEvent)) ?> 
-		<?php include_partial('aEvent/addIcal', array('a_event' => $aEvent)) ?>  
+		<?php include_partial('aEvent/addToGoogleCalendar', array('aEvent' => $aEvent)) ?> 
+		<?php include_partial('aEvent/addToIcal', array('aEvent' => $aEvent)) ?>  
 	</li>
 	
 </ul>

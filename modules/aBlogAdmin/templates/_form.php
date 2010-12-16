@@ -20,7 +20,7 @@
 
 <div class="published section a-form-row">
   <div class="post-save clearfix">
-  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button a-save-blog-main', 'big')) ?>							
+  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button a-save-blog-main','a-show-busy','big')) ?>							
   </div>
  	<h4><?php echo a_('Status') ?></h4>
   <div class="a-form-row">
@@ -100,9 +100,6 @@
 	<hr />
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo a_('Categories') ?></h4>
-		<?php if($sf_user->hasCredential('admin')): ?>
-			<?php echo link_to('<span class="icon"></span>'.a_('edit categories'),'@a_category_admin', array('class' => 'a-btn icon a-edit no-label lite edit-categories', 'title' => a_('edit categories'))) ?>
-	  <?php endif ?>
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
 	</div>
@@ -113,13 +110,10 @@
 	  <?php // Without this we can't tell what it's for at all unless there are popular tags to be shown. If you ?>
 	  <?php // remove this think it through. ?>
 	  <h4><?php echo a_('Tags') ?></h4>
-	  
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
-		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>
-				
+		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>				
 	</div>
-
 
 	<hr />
 	<div class="delete preview section a-form-row">
@@ -133,4 +127,5 @@
 	</div>
 
 </form>
+
 <?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_blog_admin_update?' . http_build_query(array('id' => $a_blog_post->id, 'slug' => $a_blog_post->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>
