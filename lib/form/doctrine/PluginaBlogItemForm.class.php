@@ -18,8 +18,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     parent::setup();
     $user = sfContext::getInstance()->getUser();
 
+    // We implement our own sluggability so we have to take responsibility for
+    // booting that field out of the form classes
     unset(
-      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug_saved'], $this['tags'], $this['title'], $this['status']
+      $this['type'], $this['page_id'], $this['created_at'], $this['updated_at'], $this['slug'], $this['slug_saved'], $this['tags'], $this['title'], $this['status']
     );
 
     $q = Doctrine::getTable($this->getModelName())->addCategoriesForUser($user->getGuardUser(), $user->hasCredential('admin'));
