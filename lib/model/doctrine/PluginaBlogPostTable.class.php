@@ -11,6 +11,14 @@ class PluginaBlogPostTable extends aBlogItemTable
     return Doctrine_Core::getTable('aBlogPost');
   }
 
+  public function createQuery($alias = '')
+  {
+    $query = parent::createQuery($alias);
+    $query->orderBy($query->getRootAlias().'.published_at asc');
+
+    return $query;
+  }
+
   public function getEngineCategories()
   {
     if(!isset(self::$engineCategoryCache))

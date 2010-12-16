@@ -43,7 +43,6 @@ abstract class BaseaBlogActions extends aEngineActions
     if($request->hasParameter('tag'))
       Doctrine::getTable($this->modelClass)->filterByTag($request->getParameter('tag'), $q);
     Doctrine::getTable($this->modelClass)->addPublished($q);
-    $q->orderBy('published_at desc');
 
     return $q;
   }

@@ -31,7 +31,7 @@
 
 	<?php if (!$admin): ?>
 	<?php include_partial('aBlog/tags', array('aBlogItem' => $a_event)) ?>
-	<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_event, 'module' => 'aEvent')) ?>
+	<?php include_partial('aBlog/addThis', array('aBlogItem' => $a_event)) ?>
 	<?php endif ?>
 
 </div>

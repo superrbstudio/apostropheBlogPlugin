@@ -8,14 +8,14 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-subnav-wrapper blog">
+	<div class="a-subnav-wrapper blog a-ui clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aEvent', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'categories' => $blogCategories, 'calendar' => $calendar, )) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>
 
-<div id="a-blog-main" class="a-blog-main">
+<div id="a-blog-main" class="a-blog-main clearfix">
 	<div class="a-blog-heading"> 
 	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Heading Content'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
 	  <?php if ($page->userHasPrivilege('edit')): ?>

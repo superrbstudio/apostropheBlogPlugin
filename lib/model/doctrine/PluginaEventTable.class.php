@@ -19,6 +19,14 @@ class PluginaEventTable extends aBlogItemTable
     return Doctrine::getTable('aEvent');
   }
 
+  public function createQuery($alias = '')
+  {
+    $query = parent::createQuery($alias);
+    $query->orderBy($query->getRootAlias().'.start_date asc');
+
+    return $query;
+  }
+
   public function filterByYMD($year=null, $month=null, $day=null, $q=null)
   {
     $rootAlias = $q->getRootAlias();

@@ -6,6 +6,8 @@
   $popular = isset($popular) ? $sf_data->getRaw('popular') : null;
   $tag = isset($tag) ? $sf_data->getRaw('tag') : null;
   $tags = isset($tags) ? $sf_data->getRaw('tags') : null;
+	$selected = array('icon','a-selected');
+
 ?>
 
 <?php if (aBlogItemTable::userCanPost()): ?>
@@ -20,23 +22,24 @@
 
 <?php if ($calendar): ?>
 	<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
-	<hr />
+<hr class="a-hr" />
 <?php endif ?>
 
 <?php if(count($categories)): ?>
 <div class="a-subnav-section categories">
   <h4>Categories</h4>
-  <div class="a-filter-options blog">
+  <div class="a-filter-options blog clearfix">
 	  <?php foreach ($categories as $category): ?>
 	    <div class="a-filter-option">
 				<?php $selected_category = ($category->getName() == $sf_params->get('cat')) ? $selected : array() ?>
-				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.$category->getName()), array_merge(array('a-link'),$selected_category)) ?>
+				<?php echo a_button($category, url_for(($sf_params->get('cat') == $category->getName()) ? 'aEvent/index' : 'aEvent/index?cat='.$category->getName()), array_merge(array('alt','no-bg'),$selected_category)) ?>
 			</div>
 	  <?php endforeach ?>
   </div>	
 </div>
 
-<hr />
+<hr class="a-hr" />
+
 <?php endif ?>
 
 <?php if (!$calendar): ?>
@@ -45,19 +48,19 @@
   <div class="a-filter-options blog clearfix">
     <div class="a-filter-option">
 			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
-			<?php echo a_button('Day', url_for('aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
+			<?php echo a_button('Day', url_for('aEvent/index?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('alt','no-bg'),$selected_day)) ?>
 		</div>
     <div class="a-filter-option">
 			<?php $selected_month = ($dateRange == 'month') ? $selected : array() ?>
-			<?php echo a_button('Month', url_for('aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('a-link'),$selected_month)) ?>
+			<?php echo a_button('Month', url_for('aEvent/index?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('alt','no-bg'),$selected_month)) ?>
 		</div>
     <div class="a-filter-option">
 			<?php $selected_year = ($dateRange == 'year') ? $selected : array() ?>
-			<?php echo a_button('Year', url_for('aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('a-link'),$selected_year)) ?>
+			<?php echo a_button('Year', url_for('aEvent/index?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('alt','no-bg'),$selected_year)) ?>
 		</div>
   </div>
 </div>
-<hr />
+<hr class="a-hr" />
 <?php endif ?>
 
 <?php if(count($tags)): ?>
@@ -66,7 +69,7 @@
 	<?php if (isset($tag)): ?>
 	<h4 class="a-tag-sidebar-title selected-tag">Selected Tag</h4>  
 	<div class="a-blog-selected-tag">
-		<?php echo a_button($tag, url_for('aEvent/index', $params['tag']), array('a-link','icon','a-selected')) ?>
+		<?php echo a_button($tag, url_for('aEvent/index', $params['tag']), array('alt','no-bg','icon','a-selected')) ?>
   </div>
 	<?php endif ?>
   
@@ -74,7 +77,8 @@
 	<ul class="a-ui a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($popular as $tag => $count): ?>
 	  <li <?php echo ($n == count($popular) ? 'class="last"':'') ?>>
-			<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aEvent/index?tag='.$tag, $params['tag']), array('a-link','a-tag')) ?>
+			<span class="a-tag"><?php echo a_button($tag, url_for('aEvent/index?tag='.$tag, $params['tag']), array('alt','no-bg')) ?></span>
+			<span class="a-tag-count"><?php echo $count ?></span>
 		</li>
 		<?php $n++; endforeach ?>
 	</ul>
@@ -84,7 +88,8 @@
 	<ul class="a-ui a-tag-sidebar-list all-tags">
 		<?php $n=1; foreach ($tags as $tag => $count): ?>
 	  <li <?php echo ($n == count($tag) ? 'class="last"':'') ?>>
-			<?php echo a_button('<span class="a-tag-count">'.$count.'</span>'.$tag, url_for('aEvent/index?tag='.$tag), array('a-link','a-tag')) ?>
+			<span class="a-tag"><?php echo a_button($tag, url_for('aEvent/index?tag='.$tag), array('alt','no-bg')) ?></span>
+			<span class="a-tag-count"><?php echo $count ?></span>
 		</li>
 		<?php $n++; endforeach ?>
 	</ul>
@@ -93,27 +98,17 @@
 <?php endif ?>
 
 <?php if(!isset($noFeed)): ?>
-<hr />
-<h5><?php echo link_to(__('RSS Feed &ndash; Full', array(), 'apostrophe'), 'aEvent/index?feed=rss') ?></h5>
-<h5><?php echo link_to(__('RSS Feed &ndash; Filtered', array(), 'apostrophe'), aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?></h5>
+	<hr class="a-hr" />
+	<ul class="a-ui a-controls stacked">
+  <?php $full = url_for('aEvent/index?feed=rss') ?>
+  <?php $filtered = url_for(aUrl::addParams('aEvent/index?feed=rss', $params['tag'], $params['cat'])) ?>
+  <?php if ($full === $filtered): ?>
+    <li><?php echo a_button(a_('RSS Feed'), $full, array('icon','a-rss-feed', 'no-bg', 'alt')) ?></li>
+  <?php else: ?>
+    <li><?php echo a_button(a_('Full Feed'), $full, array('icon','a-rss-feed','no-bg', 'alt')) ?></li>
+    <li><?php echo a_button(a_('Filtered Feed'), $filtered, array('icon','a-rss-feed','no-bg', 'alt')) ?></li>
+  <?php endif ?>
+	</ul>
 <?php endif ?>
 
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function() {
-	$('.a-tag-sidebar-title.all-tags').click(function(){
-		$('.a-tag-sidebar-list.all-tags').slideToggle();
-		$(this).toggleClass('open');
-	});
-	
-	$('.a-tag-sidebar-title.all-tags').hover(function(){
-		$(this).toggleClass('over');
-	},
-	function(){
-		$(this).toggleClass('over');		
-	});	
-	
-	$('a.selected').prepend('<span class="close"></span>');
-});	
- //]]>
-</script>
+<?php a_js_call('aBlog.sidebarEnhancements(?)', array()) ?>

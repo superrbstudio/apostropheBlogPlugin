@@ -151,3 +151,29 @@ function aBlogGetPostStatus()
 	var postStatus = $('#a_blog_item_status');
 	return postStatus.val();
 }
+
+// Starting to assemble the aBlogConstructor -- eventually all of the JS functions above can be migrated into this space
+
+function aBlogConstructor() 
+{	
+	this.sidebarEnhancements = function(options)
+	{
+		var debug = options['debug'];
+		
+		debug ? apostrophe.log('aBlog.sidebarEnhancements -- debug') : '';
+		
+		$('.a-tag-sidebar-title.all-tags').click(function(){
+			$('.a-tag-sidebar-list.all-tags').slideToggle();
+			$(this).toggleClass('open');
+		});
+
+		$('.a-tag-sidebar-title.all-tags').hover(function(){
+			$(this).toggleClass('over');
+		},
+		function(){
+			$(this).toggleClass('over');		
+		});	
+	}
+}
+
+window.aBlog = new aBlogConstructor();
