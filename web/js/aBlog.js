@@ -65,7 +65,7 @@ function aBlogEnableNewForm()
 		var form = $(this);
 		apostrophe.updating('.a-blog-admin-new-ajax');
 		$.post(form.attr('action'), $(this).serialize(), function(data) {
-			form.closest('.a-blog-admin-new-ajax').html(data);	
+			$(document).append(data);	
 		});
 		return false;
 	});
