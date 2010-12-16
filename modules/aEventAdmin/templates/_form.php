@@ -20,7 +20,7 @@
 
 <div class="published section a-form-row">
   <div class="post-save clearfix">
-  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button a-save-blog-main', 'big')) ?>							
+  	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button', 'a-save-blog-main','a-show-busy','big')) ?>
   </div>
  	<h4><?php echo a_('Status') ?></h4>
   <div class="a-form-row">
@@ -141,9 +141,6 @@
 	<hr />
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo a_('Categories') ?></h4>
-		<?php if($sf_user->hasCredential('admin')): ?>
-			<?php echo link_to('<span class="icon"></span>'.a_('edit categories'),'@a_category_admin', array('class' => 'a-btn icon a-edit no-label lite edit-categories', 'title' => a_('edit categories'))) ?>
-	  <?php endif ?>
 		<?php echo $form['categories_list']->render() ?>
 		<?php echo $form['categories_list']->renderError() ?>
 	</div>
@@ -170,5 +167,7 @@
 		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
 	  <?php endif ?>
 	</div>
+
 </form>
+
 <?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_event_admin_update?' . http_build_query(array('id' => $a_event->id, 'slug' => $a_event->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>

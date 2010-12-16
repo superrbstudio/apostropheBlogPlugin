@@ -11,7 +11,7 @@
 	</div>
   <div class="a-form-row">
     <ul class="a-controls">
-      <li><?php echo a_submit_button(a_('Create')) ?></li>
+      <li><?php echo a_anchor_submit_button(a_('Create'), array('a-show-busy')) ?></li>
       <li><?php echo a_js_button(a_('Cancel'), array('a-cancel','icon','a-options-cancel')) ?></li>
     </ul>
   </div>
