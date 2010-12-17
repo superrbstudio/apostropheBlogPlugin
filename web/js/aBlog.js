@@ -103,7 +103,7 @@ function aBlogEnableForm(options)
 		}
 		if (!init)
 		{
-			find('.a-save-blog-main').html(options['update-labels'][s]);
+			find('.a-save-blog-main .label').text(options['update-labels'][s]);
 		}
 		init = false;
 	});
