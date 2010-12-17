@@ -31,6 +31,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
 		{
 			$this->calendar = $this->buildCalendar($request);			
 		}
+		return $this->pageTemplate;
 	}
 
   public function executeShow(sfWebRequest $request)
@@ -47,6 +48,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
 		{
 			$this->calendar = $this->buildCalendar($request);			
 		}
+		return $this->pageTemplate;
   }
 
   public function executeIcal(sfWebRequest $request)

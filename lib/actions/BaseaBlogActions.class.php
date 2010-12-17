@@ -75,7 +75,8 @@ abstract class BaseaBlogActions extends aEngineActions
       $this->getFeed();
       return sfView::NONE;
     }
-
+    
+    return $this->pageTemplate;
   }
 
   public function executeShow(sfWebRequest $request)
@@ -88,6 +89,8 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->forward404Unless($this->aBlogPost['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aBlogPost));
+    
+    return $this->pageTemplate;
   }
 
   public function buildParams()
