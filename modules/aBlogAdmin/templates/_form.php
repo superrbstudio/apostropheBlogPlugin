@@ -22,17 +22,20 @@
   <div class="post-save clearfix">
   	<?php echo a_anchor_submit_button($saveLabel, array('a-save', 'a-sidebar-button a-save-blog-main','a-show-busy','big')) ?>							
   </div>
- 	<h4><?php echo a_('Status') ?></h4>
-  <div class="a-form-row">
-    <?php echo $form['publication']->render() ?>
-  </div>
-  <div class="a-published-at-container">
-		<div class="a-form-row">
-    <?php echo $form['published_at']->render() ?>
-		</div>
-   	<?php echo $form['published_at']->renderError() ?>
-  </div>  
 </div>
+<div class="status section a-form-row">
+	<h4><?php echo a_('Status') ?></h4>
+	<div class="status-list option">
+  	<?php echo $form['publication']->render() ?>
+	</div> 
+</div>
+<div class="a-published-at-container">
+	<div class="a-form-row">
+  	<?php echo $form['published_at']->render() ?>
+	</div>
+ 	<?php echo $form['published_at']->renderError() ?>
+</div>
+
 
 <?php // Author & Editors Section ?>
 <hr />
