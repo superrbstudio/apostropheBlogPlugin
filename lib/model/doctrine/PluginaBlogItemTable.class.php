@@ -127,7 +127,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     foreach($blogItems as $blogItem)
     {
-      aTools::cacheVirtualPages($blogItem->page);
+      aTools::cacheVirtualPages($blogItem->Page);
     }
   }
 
@@ -263,8 +263,9 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $query = $this->createQuery();
     }
-
+    $query->leftJoin($query->getRootAlias().'.Page p');
     $query = aPageTable::queryWithSlots(false, null, $query);
+    
 
     return $query;
   }
