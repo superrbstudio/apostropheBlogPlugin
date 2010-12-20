@@ -14,7 +14,7 @@ class PluginaBlogPostTable extends aBlogItemTable
   public function createQuery($alias = '')
   {
     $query = parent::createQuery($alias);
-    $query->orderBy($query->getRootAlias().'.published_at asc');
+    $query->orderBy($query->getRootAlias().'.published_at desc');
 
     return $query;
   }
