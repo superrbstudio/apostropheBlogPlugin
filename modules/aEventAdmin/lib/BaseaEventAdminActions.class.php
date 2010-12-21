@@ -72,7 +72,6 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    error_log("In executeUpdate");
     $this->setAEventForUser();
     $this->form = new aEventForm($this->a_event);
     if ($request->getMethod() === 'POST')
@@ -81,7 +80,6 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
       if ($this->form->isValid())
       {
         $this->a_event = $this->form->save();
-        error_log($this->a_event->end_date);
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
         $this->form = new aEventForm($this->a_event);

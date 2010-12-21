@@ -74,7 +74,7 @@ abstract class PluginaEventForm extends BaseaEventForm
       // Technically the problem might be the date but we show them on one row
       // anyway so always attach the error to the time which is easier to style
       $error = new sfValidatorError($validator, 'Ends before it begins!');
-      throw new sfValidatorErrorSchema($validator, array('end_time' => $error));
+      throw new sfValidatorErrorSchema($validator, array('end_date' => $error));
     }
     return $values;
   }

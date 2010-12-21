@@ -52,7 +52,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    error_log("In executeUpdate");
     $this->setABlogPostForUser();
     $this->form = new aBlogPostForm($this->a_blog_post);
     if ($request->getMethod() === 'POST')
@@ -95,15 +94,10 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $slug = trim($request->getParameter('slug'));
     if (strlen($slug))
     {
-      error_log("Setting the slug to $slug");
       // "OMG, aren't you going to slugify this?" The preUpdate method of the
       // PluginaBlogItem class takes care of slugifying and uniqueifying the slug.
       $this->a_blog_post->setSlug($slug);
       $this->a_blog_post->save();
-    }
-    else
-    {
-      error_log("Not setting the slug");
     }
     $this->setTemplate('titleAndSlug');
   }
@@ -277,12 +271,10 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
       if ($value->published_at > $now)
       {
-        error_log("Not published: " . $value->title);
         continue;
       }
       if (!aPageTable::checkPrivilege('view', $info))
       {
-        error_log("Not viewable: " . $value->title);
         continue;
       }
       $nvalue = $value;

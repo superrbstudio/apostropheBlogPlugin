@@ -56,18 +56,23 @@
 		<?php echo $form['start_date']->renderError() ?>
 		<div class="start_time">
     	<?php echo $form['start_time'] ?>
-    	<?php echo $form['start_time']->renderError() ?>
 		</div>
+		<?php // Errors at the end so they appear and appear correctly regardless ?>
+		<?php // of whether it's an all day event or not. Experiment before changing this ?>
+		<?php echo $form['start_date']->renderError() ?>
+  	<?php echo $form['start_time']->renderError() ?>
 	</div>
 	
 	<div class="end_date">
 		<h4>End Date</h4>
 		<?php echo $form['end_date']->render() ?>
-		<?php echo $form['end_date']->renderError() ?>
 		<div class="end_time">
     	<?php echo $form['end_time'] ?>
-    	<?php echo $form['end_time']->renderError() ?>
 		</div>
+		<?php // Errors at the end so they appear and appear correctly regardless ?>
+		<?php // of whether it's an all day event or not. Experiment before changing this ?>
+		<?php echo $form['end_date']->renderError() ?>
+  	<?php echo $form['end_time']->renderError() ?>
 	</div>
 </div>
 
