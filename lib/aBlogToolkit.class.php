@@ -60,4 +60,133 @@ class aBlogToolkit {
   {
     return aTools::slugify($s);
   }
+  
+  // Used by both the blog admin and the event admin modules
+  
+  // Unlike search in the engine, this is not specific to the categories of the page
+  // Pass a 'term' argument rather than a 'q' argument for a nice jquery.autocomplete friendly AJAX array
+  // with 'label' and 'value'
+  static public function searchBody($action, $slugMatch, $modelClass, sfWebRequest $request)
+  {
+    $now = date('YmdHis');
+    
+    // create the array of pages matching the query
+    
+    $ajax = false;
+    if ($request->hasParameter('term'))
+    {
+      $ajax = true;
+      $q = $request->getParameter('term');
+      // Wildcarding is better for autocomplete
+      $q .= '*';
+    }
+    else
+    {
+      $q = $request->getParameter('q');
+      if ($request->hasParameter('x'))
+      {
+        // We sometimes like to use input type="image" for presentation reasons, but it generates
+        // ugly x and y parameters with click coordinates. Get rid of those and come back.
+        return $action->redirect(sfContext::getInstance()->getController()->genUrl('aBlog/search', true) . '?' . http_build_query(array("q" => $q)));
+      }
+    }
+    
+    $key = strtolower(trim($q));
+    $key = preg_replace('/\s+/', ' ', $key);
+    $replacements = sfConfig::get('app_a_search_refinements', array());
+    if (isset($replacements[$key]))
+    {
+      $q = $replacements[$key];
+    }
+
+    try
+    {
+      $q = "($q) AND slug:$slugMatch";
+      $values = aZendSearch::searchLuceneWithValues(Doctrine::getTable('aPage'), $q, aTools::getUserCulture());
+    } catch (Exception $e)
+    {
+      // Lucene search error. TODO: display it nicely if they are always safe things to display. For now: just don't crash
+      $values = array();
+    }
+    $nvalues = array();
+
+    // The truth is that Zend cannot do all of our filtering for us, especially
+    // permissions-based. So we can do some other filtering as well, although it
+    // would be bad not to have Zend take care of the really big cuts (if 99% are
+    // not being prefiltered by Zend, and we have a Zend max results of 1000, then 
+    // we are reduced to working with a maximum of 10 real results).
+
+    foreach ($values as $value)
+    {
+      if ($ajax && (count($nvalues) >= sfConfig::get('app_aBlog_autocomplete_max', 10)))
+      {
+        break;
+      }
+      // 1.5: the names under which we store columns in Zend Lucene have changed to
+      // avoid conflict with also indexing them
+      $info = unserialize($value->info_stored);
+
+      if ($value->published_at > $now)
+      {
+        continue;
+      }
+      if (!aPageTable::checkPrivilege('view', $info))
+      {
+        continue;
+      }
+      $nvalue = $value;
+      $nvalue->page_id = $info['id'];
+      $nvalue->slug = $nvalue->slug_stored;
+      $nvalue->title = $nvalue->title_stored;
+      $nvalue->summary = $nvalue->summary_stored;
+      // Virtual page slug is a named Symfony route, it wants search results to go there
+      $nvalue->url = $action->getController()->genUrl($nvalue->slug, true);
+      $nvalue->class = 'aBlog';
+      $nvalues[] = $nvalue;
+    }
+    $values = $nvalues;
+    if ($ajax)
+    {
+      // We need the IDs of the blog posts, not their virtual pages
+      $pageIds = array();
+      foreach ($values as $value)
+      {
+        $pageIds[] = $value->page_id;
+      }
+      $action->results = array();
+      if (count($pageIds))
+      {
+        $infos = Doctrine::getTable($modelClass)->createQuery('p')->select('p.id, p.page_id, p.status')->whereIn('p.page_id', $pageIds)->fetchArray();
+        // At this point, if we're an admin, we have some posts on our list that are not actually
+        // useful to return as AJAX results because we only care about posts that are published when
+        // we're building up a posts slot
+        foreach ($infos as $info)
+        {
+          if ($info['status'] !== 'published')
+          {
+            continue;
+          }
+          $pageIdToPostId[$info['page_id']] = $info['id'];
+        }
+        foreach ($values as $value)
+        {
+          if (isset($pageIdToPostId[$value->page_id]))
+          {
+            // Titles are stored as entity-escaped HTML text, so decode to meet
+            // the expectations of autocomplete
+            $action->results[] = array('label' => html_entity_decode($value->title, ENT_COMPAT, 'UTF-8'), 'value' => $pageIdToPostId[$value->page_id]);
+          }
+        }
+      }
+      return 'Autocomplete';
+    }
+    $action->pager = new aArrayPager(null, sfConfig::get('app_a_search_results_per_page', 10));    
+    $action->pager->setResultArray($values);
+    $action->pager->setPage($request->getParameter('page', 1));
+    $action->pager->init();
+    $action->pagerUrl = "aBlog/search?" . http_build_query(array("q" => $q));
+    // setTitle takes care of escaping things
+    $action->getResponse()->setTitle(aTools::getOptionI18n('title_prefix') . 'Search for ' . $q . aTools::getOptionI18n('title_suffix'));
+    $action->results = $action->pager->getResults();
+  }
 }

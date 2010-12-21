@@ -55,7 +55,9 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
     return 'Error';
   }
-    
+   
+  // DEPRECATED, see executeSearch below
+   
   public function executeAutocomplete(sfWebRequest $request)
   {
     // Search is in virtual pages, the TITLE field is dead (or going to be) and not
@@ -69,6 +71,11 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $this->aEvents = aBlogItemTable::titleSearch($request->getParameter('q'), '@a_event_search_redirect');
     $this->setLayout(false);
   }
+  
+  public function executeSearch(sfWebRequest $request)
+  {
+    return aBlogToolkit::searchBody($this, '@a_event_redirect', 'aEvent', $request);
+  }   
   
   public function executeUpdate(sfWebRequest $request)
   {
