@@ -2,7 +2,8 @@
 <?php // Saving either of these forms updates both (because title can affect slug) ?>
 <?php use_helper('a') ?>
 <form method="POST" action="<?php echo url_for('a_blog_admin_updateTitle', $a_blog_item) ?>" id="a-blog-item-title-interface" class="a-blog-item-title-interface a-ui clearfix">
-	<input type="text" name="title" class="a-title" value="<?php echo a_entities(($a_blog_item->title == 'untitled')? '':$a_blog_item->title) ?>" />
+  <?php // Titles are already entity-escaped (like all text slots), so don't double-escape them ?>
+	<input type="text" name="title" class="a-title" value="<?php echo ($a_blog_item->title == 'untitled')? '':$a_blog_item->title ?>" />
   <ul class="a-ui a-controls blog-title">
     <li><?php echo a_anchor_submit_button(a_('Save'), array('a-save', 'big')) ?></li>
     <li><a href="#" class="a-btn icon a-cancel no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
