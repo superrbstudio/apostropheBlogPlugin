@@ -61,12 +61,15 @@ class aBlogToolkit {
     return aTools::slugify($s);
   }
   
-  // Used by both the blog admin and the event admin modules
+  // Used by blog admin, event admin, blog engine and event engine
   
-  // Unlike search in the engine, this is not specific to the categories of the page
+  // If $categories is not null it should be an array of category objects; search results
+  // must match at least one of the categories. However if there are NO categories in the array,
+  // all results are accepted
+  
   // Pass a 'term' argument rather than a 'q' argument for a nice jquery.autocomplete friendly AJAX array
   // with 'label' and 'value'
-  static public function searchBody($action, $slugMatch, $modelClass, sfWebRequest $request)
+  static public function searchBody($action, $slugMatch, $modelClass, $categories, sfWebRequest $request)
   {
     $now = date('YmdHis');
     
@@ -87,7 +90,7 @@ class aBlogToolkit {
       {
         // We sometimes like to use input type="image" for presentation reasons, but it generates
         // ugly x and y parameters with click coordinates. Get rid of those and come back.
-        return $action->redirect(sfContext::getInstance()->getController()->genUrl('aBlog/search', true) . '?' . http_build_query(array("q" => $q)));
+        return $action->redirect(sfContext::getInstance()->getController()->genUrl($request->getParameter('module') . '/' . $request->getParameter('action'), true) . '?' . http_build_query(array("q" => $q)));
       }
     }
     
@@ -122,9 +125,35 @@ class aBlogToolkit {
       {
         break;
       }
+      
       // 1.5: the names under which we store columns in Zend Lucene have changed to
       // avoid conflict with also indexing them
       $info = unserialize($value->info_stored);
+
+      if ((!is_null($categories)) && (count($categories)))
+      {
+        // Filtering categories this way is not ideal, we could drown in 1000 results for
+        // an unrelated category and not get a chance to winnow out the handful for this
+        // category. Think about a way to get Lucene to do it. However that is tricky 
+        // because we do a lot of gnarly things like merging categories
+        if (count($categories))
+        {
+          $good = false;
+          $categories = aArray::listToHashById($categories);
+          $ids = preg_split('/,/', $value->category_ids);
+          foreach ($ids as $id)
+          {
+            if (isset($categories[$id]))
+            {
+              $good = true;
+            }
+          }
+          if (!$good)
+          {
+            continue;
+          }
+        }
+      }
 
       if ($value->published_at > $now)
       {
@@ -141,7 +170,7 @@ class aBlogToolkit {
       $nvalue->summary = $nvalue->summary_stored;
       // Virtual page slug is a named Symfony route, it wants search results to go there
       $nvalue->url = $action->getController()->genUrl($nvalue->slug, true);
-      $nvalue->class = 'aBlog';
+      $nvalue->class = $modelClass;
       $nvalues[] = $nvalue;
     }
     $values = $nvalues;

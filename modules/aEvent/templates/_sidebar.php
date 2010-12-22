@@ -32,7 +32,7 @@
 </div>
 <?php //*/ ?>
 
-<?php if ($calendar): ?>
+<?php if (isset($calendar) && $calendar): ?>
 <hr class="a-hr" />
 <?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
 <?php endif ?>

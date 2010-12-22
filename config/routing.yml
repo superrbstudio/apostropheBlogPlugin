@@ -219,6 +219,11 @@ a_event_tag:
   param: { module: aEvent, action: index }
   class: aRoute
 
+a_event_search:
+  url: /search
+  param: { module: aEvent, action: search }
+  class: aRoute
+
 a_event_cat:
   url:   /:cat
   param: { module: aEvent, action: index }
@@ -227,11 +232,6 @@ a_event_cat:
 a_event:
   url:
   param: { module: aEvent, action: index }
-  class: aRoute
-
-a_event_search:
-  url: /search
-  param: { module: aEvent, action: search }
   class: aRoute
 
 a_event_today:

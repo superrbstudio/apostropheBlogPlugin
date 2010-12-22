@@ -59,6 +59,8 @@ class PluginaEventTable extends aBlogItemTable
       $engines = Doctrine::getTable('aPage')->createQuery()
         ->leftJoin('aPage.Categories Categories')
         ->addWhere('engine = ?', 'aEvent')
+        // Don't match virtual pages
+        ->addWhere('slug LIKE "/%"')
         ->addWhere('admin != ?', true)
         ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 

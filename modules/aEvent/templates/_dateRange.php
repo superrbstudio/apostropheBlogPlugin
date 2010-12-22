@@ -9,6 +9,11 @@
   // Compatible with sf_escaping_strategy: true
   $aEvent = isset($aEvent) ? $sf_data->getRaw('aEvent') : null;
 ?>
+
+<?php // The -> syntax is compatible with both Doctrine objects and ?>
+<?php // Zend Lucene results, I pass both to this partial. Please don't ?>
+<?php // change to the [] syntax ?>
+
 <?php echo format_date($aEvent->start_date, 'D') ?>
 <?php if (!is_null($aEvent->start_time)): ?>
   <?php echo format_date($aEvent->start_time, 't') ?>

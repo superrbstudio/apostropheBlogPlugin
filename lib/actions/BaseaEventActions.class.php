@@ -27,10 +27,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
       // Don't have to call getFeed again, the parent implementation did that
       return sfView::NONE;
     }
-		if (sfConfig::get('app_aEvents_display_calendar'))
-		{
-			$this->calendar = $this->buildCalendar($request);			
-		}
+		$this->calendar = $this->buildCalendar($request);			
 		return $this->pageTemplate;
 	}
 
@@ -44,10 +41,7 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aEvent));
-		if (sfConfig::get('app_aEvents_display_calendar'))
-		{
-			$this->calendar = $this->buildCalendar($request);			
-		}
+		$this->calendar = $this->buildCalendar($request);			
 		return $this->pageTemplate;
   }
 
@@ -190,6 +184,10 @@ EOM
 
 	public function buildCalendar($request)
 	{
+	  if (!sfConfig::get('app_aEvents_display_calendar'))
+		{
+      return;
+    }
 		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
 		$monthRequest = clone $request;
 		$monthRequest->getParameterHolder()->remove('day');
@@ -215,4 +213,10 @@ EOM
 		return $calendar;	
 	}
 
+  public function executeSearch(sfWebRequest $request)
+  {
+		$this->calendar = $this->buildCalendar($request);			
+    $this->buildParams();
+    return aBlogToolkit::searchBody($this, '@a_event_redirect', 'aEvent', $this->page->getCategories(), $request);
+  }
 }

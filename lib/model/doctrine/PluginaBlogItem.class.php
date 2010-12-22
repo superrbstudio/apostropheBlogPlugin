@@ -59,6 +59,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     // Create a virtual page for this item
     $page = new aPage();
+    // In virtual pages the engine column is used to figure out which engine should 
+    // be asked for extra fields before search indexing of the page
+    $page['engine'] = get_class($this);
     $page['slug'] = $this->getVirtualPageSlug();
     // Search is good, let it happen
     $page['view_is_secure'] = false;

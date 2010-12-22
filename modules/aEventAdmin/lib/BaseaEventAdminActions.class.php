@@ -74,7 +74,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   
   public function executeSearch(sfWebRequest $request)
   {
-    return aBlogToolkit::searchBody($this, '@a_event_redirect', 'aEvent', $request);
+    return aBlogToolkit::searchBody($this, '@a_event_redirect', 'aEvent', null, $request);
   }   
   
   public function executeUpdate(sfWebRequest $request)

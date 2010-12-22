@@ -100,7 +100,8 @@ class aBlogEvents
         $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
       }
     }
-    
+    $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
+    $migrate->query('UPDATE a_page SET engine = "aEvent" WHERE slug LIKE "@a_event_search_redirect%"');
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");

@@ -208,6 +208,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 
   public function executeSearch(sfWebRequest $request)
   {
-    return aBlogToolkit::searchBody($this, '@a_blog_redirect', 'aBlogPost', $request);
+    return aBlogToolkit::searchBody($this, '@a_blog_redirect', 'aBlogPost', null, $request);
   }   
 }
