@@ -16,6 +16,7 @@
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main clearfix">
+  
 	<div class="a-blog-heading"> 
 	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Heading Content'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
 	  <?php if ($page->userHasPrivilege('edit')): ?>
@@ -37,7 +38,7 @@
   	<hr />
   <?php endforeach ?>
 
-    <?php if ($pager->haveToPaginate()): ?>
- 		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aEvent/index?'. http_build_query($params['pagination'])))); ?>
+  <?php if ($pager->haveToPaginate()): ?>
+ 		<?php echo include_partial('aBlog/pager', array('pager' => $pager, 'pagerUrl' => url_for('aEvent/index?'. http_build_query($params['pagination'])), 'max_per_page' => $max_per_page)); ?>
   <?php endif ?>
 </div>
