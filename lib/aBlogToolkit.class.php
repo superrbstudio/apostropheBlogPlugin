@@ -394,7 +394,7 @@ class aBlogToolkit {
     }
     else
     {
-      $cjoin .= 'left join';
+      $cjoin = 'left join';
     }
     $q .= $cjoin . ' a_page_to_category ptc on ptc.page_id = p.id ' . $cjoin . ' a_category c on ptc.category_id = c.id ';
 
