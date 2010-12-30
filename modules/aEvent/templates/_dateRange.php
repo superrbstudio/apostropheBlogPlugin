@@ -15,7 +15,8 @@
 <?php // change to the [] syntax ?>
 
 <?php echo format_date($aEvent->start_date, 'D') ?>
-<?php if (!is_null($aEvent->start_time)): ?>
+<?php // Use strlen rather than is_null to cope with legacy data ?>
+<?php if (strlen($aEvent->start_time)): ?>
   <?php echo format_date($aEvent->start_time, 't') ?>
 <?php endif ?>
 <?php if (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time)): ?>
@@ -24,6 +25,6 @@
 <?php if ($aEvent->start_date !== $aEvent->end_date): ?>
   <?php echo format_date($aEvent->end_date, 'D') ?>
 <?php endif ?>
-<?php if (!is_null($aEvent->end_time)): ?>
+<?php if (strlen($aEvent->end_time)): ?>
   <?php echo format_date($aEvent->end_time, 't') ?>
 <?php endif ?>

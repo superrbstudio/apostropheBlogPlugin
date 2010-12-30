@@ -32,7 +32,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   
   public function filterByCategory($category_id, Doctrine_Query $q)
   {
-    $q->addWhere('c.name = ?', $category_id);
+    $q->addWhere('c.slug = ?', $category_id);
   }
   
   public function filterByTag($tag, Doctrine_Query $q)

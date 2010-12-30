@@ -23,29 +23,10 @@ abstract class BaseaBlogComponents extends sfComponents
 
   public function executeSidebar()
   {
-    if ($this->getRequestParameter('tag'))
-    {
-      $this->tag = Doctrine::getTable('Tag')->findOrCreateByTagname($this->getRequestParameter('tag'));
-    }
-
-    if(is_null($this->categories) || !count($this->categories))
-    {
-      $this->categories = Doctrine::getTable('aCategory')
-        ->createQuery('c')
-        ->addWhere('c.posts = ?', true)
-        ->orderBy('c.name')
-        ->execute();
-    }
-    
-    $categoryIds = array();
-    foreach($this->categories as $category)
-    {
-      $categoryIds[] = $category['id'];
-    }
-
-    $this->popular = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aBlogPost', true, 10);
-    $this->tags = Doctrine::getTable('aBlogItem')->getTagsForCategories($categoryIds, 'aBlogPost');
-
+    $this->categories = $this->info['categoriesInfo'];
+    $this->tagsByPopularity = $this->info['tagsByPopularity'];
+    $this->tagsByName = $this->info['tagsByName'];
+    // What is this for?
     if($this->reset == true)
     {
       $this->params['cat'] = array();

@@ -11,49 +11,60 @@
 abstract class BaseaBlogActions extends aEngineActions
 {
   protected $modelClass = 'aBlogPost';
+  protected $slugStem = '@a_blog_search_redirect';
+  // The application of the various filters (date, category, tag, search) is done
+  // by aBlogToolkit::filterForEngine. That's where the important bits are
 
+  public function getFilterForEngineParams()
+  {
+    $request = $this->getRequest();
+    return array(
+      'q' => $request->getParameter('q'),      
+      'categoryIds' => aArray::getIds($this->page->Categories),
+      'categorySlug' => $request->getParameter('cat'),
+      'tag' => $request->getParameter('tag'),
+      'slugStem' => $this->slugStem,
+      'year' => $request->getParameter('year'),
+      'month' => $request->getParameter('month'),
+      'day' => $request->getParameter('day'),
+      'byPublishedAt' => true);
+  }
+  
   public function preExecute()
   {
     parent::preExecute();
-    $this->categories = aCategoryTable::getCategoriesForPage($this->page);
-    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
+    $request = $this->getRequest();
+    $this->info = aBlogToolkit::filterForEngine($this->getFilterForEngineParams());
+    if (sfConfig::get('app_aBlog_use_bundled_assets', true))
     {
       $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
     }
   }
 
-  protected function filterByPageCategory()
-  {
-    $q = Doctrine::getTable($this->modelClass)->createQuery()
-      ->leftJoin($this->modelClass.'.Author a')
-      ->leftJoin($this->modelClass.'.Categories c');
-    Doctrine::getTable($this->modelClass)->filterByCategories($this->categories, $q);
-    
-    return $q;
-  }
-
   protected function buildQuery($request)
   {
-    $q = $this->filterByPageCategory();
-
-    if($request->hasParameter('year'))
-      Doctrine::getTable($this->modelClass)->filterByYMD($request->getParameter('year'), $request->getParameter('month'), $request->getParameter('day'), $q);
-    if($request->hasParameter('cat'))
-      Doctrine::getTable($this->modelClass)->filterByCategory($request->getParameter('cat'), $q);
-    if($request->hasParameter('tag'))
-      Doctrine::getTable($this->modelClass)->filterByTag($request->getParameter('tag'), $q);
-    Doctrine::getTable($this->modelClass)->addPublished($q);
-
+    // We already know what page ids are relevant, now we're fetching author
+    // information. There's another method implicitly called later to populate
+    // all of the blog content for the posts
+    $q = Doctrine::getTable($this->modelClass)->createQuery()
+      ->leftJoin($this->modelClass.'.Author a');
+    if (count($this->info['pageIds']))
+    {
+      // We have page ids, so we need a join to figure out which blog items we want.
+      // Doctrine doesn't have a withIn mechanism that takes a nice clean array, but we
+      // know these are clean IDs 
+      $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $this->info['pageIds']) . ')');
+    }
+    else
+    {
+      $q->where('0 <> 0');
+    }
     return $q;
   }
 
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    if ($request->hasParameter('max_per_page'))
-    {
-      $this->getUser()->setAttribute('max_per_page', $request->getParameter('max_per_page'), 'apostropheBlog_prefs');
-    }
     $this->max_per_page = $this->getUser()->getAttribute('max_per_page', 20, 'apostropheBlog_prefs');
     $pager = new sfDoctrinePager($this->modelClass);
     $pager->setMaxPerPage($this->max_per_page);
@@ -67,6 +78,8 @@ abstract class BaseaBlogActions extends aEngineActions
 
     if($request->hasParameter('year') || $request->hasParameter('month') || $request->hasParameter('day') || $request->hasParameter('cat') || $request->hasParameter('tag'))
     {
+      // Forbid combinations of filters for bots like Google. This prevents aggressive overspidering
+      // of the same data
       $this->getResponse()->addMeta('robots', 'noarchive, nofollow');
     }
 
@@ -75,7 +88,7 @@ abstract class BaseaBlogActions extends aEngineActions
       $this->getFeed();
       return sfView::NONE;
     }
-    
+		
     return $this->pageTemplate;
   }
 
@@ -84,7 +97,6 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->buildParams();
     $this->dateRange = '';
     $this->aBlogPost = $this->getRoute()->getObject();
-		$this->categories = aCategoryTable::getCategoriesForPage($this->page);
     $this->forward404Unless($this->aBlogPost);
     $this->forward404Unless($this->aBlogPost['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
@@ -95,6 +107,7 @@ abstract class BaseaBlogActions extends aEngineActions
 
   public function buildParams()
   {
+    $request = $this->getRequest();
     $this->params = array();
 
     // set our parameters for building pagination links
@@ -109,30 +122,30 @@ abstract class BaseaBlogActions extends aEngineActions
     if ($this->getRequestParameter('day'))
     {
       $next = strtotime('tomorrow', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       $prev = strtotime('yesterday', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       $this->dateRange = 'day';
     }
     else if ($this->getRequestParameter('month'))
     {
       $next = strtotime('next month', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       $prev = strtotime('last month', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       $this->dateRange = 'month';
     }
     else
     {
       $next = strtotime('next year', $date);
-      $this->params['next'] = array('year' => date('Y', $next));
+      $this->params['next'] = array('year' => date('Y', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       $prev = strtotime('last year', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
       if ($this->getRequestParameter('year'))
       {
@@ -140,16 +153,16 @@ abstract class BaseaBlogActions extends aEngineActions
       }
     }
 
-    // set our parameters for building links that set the date ranges
-    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date));
-    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date));
-    $this->params['year'] = array('year' => date('Y', $date));
-    $this->params['nodate'] = array();
+    // set our parameters for building links that set the date ranges and
+    // keep other filters alive as well
+    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+    $this->params['year'] = array('year' => date('Y', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+    $this->params['nodate'] = array('cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
 
     $this->addFilterParams('cat');
     $this->addFilterParams('tag');
-    $this->addFilterParams('search');
-    $this->addFilterParams('max_per_page');
+    $this->addFilterParams('q');
   }
 
   public function addFilterParams($name)
@@ -189,11 +202,5 @@ abstract class BaseaBlogActions extends aEngineActions
     );
 
     $this->getResponse()->setContent($this->feed->asXml());
-  }
-  
-  public function executeSearch(sfWebRequest $request)
-  {
-    $this->buildParams();
-    return aBlogToolkit::searchBody($this, '@a_blog_redirect', 'aBlogPost', $this->page->getCategories(), $request);
   }
 }
