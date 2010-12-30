@@ -14,7 +14,7 @@ class PluginaBlogPostTable extends aBlogItemTable
   public function createQuery($alias = '')
   {
     $query = parent::createQuery($alias);
-    $query->orderBy($query->getRootAlias().'.published_at asc');
+    $query->orderBy($query->getRootAlias().'.published_at desc');
 
     return $query;
   }
@@ -26,6 +26,8 @@ class PluginaBlogPostTable extends aBlogItemTable
       $engines = Doctrine::getTable('aPage')->createQuery()
         ->leftJoin('aPage.Categories Categories')
         ->addWhere('engine = ?', 'aBlog')
+        // Don't match virtual pages
+        ->addWhere('slug LIKE "/%"')
         ->addWhere('admin != ?', true)
         ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 

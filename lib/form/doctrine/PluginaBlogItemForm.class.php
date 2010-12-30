@@ -215,15 +215,12 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   public function updateObject($values = null)
   {
     $object = $this->getObject();
-    error_log("START: status is " . $object->status);
     if (is_null($values))
     {
       $values = $this->getValues();
     }
     $object = parent::updateObject($values);
-    error_log("AFTER PARENT: status is " . $object->status);
     $this->updatePublication($values);
-    error_log("AFTER updatePublication: status is " . $object->status);
     return $object;
   }
   

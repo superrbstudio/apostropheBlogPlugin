@@ -51,7 +51,6 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       if (isset($this->values['blog_posts']) && count($this->values['blog_posts']))
       {
         $q->andWhereIn('id', $this->values['blog_posts']);
-        // 
         $q = aDoctrine::orderByList($q, $this->values['blog_posts']);
       }
       else

@@ -15,21 +15,9 @@
 
 <ul class="a-blog-item-meta">
 
-  <li class="post-date post-start-date<?php ($allDay) ? ' all-day-event' : '' ?>"><?php echo $startDate ?></li>
-
-	<?php if ($startDate == $endDate): ?>
-		<?php if (isset($startTime)): ?>
-	    <li class="post-time"><?php echo $startTime ?> &ndash; <?php echo $endTime ?></li>
-		<?php endif ?>
-	<?php else: ?>
-		<?php if (isset($startTime)): ?>
-	  	<li class="post-time post-start-time"><?php echo $startTime ?></li>				
-			<li class="post-date post-end-date"><?php echo $endDate ?></li>
-			<li class="post-time post-end-time"><?php echo $endTime ?></li>
-		<?php else: ?>
-	    <li class="post-date post-end-date"><?php echo $endDate ?></li>
-	  <?php endif ?>
-	<?php endif ?>
+  <?php // This has been simplified quite a lot. Please leave it that way so ?>
+  <?php // it can be easily shared with the admin side and also stay I18N ?>
+  <li class="post-date"><?php include_partial('aEvent/dateRange', array('aEvent' => $aEvent)) ?></li>
 
 	<?php if (strlen($aEvent['location'])): ?>
 	  <?php // It is amazing how often this works well even for something as short as ?>

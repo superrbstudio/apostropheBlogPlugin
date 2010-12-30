@@ -219,6 +219,11 @@ a_event_tag:
   param: { module: aEvent, action: index }
   class: aRoute
 
+a_event_search:
+  url: /search
+  param: { module: aEvent, action: search }
+  class: aRoute
+
 a_event_cat:
   url:   /:cat
   param: { module: aEvent, action: index }
@@ -337,6 +342,7 @@ a_event_admin:
     with_show:            false
     collection_actions:
       categories: get
+      search: get
 
 a_event_admin_autocomplete:
   url:   /admin/event/autocomplete

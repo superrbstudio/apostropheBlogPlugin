@@ -9,14 +9,19 @@
 abstract class BaseaEventActions extends BaseaBlogActions
 {
   protected $modelClass = 'aEvent';
+  protected $slugStem = '@a_event_search_redirect';
+
+  public function getFilterForEngineParams()
+  {
+    $p = parent::getFilterForEngineParams();
+    $p['byPublishedAt'] = false;
+    $p['byEventDateRange'] = true;
+    return $p;
+  }
 
   public function preExecute()
   {
     parent::preExecute();
-    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
-    {
-      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
-    }
   }
   
 	public function executeIndex(sfWebRequest $request)
@@ -27,10 +32,9 @@ abstract class BaseaEventActions extends BaseaBlogActions
       // Don't have to call getFeed again, the parent implementation did that
       return sfView::NONE;
     }
-		if (sfConfig::get('app_aEvents_display_calendar'))
-		{
-			$this->calendar = $this->buildCalendar($request);			
-		}
+		$this->calendar = $this->buildCalendar($request);			
+    
+		return $this->pageTemplate;
 	}
 
   public function executeShow(sfWebRequest $request)
@@ -43,10 +47,8 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aEvent));
-		if (sfConfig::get('app_aEvents_display_calendar'))
-		{
-			$this->calendar = $this->buildCalendar($request);			
-		}
+		$this->calendar = $this->buildCalendar($request);			
+		return $this->pageTemplate;
   }
 
   public function executeIcal(sfWebRequest $request)
@@ -126,24 +128,7 @@ EOM
     );
     exit(0);
   }
-    
-  protected function buildQuery($request)
-  {
-    $q = $this->filterByPageCategory();
-
-    if($request->hasParameter('year'))
-      Doctrine::getTable($this->modelClass)->filterByYMD($request->getParameter('year'), $request->getParameter('month'), $request->getParameter('day'), $q);
-    else
-      Doctrine::getTable('aEvent')->addUpcoming($q);
-    if($request->hasParameter('cat'))
-      Doctrine::getTable($this->modelClass)->filterByCategory($request->getParameter('cat'), $q);
-    if($request->hasParameter('tag'))
-      Doctrine::getTable($this->modelClass)->filterByTag($request->getParameter('tag'), $q);
-    Doctrine::getTable($this->modelClass)->addPublished($q);
-
-    return $q;
-  }
-  
+      
   public function getFeed()
   {
     $this->articles = $this->pager->getResults();
@@ -188,6 +173,10 @@ EOM
 
 	public function buildCalendar($request)
 	{
+	  if (!sfConfig::get('app_aEvents_display_calendar'))
+		{
+      return;
+    }
 		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
 		$monthRequest = clone $request;
 		$monthRequest->getParameterHolder()->remove('day');
@@ -212,5 +201,4 @@ EOM
 
 		return $calendar;	
 	}
-
 }
