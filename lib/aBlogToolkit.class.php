@@ -390,13 +390,13 @@ class aBlogToolkit {
 
     if ($restrictedByCategory)
     {
-      $q .= 'inner join ';
+      $cjoin = 'inner join';
     }
     else
     {
-      $q .= 'left join ';
+      $cjoin .= 'left join';
     }
-    $q .= 'a_page_to_category ptc on ptc.page_id = p.id left join a_category c on ptc.category_id = c.id ';
+    $q .= $cjoin . ' a_page_to_category ptc on ptc.page_id = p.id ' . $cjoin . ' a_category c on ptc.category_id = c.id ';
 
     // The engine page is locked down to these categories. If none are specified it is not
     // locked down by category
