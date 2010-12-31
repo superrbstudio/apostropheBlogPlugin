@@ -486,7 +486,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   public function getEngineSlug()
-  {
+  {    
     if(!isset($this->engineSlug))
     {
       $categories = array();
