@@ -32,7 +32,6 @@ abstract class BaseaEventComponents extends sfComponents
       $this->categories = Doctrine::getTable('aCategory')
         ->createQuery('c')
         ->orderBy('c.name')
-        ->where('c.events = ?', true)
         ->execute();
     }
 

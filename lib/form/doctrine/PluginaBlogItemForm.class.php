@@ -11,7 +11,6 @@
 abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 {
   protected $engine = 'aBlog';
-  protected $categoryColumn = 'posts';
 
   public function setup()
   {
@@ -153,7 +152,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         $aCategory = new aCategory();
         $aCategory['name'] = $value;
       }
-      $aCategory[$this->categoryColumn] = true;
       $aCategory->save();
       $link[] = $aCategory['id'];
     }
