@@ -469,9 +469,12 @@ class aBlogToolkit {
 
     $events = isset($options['byEventDateRange']) && $options['byEventDateRange'];
 
-    if ($events)
+    if ($events && ($startYear === '0000'))
     {
       list($startYear, $startMonth, $startDay) = preg_split('/-/', date('Y-m-d'));
+    }
+    if ($events)
+    {
       // The event's start and end dates are part of the blog item table
       $q .= ' inner join a_blog_item bi on bi.page_id = p.id ';
       $q .= "and bi.start_date <= :end_date ";
