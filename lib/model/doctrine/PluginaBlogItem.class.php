@@ -29,12 +29,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   public function delete(Doctrine_Connection $conn = null)
   {
     $user = sfContext::getInstance()->getUser()->getGuardUser();
-    if($this->userHasPrivilege('delete'))
+    if ($this->userHasPrivilege('delete'))
     {
       return parent::delete($conn);
     }
     else
+    {
       return false;
+    }
   }
 
   public function postDelete($event)
@@ -57,8 +59,18 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function postInsert($event)
   {
-    // Create a virtual page for this item
-    $page = new aPage();
+    if ($this->page_id)
+    {
+      // TODO: how is it possible for the page to already exist at this point?
+      // It definitely does. We were wasting every other page before this change,
+      // and also crashing "New Event"
+      $page = $this->Page;
+    }
+    else
+    {
+      // Create a virtual page for this item
+      $page = new aPage();
+    }
     // In virtual pages the engine column is used to figure out which engine should 
     // be asked for extra fields before search indexing of the page
     $page['engine'] = get_class($this);
@@ -81,8 +93,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     
     // For consistency with the way the page creation form does it, and to fix a bug
     // in generate-test-posts, we save the page before setting its title slot
-    $this->Page->save();
     
+    error_log("About to save page with slug " . $this->Page->slug);
+    $this->Page->save();
+    error_log("Id of page is " . $this->Page->id);
     // Create a slot for the title and add to the virtual page.
     // We now have an actual title right off owing to the special form for
     // creating a new post which won't let you slide by without one
@@ -168,7 +182,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function postUpdate($event)
   {
-    if($this->update)
+    if ($this->update)
     {
       $this->Page->setTitle($this->_get('title'));
     }
@@ -183,6 +197,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   // even if only relations are updated. That's not true for postUpdate
   public function postSave($event)
   {
+    error_log("postSave");
     // The page can index its own categories and tags if we let it
     $this->Page->setTags($this->getTags());
     $this->Page->unlink('Categories');

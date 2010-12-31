@@ -10,7 +10,7 @@
 <?php slot('a-subnav') ?>
 	<div class="a-subnav-wrapper blog a-ui clearfix">
 		<div class="a-subnav-inner">
-	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'))) ?>
+	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'), 'newLabel' => a_('New Post'), 'newModule' => 'aBlogAdmin', 'newComponent' => 'newPost')) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>

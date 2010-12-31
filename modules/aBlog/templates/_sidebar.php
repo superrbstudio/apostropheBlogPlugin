@@ -9,6 +9,8 @@
   $tagsByName = isset($tagsByName) ? $sf_data->getRaw('tagsByName') : null;
 	$url = isset($url) ? $sf_data->getRaw('url') : null;
 	$searchLabel = isset($searchLabel) ? $sf_data->getRaw('searchLabel') : null;
+	$newLabel = isset($newLabel) ? $sf_data->getRaw('newLabel') : null;
+	$adminModule = isset($adminModule) ? $sf_data->getRaw('adminModule') : null;
 	$selected = array('icon','a-selected'); // Class names for selected filters
   $calendar = isset($calendar) ? $sf_data->getRaw('calendar') : null;
 ?>
@@ -19,9 +21,9 @@
 
 <?php if (aBlogItemTable::userCanPost()): ?>
 	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
-	  <?php echo a_js_button(a_('New Post'), array('big', 'a-add', 'a-blog-new-post-button', 'a-sidebar-button'), 'a-blog-new-post-button') ?>
+	  <?php echo a_js_button($newLabel, array('big', 'a-add', 'a-blog-new-post-button', 'a-sidebar-button'), 'a-blog-new-post-button') ?>
     <div class="a-options a-blog-admin-new-ajax dropshadow">
-      <?php include_component('aBlogAdmin', 'newPost') ?>
+      <?php include_component($newModule, $newComponent) ?>
     </div>
 	</div>
 <?php endif ?>
