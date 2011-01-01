@@ -135,15 +135,40 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     return $values;
   }
 
-  public function updateCategoriesList($values)
+  // Returns categories set on this item that this user is not eligible to remove.
+  // Used for static display
+  public function getAdminCategories()
   {
+    $reserved = array();
+    $existing = Doctrine::getTable('aCategory')->createQuery('c')->select('c.*')->innerJoin('c.BlogItems bi WITH bi.id = ?', $this->object->id)->execute();
+    $categoriesForUser = aCategoryTable::getInstance()->addCategoriesForUser(sfContext::getInstance()->getUser()->getGuardUser(), sfContext::getInstance()->getUser()->hasCredential('admin'))->execute();
+    $ours = array_flip(aArray::getIds($categoriesForUser));
+    foreach ($existing as $category)
+    {
+      if (!isset($ours[$category->id]))
+      {
+        $reserved[] = $category;
+      }
+    }
+    return $reserved;
+  }
+  
+  public function updateCategoriesList($addValues)
+  {
+    // Add any new categories (categories_list_add), and restore any
+    // categories we didn't have the privileges to remove
+    
+    $reserved = $this->getAdminCategories();
+    $this->values['categories_list'][] = aArray::getIds($reserved);
     $link = array();
-    if(!is_array($values))
-      $values = array();
-    foreach ($values as $value)
+    if(!is_array($addValues))
+    {
+      $addValues = array();
+    }
+    foreach ($addValues as $value)
     {
       $existing = Doctrine::getTable('aCategory')->findOneBy('name', $value);
-      if($existing)
+      if ($existing)
       {
         $aCategory = $existing;
       }
@@ -159,55 +184,19 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $this->values['categories_list'] = array();
     }
-    $this->values['categories_list'] = array_merge($link, $this->values['categories_list']);
+    foreach ($link as $id)
+    {
+      if (!in_array($id, $this->values['categories_list']))
+      {
+        $this->values['categories_list'][] = $id;
+      }
+    }
   }
 
   protected function doSave($con = null)
   {
-    if(isset($this['categories_list_add']))
-    {
-      $this->updateCategoriesList($this->values['categories_list_add']);
-    }
+    $this->updateCategoriesList(isset($this->values['categories_list_add']) ? $this->values['categories_list_add'] : array());
     parent::doSave($con);
-  }
-
-  public function saveCategoriesListAdd($con = null)
-  {
-    if (!$this->isValid())
-    {
-      throw $this->getErrorSchema();
-    }
-
-    if (!isset($this->widgetSchema['categories_list_add']))
-    {
-      // somebody has unset this widget
-      return;
-    }
-
-    if (null === $con)
-    {
-      $con = $this->getConnection();
-    }
-
-    $values = $this->getValue('categories_list_add');
-    if (!is_array($values))
-    {
-      $values = array();
-    }
-
-    $link = array();
-    foreach ($values as $value)
-    {
-      $aCategory = new aCategory();
-      $aCategory['name'] = $value;
-      $aCategory->save();
-      $link[] = $aCategory['id'];
-    }
-
-    if (count($link))
-    {
-      $this->object->link('Categories', array_values($link));
-    }
   }
   
   public function updateObject($values = null)

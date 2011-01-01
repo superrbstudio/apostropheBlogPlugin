@@ -104,6 +104,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   protected function setABlogPostForUser()
   {
+    $request = $this->getRequest();
     if ($this->getUser()->hasCredential('admin'))
     {
       $this->a_blog_post = $this->getRoute()->getObject();

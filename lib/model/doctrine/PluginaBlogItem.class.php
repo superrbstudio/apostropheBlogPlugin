@@ -94,9 +94,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     // For consistency with the way the page creation form does it, and to fix a bug
     // in generate-test-posts, we save the page before setting its title slot
     
-    error_log("About to save page with slug " . $this->Page->slug);
     $this->Page->save();
-    error_log("Id of page is " . $this->Page->id);
     // Create a slot for the title and add to the virtual page.
     // We now have an actual title right off owing to the special form for
     // creating a new post which won't let you slide by without one
@@ -197,11 +195,17 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   // even if only relations are updated. That's not true for postUpdate
   public function postSave($event)
   {
-    error_log("postSave");
     // The page can index its own categories and tags if we let it
     $this->Page->setTags($this->getTags());
+    // Calling getCategories creates and saves a phantom category when the blog item form is saved. Why?
+    // I've been chasing it for hours and I have no idea.
+    $categoryIds = aArray::getIds(Doctrine::getTable('aBlogItemToCategory')->createQuery('itc')->where('itc.blog_item_id = ?', $this->id)->execute(array(), Doctrine::HYDRATE_ARRAY));
+    // Somehow when you edit the categories of a post you wind up with a null ID for a no-longer-associated
+    // category still hanging around. This is probably due to the fact that you haven't reloaded the relation.
+    // If we don't fix this we wind up with an extra, null-titled category. 
+    $categoryIds = aArray::filterNulls($categoryIds);
     $this->Page->unlink('Categories');
-    $this->Page->link('Categories', aArray::getIds($this->getCategories()));
+    $this->Page->link('Categories', $categoryIds);
     $this->Page->save();
   }
 
