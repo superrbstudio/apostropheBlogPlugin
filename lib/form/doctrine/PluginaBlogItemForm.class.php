@@ -150,6 +150,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         $reserved[] = $category;
       }
     }
+    error_log("Reserved has " . count($reserved) . " elements");
     return $reserved;
   }
   
@@ -158,8 +159,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     // Add any new categories (categories_list_add), and restore any
     // categories we didn't have the privileges to remove
     
-    $reserved = $this->getAdminCategories();
-    $this->values['categories_list'][] = aArray::getIds($reserved);
     $link = array();
     if(!is_array($addValues))
     {
@@ -183,6 +182,14 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     if(!is_array($this->values['categories_list']))
     {
       $this->values['categories_list'] = array();
+    }
+    $reserved = $this->getAdminCategories();
+    foreach ($reserved as $category)
+    {
+      if (!in_array($category->id, $this->values['categories_list']))
+      {
+        $this->values['categories_list'][] = $category->id;
+      }
     }
     foreach ($link as $id)
     {

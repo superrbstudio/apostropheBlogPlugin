@@ -104,7 +104,7 @@ a_blog_cat:
   class: aRoute
 
 a_blog:
-  url:
+  url: /
   param: { module: aBlog, action: index }
   class: aRoute
 
@@ -230,7 +230,7 @@ a_event_cat:
   class: aRoute
 
 a_event:
-  url:
+  url: /
   param: { module: aEvent, action: index }
   class: aRoute
 

@@ -102,6 +102,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   
   protected function setAEventForUser()
   {
+    $request = $this->getRequest();
     if ($this->getUser()->hasCredential('admin'))
     {
       $this->a_event = $this->getRoute()->getObject();

@@ -60,6 +60,11 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       if ($this->form->isValid())
       {
         $this->a_blog_post = $this->form->save();
+        
+        // We do this here to avoid some nasty race conditions that crop up when
+        // we try to push things to the page inside the Doctrine form transaction
+        $this->a_blog_post->updatePageTagsAndCategories();
+        
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
         $this->form = new aBlogPostForm($this->a_blog_post);

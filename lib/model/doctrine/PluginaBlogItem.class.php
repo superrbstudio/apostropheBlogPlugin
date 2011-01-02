@@ -190,22 +190,18 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $this->Page->view_is_secure = false;
     $this->Page->save();
   }
-  
-  // This is always invoked, new or updated, when the form is saved -
-  // even if only relations are updated. That's not true for postUpdate
-  public function postSave($event)
+
+  // We were calling this from postSave but some subtlety of Doctrine forms
+  // made it fail in fascinating ways - categories with null names popping into
+  // existence was my favorite symptom, personally... now we call it after all the
+  // excitement is over in the blog form update action. 
+  public function updatePageTagsAndCategories()
   {
-    // The page can index its own categories and tags if we let it
     $this->Page->setTags($this->getTags());
-    // Calling getCategories creates and saves a phantom category when the blog item form is saved. Why?
-    // I've been chasing it for hours and I have no idea.
-    $categoryIds = aArray::getIds(Doctrine::getTable('aBlogItemToCategory')->createQuery('itc')->where('itc.blog_item_id = ?', $this->id)->execute(array(), Doctrine::HYDRATE_ARRAY));
-    // Somehow when you edit the categories of a post you wind up with a null ID for a no-longer-associated
-    // category still hanging around. This is probably due to the fact that you haven't reloaded the relation.
-    // If we don't fix this we wind up with an extra, null-titled category. 
-    $categoryIds = aArray::filterNulls($categoryIds);
+    $categories = $this->getCategories();
+    $ids = aArray::getIds($categories);
     $this->Page->unlink('Categories');
-    $this->Page->link('Categories', $categoryIds);
+    $this->Page->link('Categories', $ids);
     $this->Page->save();
   }
 
