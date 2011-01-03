@@ -1,6 +1,6 @@
 <?php
 
-class PluginaEventEngineForm extends aBlogEngineForm
+class PluginaEventEngineForm extends aEngineCategoriesForm
 {
-  public $model = 'aEvent';
+  // Just adds categories to the page
 }

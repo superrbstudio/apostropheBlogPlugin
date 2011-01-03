@@ -31,8 +31,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     if($user->hasCredential('admin'))
     {
+      // Don't use a hidden field, an actual field will be output in that case and conflict
+      // with the DHTML-generated checkboxes when PHP goes to parse the result
       $this->setWidget('categories_list_add',
-        new sfWidgetFormInputHidden());
+        new sfWidgetFormInputText());
       //TODO: Make this validator better, should check for duplicate categories, etc.
       $this->setValidator('categories_list_add',
         new sfValidatorPass(array('required' => false)));

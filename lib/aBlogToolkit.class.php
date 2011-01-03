@@ -403,7 +403,7 @@ class aBlogToolkit {
 
     if ($hasCategoryIds)
     {
-      $q .= "and c.id in (:category_ids) ";
+      $q .= "and c.id in :category_ids ";
       $params['category_ids'] = $options['categoryIds'];
     }
 
