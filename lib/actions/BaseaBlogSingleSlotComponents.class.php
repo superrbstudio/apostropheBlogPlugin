@@ -1,5 +1,5 @@
 <?php
-abstract class BaseaBlogSingleSlotComponents extends BaseaSlotComponents
+abstract class BaseaBlogSingleSlotComponents extends aSlotComponents
 {
   protected $modelClass = 'aBlogPost';
   protected $formClass = 'aBlogSingleSlotForm';
