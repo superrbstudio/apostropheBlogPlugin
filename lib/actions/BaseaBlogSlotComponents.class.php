@@ -40,6 +40,21 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
+    $q = $this->getQuery();
+    
+		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
+		$this->options['slideshowOptions']['height'] = ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100);
+		$this->options['slideshowOptions']['resizeType'] = ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c');
+				
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
+    $this->options['maxImages'] = $this->getOption('maxImages', 1);
+
+    $this->aBlogPosts = $q->execute();
+    aBlogItemTable::populatePages($this->aBlogPosts);
+  }
+  
+  public function getQuery()
+  {
     // Explicit select() mandatory with orderByList
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
@@ -74,16 +89,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       }
       $q->limit($this->values['count']);
       $q->orderBy('published_at desc');
+      return $q;
     }
-    
-		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
-		$this->options['slideshowOptions']['height'] = ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100);
-		$this->options['slideshowOptions']['resizeType'] = ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c');
-				
-    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
-    $this->options['maxImages'] = $this->getOption('maxImages', 1);
-
-    $this->aBlogPosts = $q->execute();
-    aBlogItemTable::populatePages($this->aBlogPosts);
   }
 }
