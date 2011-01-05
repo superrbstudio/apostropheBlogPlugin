@@ -102,6 +102,8 @@ class aBlogEvents
     }
     $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
     $migrate->query('UPDATE a_page SET engine = "aEvent" WHERE slug LIKE "@a_event_search_redirect%"');
+    // Older blog post virtual pages won't have published_at
+    $migrate->query('update a_page p inner join a_blog_item bi on bi.page_id = p.id set p.published_at = bi.published_at');
     // Old full day events from before we started defining this as a null start and end time
     $migrate->query('UPDATE a_blog_item SET start_time = null, end_time = null WHERE start_time = "00:00:00" AND end_time = "00:00:00"');
     if (!$migrate->getCommandsRun())
