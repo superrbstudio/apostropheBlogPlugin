@@ -8,7 +8,7 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-subnav-wrapper blog a-ui clearfix">
+	<div class="a-ui a-subnav-wrapper blog clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aEvent/index', 'searchLabel' => a_('Search Events'), 'newLabel' => a_('New Event'), 'newModule' => 'aEventAdmin', 'newComponent' => 'newEvent', 'calendar' => $calendar)) ?>
 	  </div> 
@@ -17,7 +17,7 @@
 
 <div id="a-blog-main" class="a-blog-main clearfix">
   
-	<div class="a-blog-heading a-ui"> 
+	<div class="a-ui a-blog-heading"> 
 	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Heading Content'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
 	  <?php if ($page->userHasPrivilege('edit')): ?>
 	    <div class="a-help">
