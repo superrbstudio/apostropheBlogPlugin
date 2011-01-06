@@ -35,7 +35,7 @@ class aEventSlotForm extends BaseForm
     // On the validation pass there will be no defaults, so we won't have to,
     // and shouldn't do a bad whereIn query that matches everything etc.
     
-    $ids = $this->getDefault('events');
+    $ids = $this->getDefault('blog_posts');
     $choices = array();
     if (count($ids))
     {
@@ -49,9 +49,9 @@ class aEventSlotForm extends BaseForm
         $choices[$item->id] = $item->getTitle();
       }
     }
-    $this->setWidget('events', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
+    $this->setWidget('blog_posts', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
     // TODO: really should be specific to events, requires adding a custom query
-    $this->validatorSchema['events'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
+    $this->validatorSchema['blog_posts'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
     
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));

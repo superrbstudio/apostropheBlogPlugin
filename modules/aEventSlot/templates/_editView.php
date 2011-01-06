@@ -49,7 +49,8 @@
 	  <input type="radio" id="<?php echo $w->renderId() ?>-title" name="<?php echo $w->renderName() ?>" value="title" <?php echo ($w->getValue() === "title") ? 'checked' : '' ?> /> <label for="<?php echo $w->renderId() ?>-title"><?php echo a_('By Title') ?></label>
 
 	  <div class="a-form-row events">
-	    <?php echo $form['events']->render() ?>
+	    <?php // Widget has the same name as in blog post form so they can share more stuff ?>
+	    <?php echo $form['blog_posts']->render() ?>
 	  </div>
 	</div>
 </div>
