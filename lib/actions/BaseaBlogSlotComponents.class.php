@@ -72,6 +72,8 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
       {
         $q->andWhere('0 <> 0');
       }
+      // Works way better when you actually return it!
+      return $q;
     }
     else
     {
