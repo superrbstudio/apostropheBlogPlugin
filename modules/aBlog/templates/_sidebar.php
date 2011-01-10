@@ -45,6 +45,7 @@
 <?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
 <?php endif ?>
 
+<?php if (!$calendar): ?>
 <hr class="a-hr" />
 <div class='a-subnav-section range'>
   <h4><?php echo a_('Browse by') ?></h4>
@@ -64,6 +65,7 @@
 		</div>
   </div>
 </div>
+<?php endif ?>
 
 <?php if(count($categories) > 1): ?>
 <hr class="a-hr" />
