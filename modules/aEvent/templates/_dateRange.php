@@ -28,3 +28,4 @@
 <?php if (strlen($aEvent->end_time)): ?>
   <?php echo format_date($aEvent->end_time, 't') ?>
 <?php endif ?>
+
