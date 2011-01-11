@@ -42,7 +42,11 @@
 		<?php $type = ($count > 1) ? $typePlural : $type  ?>
 		<?php echo a_('You are viewing %count% %type% %filters%', array('%count%' => $count, '%type%' => $type, '%filters%' => implode(' ', $filters))) ?>
 	<?php else: ?>
-		<?php echo a_('You are viewing all %type%', array('%type%' => $typePlural)) ?>
+		<?php if ($count): ?>
+			<?php echo a_('You are viewing all %type%', array('%type%' => $typePlural)) ?>
+		<?php else: ?>
+			<?php echo a_('There are no %type%', array('%type%' => $typePlural)) ?>			
+		<?php endif ?>
 	<?php endif ?>
 	</h3>
 </div>
