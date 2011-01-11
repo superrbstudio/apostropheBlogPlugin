@@ -10,8 +10,7 @@ require_once dirname(__FILE__).'/aEventAdminGeneratorHelper.class.php';
  */
 abstract class BaseaEventAdminActions extends autoAEventAdminActions
 { 
-  protected $updateForm = 'aEventForm';
-	
+  public $minorSorts = array('start_date desc', 'start_time desc');
   public function preExecute()
   {
     parent::preExecute();
