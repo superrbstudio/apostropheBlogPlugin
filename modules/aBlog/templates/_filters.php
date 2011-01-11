@@ -1,4 +1,5 @@
 <?php $type = $sf_data->getRaw('type') ?>
+<?php $typePlural = $sf_data->getRaw('typePlural') ?>
 <?php $url = $sf_data->getRaw('url') ?>
 <?php $params = $sf_data->getRaw('params') ?>
 <?php $count = $sf_data->getRaw('count') ?>
@@ -35,10 +36,13 @@
 	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->get('tag'), $filterUrl, 'tag'))) ?>
 	<?php endif ?>
 
+  <h3 class="a-blog-filters browser">
 	<?php if (count($filters)): ?>
-		<?php // pluralize $type ?>
-		<?php $type = ($count > 1) ? $type.'s' : $type  ?>
-	  <h3 class="a-blog-filters browser"><?php echo a_('You are viewing %count% %type% %filters%', array('%count%' => $count, '%type%' => $type, '%filters%' => implode(' ', $filters))) ?></h3>
+		<?php // Pluralize $type ?>
+		<?php $type = ($count > 1) ? $typePlural : $type  ?>
+		<?php echo a_('You are viewing %count% %type% %filters%', array('%count%' => $count, '%type%' => $type, '%filters%' => implode(' ', $filters))) ?>
+	<?php else: ?>
+		<?php echo a_('You are viewing all %type%', array('%type%' => $typePlural)) ?>
 	<?php endif ?>
-
+	</h3>
 </div>

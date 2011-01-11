@@ -19,7 +19,7 @@
 
 	<div class="a-ui a-blog-heading"> 
 	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
-  	<?php include_partial('aBlog/filters', array('type' => 'post', 'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
+  	<?php include_partial('aBlog/filters', array('type' => a_('post'), 'typePlural' => a_('posts'),  'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>
   
   <?php foreach ($pager->getResults() as $a_blog_post): ?>

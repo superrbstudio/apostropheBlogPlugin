@@ -10,7 +10,8 @@ require_once dirname(__FILE__).'/aEventAdminGeneratorHelper.class.php';
  */
 abstract class BaseaEventAdminActions extends autoAEventAdminActions
 { 
-  
+  protected $updateForm = 'aEventForm';
+	
   public function preExecute()
   {
     parent::preExecute();
@@ -87,11 +88,14 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
       if ($this->form->isValid())
       {
         $this->a_event = $this->form->save();
+
+        // We do this here to avoid some nasty race conditions that crop up when
+        // we try to push things to the page inside the Doctrine form transaction
+        $this->a_event->updatePageTagsAndCategories();
+
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
         $this->form = new aEventForm($this->a_event);
-        // Do we need this? Why? Pretty sure changing the date/time in updateObject was sufficient
-        // $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $this->a_event)));
       }
     }
     if (!$request->isXmlHttpRequest())

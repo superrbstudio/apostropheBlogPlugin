@@ -4,6 +4,8 @@
   $configuration = isset($configuration) ? $sf_data->getRaw('configuration') : null;
   $form = isset($form) ? $sf_data->getRaw('form') : null;
   $helper = isset($helper) ? $sf_data->getRaw('helper') : null;
+  $popularTags = isset($popularTags) ? $sf_data->getRaw('popularTags') : null;
+  $existingTags = isset($existingTags) ? $sf_data->getRaw('existingTags') : null;
 ?>
 <?php use_helper("a") ?>
 <?php include_partial('assets') ?>
@@ -14,7 +16,7 @@
 		<div class="a-subnav-inner">
 	    <div id="a-ui a-admin-blog-post-form">
 	      <form method="POST" action="<?php echo url_for('a_event_admin_update', $a_event) ?>" id="a-admin-form" class="a-ui blog">
-          <?php include_partial('aEventAdmin/form', array('form' => $form, 'a_event' => $a_event)) ?>
+          <?php include_partial('aEventAdmin/form', array('form' => $form, 'a_event' => $a_event, 'popularTags' => $popularTags, 'existingTags' => $existingTags)) ?>
         </form>
 	    </div>
 		</div>

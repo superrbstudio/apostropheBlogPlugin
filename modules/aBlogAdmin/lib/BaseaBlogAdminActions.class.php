@@ -10,6 +10,7 @@ require_once dirname(__FILE__).'/aBlogAdminGeneratorHelper.class.php';
  */
 abstract class BaseaBlogAdminActions extends autoABlogAdminActions
 {
+	
   public function preExecute()
   {
     parent::preExecute();

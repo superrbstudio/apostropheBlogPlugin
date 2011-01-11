@@ -19,7 +19,7 @@
   
 	<div class="a-ui a-blog-heading"> 
 	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Events Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
- 		<?php include_partial('aBlog/filters', array('type' => 'event', 'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
+ 		<?php include_partial('aBlog/filters', array('type' => a_('event'), 'typePlural' => a_('events'), 'url' => 'aEvent/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>
 
   <?php if ($pager->haveToPaginate()): ?>
