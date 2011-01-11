@@ -22,6 +22,7 @@ class PluginaEventTable extends aBlogItemTable
   {
     $query = parent::createQuery($alias);
     $query->orderBy($query->getRootAlias().'.start_date asc');
+    $query->addOrderBy($query->getRootAlias().'.start_time asc');
 
     return $query;
   }

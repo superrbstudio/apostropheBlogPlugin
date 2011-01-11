@@ -3,7 +3,8 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
 {
   protected $modelClass = 'aBlogPost';
   protected $formClass = 'aBlogSlotForm';
-
+  protected $handSelected = false;
+  
   public function setup()
   {
     parent::setup();
@@ -63,6 +64,7 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
     Doctrine::getTable($this->modelClass)->addPublished($q);
     if (isset($this->values['title_or_tag']) && ($this->values['title_or_tag'] === 'title'))
     {
+      $this->handSelected = true;
       if (isset($this->values['blog_posts']) && count($this->values['blog_posts']))
       {
         $q->andWhereIn('id', $this->values['blog_posts']);
