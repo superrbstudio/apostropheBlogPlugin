@@ -1,9 +1,10 @@
+<div class="a-no-items">
 <?php $type = isset($type) ? $sf_data->getRaw('type') : null; ?>
 
 <?php // Display some help information to admins so they know they can customize the Error404 page ?>
 <?php if ($sf_user->hasCredential('admin')): ?>
-	<div class="a-help a-blog">
-		<?php echo a_('You can customize the page displayed to users when there are no blog posts or events by adding content below.') ?>
+	<div class="a-help a-no-items">
+		<?php echo a_('You can customize the message displayed to users when there are no blog posts or events by adding content below.') ?>
 	</div>
 <?php endif ?>	
 
@@ -120,3 +121,4 @@
 		'aRawHTML' => array(
 		), 
 	))) ?>
+</div>	
