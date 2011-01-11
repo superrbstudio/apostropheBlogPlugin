@@ -8,33 +8,18 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-subnav-wrapper blog a-ui clearfix">
+	<div class="a-ui a-subnav-wrapper blog clearfix">
 		<div class="a-subnav-inner">
-	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'))) ?>
+	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'), 'newLabel' => a_('New Post'), 'newModule' => 'aBlogAdmin', 'newComponent' => 'newPost')) ?>
 	  </div> 
 	</div>
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main clearfix">
-	<div class="a-blog-heading a-ui"> 
-	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Heading Content'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
-	  <?php if ($page->userHasPrivilege('edit')): ?>
-	    <div class="a-help">
-	      The heading appears before the blog posts. Use the "New Post" button to add blog posts.
-	    </div>
-	  <?php endif ?>
-	 
-	  <?php // Date nav controls ?>
-    <?php if ($sf_params->get('year')): ?>
-      <?php $date = $sf_params->get('day') . ' ' . (($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '') . ' ' . $sf_params->get('year') ?>
-  		<h3><?php echo $date ?></h3>
-  	  <ul class="a-ui a-controls a-blog-browser-controls">
-  	    <li><?php echo link_to('<span class="icon"></span>'.a_('Previous'), 'aBlog/index?'.http_build_query($params['prev']), array('class' => 'a-arrow-btn icon a-arrow-left', )) ?></li>
-  	    <li><?php echo link_to('<span class="icon"></span>'.a_('Next'), 'aBlog/index?'.http_build_query($params['next']), array('class' => 'a-arrow-btn icon a-arrow-right', )) ?></li>
-  	  </ul>
-  	<?php endif ?>
-  	
-  	<?php include_partial('aBlog/filters', array('type' => 'posts', 'url' => 'aBlog/index')) ?>
+
+	<div class="a-ui a-blog-heading"> 
+	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+  	<?php include_partial('aBlog/filters', array('type' => a_('post'), 'typePlural' => a_('posts'),  'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>
   
   <?php foreach ($pager->getResults() as $a_blog_post): ?>

@@ -156,13 +156,12 @@
 	<?php // Blog Post Tags ?>
 	<hr />
 	<div class="tags section a-form-row">
-	  <?php // Without this we can't tell what it's for at all unless there are popular tags to be shown. If you ?>
-	  <?php // remove this think it through. ?>
+	  <?php /* The label is provided by the pkInlineTaggableWidget?> 
 	  <h4><?php echo a_('Tags') ?></h4>
+	  <?php //*/ ?>
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
 		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>
-				
 	</div>
 
 	<hr />
