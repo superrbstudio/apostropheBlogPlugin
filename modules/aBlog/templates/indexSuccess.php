@@ -18,29 +18,21 @@
 <div id="a-blog-main" class="a-blog-main clearfix">
 
 	<div class="a-ui a-blog-heading"> 
-	  <?php a_area('blog-heading', array('area_add_content_label' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+	  <?php a_area('blog-heading', array('area_label' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
   	<?php include_partial('aBlog/filters', array('type' => a_('post'), 'typePlural' => a_('posts'),  'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>
-  
-	<?php if (!$pager->count()): ?>
 
-		<?php include_partial('aBlog/noBlogItemsArea', array('type' => 'aBlog')) ?>
+  <?php if ($pager->haveToPaginate()): ?>
+  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
+  <?php endif ?>
 
-	<?php else: ?>
+  <?php foreach ($pager->getResults() as $a_blog_post): ?>
+  	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
+  	<hr />
+  <?php endforeach ?>
 
-	  <?php if ($pager->haveToPaginate()): ?>
-	  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
-	  <?php endif ?>
-
-	  <?php foreach ($pager->getResults() as $a_blog_post): ?>
-	  	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
-	  	<hr />
-	  <?php endforeach ?>
-
-	  <?php if ($pager->haveToPaginate()): ?>
-	  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
-		<?php endif ?>
-		
+  <?php if ($pager->haveToPaginate()): ?>
+  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
 	<?php endif ?>
-  
+		  
 </div>
