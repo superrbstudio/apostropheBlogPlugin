@@ -65,7 +65,7 @@ abstract class BaseaBlogActions extends aEngineActions
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    $this->max_per_page = $this->getUser()->getAttribute('max_per_page', 20, 'apostropheBlog_prefs');
+    $this->max_per_page = $this->getUser()->getAttribute('max_per_page', sfConfig::get('app_aBlog_max_per_page', 20), 'apostropheBlog_prefs');
     $pager = new sfDoctrinePager($this->modelClass);
     $pager->setMaxPerPage($this->max_per_page);
     $pager->setQuery($this->buildQuery($request));
