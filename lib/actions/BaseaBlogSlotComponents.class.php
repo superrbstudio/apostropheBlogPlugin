@@ -49,7 +49,7 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
 				
     $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
-
+		
     $this->aBlogPosts = $q->execute();
     aBlogItemTable::populatePages($this->aBlogPosts);
   }

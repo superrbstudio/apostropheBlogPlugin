@@ -11,6 +11,7 @@
 ?>
 <?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page, 'label' => a_get_option($options, 'editLabel', a_('Edit')))) ?>
 
+
 <?php foreach ($aBlogPosts as $aBlogPost): ?>
 	<?php $options['slideshowOptions']['idSuffix'] = 'aBlogSlot-'.$permid.'-'.$slot.'-'.$aBlogPost->getId(); ?>	
 	<?php include_partial('aEventSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost)) ?>
