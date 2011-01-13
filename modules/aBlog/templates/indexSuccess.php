@@ -27,18 +27,27 @@
 	</div>
   <?php endif ?>
   
-  <?php if($sf_user->isAuthenticated()): ?>
-  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
-  <?php endif ?>
+	<?php if (!$pager->count()): ?>
+	
+		<h3><?php echo __('There are no blog posts.', array(), 'apostrophe') ?></h3>
+	
+	<?php else: ?>
 
-  <?php foreach ($pager->getResults() as $a_blog_post): ?>
-  	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
-  	<hr />
-  <?php endforeach ?>
+	  <?php if($sf_user->isAuthenticated()): ?>
+	  	<?php echo link_to('New Post', 'aBlogAdmin/new', array('class' => 'a-btn icon big a-add')) ?>
+	  <?php endif ?>
 
-  <?php if ($pager->haveToPaginate()): ?>
- 		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aBlog/index?'. http_build_query($params['pagination'])))); ?>
-  <?php endif ?>
+	  <?php foreach ($pager->getResults() as $a_blog_post): ?>
+	  	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
+	  	<hr />
+	  <?php endforeach ?>
+
+	  <?php if ($pager->haveToPaginate()): ?>
+	 		<?php echo include_partial('aPager/pager', array('pager' => $pager, 'pagerUrl' => url_for('aBlog/index?'. http_build_query($params['pagination'])))); ?>
+	  <?php endif ?>
+
+	<?php endif ?>
+
 
 </div>
   
