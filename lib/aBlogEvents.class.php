@@ -64,11 +64,11 @@ class aBlogEvents
       
       echo("Migrating blog categories to Apostrophe categories...\n");
         
+      $oldCategories = array();
       if ($migrate->tableExists('a_blog_category'))
       {
         $oldCategories = $migrate->query('SELECT * FROM a_blog_category');
       }
-      $oldCategories = array();
       $newCategories = $migrate->query('SELECT * FROM a_category');
       $nc = array();
       foreach ($newCategories as $newCategory)
@@ -102,6 +102,15 @@ class aBlogEvents
     }
     $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
     $migrate->query('UPDATE a_page SET engine = "aEvent" WHERE slug LIKE "@a_event_search_redirect%"');
+    // Older blog post virtual pages won't have published_at
+    $migrate->query('update a_page p inner join a_blog_item bi on bi.page_id = p.id set p.published_at = bi.published_at');
+    // Really old events may have full timestamps in start_date and end_date, break them out
+    $migrate->query('UPDATE a_blog_item SET start_time = substr(start_date, 12), start_date = substr(start_date, 1, 10) WHERE (length(start_date) > 10) AND start_time IS NULL');
+    $migrate->query('ALTER TABLE a_blog_item modify column start_date date;');
+    $migrate->query('UPDATE a_blog_item SET end_time = substr(end_date, 12), end_date = substr(end_date, 1, 10) WHERE (length(end_date) > 10) AND end_time IS NULL');
+    $migrate->query('ALTER TABLE a_blog_item modify column end_date date;');
+    // Migrate old full day events from before we started defining this as a null start and end time
+    $migrate->query('UPDATE a_blog_item SET start_time = null, end_time = null WHERE start_time = "00:00:00" AND end_time = "00:00:00"');
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");

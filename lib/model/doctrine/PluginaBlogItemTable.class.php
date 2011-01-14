@@ -3,7 +3,6 @@
  */
 class PluginaBlogItemTable extends Doctrine_Table
 {
-  protected $categoryColumn = 'posts';
 
   public static function getInstance()
   {
@@ -32,7 +31,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   
   public function filterByCategory($category_id, Doctrine_Query $q)
   {
-    $q->addWhere('c.slug = ?', $category_id);
+    $q->addWhere('c.name = ?', $category_id);
   }
   
   public function filterByTag($tag, Doctrine_Query $q)
@@ -77,17 +76,10 @@ class PluginaBlogItemTable extends Doctrine_Table
     if(is_null($q))
       $q = Doctrine::getTable('aCategory')->createQuery();
       
-    $q->andwhere('aCategory.'.$this->categoryColumn .'= ?', true);
     $q->addOrderBy('aCategory.name');
     return $q;
   }
   
-  // The category form needs to be able to discover this for useFields()
-  public function getCategoryColumn()
-  {
-    return $this->categoryColumn;
-  }
-
   public function filterByCategories($categories, $q)
   {
     $categoryIds = array();
@@ -127,7 +119,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     foreach($blogItems as $blogItem)
     {
-      aTools::cacheVirtualPages($blogItem->Page);
+      aTools::cacheVirtualPages($blogItem->page);
     }
   }
 
@@ -263,9 +255,8 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $query = $this->createQuery();
     }
-    $query->leftJoin($query->getRootAlias().'.Page p');
+
     $query = aPageTable::queryWithSlots(false, null, $query);
-    
 
     return $query;
   }

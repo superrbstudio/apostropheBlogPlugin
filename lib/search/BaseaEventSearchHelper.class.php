@@ -16,6 +16,10 @@ class BaseaEventSearchHelper
       return $args;
     }
     $event = aEventTable::getInstance()->find($id);
+    if (!$event)
+    {
+      return $args;
+    }
     $args['stored']['start_date'] = $event->start_date;
     $args['stored']['start_time'] = $event->start_time;
     $args['stored']['end_date'] = $event->end_date;

@@ -150,6 +150,12 @@
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo a_('Categories') ?></h4>
 		<?php echo $form['categories_list']->render() ?>
+		<?php $adminCategories = $form->getAdminCategories() ?>
+		<?php if (count($adminCategories)): ?>
+      <div class="a-form-row">
+		    <?php echo 'Set by admin: ' . implode(',', $form->getAdminCategories()) ?>
+		  </div>
+		<?php endif ?>
 		<?php echo $form['categories_list']->renderError() ?>
 	</div>
 

@@ -107,17 +107,10 @@ aBlogItemToCategory:
       local: category_id
       onDelete: CASCADE
 
-# Extend with more columns.
+# Extend with more relations.
 # This plugin must now be loaded AFTER
 # the main apostrophePlugin
 aCategory:
-  columns:
-    posts:
-      type: boolean
-      default: false
-    events:
-      type: boolean
-      default: false
   relations:
     BlogItems:
       foreignAlias: BlogCategories

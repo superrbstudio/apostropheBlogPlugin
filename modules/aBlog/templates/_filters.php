@@ -6,12 +6,7 @@
 
 <div class="a-ui a-blog-browser">
 
-	<?php if ($sf_params->get('year')): ?>
-		<ul class="a-ui a-controls a-blog-browser-controls">
-	  	<li><?php echo a_button(a_('Previous'), url_for($url.'?'.http_build_query($params['prev'])), array('icon','alt','a-arrow-left', 'no-bg')) ?></li>
-	  	<li><?php echo a_button(a_('Next'), url_for($url.'?'.http_build_query($params['next'])), array('icon','alt','a-arrow-right', 'no-bg')) ?></li>
-		</ul>
-	<?php endif ?>
+  <?php include_partial('aBlog/datePrevAndNext', array('params' => $params, 'url' => $url)) ?>
 
 	<?php $filters = array() ?>
 	<?php $date = $sf_params->get('day') . ' ' . (($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '') . ' ' . $sf_params->get('year') ?>
@@ -39,7 +34,7 @@
   <h3 class="a-blog-filters browser">
 	<?php if (count($filters)): ?>
 		<?php // Pluralize $type ?>
-		<?php $type = ($count > 1) ? $typePlural : $type  ?>
+		<?php $type = ($count != 1) ? $typePlural : $type  ?>
 		<?php echo a_('You are viewing %count% %type% %filters%', array('%count%' => $count, '%type%' => $type, '%filters%' => implode(' ', $filters))) ?>
 	<?php else: ?>
 		<?php if ($count): ?>

@@ -17,8 +17,11 @@
 
 <div id="a-blog-main" class="a-blog-main clearfix">
   
-	<div class="a-ui a-blog-heading"> 
-	  <?php a_area('blog-heading', array('area_label' => a_('Add Events Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+	<div class="a-ui a-blog-heading">
+		<?php ($page) ? $slots = $page->getArea('blog-header') : $slots = array() ?>
+		<?php if (count($slots) || $page->userHasPrivilege('edit')): ?>
+	  	<?php a_area('blog-heading', array('area_label' => a_('Add Events Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+		<?php endif ?>
  		<?php include_partial('aBlog/filters', array('type' => a_('event'), 'typePlural' => a_('events'), 'url' => 'aEvent/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>
 

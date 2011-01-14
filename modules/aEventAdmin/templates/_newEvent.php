@@ -18,5 +18,5 @@
 </form>
 
 <?php a_js_call('aBlogEnableNewForm()') ?>
-<?php a_js_call('apostrophe.menuToggle(?)', array('button' => '.a-blog-new-event-button', 'classname' => 'a-options-open', 'overlay' => false, 'focus' => '#a_new_event_title')) ?>	
+<?php a_js_call('apostrophe.menuToggle(?)', array('button' => '.a-blog-new-post-button', 'classname' => 'a-options-open', 'overlay' => false, 'focus' => '#a_new_event_title')) ?>	
 <?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a_new_event_title', 'title' => a_('Title'), 'persistentLabel' => true)) ?>

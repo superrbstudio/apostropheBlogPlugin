@@ -12,7 +12,7 @@
 <?php slot('body_class') ?>a-admin a-blog-admin <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?> <?php echo $a_event['template'] ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-  <div class="a-subnav-wrapper a-admin-sidebar">
+  <div class="a-ui a-subnav-wrapper a-admin-sidebar">
 		<div class="a-subnav-inner">
 	    <div id="a-ui a-admin-blog-post-form">
 	      <form method="POST" action="<?php echo url_for('a_event_admin_update', $a_event) ?>" id="a-admin-form" class="a-ui blog">
@@ -24,7 +24,7 @@
 <?php end_slot() ?>
 
 <?php slot('a-page-header') ?>
-<div class="a-admin-header">
+<div class="a-ui a-admin-header">
 	<ul class="a-ui a-controls a-admin-controls">
 		<li><a href="<?php echo url_for('@a_event_admin'); ?>" class="a-btn big"><?php echo __('View All Events', array(), 'apostrophe') ?></a></li>
      <?php include_partial('list_actions', array('helper' => $helper)) ?>

@@ -3,21 +3,11 @@
   $aEvent = isset($aEvent) ? $sf_data->getRaw('aEvent') : null;
 ?>
 
-<?php $startDate = aDate::dayMonthYear($aEvent->getStartDate()) ?>
-<?php $endDate = aDate::dayMonthYear($aEvent->getEndDate()) ?>
-<?php if (!$aEvent->isAllDay()): ?>
-  <?php $startTime = aDate::time($aEvent->getStartTime()) ?>
-  <?php $endTime = aDate::time($aEvent->getEndTime()) ?>
-	<?php $allDay = false ?>
-<?php else: ?>
-	<?php $allDay = true ?>
-<?php endif ?>
-
 <ul class="a-blog-item-meta">
 
   <?php // This has been simplified quite a lot. Please leave it that way so ?>
   <?php // it can be easily shared with the admin side and also stay I18N ?>
-  <li class="post-date"><?php include_partial('aEvent/dateRange', array('aEvent' => $aEvent)) ?></li>
+  <li class="post-date"><?php include_partial('aEvent/dateRange', array('aEvent' => $aEvent,)) ?></li>
 
 	<?php if (strlen($aEvent['location'])): ?>
 	  <?php // It is amazing how often this works well even for something as short as ?>

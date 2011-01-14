@@ -52,51 +52,51 @@
 				</div>
 			<?php else: ?>: <span><?php echo $a_blog_post->Author ?></span></h4><?php endif ?>
 	</div>
+</div>
 
 	<?php // Blog Post Editors ?>
   <?php if(isset($form['editors_list'])): ?>
-	<div class="post-editors">
+  	<div class="post-editors">
 
-		<?php if (!count($a_blog_post->Editors)): ?>
-		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo a_('allow others to edit this post') ?></a>
-	  	<div class="post-editors-options option" id="editors-section">
-		<?php else: ?>
-			<hr/>
-	  	<div class="post-editors-options option show-editors" id="editors-section">
-		<?php endif ?>
+  		<?php if (!count($a_blog_post->Editors)): ?>
+  		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo a_('allow others to edit this post') ?></a>
+  	  	<div class="post-editors-options option" id="editors-section">
+  		<?php else: ?>
+  			<hr/>
+  	  	<div class="post-editors-options option show-editors" id="editors-section">
+  		<?php endif ?>
 
-	    <h4><?php echo a_('Editors') ?></h4>
-	    <?php echo $form['editors_list']->render()?>
-	    <?php echo $form['editors_list']->renderError() ?>
+  	    <h4><?php echo a_('Editors') ?></h4>
+  	    <?php echo $form['editors_list']->render()?>
+  	    <?php echo $form['editors_list']->renderError() ?>
 
-      </div>
+        </div>
     </div>
-  </div>
   <?php endif ?>
 
 	<?php // Blog Post Templates ?>
 	<?php if(isset($form['template'])): ?>
-	<hr />
-	<div class="template section">
-		<h4><?php echo a_('Template') ?></h4>
-		<div class="a-form-row">
-		<?php echo $form['template']->render() ?>
-		</div>
-		<?php echo $form['template']->renderError() ?>
-	</div>
+  	<hr />
+  	<div class="template section">
+  		<h4><?php echo a_('Template') ?></h4>
+  		<div class="a-form-row">
+    		<?php echo $form['template']->render() ?>
+  		</div>
+  		<?php echo $form['template']->renderError() ?>
+  	</div>
 	<?php endif ?>
 
 
 	<?php // Blog Post Comments ?>
 	<?php if(isset($form['allow_comments'])): ?>
-	<hr />
-	<div class="comments section">
-		<h4><a href="#" class="allow_comments_toggle <?php echo ($a_blog_post['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
-		<div class="allow_comments option">
-			<?php echo $form['allow_comments']->render() ?>
-			<?php echo $form['allow_comments']->renderError() ?>
-		</div>
-	</div>
+  	<hr />
+  	<div class="comments section">
+  		<h4><a href="#" class="allow_comments_toggle <?php echo ($a_blog_post['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
+  		<div class="allow_comments option">
+  			<?php echo $form['allow_comments']->render() ?>
+  			<?php echo $form['allow_comments']->renderError() ?>
+  		</div>
+  	</div>
 	<?php endif ?>
 	
 	<?php // Blog Post Categories ?>
@@ -104,6 +104,12 @@
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo a_('Categories') ?></h4>
 		<?php echo $form['categories_list']->render() ?>
+		<?php $adminCategories = $form->getAdminCategories() ?>
+		<?php if (count($adminCategories)): ?>
+      <div class="a-form-row">
+		    <?php echo 'Set by admin: ' . implode(',', $form->getAdminCategories()) ?>
+		  </div>
+		<?php endif ?>
 		<?php echo $form['categories_list']->renderError() ?>
 	</div>
 
@@ -129,6 +135,6 @@
 	  <?php endif ?>
 	</div>
 
-</form>
+<?php // This is NOT the right place to close the form tag ?>
 
 <?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_blog_admin_update?' . http_build_query(array('id' => $a_blog_post->id, 'slug' => $a_blog_post->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>

@@ -7,7 +7,6 @@
  */
 class PluginaEventTable extends aBlogItemTable
 {
-  protected $categoryColumn = 'events';
   private static $engineCategoryCache;
   /**
    * Returns an instance of this class.
@@ -23,6 +22,7 @@ class PluginaEventTable extends aBlogItemTable
   {
     $query = parent::createQuery($alias);
     $query->orderBy($query->getRootAlias().'.start_date asc');
+    $query->addOrderBy($query->getRootAlias().'.start_time asc');
 
     return $query;
   }

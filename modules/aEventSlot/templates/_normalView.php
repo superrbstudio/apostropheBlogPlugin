@@ -9,7 +9,8 @@
   $permid = isset($permid) ? $sf_data->getRaw('permid') : null;
   $slot = isset($slot) ? $sf_data->getRaw('slot') : null;
 ?>
-<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
+<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page, 'label' => a_get_option($options, 'editLabel', a_('Edit')))) ?>
+
 
 <?php foreach ($aBlogPosts as $aBlogPost): ?>
 	<?php $options['slideshowOptions']['idSuffix'] = 'aBlogSlot-'.$permid.'-'.$slot.'-'.$aBlogPost->getId(); ?>	

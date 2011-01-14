@@ -1,9 +1,10 @@
 <?php
-abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
+abstract class BaseaBlogSlotComponents extends aSlotComponents
 {
   protected $modelClass = 'aBlogPost';
   protected $formClass = 'aBlogSlotForm';
-
+  protected $handSelected = false;
+  
   public function setup()
   {
     parent::setup();
@@ -40,6 +41,21 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
   {
     $this->setup();
     $this->values = $this->slot->getArrayValue();
+    $q = $this->getQuery();
+    
+		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
+		$this->options['slideshowOptions']['height'] = ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100);
+		$this->options['slideshowOptions']['resizeType'] = ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c');
+				
+    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
+    $this->options['maxImages'] = $this->getOption('maxImages', 1);
+		
+    $this->aBlogPosts = $q->execute();
+    aBlogItemTable::populatePages($this->aBlogPosts);
+  }
+  
+  public function getQuery()
+  {
     // Explicit select() mandatory with orderByList
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a')
@@ -48,6 +64,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
     Doctrine::getTable($this->modelClass)->addPublished($q);
     if (isset($this->values['title_or_tag']) && ($this->values['title_or_tag'] === 'title'))
     {
+      $this->handSelected = true;
       if (isset($this->values['blog_posts']) && count($this->values['blog_posts']))
       {
         $q->andWhereIn('id', $this->values['blog_posts']);
@@ -57,6 +74,8 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       {
         $q->andWhere('0 <> 0');
       }
+      // Works way better when you actually return it!
+      return $q;
     }
     else
     {
@@ -74,16 +93,7 @@ abstract class BaseaBlogSlotComponents extends BaseaSlotComponents
       }
       $q->limit($this->values['count']);
       $q->orderBy('published_at desc');
+      return $q;
     }
-    
-		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
-		$this->options['slideshowOptions']['height'] = ((isset($this->options['slideshowOptions']['height']))? $this->options['slideshowOptions']['height']:100);
-		$this->options['slideshowOptions']['resizeType'] = ((isset($this->options['slideshowOptions']['resizeType']))? $this->options['slideshowOptions']['resizeType']:'c');
-				
-    $this->options['excerptLength'] = $this->getOption('excerptLength', 100);
-    $this->options['maxImages'] = $this->getOption('maxImages', 1);
-
-    $this->aBlogPosts = $q->execute();
-    aBlogItemTable::populatePages($this->aBlogPosts);
   }
 }

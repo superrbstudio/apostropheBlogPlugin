@@ -390,20 +390,20 @@ class aBlogToolkit {
 
     if ($restrictedByCategory)
     {
-      $q .= 'inner join ';
+      $cjoin = 'inner join';
     }
     else
     {
-      $q .= 'left join ';
+      $cjoin = 'left join';
     }
-    $q .= 'a_page_to_category ptc on ptc.page_id = p.id left join a_category c on ptc.category_id = c.id ';
+    $q .= $cjoin . ' a_page_to_category ptc on ptc.page_id = p.id ' . $cjoin . ' a_category c on ptc.category_id = c.id ';
 
     // The engine page is locked down to these categories. If none are specified it is not
     // locked down by category
 
     if ($hasCategoryIds)
     {
-      $q .= "and c.id in (:category_ids) ";
+      $q .= "and c.id in :category_ids ";
       $params['category_ids'] = $options['categoryIds'];
     }
 
@@ -469,9 +469,12 @@ class aBlogToolkit {
 
     $events = isset($options['byEventDateRange']) && $options['byEventDateRange'];
 
-    if ($events)
+    if ($events && ($startYear === '0000'))
     {
       list($startYear, $startMonth, $startDay) = preg_split('/-/', date('Y-m-d'));
+    }
+    if ($events)
+    {
       // The event's start and end dates are part of the blog item table
       $q .= ' inner join a_blog_item bi on bi.page_id = p.id ';
       $q .= "and bi.start_date <= :end_date ";

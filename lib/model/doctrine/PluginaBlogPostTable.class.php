@@ -3,7 +3,6 @@
  */
 class PluginaBlogPostTable extends aBlogItemTable
 {
-  protected $categoryColumn = 'posts';
   private static $engineCategoryCache;
     
   public static function getInstance()
