@@ -215,6 +215,11 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $values = $this->getValues();
     }
+
+    // Slashes break routes in most server configs. Do NOT force case of tags.
+    
+    $values['tags'] = str_replace('/', '-', isset($values['tags']) ? $values['tags'] : '');
+    
     $object = parent::updateObject($values);
     $this->updatePublication($values);
     return $object;
