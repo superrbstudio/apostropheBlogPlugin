@@ -43,7 +43,7 @@
       <?php include_partial('aBlogAdmin/titleAndSlug', array('a_blog_item' => $a_blog_post)) ?>
     </div>
 
-		<div class="a-blog-item event<?php echo ($a_blog_post->hasMedia())? ' has-media':''; ?> <?php echo $a_blog_post->getTemplate() ?>">
+		<div class="a-blog-item post<?php echo ($a_blog_post->hasMedia())? ' has-media':''; ?> <?php echo $a_blog_post->getTemplate() ?>">
   		<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post, 'edit' => true)) ?>
 		</div>
 

@@ -174,6 +174,33 @@ function aBlogConstructor()
 			$(this).toggleClass('over');		
 		});	
 	}
+	
+	this.slotEditView = function(options)
+	{
+		var formName = options['formName'];
+		var autocompleteUrl = options['autocompleteUrl'];
+		var className = options['class'];
+		var selfLabelSelector = options['selfLabelSelector'];
+		
+		var debug = (options['debug']) ? options['debug'] : false;
+		
+		(debug) ? apostrophe.log('aBlog.slotEditView -- formName: ' + formName) : '';
+		(debug) ? apostrophe.log('aBlog.slotEditView -- autocompleteUrl: ' + autocompleteUrl) : '';
+		(debug) ? apostrophe.log('aBlog.slotEditView -- class: ' + className) : '';
+				
+    aMultipleSelect('#a-' + formName + ' .' + className, { 'autocomplete': autocompleteUrl });
+    aMultipleSelect('#a-' + formName + ' .categories', { 'choose-one': 'Add Categories' });
+		
+		var slotEditForm = $('#a-'+formName)
+		var editStates = slotEditForm.find('.a-form-row.by-type input[type="radio"]');
+		var editState = slotEditForm.find('.a-form-row.by-type input[type="radio"]:checked').val();
+		slotEditForm.addClass('a-options dropshadow editState-' + editState );
+			editStates.live('click', function(){
+			 	editState = slotEditForm.find('.a-form-row.by-type input[type="radio"]:checked').val();
+				slotEditForm.removeClass('editState-title').removeClass('editState-tags').addClass('editState-'+editState);
+		});
+	}
+	
 }
 
 window.aBlog = new aBlogConstructor();
