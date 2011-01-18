@@ -1,3 +1,5 @@
+<?php $result = isset($result) ? $sf_data->getRaw('result') : null; ?>
+
 <?php $url = $result->url ?>
 <dt class="result-title <?php echo $result->class ?>">
 	<?php echo link_to($result->title, $url) ?> 
