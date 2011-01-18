@@ -1,3 +1,7 @@
+<?php /* ?> 
+This slot is deprecated as of Apostrophe 1.5
+<?php //*/ ?>
+
 <?php
   // Compatible with sf_escaping_strategy: true
   $form = isset($form) ? $sf_data->getRaw('form') : null;
