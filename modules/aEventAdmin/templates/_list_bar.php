@@ -6,7 +6,7 @@
 ?>
 <div id="a-admin-bar" <?php if (count($sf_user->getAttribute('aBlogAdmin.filters', null, 'admin_module'))): ?>class="has-filters"<?php endif ?>>
   <?php if (0): ?>
-    <h2 class="a-admin-title you-are-here"><?php echo __('Event Admin', array(), 'messages') ?></h2>
+    <h2 class="a-admin-title you-are-here"><?php echo a_('Event Admin') ?></h2>
   <?php endif ?>
 </div>
 
@@ -17,9 +17,9 @@
   <?php $fields = $configuration->getFormFilterFields($filters) ?>
 
 	<?php if ($appliedFilters): ?>
-		You are viewing events 
+		<?php echo a_('You are viewing events') ?> 
 	<?php else: ?>
-		You are viewing all events
+		<?php echo a_('You are viewing all events') ?>
 	<?php endif ?>	
 
 	<?php $n=1; foreach($appliedFilters as $name => $values): ?>

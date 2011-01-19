@@ -17,9 +17,9 @@
   <?php $fields = $configuration->getFormFilterFields($filters) ?>
 
 	<?php if ($appliedFilters): ?>
-		You are viewing posts 
+		<?php echo a_('You are viewing posts') ?> 
 	<?php else: ?>
-		You are viewing all posts
+		<?php echo a_('You are viewing all posts') ?>
 	<?php endif ?>	
 
 	<?php $n=1; foreach($appliedFilters as $name => $values): ?>
