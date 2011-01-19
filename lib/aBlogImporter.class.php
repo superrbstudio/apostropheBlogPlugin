@@ -51,24 +51,14 @@ class aBlogImporter extends aImporter
     $category = current($this->sql->query("SELECT * FROM a_category where name = :name", array('name' => $name)));
     if($category)
     {
-      if($type == 'posts')
-      {
-        $this->sql->query("UPDATE a_category SET posts=1 WHERE id=:id", array('id' => $category['id']));
-      }
-      elseif($type == 'events')
-      {
-        $this->sql->query("UPDATE a_category SET events=1 WHERE id=:id", array('id' => $category['id']));
-      }
       $category_id = $category['id'];
     }
     else
     {
-      $s = "INSERT INTO a_category (name, posts, events, created_at, updated_at, slug) ";
-      $s.= "VALUES( :name, :posts, :events, :created_at, :updated_at, :slug)";
+      $s = "INSERT INTO a_category (name, created_at, updated_at, slug) ";
+      $s.= "VALUES( :name, :created_at, :updated_at, :slug)";
       $params = array(
         'name' => $name,
-        'posts' => ($type == 'posts'),
-        'events' => ($type == 'events'),
         'created_at' => aDate::mysql(),
         'updated_at' => aDate::mysql(),
         'slug' => aTools::slugify($name)
