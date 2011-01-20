@@ -3,5 +3,8 @@
   <li class="post-author">
 			<span class="a-blog-item-meta-label"><?php echo __('Posted By:', array(), 'apostrophe') ?></span>
 			<?php echo ($a_blog_post->getAuthor()->getName()) ? $a_blog_post->getAuthor()->getName() : $a_blog_post->getAuthor()  ?>
-	</li>   
+	</li>
+	<?php  if (sfConfig::get('app_aBlog_disqus_enabled', true)): ?>
+	<li><a class="disqus-comment-count" href="<?php echo url_for('a_blog_post', $a_blog_post) ?>#disqus_thread">#</a></li>   
+	<?php endif ?>
 </ul>
