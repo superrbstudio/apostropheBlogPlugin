@@ -162,12 +162,12 @@
 	<?php // Blog Post Tags ?>
 	<hr />
 	<div class="tags section a-form-row">
-	  <?php /* The label is provided by the pkInlineTaggableWidget?> 
 	  <h4><?php echo a_('Tags') ?></h4>
-	  <?php //*/ ?>
+		<div>
 		<?php echo $form['tags']->render() ?>
 		<?php echo $form['tags']->renderError() ?>
-		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => a_('Tags'))) ?>
+		<?php a_js_call('pkInlineTaggableWidget(?, ?)', '#a-blog-post-tags-input', array('popular-tags' => $popularTags, 'existing-tags' => $existingTags, 'typeahead-url' => url_for('taggableComplete/complete'), 'tags-label' => ' ')) ?>
+		</div>
 	</div>
 
 	<hr />
