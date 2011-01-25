@@ -111,6 +111,54 @@ class aBlogEvents
     $migrate->query('ALTER TABLE a_blog_item modify column end_date date;');
     // Migrate old full day events from before we started defining this as a null start and end time
     $migrate->query('UPDATE a_blog_item SET start_time = null, end_time = null WHERE start_time = "00:00:00" AND end_time = "00:00:00"');
+    
+    $oldCategoryUsers = $migrate->query('SELECT * FROM a_blog_category_user');
+    $oldCategories = $migrate->query('SELECT * from a_blog_category');
+    $newCategories = $migrate->query('SELECT * from a_category');
+    $oldByName = array();
+    foreach ($oldCategories as $oldCategory)
+    {
+      $oldByName[$oldCategory['name']] = $oldCategory['id'];
+    }
+    $newByName = array();
+    foreach ($newCategories as $newCategory)
+    {
+      $newByName[$newCategory['name']] = $newCategory['id'];
+    }
+    $oldToNew = array();
+    foreach ($oldByName as $name => $id)
+    {
+      $oldToNew[$id] = $newByName[$name];
+    }
+    foreach ($oldCategoryUsers as $oldCategoryUser)
+    {
+      $migrate->query('INSERT INTO a_category_user (category_id, user_id) VALUES (:category_id, :user_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryUser['blog_category_id']], 'user_id' => $oldCategoryUser['user_id']));
+    }
+    if ($migrate->tableExists('a_blog_category_group'))
+    {
+      $oldCategoryGroups = $migrate->query('SELECT * FROM a_blog_category_group');
+      $oldCategories = $migrate->query('SELECT * from a_blog_category');
+      $newCategories = $migrate->query('SELECT * from a_category');
+      $oldByName = array();
+      foreach ($oldCategories as $oldCategory)
+      {
+        $oldByName[$oldCategory['name']] = $oldCategory['id'];
+      }
+      $newByName = array();
+      foreach ($newCategories as $newCategory)
+      {
+        $newByName[$newCategory['name']] = $newCategory['id'];
+      }
+      $oldToNew = array();
+      foreach ($oldByName as $name => $id)
+      {
+        $oldToNew[$id] = $newByName[$name];
+      }
+      foreach ($oldCategoryGroups as $oldCategoryGroup)
+      {
+        $migrate->query('INSERT INTO a_category_group (category_id, group_id) VALUES (:category_id, :group_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryGroup['blog_category_id']], 'group_id' => $oldCategoryGroup['group_id']));
+      }
+    }
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");
