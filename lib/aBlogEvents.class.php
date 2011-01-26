@@ -55,8 +55,6 @@ class aBlogEvents
     if (!$migrate->tableExists('a_blog_item_to_category'))
     {
       $migrate->sql(array(
-        "ALTER TABLE a_category ADD COLUMN posts TINYINT default false;",
-        "ALTER TABLE a_category ADD COLUMN events TINYINT default false;",
         "CREATE TABLE a_blog_item_to_category (blog_item_id BIGINT, category_id BIGINT, PRIMARY KEY(blog_item_id, category_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = INNODB;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_category_id_a_category_id FOREIGN KEY (category_id) REFERENCES a_category(id) ON DELETE CASCADE;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id) ON DELETE CASCADE;"
@@ -80,14 +78,13 @@ class aBlogEvents
       {
         if (isset($nc[$category['name']]))
         {
-          $migrate->query('UPDATE a_category SET posts = :posts, events = :events WHERE name = :name', $category);
           $oldIdToNewId[$category['id']] = $nc[$category['name']]['id'];
         }
         else
         {
           // Blog categories didn't have slugs
           $category['slug'] = aTools::slugify($category['name']);
-          $migrate->query('INSERT INTO a_category (name, description, slug, posts, events) VALUES (:name, :description, :slug, :posts, :events)', $category);
+          $migrate->query('INSERT INTO a_category (name, description, slug) VALUES (:name, :description, :slug)', $category);
           $oldIdToNewId[$category['id']] = $migrate->lastInsertId();
         }
       }
@@ -156,6 +153,11 @@ class aBlogEvents
       }
       foreach ($oldCategoryGroups as $oldCategoryGroup)
       {
+        if (!isset($oldToNew[$oldCategoryGroup['blog_category_id']]))
+        {
+          echo("WARNING: there is no a_blog_category with the id " . $oldCategoryGroup['blog_category_id'] . "\n");
+          continue;
+        }
         $migrate->query('INSERT INTO a_category_group (category_id, group_id) VALUES (:category_id, :group_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryGroup['blog_category_id']], 'group_id' => $oldCategoryGroup['group_id']));
       }
     }
