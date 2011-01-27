@@ -90,11 +90,14 @@ class aBlogEvents
       }
       echo("Migrating from aBlogItemCategory to aBlogItemToCategory...\n");
       
-      $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
-      foreach ($oldMappings as $info)
+      if ($migrate->tableExists('a_blog_item_category'))
       {
-        $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
-        $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+        $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
+        foreach ($oldMappings as $info)
+        {
+          $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
+          $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+        }
       }
     }
     $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
