@@ -100,6 +100,52 @@ class aBlogEvents
         }
       }
     }
+
+    // Older updates may not have categories on the virtual page
+    
+    $blogPagesById = array();
+    $blogPageIdInfos = $migrate->query("SELECT id, page_id FROM a_blog_item");
+    foreach ($blogPageIdInfos as $info)
+    {
+      $blogPagesById[$info['id']] = $info['page_id'];
+    }
+    
+    $blogToCategories = $migrate->query("SELECT * FROM a_blog_item_to_category");
+    foreach ($blogToCategories as $toCategory)
+    {
+      $migrate->query("INSERT INTO a_page_to_category (category_id, page_id) VALUES (:category_id, :page_id) ON DUPLICATE KEY UPDATE category_id = category_id", array('category_id' => $toCategory['category_id'], 'page_id' => $blogPagesById[$toCategory['blog_item_id']]));
+    }
+        
+    // Older versions did not have taggings on the virtual page
+    
+    $blogTaggings = $migrate->query("SELECT * FROM tagging WHERE taggable_model IN ('aBlogPost', 'aEvent')");
+    $blogTagsById = array();
+    foreach ($blogTaggings as $tagging)
+    {
+      $blogTagsById[$tagging['taggable_id']][$tagging['tag_id']] = true;
+    }
+    $pageTaggings = $migrate->query("SELECT * FROM tagging WHERE taggable_model IN ('aPage')");
+    $pageTagsById = array();
+    foreach ($pageTaggings as $tagging)
+    {
+      $pageTagsById[$tagging['taggable_id']][$tagging['tag_id']] = true;
+    }
+    foreach ($blogTagsById as $blogId => $tags)
+    {
+      if (!isset($blogPagesById[$blogId]))
+      {
+        // No virtual page - just a stale tagging
+        continue;
+      }
+      foreach ($tags as $tagId => $dummy)
+      {
+        if (!isset($pageTagsById[$blogPagesById[$blogId]][$tagId]))
+        {
+          $migrate->query('INSERT INTO tagging (taggable_model, taggable_id, tag_id) VALUES ("aPage", :taggable_id, :tag_id)', array('taggable_id' => $blogPagesById[$blogId], 'tag_id' => $tagId));
+        }
+      }
+    }
+    
     $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
     $migrate->query('UPDATE a_page SET engine = "aEvent" WHERE slug LIKE "@a_event_search_redirect%"');
     // Older blog post virtual pages won't have published_at
@@ -167,6 +213,7 @@ class aBlogEvents
         $migrate->query('INSERT INTO a_category_group (category_id, group_id) VALUES (:category_id, :group_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryGroup['blog_category_id']], 'group_id' => $oldCategoryGroup['group_id']));
       }
     }
+    // Blog item tags must also be on the virtual page, ditto for categories
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");

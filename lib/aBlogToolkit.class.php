@@ -553,11 +553,12 @@ class aBlogToolkit {
     // In the cases where we are looking for categories or tags, be sure to
     // discard the null rows from the LEFT JOINs. This is simpler than 
     // determining when to switch them to INNER JOINs
-    return array(
+    $result = array(
       'categoriesInfo' => $mysql->query('select distinct c.slug, c.name ' . $c_q . 'and c.slug is not null order by c.name', $params),
       'tagsByName' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t.name', $params),
       'tagsByPopularity' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t_count desc limit 10', $params),
       'pageIds' => $mysql->queryScalar('select distinct p.id ' . $p_q . ' order by ' . $pagesOrderBy, $params));
+    return $result;
   }
   
   static protected function between($x, $lo, $hi)
