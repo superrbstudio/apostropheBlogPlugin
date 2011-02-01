@@ -322,6 +322,34 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $text;
   }
 
+  /**
+   *
+   * @param string $areas Array of areas to retrieve text for
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getRichTextForAreas($areas = array(), $limit = null)
+  {
+    $text = '';
+		if(!is_array($areas))
+			$areas = array($areas);
+    foreach($areas as $area)
+    {
+      foreach($this->Page->getArea($area) as $slot)
+      {
+        if($slot['type'] == 'aRichText' || $slot['type'] == 'aText')
+        {
+          $text .= $slot->getValue();
+        }
+      }
+    }
+    if(!is_null($limit))
+    {
+      $text = aHtml::limitWords($text, $limit, array('append_ellipsis' => true));
+    }
+
+    return $text;
+  }
   
   /**
    * Returns media for all areas for this items virtual page, this may produce
