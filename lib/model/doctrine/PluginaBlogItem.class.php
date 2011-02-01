@@ -324,6 +324,17 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
   /**
    *
+   * @param string $area Name of an area
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getRichTextForArea($area, $limit = null)
+  {
+    return $this->getRichTextForAreas(array($area), $limit);
+  }
+
+  /**
+   *
    * @param string $areas Array of areas to retrieve text for
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
