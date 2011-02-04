@@ -230,11 +230,11 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     
     if ($value === '-')
     {
-      $query->where($query->getRootAlias() . '.author_id IS NULL');
+      $query->andWhere($query->getRootAlias() . '.author_id IS NULL');
     }
     else
     {
-      $query->where($query->getRootAlias() . '.author_id = ?', $value);
+      $query->andWhere($query->getRootAlias() . '.author_id = ?', $value);
     }
   }
 
@@ -247,7 +247,7 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     
     if ($value === '-')
     {
-      $query->leftJoin($query->getRootAlias() . '.Categories c')->where('c.id IS NULL');
+      $query->leftJoin($query->getRootAlias() . '.Categories c')->andWhere('c.id IS NULL');
     }
     else
     {
