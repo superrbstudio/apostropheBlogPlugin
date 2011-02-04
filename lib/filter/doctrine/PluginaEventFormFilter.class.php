@@ -10,6 +10,8 @@
  */
 abstract class PluginaEventFormFilter extends BaseaEventFormFilter
 {
+  protected $type = 'event';
+  
   public function setup()
   {
     parent::setup();

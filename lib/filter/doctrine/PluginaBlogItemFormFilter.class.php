@@ -10,16 +10,60 @@
  */
 abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
 {
+  private function i18nDummy() {
+    a_('No Author');
+  }
+  
+  // Subclasses return post or event. Next time let's have the type field in the database contain the actual model class name
+  protected function getType()
+  {
+    return $this->type;
+  }
+  
   public function configure()
   {
     //$this->widgetSchema->setLabel('editors_list', 'Edited By');
     //$this->widgetSchema->setLabel('user_id', 'By');
   }
+
+  public function getAuthorChoices()
+  {
+    if (isset($this->authors))
+    {
+      return $this->authors;
+    }
+    $authors = Doctrine::getTable('sfGuardUser')->createQuery('u')->innerJoin('u.BlogAuthorItems i')->where('i.type = ?', $this->getType())-> select('u.*')->orderBy('u.last_name asc, u.first_name asc, u.username asc')->execute();
+    $this->authors = array();
+    foreach ($authors as $author)
+    {
+      $this->authors[$author['id']] = (string) $author;
+    }
+    $this->authors['-'] = 'No Author';
+    return $this->authors;
+  }
+  
+  public function getCategoryChoices()
+  {
+    if (isset($this->categories))
+    {
+      return $this->categories;
+    }
+    $categories = Doctrine::getTable('aCategory')->createQuery('c')->innerJoin('c.BlogItems i')->where('i.type = ?', $this->getType())-> select('c.*')->orderBy('c.name asc')->execute();
+    $this->categories = array();
+    foreach ($categories as $category)
+    {
+      $this->categories[$category['id']] = (string) $category;
+    }
+    $this->categories['-'] = 'Uncategorized';
+    return $this->categories;
+  }
   
 	public function getTagChoices()
 	{
-		if(isset($this->tags))
+		if (isset($this->tags))
+		{
 		  return $this->tags;
+		}
 		$this->tags = TagTable::getAllTagNameWithCount(null, array('model' => $this->getModelName()));
 		foreach($this->tags as $key => &$tag)
 		{
@@ -31,7 +75,40 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
   public function setup()
   {
     $this->fields = $this->getFields();
+
 		parent::setup();
+
+		$this->setWidget('author_id', new sfWidgetFormChoice(
+		  array(
+			  'choices' => $this->getAuthorChoices(),
+				'multiple' => true,
+				'expanded' => false
+			)
+		));
+		
+		$this->setValidator('author_id', new sfValidatorChoice(
+		  array(
+			  'choices' => array_keys($this->getAuthorChoices()),
+				'multiple' => true,
+				'required' => false
+			)
+		));
+
+	$this->setWidget('categories_list', new sfWidgetFormChoice(
+	  array(
+		  'choices' => $this->getCategoryChoices(),
+			'multiple' => true,
+			'expanded' => false
+		)
+	));
+	
+	$this->setValidator('categories_list', new sfValidatorChoice(
+	  array(
+		  'choices' => array_keys($this->getCategoryChoices()),
+			'multiple' => true,
+			'required' => false
+		)
+	));
 		
 		$this->setWidget('tags_list', new sfWidgetFormChoice(
 		  array(
@@ -142,6 +219,40 @@ abstract class PluginaBlogItemFormFilter extends BaseaBlogItemFormFilter
     }
     $choices = $this->getWidget($field)->getChoices();
     return array($choices[$value]);
+  }
+	
+	public function addAuthorIdColumnQuery(Doctrine_Query $query, $field, $value)
+  {
+    if (!strlen($value))
+    {
+      return;
+    }
+    
+    if ($value === '-')
+    {
+      $query->where($query->getRootAlias() . '.author_id IS NULL');
+    }
+    else
+    {
+      $query->where($query->getRootAlias() . '.author_id = ?', $value);
+    }
+  }
+
+	public function addCategoriesListColumnQuery(Doctrine_Query $query, $field, $value)
+  {
+    if (!strlen($value))
+    {
+      return;
+    }
+    
+    if ($value === '-')
+    {
+      $query->leftJoin($query->getRootAlias() . '.Categories c')->where('c.id IS NULL');
+    }
+    else
+    {
+      $query->innerJoin($query->getRootAlias() . '.Categories c WITH c.id = ?', $value);
+    }
   }
 	
 	public function addTagsListColumnQuery(Doctrine_Query $query, $field, $values)

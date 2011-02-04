@@ -88,11 +88,15 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     if($user->hasCredential('admin'))
     {
-      $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
-
+      // Blog author candidates include blog editor candidates, plus admins - if they aren't listed here they
+      // wind up losing authorship to the first person in the dropdown due to the validator!
       if ($candidateGroup && $sufficientGroup)
       {
-        $q->leftJoin('u.Groups g')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE)', array($candidateGroup, $sufficientGroup));
+        $q = Doctrine::getTable('sfGuardUser')->createQuery('u')->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
+      }
+      else
+      {
+        $q = Doctrine::getTable('sfGuardUser')->createQuery('u')->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
       }
       $this->setWidget('author_id',
         new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
