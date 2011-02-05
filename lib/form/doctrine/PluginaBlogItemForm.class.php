@@ -156,7 +156,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         $reserved[] = $category;
       }
     }
-    error_log("Reserved has " . count($reserved) . " elements");
     return $reserved;
   }
   
