@@ -326,7 +326,8 @@ class aBlogToolkit {
     //   'categoriesInfo' => array('slug' => 'cheese', 'name' => 'Cheese'),
     //   'tagNames' => array('wensleydale'),
     //   'pageIds' => array(10, 15, 20, 25)
-    
+
+    $alphaSort = isset($options['alphaSort']) && $options['alphaSort'];
     if (isset($options['q']) && (strlen($options['q'])))
     {
       $q = $options['q'];
@@ -381,6 +382,22 @@ class aBlogToolkit {
 
     // Select the relevant virtual pages for this engine
     $q = 'from a_page p ';
+    
+    // If alpha sort is present we need title slots
+    if ($alphaSort)
+    {
+      if (!isset($options['culture']))
+      {
+        $options['culture'] = aTools::getUserCulture();
+      }
+      $culture = $options['culture'];
+      $q .= "
+        LEFT JOIN a_area a ON a.page_id = p.id AND a.name = 'title' AND a.culture = :culture
+        LEFT JOIN a_area_version v ON v.area_id = a.id AND a.latest_version = v.version 
+        LEFT JOIN a_area_version_slot avs ON avs.area_version_id = v.id
+        LEFT JOIN a_slot s ON s.id = avs.slot_id ";
+      $params['culture'] = $culture;
+    }
 
     // Merge in categories. A left join unless we are restricted to certain categories
 
@@ -514,13 +531,18 @@ class aBlogToolkit {
       }
     }
 
-    if ($events)
+    if ($alphaSort)
+    {
+      $pagesOrderBy = 's.value asc';
+    }
+    elseif ($events)
     {
       $pagesOrderBy = 'bi.start_date asc, bi.start_time asc';
     }
     else
     {
-      $pagesOrderBy = 'p.published_at asc';
+      // Oops: blog presentation is typically descending, not ascending
+      $pagesOrderBy = 'p.published_at desc';
     }
 
     // Separate queries, but quite fast because we're not bogged down in Doctrineland
@@ -553,6 +575,7 @@ class aBlogToolkit {
     // In the cases where we are looking for categories or tags, be sure to
     // discard the null rows from the LEFT JOINs. This is simpler than 
     // determining when to switch them to INNER JOINs
+    
     $result = array(
       'categoriesInfo' => $mysql->query('select distinct c.slug, c.name ' . $c_q . 'and c.slug is not null order by c.name', $params),
       'tagsByName' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t.name', $params),
