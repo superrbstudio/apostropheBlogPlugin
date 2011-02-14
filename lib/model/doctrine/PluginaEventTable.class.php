@@ -54,27 +54,7 @@ class PluginaEventTable extends aBlogItemTable
 
   public function getEngineCategories()
   {
-    if(!isset(self::$engineCategoryCache))
-    {
-      $engines = Doctrine::getTable('aPage')->createQuery()
-        ->leftJoin('aPage.Categories Categories')
-        ->addWhere('engine = ?', 'aEvent')
-        // Don't match virtual pages
-        ->addWhere('slug LIKE "/%"')
-        ->addWhere('admin != ?', true)
-        ->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
-
-      $engineCache = array();
-      foreach($engines as $engine)
-      {
-        $engineCache[$engine['slug']] = array();
-        foreach($engine['Categories'] as $category)
-          $engineCache[$engine['slug']][] = $category['name'];
-      }
-      self::$engineCategoryCache = $engineCache;
-    }
-
-    return self::$engineCategoryCache;
+    return aEngineTools::getEngineCategories('aEvent');
   }
   
   public function getCountByCategory()
