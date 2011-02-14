@@ -28,7 +28,7 @@
 	  <?php endif ?>
 	<?php endif ?>
 	<ul class="a-ui a-controls a-blog-browser-controls">
-  	<li><?php echo a_button('&#8810; ' . $prevLabel, url_for($url.'?'.http_build_query($params['prev'])), array('icon','alt','a-arrow-left', 'no-bg')) ?></li>
-  	<li><?php echo a_button($nextLabel . ' &#8811;', url_for($url.'?'.http_build_query($params['next'])), array('icon','alt','a-arrow-right', 'no-bg')) ?></li>
+  	<li><?php echo a_button($prevLabel, url_for($url.'?'.http_build_query($params['prev'])), array('icon','a-arrow-left', 'alt', 'no-bg')) ?></li>
+  	<li><?php echo a_button($nextLabel, url_for($url.'?'.http_build_query($params['next'])), array('icon','a-arrow-right', 'alt', 'no-bg', 'icon-right')) ?></li>
 	</ul>
 <?php endif ?>

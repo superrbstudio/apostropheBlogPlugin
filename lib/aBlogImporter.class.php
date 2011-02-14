@@ -7,8 +7,14 @@ class aBlogImporter extends aImporter
   public function  initialize($params)
   {
     $this->sql->query('DELETE FROM a_blog_item');
-    $this->posts = simplexml_load_file($params['posts']);
-    $this->events = simplexml_load_file($params['events']);
+    if (isset($params['posts']))
+    {
+      $this->posts = simplexml_load_file($params['posts']);
+    }
+    if (isset($params['events']))
+    {
+      $this->events = simplexml_load_file($params['events']);
+    }
     $author_row = current($this->sql->query('SELECT * FROM sf_guard_user WHERE username="admin"'));
     $this->author_id = $author_row['id'];
   }
@@ -25,10 +31,22 @@ class aBlogImporter extends aImporter
       
       $blog_id = $this->sql->lastInsertId();
       $categories = $post->categories;
+      $categoryIds = array();
       foreach($categories->category as $category)
       {
         $name = $category->__toString();
-        $this->addCategory($name, $blog_id, $type);
+        $categoryIds[] = $this->addCategory($name, $blog_id, $type);
+      }
+
+      $tagIds = array();
+      if ($post->tags)
+      {
+        $tags = $post->tags;
+        foreach($tags->tag as $tag)
+        {
+          $name = $tag->__toString();
+          $tagIds[] = $this->addTag($name, $blog_id, $type);
+        }
       }
       
       if($type == 'posts') {
@@ -41,34 +59,35 @@ class aBlogImporter extends aImporter
       $post->Page->addAttribute('title', $post->title);
 
       $page = $this->parsePage($post->Page);
-
+      
       $this->sql->query("UPDATE a_blog_item SET page_id=:page_id where id=:id", array('page_id' => $page['id'], 'id' => $blog_id));
+
+      // Sync tags and categories to the associated page, enabling search
+      foreach ($categoryIds as $categoryId)
+      {
+        $this->sql->query("INSERT INTO a_page_to_category (page_id, category_id) VALUES(:page_id, :category_id) ON DUPLICATE KEY UPDATE page_id = page_id", array('page_id' => $page['id'], 'category_id' => $categoryId));
+      }
+      
+      foreach ($tagIds as $tagId)
+      {
+        $this->sql->query("INSERT INTO tagging (tag_id, taggable_model, taggable_id) VALUES(:tag_id, 'aPage', :taggable_id)", array('tag_id' => $tagId, 'taggable_id' => $page['id']));
+      }
     }
   }
-
+  
   public function addCategory($name, $blog_id, $type = 'posts')
   {
     $category = current($this->sql->query("SELECT * FROM a_category where name = :name", array('name' => $name)));
     if($category)
     {
-      if($type == 'posts')
-      {
-        $this->sql->query("UPDATE a_category SET posts=1 WHERE id=:id", array('id' => $category['id']));
-      }
-      elseif($type == 'events')
-      {
-        $this->sql->query("UPDATE a_category SET events=1 WHERE id=:id", array('id' => $category['id']));
-      }
       $category_id = $category['id'];
     }
     else
     {
-      $s = "INSERT INTO a_category (name, posts, events, created_at, updated_at, slug) ";
-      $s.= "VALUES( :name, :posts, :events, :created_at, :updated_at, :slug)";
+      $s = "INSERT INTO a_category (name, created_at, updated_at, slug) ";
+      $s.= "VALUES (:name, :created_at, :updated_at, :slug)";
       $params = array(
         'name' => $name,
-        'posts' => ($type == 'posts'),
-        'events' => ($type == 'events'),
         'created_at' => aDate::mysql(),
         'updated_at' => aDate::mysql(),
         'slug' => aTools::slugify($name)
@@ -81,14 +100,36 @@ class aBlogImporter extends aImporter
         'blog_item_id' => $blog_id,
         'category_id' => $category_id
       );
-    try{
-      $this->sql->query($s, $parms);
-    } catch(Exception $e) {
-      exit();
-    }
-    
+    $this->sql->query($s, $parms);
+    return $category_id;
   }
-
+  
+  public function addTag($name, $blog_id, $type = 'posts')
+  {
+    $tag = current($this->sql->query("SELECT * FROM tag where name = :name", array('name' => $name)));
+    if($tag)
+    {
+      $tag_id = $tag['id'];
+    }
+    else
+    {
+      $s = "INSERT INTO tag (name) ";
+      $s.= "VALUES(:name)";
+      $params = array(
+        'name' => str_replace('/', '-', $name));
+      $this->sql->query($s, $params);
+      $tag_id = $this->sql->lastInsertId();
+    }
+    $s = 'INSERT INTO tagging (tag_id, taggable_model, taggable_id) VALUES (:tag_id, :taggable_model, :taggable_id) ON DUPLICATE KEY UPDATE taggable_id = taggable_id';
+    $params = array(
+        'tag_id' => $tag_id,
+        'taggable_model' => ($type === 'posts') ? 'aBlogPost' : 'aEvent',
+        'taggable_id' => $blog_id
+      );
+    $this->sql->query($s, $params);
+    return $tag_id;
+  }
+  
   public function insertPost($post)
   {
     $s = "INSERT INTO a_blog_item (title, author_id, slug_saved, status, allow_comments, template, published_at, type, slug )";

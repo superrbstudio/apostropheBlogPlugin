@@ -1,4 +1,4 @@
-<?php $filterForm = new aBlogPostFormFilter() ?>
+<?php $filterForm = $this->configuration->getFilterForm(array()) ?>
 <?php $filterFieldConfig = $this->configuration->getFormFilterFields($filterForm) ?>
 <?php $filterFields = $filterForm->getFields() ?>
 <?php foreach ($this->configuration->getValue('list.display') as $name => $field): ?>

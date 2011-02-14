@@ -10,6 +10,7 @@
  */
 abstract class PluginaBlogPostFormFilter extends BaseaBlogPostFormFilter
 {
+  protected $type = 'post';
   public function setup()
   {
     parent::setup();

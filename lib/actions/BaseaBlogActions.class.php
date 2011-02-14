@@ -54,6 +54,11 @@ abstract class BaseaBlogActions extends aEngineActions
       // Doctrine doesn't have a withIn mechanism that takes a nice clean array, but we
       // know these are clean IDs 
       $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $this->info['pageIds']) . ')');
+      // Oops: there is NO ordering with an IN clause alone, you must make that explicit
+      aDoctrine::orderByList($q, $this->info['pageIds'], 'p');
+      // When you call aDoctrine::orderByList you must have an explicit select clause of your own as the
+      // default 'select everything' behavior of Doctrine goes away as soon as that method calls addSelect
+      $q->addSelect($q->getRootAlias() . '.*, a.*, p.*');
     }
     else
     {

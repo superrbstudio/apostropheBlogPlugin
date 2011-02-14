@@ -41,20 +41,25 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getDoctrineConnection();
 
-    if (!$this->askConfirmation("Importing any content will erase any existing content, are you sure? [y/N]", 'QUESTION_LARGE', false))
+    if (is_null($options['posts']) && is_null($options['events']))
+    {
+      die("You must specify at least one of the posts and events options with a path to the xml file.\n");
+    }
+    if (!$this->askConfirmation("Importing the same content twice will result in duplicate content, are you sure? [y/N]", 'QUESTION_LARGE', false))
     {
       die("Import CANCELLED.  No changes made.\n");
     }
     $rootDir = $this->configuration->getRootDir();
-    $dataDir = $rootDir . '/data/a';
-    $options['events'] = $dataDir . '/events.xml';
-    $options['posts'] = $dataDir . '/posts.xml';
-
-
 
     $importer = new aBlogImporter($connection, $options);
-    $importer->import('posts');
-    $importer->import('events');
+    if (!is_null($options['events']))
+    {
+      $importer->import('events');
+    }
+    if (!is_null($options['posts']))
+    {
+      $importer->import('posts');
+    }
   }
 
 }

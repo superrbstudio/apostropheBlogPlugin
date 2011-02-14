@@ -290,9 +290,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
    */
-  public function getTextForArea($area, $limit = null)
+  public function getTextForArea($area, $limit = null, $options = null)
   {
-    return $this->getTextForAreas(array($area), $limit);
+    return $this->getTextForAreas(array($area), $limit, $options);
   }
 
   /**
@@ -301,8 +301,12 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
    */
-  public function getTextForAreas($areas = array(), $limit = null)
+  public function getTextForAreas($areas = array(), $limit = null, $options = null)
   {
+    if (is_null($options))
+    {
+      $options = array('append_ellipsis' => true);
+    }
     $text = '';
     foreach($areas as $area)
     {
@@ -316,12 +320,51 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     if(!is_null($limit))
     {
-      $text = aString::limitWords($text, $limit, array('append_ellipsis' => true));
+      $text = aString::limitWords($text, $limit, $options);
     }
 
     return $text;
   }
 
+  /**
+   *
+   * @param string $area Name of an area
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getRichTextForArea($area, $limit = null)
+  {
+    return $this->getRichTextForAreas(array($area), $limit);
+  }
+
+  /**
+   *
+   * @param string $areas Array of areas to retrieve text for
+   * @param int $limit Number of characters to restrict retrieval to
+   * @return string
+   */
+  public function getRichTextForAreas($areas = array(), $limit = null)
+  {
+    $text = '';
+		if(!is_array($areas))
+			$areas = array($areas);
+    foreach($areas as $area)
+    {
+      foreach($this->Page->getArea($area) as $slot)
+      {
+        if($slot['type'] == 'aRichText' || $slot['type'] == 'aText')
+        {
+          $text .= $slot->getValue();
+        }
+      }
+    }
+    if(!is_null($limit))
+    {
+      $text = aHtml::limitWords($text, $limit, array('append_ellipsis' => true));
+    }
+
+    return $text;
+  }
   
   /**
    * Returns media for all areas for this items virtual page, this may produce

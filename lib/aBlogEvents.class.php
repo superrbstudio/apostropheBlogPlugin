@@ -55,8 +55,6 @@ class aBlogEvents
     if (!$migrate->tableExists('a_blog_item_to_category'))
     {
       $migrate->sql(array(
-        "ALTER TABLE a_category ADD COLUMN posts TINYINT default false;",
-        "ALTER TABLE a_category ADD COLUMN events TINYINT default false;",
         "CREATE TABLE a_blog_item_to_category (blog_item_id BIGINT, category_id BIGINT, PRIMARY KEY(blog_item_id, category_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE = INNODB;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_category_id_a_category_id FOREIGN KEY (category_id) REFERENCES a_category(id) ON DELETE CASCADE;",
         "ALTER TABLE a_blog_item_to_category ADD CONSTRAINT a_blog_item_to_category_blog_item_id_a_blog_item_id FOREIGN KEY (blog_item_id) REFERENCES a_blog_item(id) ON DELETE CASCADE;"
@@ -80,26 +78,74 @@ class aBlogEvents
       {
         if (isset($nc[$category['name']]))
         {
-          $migrate->query('UPDATE a_category SET posts = :posts, events = :events WHERE name = :name', $category);
           $oldIdToNewId[$category['id']] = $nc[$category['name']]['id'];
         }
         else
         {
           // Blog categories didn't have slugs
           $category['slug'] = aTools::slugify($category['name']);
-          $migrate->query('INSERT INTO a_category (name, description, slug, posts, events) VALUES (:name, :description, :slug, :posts, :events)', $category);
+          $migrate->query('INSERT INTO a_category (name, description, slug) VALUES (:name, :description, :slug)', $category);
           $oldIdToNewId[$category['id']] = $migrate->lastInsertId();
         }
       }
       echo("Migrating from aBlogItemCategory to aBlogItemToCategory...\n");
       
-      $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
-      foreach ($oldMappings as $info)
+      if ($migrate->tableExists('a_blog_item_category'))
       {
-        $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
-        $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+        $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
+        foreach ($oldMappings as $info)
+        {
+          $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
+          $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+        }
       }
     }
+
+    // Older updates may not have categories on the virtual page
+    
+    $blogPagesById = array();
+    $blogPageIdInfos = $migrate->query("SELECT id, page_id FROM a_blog_item");
+    foreach ($blogPageIdInfos as $info)
+    {
+      $blogPagesById[$info['id']] = $info['page_id'];
+    }
+    
+    $blogToCategories = $migrate->query("SELECT * FROM a_blog_item_to_category");
+    foreach ($blogToCategories as $toCategory)
+    {
+      $migrate->query("INSERT INTO a_page_to_category (category_id, page_id) VALUES (:category_id, :page_id) ON DUPLICATE KEY UPDATE category_id = category_id", array('category_id' => $toCategory['category_id'], 'page_id' => $blogPagesById[$toCategory['blog_item_id']]));
+    }
+        
+    // Older versions did not have taggings on the virtual page
+    
+    $blogTaggings = $migrate->query("SELECT * FROM tagging WHERE taggable_model IN ('aBlogPost', 'aEvent')");
+    $blogTagsById = array();
+    foreach ($blogTaggings as $tagging)
+    {
+      $blogTagsById[$tagging['taggable_id']][$tagging['tag_id']] = true;
+    }
+    $pageTaggings = $migrate->query("SELECT * FROM tagging WHERE taggable_model IN ('aPage')");
+    $pageTagsById = array();
+    foreach ($pageTaggings as $tagging)
+    {
+      $pageTagsById[$tagging['taggable_id']][$tagging['tag_id']] = true;
+    }
+    foreach ($blogTagsById as $blogId => $tags)
+    {
+      if (!isset($blogPagesById[$blogId]))
+      {
+        // No virtual page - just a stale tagging
+        continue;
+      }
+      foreach ($tags as $tagId => $dummy)
+      {
+        if (!isset($pageTagsById[$blogPagesById[$blogId]][$tagId]))
+        {
+          $migrate->query('INSERT INTO tagging (taggable_model, taggable_id, tag_id) VALUES ("aPage", :taggable_id, :tag_id)', array('taggable_id' => $blogPagesById[$blogId], 'tag_id' => $tagId));
+        }
+      }
+    }
+    
     $migrate->query('UPDATE a_page SET engine = "aBlog" WHERE slug LIKE "@a_blog_search_redirect%"');
     $migrate->query('UPDATE a_page SET engine = "aEvent" WHERE slug LIKE "@a_event_search_redirect%"');
     // Older blog post virtual pages won't have published_at
@@ -111,6 +157,63 @@ class aBlogEvents
     $migrate->query('ALTER TABLE a_blog_item modify column end_date date;');
     // Migrate old full day events from before we started defining this as a null start and end time
     $migrate->query('UPDATE a_blog_item SET start_time = null, end_time = null WHERE start_time = "00:00:00" AND end_time = "00:00:00"');
+    
+    if ($migrate->tableExists('a_blog_category_user'))
+    {
+      $oldCategoryUsers = $migrate->query('SELECT * FROM a_blog_category_user');
+      $oldCategories = $migrate->query('SELECT * from a_blog_category');
+      $newCategories = $migrate->query('SELECT * from a_category');
+      $oldByName = array();
+      foreach ($oldCategories as $oldCategory)
+      {
+        $oldByName[$oldCategory['name']] = $oldCategory['id'];
+      }
+      $newByName = array();
+      foreach ($newCategories as $newCategory)
+      {
+        $newByName[$newCategory['name']] = $newCategory['id'];
+      }
+      $oldToNew = array();
+      foreach ($oldByName as $name => $id)
+      {
+        $oldToNew[$id] = $newByName[$name];
+      }
+      foreach ($oldCategoryUsers as $oldCategoryUser)
+      {
+        $migrate->query('INSERT INTO a_category_user (category_id, user_id) VALUES (:category_id, :user_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryUser['blog_category_id']], 'user_id' => $oldCategoryUser['user_id']));
+      }
+    }
+    if ($migrate->tableExists('a_blog_category_group'))
+    {
+      $oldCategoryGroups = $migrate->query('SELECT * FROM a_blog_category_group');
+      $oldCategories = $migrate->query('SELECT * from a_blog_category');
+      $newCategories = $migrate->query('SELECT * from a_category');
+      $oldByName = array();
+      foreach ($oldCategories as $oldCategory)
+      {
+        $oldByName[$oldCategory['name']] = $oldCategory['id'];
+      }
+      $newByName = array();
+      foreach ($newCategories as $newCategory)
+      {
+        $newByName[$newCategory['name']] = $newCategory['id'];
+      }
+      $oldToNew = array();
+      foreach ($oldByName as $name => $id)
+      {
+        $oldToNew[$id] = $newByName[$name];
+      }
+      foreach ($oldCategoryGroups as $oldCategoryGroup)
+      {
+        if (!isset($oldToNew[$oldCategoryGroup['blog_category_id']]))
+        {
+          echo("WARNING: there is no a_blog_category with the id " . $oldCategoryGroup['blog_category_id'] . "\n");
+          continue;
+        }
+        $migrate->query('INSERT INTO a_category_group (category_id, group_id) VALUES (:category_id, :group_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryGroup['blog_category_id']], 'group_id' => $oldCategoryGroup['group_id']));
+      }
+    }
+    // Blog item tags must also be on the virtual page, ditto for categories
     if (!$migrate->getCommandsRun())
     {
       echo("Your database is already up to date.\n\n");
