@@ -533,7 +533,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   /**
-   * This function attempts to find the "best" engine to route a given post to.
+   * This function attempts to find the "best" engine to route a given person to.
    * based on the categories that are used on various engine pages.
    *
    * @return aPage the best engine page
@@ -545,33 +545,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
   public function getEngineSlug()
   {    
-    if(!isset($this->engineSlug))
+    if (!isset($this->engineSlug))
     {
-      $categories = array();
-      foreach($this->Categories as $category)
-      {
-        $categories[] = $category;
-      }
-      $engines = $this->getTable()->getEngineCategories();
-      $best = array('', -99);
-      foreach($engines as $engineSlug => $engineCategories)
-      {
-        $score = 0;
-        if(count($engines) == 0)
-        {
-          $score = 1;
-        }
-        $score = $score + count(array_intersect($categories, $engineCategories)) * 2 - count(array_diff($categories, $engineCategories));
-        if($score > $best[1])
-        {
-          $best = array($engineSlug, $score);
-        }
-      }
-      $this->engineSlug = $best[0];
+      $this->engineSlug = aEngineTools::getEngineSlug($this);
     }
 
     return $this->engineSlug;
   }
+
 
   public function getRoutingParams($bestEngine = true)
   {

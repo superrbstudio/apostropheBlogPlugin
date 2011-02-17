@@ -20,7 +20,7 @@
 	<div class="a-ui a-blog-heading">
 		<?php ($page) ? $slots = $page->getArea('blog-heading') : $slots = array() ?>
 		<?php if (count($slots) || $page->userHasPrivilege('edit')): ?>
-		  <?php a_area('blog-heading', array('area_label' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
+		  <?php a_area('blog-heading', array('areaLabel' => a_('Add Blog Heading'), 'allowed_types' => array('aRichText', 'aSlideshow', 'aSmartSlideshow'))) ?>
 		<?php endif ?>
   	<?php include_partial('aBlog/filters', array('type' => a_('post'), 'typePlural' => a_('posts'),  'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
 	</div>

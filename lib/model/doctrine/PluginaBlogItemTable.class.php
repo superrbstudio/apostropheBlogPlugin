@@ -31,7 +31,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   
   public function filterByCategory($category_id, Doctrine_Query $q)
   {
-    $q->addWhere('c.name = ?', $category_id);
+    $q->addWhere('c.slug = ?', $category_id);
   }
   
   public function filterByTag($tag, Doctrine_Query $q)
@@ -119,7 +119,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     foreach($blogItems as $blogItem)
     {
-      aTools::cacheVirtualPages($blogItem->page);
+      aTools::cacheVirtualPages($blogItem->Page);
     }
   }
 
@@ -255,8 +255,9 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $query = $this->createQuery();
     }
-
+    $query->leftJoin($query->getRootAlias().'.Page p');
     $query = aPageTable::queryWithSlots(false, null, $query);
+    
 
     return $query;
   }
