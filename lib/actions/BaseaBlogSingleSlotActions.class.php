@@ -7,10 +7,6 @@ abstract class BaseaBlogSingleSlotActions extends aSlotActions
   public function preExecute()
   {
     parent::preExecute();
-    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
-    {
-      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
-    }
   }
 
   public function executeEdit(sfRequest $request)

@@ -35,10 +35,6 @@ abstract class BaseaBlogActions extends aEngineActions
     parent::preExecute();
     $request = $this->getRequest();
     $this->info = aBlogToolkit::filterForEngine($this->getFilterForEngineParams());
-    if (sfConfig::get('app_aBlog_use_bundled_assets', true))
-    {
-      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
-    }
   }
 
   protected function buildQuery($request)

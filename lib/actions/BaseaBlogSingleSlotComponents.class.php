@@ -7,10 +7,6 @@ abstract class BaseaBlogSingleSlotComponents extends aSlotComponents
   public function setup()
   {
     parent::setup();
-    if(sfConfig::get('app_aBlog_use_bundled_assets', true))
-    {
-      $this->getResponse()->addJavascript('/apostropheBlogPlugin/js/aBlog.js');
-    }
   }
 
   public function executeEditView()
