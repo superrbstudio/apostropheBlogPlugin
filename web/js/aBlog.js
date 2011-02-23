@@ -80,7 +80,7 @@ function aBlogEnableForm(options)
 	// Due to the way our markup is structured this is a better place for the little
 	// 'updating' message
 	$('.a-subnav-wrapper').addClass('a-ajax-attach-updating');
-	var status = form.find('[name=a_blog_item[publication]]');
+	var status = form.find('[name="a_blog_item[publication]"]');
 	var init = true;
 	
 	// A convenience within this closure to keep us from getting lazy and
