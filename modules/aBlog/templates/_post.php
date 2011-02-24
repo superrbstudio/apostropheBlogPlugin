@@ -8,7 +8,9 @@
 
 	<?php if ($a_blog_post->userHasPrivilege('edit')): ?>
 	  <ul class="a-ui a-controls a-blog-post-controls">
-			<li><?php echo link_to('<span class="icon"></span>'.a_('Edit'), 'a_blog_admin_edit', $a_blog_post, array('class' => 'a-btn icon a-edit lite alt no-label', )) ?></li>
+			<li>
+				<?php echo a_button(a_('Edit'), url_for('a_blog_admin_edit', $a_blog_post), array('icon','a-edit','lite','alt','no-label')) ?>
+			</li>
 		</ul>
 	<?php endif ?>
 	
