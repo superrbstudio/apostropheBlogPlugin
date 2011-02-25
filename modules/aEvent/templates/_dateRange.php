@@ -20,7 +20,7 @@
   <?php echo format_date($aEvent->start_time, 't') ?>
 <?php endif ?>
 <?php if (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time)): ?>
-  <?php echo '&mdash;' ?>
+  <?php echo '&ndash;' ?>
 <?php endif ?>
 <?php if ($aEvent->start_date !== $aEvent->end_date): ?>
   <?php echo format_date($aEvent->end_date, 'D') ?>
