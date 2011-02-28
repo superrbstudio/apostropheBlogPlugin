@@ -24,7 +24,7 @@ class aBlogGenerateTestPostsTask extends sfBaseTask
     ));
 
 
-    $this->namespace        = 'apostrophe-blog';
+    $this->namespace        = 'apostrophe';
     $this->name             = 'generate-test-posts';
     $this->briefDescription = 'Adds 50 random test posts to the blog';
     $this->detailedDescription = <<<EOF

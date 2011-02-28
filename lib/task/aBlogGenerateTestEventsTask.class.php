@@ -24,7 +24,7 @@ class aBlogGenerateTestEventsTask extends sfBaseTask
     ));
 
 
-    $this->namespace        = 'apostrophe-blog';
+    $this->namespace        = 'apostrophe';
     $this->name             = 'generate-test-events';
     $this->briefDescription = 'Adds 50 random test events to the blog';
     $this->detailedDescription = <<<EOF
