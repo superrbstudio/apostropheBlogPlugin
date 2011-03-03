@@ -6,10 +6,10 @@
 
 <?php if ($addthis_username = sfConfig::get('app_aBlog_add_this')): ?>
 	<!-- AddThis Button BEGIN -->
-	<div class="addthis_toolbox addthis_default_style">
-		<a href="http://addthis.com/bookmark.php?v=250&amp;username=<?php echo $addthis_username ?>" class="addthis_button_compact"
-			addthis:url="<?php echo url_for( (($type == 'post') ? 'a_blog_post':'a_event' ), $aBlogItem, true) ?>"
-			addthis:title="<?php echo $aBlogItem['title'] ?>">Share</a>
+	<div class="addthis_toolbox addthis_default_style"
+	addthis:url="<?php echo url_for( (($type == 'post') ? 'a_blog_post':'a_event' ), $aBlogItem, true) ?>"
+	addthis:title="<?php echo $aBlogItem['title'] ?>">
+		<a href="http://addthis.com/bookmark.php?v=250&amp;username=<?php echo $addthis_username ?>" class="addthis_button_compact">Share</a>
 		<span class="addthis_separator">|</span>
 		<a class="addthis_button_facebook"></a>
 		<a class="addthis_button_myspace"></a>
