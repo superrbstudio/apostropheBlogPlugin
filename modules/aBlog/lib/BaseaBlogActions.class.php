@@ -12,31 +12,7 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $q = Doctrine_Query::create()->from('aBlogPost');
-    $this->nofollowIfNeeded();
-    
-    $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
-    if(count($categories) > 0)
-    {
-      $categoryIds = array_map(create_function('$a', 'return $a["blog_category_id"];'),  $categories);
-      
-      if(in_array(null, $categoryIds)) 
-      {
-        if(count($categories) == 1) $uncat = true;
-        $q->addWhere('aBlogPost.category_id IS NULL OR aBlogPost.category_id IN ?', array($categoryIds));
-      }
-      else
-      {
-        $q->addWhere('aBlogPost.category_id IN ?', array($categoryIds));
-      }
-    }
-    
-    $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
-    $pager->setQuery(Doctrine::getTable('aBlogPost')->buildQuery($request, 'aBlogPost', $q));
-    $pager->setPage($this->getRequestParameter('page', 1));
-    $pager->init();
-    
-    $this->a_blog_posts = $pager;
+		$this->setPager();
 
     $this->buildParams();
 
@@ -60,34 +36,51 @@ abstract class BaseaBlogActions extends apostropheBlogPluginEngineActions
   
   public function executeFeed(sfWebRequest $request)
   {
-    $q = Doctrine_Query::create()->from('aBlogPost');
-    $categories = aTools::getCurrentPage()->BlogCategories->toArray();
-    if(count($categories) > 0)
-    {
-      $categoryIds = array_map(create_function('$a', 'return $a["id"];'),  $categories);
-      $q->whereIn('aBlogPost.Category.id', $categoryIds);
-    }
-    
-    $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
-    $pager->setQuery(Doctrine::getTable('aBlogPost')->buildQuery($request, 'aBlogPost', $q));
-    $pager->setPage($this->getRequestParameter('page', 1));
-    $pager->init();
-    
-    $this->articles = $pager->getResults();
+		$this->setPager();
     
     $feed = sfFeedPeer::createFromObjects(
-	    $this->articles,
+	    $this->a_blog_posts,
 	    array(
 	      'format'      => 'rss',
 	      'title'       => sfConfig::get('app_aBlog_feed_title'),
 	      'link'        => '@a_blog',
 	      'authorEmail' => sfConfig::get('app_aBlog_feed_author_email'),
 	      'authorName'  => sfConfig::get('app_aBlog_feed_author_name'),
-	      'routeName'   => '@a_blog_post',
+	      'routeName'   => '@a_blog_post', 
 	      'methods'     => array('description' => 'getBody')
 	    )
 	  );
 	  $this->getResponse()->setContent($feed->asXml());
 	  return sfView::NONE;
   }
+
+	protected function setPager()
+	{
+		$request = $this->getRequest();
+	  $q = Doctrine_Query::create()->from('aBlogPost');
+	  $this->nofollowIfNeeded();
+  
+	  $categories = aTools::getCurrentPage()->aBlogPageCategory->toArray();
+	  if(count($categories) > 0)
+	  {
+	    $categoryIds = array_map(create_function('$a', 'return $a["blog_category_id"];'),  $categories);
+    
+	    if(in_array(null, $categoryIds)) 
+	    {
+	      if(count($categories) == 1) $uncat = true;
+	      $q->addWhere('aBlogPost.category_id IS NULL OR aBlogPost.category_id IN ?', array($categoryIds));
+	    }
+	    else
+	    {
+	      $q->addWhere('aBlogPost.category_id IN ?', array($categoryIds));
+	    }
+	  }
+  
+	  $pager = new sfDoctrinePager('aBlogPost', sfConfig::get('app_aBlog_max_per_page', 10));
+	  $pager->setQuery(Doctrine::getTable('aBlogPost')->buildQuery($request, 'aBlogPost', $q));
+	  $pager->setPage($this->getRequestParameter('page', 1));
+	  $pager->init();
+  
+	  $this->a_blog_posts = $pager;
+	}
 }
