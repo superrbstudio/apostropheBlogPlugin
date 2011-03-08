@@ -3,7 +3,7 @@
   $aEvent = isset($aEvent) ? $sf_data->getRaw('aEvent') : null;
 ?>
 
-<ul class="a-blog-item-meta">
+<ul class="a-ui a-blog-item-meta">
 
   <?php // This has been simplified quite a lot. Please leave it that way so ?>
   <?php // it can be easily shared with the admin side and also stay I18N ?>
@@ -14,7 +14,7 @@
 	  <?php // 'Blockley Hall' since the user's location is often known to Google Maps. However ?>
 	  <?php // it is less useful if all of your locations are 'room 150', etc. with no further ?>
 	  <?php // information. Naturally full addresses work best ?>
-    <li class="post-location a-ui">
+    <li class="post-location">
 			<?php echo aString::firstLine($aEvent['location']) ?>
   		<?php if (sfConfig::get('app_events_google_maps', true)): ?>
 				<?php echo a_button(a_('Google Maps'), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('no-bg', 'alt', 'icon', 'a-google-maps')) ?>
@@ -29,7 +29,7 @@
 	</li>   			
 	<?php //*/ ?>
 	
-	<li class="post-extra a-ui">
+	<li class="post-extra">
 		<?php include_partial('aEvent/addToGoogleCalendar', array('aEvent' => $aEvent)) ?> 
 		<?php include_partial('aEvent/addToIcal', array('aEvent' => $aEvent)) ?>  
 	</li>
