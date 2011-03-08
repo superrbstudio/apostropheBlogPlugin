@@ -52,12 +52,12 @@ class aBlogSlotForm extends BaseForm
     $this->setWidget('blog_posts', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
     // TODO: really should be specific to posts, requires adding a custom query
     $this->validatorSchema['blog_posts'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
-    
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));
     $this->validatorSchema['categories_list'] =
       new sfValidatorDoctrineChoice(array('model' => 'aCategory', 'multiple' => true, 'required' => false));
 		$this->widgetSchema->setHelp('categories_list', '<span class="a-help-arrow"></span> Filter Posts by Category');
+   	$this->getWidget('categories_list')->setOption('query', Doctrine::getTable('aCategory')->createQuery()->orderBy('aCategory.name asc'));
         
     $this->widgetSchema['tags_list']       = new sfWidgetFormInput(array(), array('class' => 'tag-input', 'autocomplete' => 'off'));
     $this->validatorSchema['tags_list']    = new sfValidatorString(array('required' => false));
