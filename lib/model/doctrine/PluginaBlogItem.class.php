@@ -569,4 +569,21 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return aDate::normalize($this->published_at);
     return $this->published_at;
   }
+  
+  public function getTemplate()
+  {
+    $template = $this->_get('template');
+    $defaults = $this->getTemplateDefaults();
+    $templates = sfConfig::get('app_'.$this->engine.'_templates', $defaults);
+    // If the template is no longer valid, return the first template in the hardcoded
+    // set of default templates (which are guaranteed to exist because they are in the plugin)
+    if (!isset($templates[$template]))
+    {
+      foreach ($defaults as $key => $value)
+      {
+        return $key;
+      }
+    }
+    return $template;
+  }
 }
