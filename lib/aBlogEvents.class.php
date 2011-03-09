@@ -92,11 +92,20 @@ class aBlogEvents
       
       if ($migrate->tableExists('a_blog_item_category'))
       {
+        $itemIds = $migrate->query('SELECT id FROM a_blog_item');
+        $validItemIds = array();
+        foreach ($itemIds as $row)
+        {
+          $validItemIds[$row['id']] = true;
+        }
         $oldMappings = $migrate->query('SELECT * FROM a_blog_item_category');
         foreach ($oldMappings as $info)
         {
           $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
-          $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+          if (isset($validItemIds[$info['blog_item_id']]))
+          {
+            $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
+          }
         }
       }
     }
