@@ -332,9 +332,9 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
    */
-  public function getRichTextForArea($area, $limit = null)
+  public function getRichTextForArea($area, $limit = null, $types = array())
   {
-    return $this->getRichTextForAreas(array($area), $limit);
+    return $this->getRichTextForAreas(array($area), $limit, $types);
   }
 
   /**
@@ -343,16 +343,19 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
    */
-  public function getRichTextForAreas($areas = array(), $limit = null)
+  public function getRichTextForAreas($areas = array(), $limit = null, $types = array())
   {
     $text = '';
+		$typesArray = array_merge(array('aRichText', 'aText'), $types);
+		
 		if(!is_array($areas))
 			$areas = array($areas);
+
     foreach($areas as $area)
     {
       foreach($this->Page->getArea($area) as $slot)
       {
-        if($slot['type'] == 'aRichText' || $slot['type'] == 'aText')
+        if(in_array($slot['type'], $typesArray))
         {
           $text .= $slot->getValue();
         }
