@@ -343,24 +343,18 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * @param int $limit Number of characters to restrict retrieval to
    * @return string
    */
-  public function getRichTextForAreas($areas = array(), $limit = null, $types = array())
+  public function getRichTextForAreas($areas = array(), $limit = null)
   {
+		
     $text = '';
-		$typesArray = array_merge(array('aRichText', 'aText'), $types);
 		
 		if(!is_array($areas))
 			$areas = array($areas);
 
     foreach($areas as $area)
     {
-      foreach($this->Page->getArea($area) as $slot)
-      {
-        if(in_array($slot['type'], $typesArray))
-        {
-          $text .= $slot->getValue();
-        }
-      }
-    }
+			$text .= $this->Page->getAreaBasicHtml($area);
+		}
     if(!is_null($limit))
     {
       $text = aHtml::limitWords($text, $limit, array('append_ellipsis' => true));
