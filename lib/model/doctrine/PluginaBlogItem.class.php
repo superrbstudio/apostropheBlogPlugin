@@ -364,9 +364,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
   
   /**
-   * Returns media for all areas for this items virtual page, this may produce
-   * an erroneous result if templates are changed and media is attached to a no
-   * longer used area.
+   * Returns media for all areas that are specified in app.yml as being valid for
+	 * this blog template. 
    * @param string $type Kind of media to select from (image, video, pdf)
    * @param int $limit
    * @return Array aMediaItem
