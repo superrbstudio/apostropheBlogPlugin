@@ -2,9 +2,7 @@
 	$a_blog_post = isset($a_blog_post) ? $sf_data->getRaw('a_blog_post') : null;
 ?>
 
-<li class="author">
-	<span class="a-blog-item-meta-label"><?php echo __('Posted By:', array(), 'apostrophe') ?></span>
-	<?php if ($a_blog_post->getAuthor()): ?>
-	  <?php echo ($a_blog_post->getAuthor()->getName()) ? $a_blog_post->getAuthor()->getName() : $a_blog_post->getAuthor()  ?>
-	<?php endif ?>
-</li>
+<span class="a-blog-item-meta-label"><?php echo __('Posted By:', array(), 'apostrophe') ?></span>
+<?php if ($a_blog_post->getAuthor()): ?>
+  <?php echo ($a_blog_post->getAuthor()->getName()) ? $a_blog_post->getAuthor()->getName() : $a_blog_post->getAuthor()  ?>
+<?php endif ?>
