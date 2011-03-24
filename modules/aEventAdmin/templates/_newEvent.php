@@ -1,5 +1,5 @@
 <?php use_helper("a") ?>
-<form class="a-blog-admin-new-form" method="POST" action="<?php echo url_for('aEventAdmin/newWithTitle') ?>">
+<form class="a-blog-admin-new-form" method="post" action="<?php echo url_for('aEventAdmin/newWithTitle') ?>">
 	<div class="a-form-row a-hidden">
 		<?php echo $form->renderHiddenFields() ?>
 	</div>

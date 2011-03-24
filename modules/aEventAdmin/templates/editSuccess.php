@@ -15,7 +15,7 @@
   <div class="a-ui a-subnav-wrapper a-admin-sidebar">
 		<div class="a-subnav-inner">
 	    <div id="a-ui a-admin-blog-post-form">
-	      <form method="POST" action="<?php echo url_for('a_event_admin_update', $a_event) ?>" id="a-admin-form" class="a-ui blog">
+	      <form method="post" action="<?php echo url_for('a_event_admin_update', $a_event) ?>" id="a-admin-form" class="a-ui blog">
           <?php include_partial('aEventAdmin/form', array('form' => $form, 'a_event' => $a_event, 'popularTags' => $popularTags, 'existingTags' => $existingTags)) ?>
         </form>
 	    </div>
