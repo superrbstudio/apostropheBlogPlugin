@@ -1,7 +1,7 @@
 [?php use_helper("a") ?]
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
-<script charset="utf-8" type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function(){
 	var sortLabel = $("a.a-sort-label").parent().parent();
 	sortLabel.click(function(event) {
