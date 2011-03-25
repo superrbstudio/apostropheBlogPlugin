@@ -62,7 +62,11 @@ class sfEventCalendar
    */
   public function __construct($type, $date = null)
   {
-    define('DATE_CALC_BEGIN_WEEKDAY', 0);
+    // This can already be defined, generates warning
+    if (!defined('DATE_CALC_BEGIN_WEEKDAY'))
+    {
+      define('DATE_CALC_BEGIN_WEEKDAY', 0);
+    }
 
     if (!class_exists('Date_Calc'))
     {
