@@ -45,13 +45,6 @@ class aBlogEvents
         'ALTER TABLE a_blog_item ADD COLUMN end_time TIME'));
     }
     
-    if (!$migrate->tableExists('a_page_to_category'))
-    {
-      $migrate->sql(array(
-        "CREATE TABLE a_page_to_category (page_id BIGINT, category_id BIGINT, PRIMARY KEY(page_id, category_id)) ENGINE = INNODB;"
-      ));
-    }
-    
     if (!$migrate->tableExists('a_blog_item_to_category'))
     {
       $migrate->sql(array(
@@ -106,6 +99,46 @@ class aBlogEvents
           {
             $migrate->query('INSERT INTO a_blog_item_to_category (blog_item_id, category_id) VALUES (:blog_item_id, :category_id)', $info);
           }
+        }
+      }
+      if ($migrate->tableExists('a_blog_page_category'))
+      {
+        echo("Associating existing blog engine pages with new category IDs\n");
+        $itemIds = $migrate->query('SELECT id FROM a_page WHERE engine = "aBlog" OR engine = "aEvent"');
+        $validItemIds = array();
+        foreach ($itemIds as $row)
+        {
+          $validItemIds[$row['id']] = true;
+        }
+        $oldMappings = $migrate->query('SELECT * FROM a_blog_page_category');
+        foreach ($oldMappings as $info)
+        {
+          $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
+          if (isset($validItemIds[$info['page_id']]))
+          {
+            $migrate->query('INSERT INTO a_page_to_category (page_id, category_id) VALUES (:page_id, :category_id)', $info);
+          }
+        }
+      }
+      echo("Associating existing blog slots with new category IDs\n");
+      $blogSlots = $migrate->query('SELECT id, value FROM a_slot WHERE type = "aBlog" OR type = "aEvent"');
+      foreach ($blogSlots as $blogSlot)
+      {
+        $value = $blogSlot['value'];
+        $info = @unserialize($value);
+        if (isset($info['categories_list']))
+        {
+          $new = array();
+          foreach ($info['categories_list'] as $categoryId)
+          {
+            if (isset($oldIdToNewId[$categoryId]))
+            {
+              $new[] = $oldIdToNewId[$categoryId];
+            }
+          }
+          $info['categories_list'] = $new;
+          $blogSlot['value'] = serialize($info);
+          $migrate->query('UPDATE a_slot SET value = :value WHERE id = :id', $blogSlot);
         }
       }
     }
