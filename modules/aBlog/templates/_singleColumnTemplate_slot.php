@@ -11,10 +11,7 @@
   
   <h3 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h3>
 
-  <ul class="a-blog-item-meta">
-  	<li class="date"><?php echo aDate::long($aBlogPost['published_at']) ?></li>
-  	<li class="author"><?php echo __('Posted By:', array(), 'apostrophe') ?> <?php echo $aBlogPost->getAuthor() ?></li>   			
-  </ul>
+	<?php include_partial('aBlog/meta', array('a_blog_post' => $a_blog_post)) ?>
 
   <?php if($options['maxImages'] && $aBlogPost->hasMedia()): ?>
   	<div class="a-blog-item-media">
