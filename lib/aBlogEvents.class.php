@@ -141,6 +141,30 @@ class aBlogEvents
           $migrate->query('UPDATE a_slot SET value = :value WHERE id = :id', $blogSlot);
         }
       }
+      
+      // permissions regime for blogs
+      $blogAdmin = new sfGuardPermission();
+      $blogAdmin->setName('blog_admin');
+      $blogAdmin->setDescription('Blog administration');
+      $blogAdmin->save();
+      $blogAuthor = new sfGuardPermission();
+      $blogAuthor->setName('blog_author');
+      $blogAuthor->setDescription('Blog post authoring');
+      $blogAuthor->save();
+      
+      // Grant the expected access to the admin and editor groups if they are there
+      $adminGroup = Doctrine::getTable('sfGuardGroup')->findOneByName('admin');
+      if ($adminGroup)
+      {
+        $adminGroup->Permissions[] = $blogAdmin;
+        $adminGroup->save();
+      }
+      $editorGroup = Doctrine::getTable('sfGuardGroup')->findOneByName('editor');
+      if ($editorGroup)
+      {
+        $editorGroup->Permissions[] = $blogAuthor;
+        $editorGroup->save();
+      }
     }
 
     // Older updates may not have categories on the virtual page
