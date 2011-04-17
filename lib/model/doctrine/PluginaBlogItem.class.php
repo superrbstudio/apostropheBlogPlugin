@@ -206,7 +206,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   /**
-   * These date methods are use in the routing of the permalink
+   * These date methods are used in the routing of the permalink
    */
   public function getYear()
   {
@@ -230,7 +230,17 @@ abstract class PluginaBlogItem extends BaseaBlogItem
 
   public function getTitle()
   {
-    $titleSlot = $this->Page->getSlot('title');
+    // See if the index action has already cached the associated page
+    // (This is a big speedup)
+    $slug = $this->getVirtualPageSlug();
+    if (aTools::isPageCached($slug))
+    {
+      $titleSlot = aTools::getCachedPage($slug)->getSlot('title');
+    }
+    else
+    {
+      $titleSlot = $this->Page->getSlot('title');
+    }
     if ($titleSlot)
     {
       $result = $titleSlot->value;

@@ -110,8 +110,9 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $q = aPageTable::queryWithSlots();
       $q->whereIn('id', $pageIds);
-      $pages = $q->execute();
-      aTools::cacheVirtualPages($pages);
+      $fast = sfConfig::get('app_a_fasthydrate', false);
+      $pagesInfo = $q->execute(array(), $fast ? Doctrine::HYDRATE_ARRAY : Doctrine::HYDRATE_RECORD);
+      aTools::cacheVirtualPages($pagesInfo);
     }
   }
 
