@@ -7,7 +7,7 @@
 
 <?php $catClass = ""; foreach ($a_event->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
 
-<div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
+<div class="a-blog-item event <?php echo $a_event->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?> clearfix">
   <?php if($a_event->userHasPrivilege('edit')): ?>
 	  <ul class="a-ui a-controls a-blog-post-controls">
 			<li>

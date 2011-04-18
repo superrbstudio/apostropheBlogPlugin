@@ -4,7 +4,7 @@
 ?>
 <?php use_helper("a") ?>
 <?php $catClass = ""; foreach ($a_blog_post->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
-<div class="a-blog-item post <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?>">
+<div class="a-blog-item post <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?> clearfix">
 
 	<?php if ($a_blog_post->userHasPrivilege('edit')): ?>
 	  <ul class="a-ui a-controls a-blog-post-controls">
