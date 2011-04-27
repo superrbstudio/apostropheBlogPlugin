@@ -2,6 +2,7 @@
 <?php // of the implementation from the blog posts slot ?>
 <?php
   // Compatible with sf_escaping_strategy: true
+  $editable = isset($editable) ? $sf_data->getRaw('editable') : null;
   $aBlogPosts = isset($aBlogPosts) ? $sf_data->getRaw('aBlogPosts') : null;
   $name = isset($name) ? $sf_data->getRaw('name') : null;
   $options = isset($options) ? $sf_data->getRaw('options') : null;
@@ -10,7 +11,10 @@
   $slot = isset($slot) ? $sf_data->getRaw('slot') : null;
 ?>
 
-<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page, 'label' => a_get_option($options, 'editLabel', a_('Choose Events')))) ?>
+<?php use_helper('a') ?>
+<?php if ($editable): ?>
+	<?php include_partial('a/simpleEditWithVariants', array('pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page, 'label' => a_get_option($options, 'editLabel', a_('Choose Events')))) ?>
+<?php endif ?>
 
 <?php if (count($aBlogPosts)): ?>
 	<?php foreach ($aBlogPosts as $aBlogPost): ?>
