@@ -194,7 +194,7 @@ function aBlogConstructor()
 		var slotEditForm = $('#a-'+formName)
 		var editStates = slotEditForm.find('.a-form-row.by-type input[type="radio"]');
 		var editState = slotEditForm.find('.a-form-row.by-type input[type="radio"]:checked').val();
-		slotEditForm.addClass('a-options dropshadow editState-' + editState );
+		slotEditForm.addClass('a-ui a-options dropshadow editState-' + editState );
 			editStates.live('click', function(){
 			 	editState = slotEditForm.find('.a-form-row.by-type input[type="radio"]:checked').val();
 				slotEditForm.removeClass('editState-title').removeClass('editState-tags').addClass('editState-'+editState);

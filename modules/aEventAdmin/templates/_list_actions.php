@@ -1,6 +1,6 @@
 <?php use_helper("a") ?>
 <li class="a-admin-action-new"><?php echo a_js_button(a_('New Event'), array('big', 'icon', 'a-add', 'a-blog-new-post-button'), 'a-blog-new-post-button') ?>
-  <div class="a-options a-blog-admin-new-ajax dropshadow">
+  <div class="a-ui a-options a-blog-admin-new-ajax dropshadow">
     <?php include_component('aEventAdmin', 'newEvent') ?>
   </div>
 </li>

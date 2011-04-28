@@ -21,7 +21,7 @@
 <?php if (aBlogItemTable::userCanPost()): ?>
 	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
 	  <?php echo a_js_button($newLabel, array('big', 'a-add', 'a-blog-new-post-button', 'a-sidebar-button'), 'a-blog-new-post-button') ?>
-    <div class="a-options a-blog-admin-new-ajax dropshadow">
+    <div class="a-ui a-options a-blog-admin-new-ajax dropshadow">
       <?php include_component($newModule, $newComponent) ?>
     </div>
 	</div>

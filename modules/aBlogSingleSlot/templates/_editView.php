@@ -23,7 +23,7 @@ This slot is deprecated as of Apostrophe 1.5
 <script type="text/javascript" src="/sfJqueryReloadedPlugin/js/plugins/jquery.autocomplete.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#a-<?php echo $form->getName() ?>').addClass('a-options dropshadow');
+		$('#a-<?php echo $form->getName() ?>').addClass('a-ui a-options dropshadow');
 	  $('#<?php echo $form['search']->renderId() ?>').autocomplete('<?php echo url_for("@a_blog_admin_autocomplete") ?>');
 	  $('#<?php echo $form['search']->renderId() ?>').result(function(event, data, formatted){
 	    if (data) {
