@@ -106,13 +106,25 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $pageIds[] = $aBlogItem['page_id'];
     }
+    $pages = array();
     if(count($pageIds))
     {
       $q = aPageTable::queryWithSlots();
       $q->whereIn('id', $pageIds);
       $fast = sfConfig::get('app_a_fasthydrate', false);
       $pagesInfo = $q->execute(array(), $fast ? Doctrine::HYDRATE_ARRAY : Doctrine::HYDRATE_RECORD);
-      aTools::cacheVirtualPages($pagesInfo);
+      foreach($pagesInfo as $pageInfo)
+      {
+        $pages[] = aTools::cacheVirtualPage($pageInfo);
+      }
+    }
+    $pagesById = aArray::listToHashById($pages);
+    foreach ($blogItems as $aBlogItem)
+    {
+      if (isset($pagesById[$aBlogItem->page_id]))
+      {
+        $aBlogItem->Page = $pagesById[$aBlogItem->page_id];
+      }
     }
   }
 
