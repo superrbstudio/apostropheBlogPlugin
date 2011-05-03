@@ -177,7 +177,7 @@
 		<?php echo link_to('<span class="icon"></span>'.a_('Preview'), 'a_blog_post', array('preview' => 1) + $a_event->getRoutingParams(), array('class' => 'a-btn icon a-search lite a-align-left', 'rel' => 'external')) ?>
 	  <?php aRouteTools::popTargetEnginePage($engine->engine) ?>
 	  <?php if($a_event->userHasPrivilege('delete')): ?>
-		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
+		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete alt lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
 	  <?php endif ?>
 	</div>
 
