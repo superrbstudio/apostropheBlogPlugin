@@ -33,7 +33,7 @@
     [?php echo link_to(
 			$sortLabel,
 			'<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type='.($sort[1] == 'asc' ? 'desc' : 'asc'), 
-			array('class' => 'a-btn flag flag-right no-bg icon a-sort-arrow sorting '.$sort[1], 'title' => __($sortLabel, array(), 'a-admin'))) 
+			array('class' => 'a-btn flag flag-right a-sort-arrow no-bg no-label icon alt sorting '.$sort[1].(($sort[1] == 'asc') ? ' a-arrow-up' : ' a-arrow-down'), 'title' => __($sortLabel, array(), 'a-admin'))) 
 		?]
 		
     [?php else: ?]
@@ -41,7 +41,7 @@
     [?php echo link_to(
       __('<span class="icon"></span>Ascending', array(), 'a-admin'),
       '<?php echo $this->getModuleName() ?>/index?sort=<?php echo $name ?>&sort_type=asc', 
-			array('class' => 'a-btn flag flag-right no-bg icon a-sort-arrow asc', 'title' => __('Ascending', array(), 'a-admin'))) 
+			array('class' => 'a-btn flag flag-right a-sort-arrow not-sorting no-bg no-label icon a-arrow-up alt asc', 'title' => __('Ascending', array(), 'a-admin')))
 		?]
 		
   [?php endif; ?]
