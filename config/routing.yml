@@ -14,44 +14,54 @@ a_blog_search:
   param: { module: aBlog, action: search }
   class: aRoute
 
+# Tags no longer go in the pretty path because they are not
+# restricted on punctuation. Categories now have a clear prefix
+# so the blog can be the home page
+
+# Please do not put the tag back in the URL
 a_blog_cat_tag_year_month_day:
-  url:   /:cat/tag/:tag/:year/:month/:day
+  url:   /category/:cat/:year/:month/:day
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_cat_tag_year_month:
-  url:   /:cat/tag/:tag/:year/:month
+  url:   /category/:cat/:year/:month
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_cat_tag_year:
-  url:   /:cat/tag/:tag/:year
+  url:   /category/:cat/:year
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_tag_year_month_day:
-  url:   /tag/:tag/:year/:month/:day
+  url:   /:year/:month/:day
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_tag_year_month:
-  url:   /tag/:tag/:year/:month
+  url:   /:year/:month
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_tag_year:
-  url:   /tag/:tag/:year
+  url:   /:year
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}' }
   class: aRoute
 
 a_blog_cat_year_month_day:
-  url:   /:cat/:year/:month/:day
+  url:   /category/:cat/:year/:month/:day
   param: { module: aBlog, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
@@ -88,13 +98,15 @@ a_blog_year:
   requirements: { year: '\d{4}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_cat_tag:
-  url:   /:cat/tag/:tag
+  url:   /category/:cat
   param: { module: aBlog, action: index }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_blog_tag:
-  url:   /tag/:tag
+  url:   /
   param: { module: aBlog, action: index }
   class: aRoute
 
@@ -137,56 +149,65 @@ a_event_post:
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class:   aDoctrineRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_tag_year_month_day:
-  url:   /:cat/tag/:tag/:year/:month/:day
+  url:   /category/:cat/:year/:month/:day
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_tag_year_month:
-  url:   /:cat/tag/:tag/:year/:month
+  url:   /category/:cat/:year/:month
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_tag_year:
-  url:   /:cat/tag/:tag/:year
+  url:   /category/:cat/:year
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_tag_year_month_day:
-  url:   /tag/:tag/:year/:month/:day
+  url:   /:year/:month/:day
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_tag_year_month:
-  url:   /tag/:tag/:year/:month
+  url:   /:year/:month
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_tag_year:
-  url:   /tag/:tag/:year
+  url:   /:year
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_year_month_day:
-  url:   /:cat/:year/:month/:day
+  url:   /category/:cat/:year/:month/:day
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}', day: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_year_month:
-  url:   /:cat/:year/:month
+  url:   /category/:cat/:year/:month
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}', month: '\d|\d{2}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_year:
-  url:   /:cat/:year
+  url:   /category/:cat/:year
   param: { module: aEvent, action: index }
   requirements: { year: '\d{4}' }
   class: aRoute
@@ -209,13 +230,15 @@ a_event_year:
   requirements: { year: '\d{4}' }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_cat_tag:
-  url:   /:cat/tag/:tag
+  url:   /category/:cat
   param: { module: aEvent, action: index }
   class: aRoute
 
+# Please do not put the tag back in the URL
 a_event_tag:
-  url:   /tag/:tag
+  url:   /
   param: { module: aEvent, action: index }
   class: aRoute
 
