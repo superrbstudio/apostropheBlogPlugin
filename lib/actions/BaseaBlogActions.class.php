@@ -102,6 +102,13 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->forward404Unless($this->aBlogPost['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aBlogPost));
+
+    // Thanks to Giles Smith for catching that we had no titles on our blog post permalink pages!
+    // Too much Chrome will do that to you (:
+    // Title is pre-escaped as valid HTML
+    $prefix = aTools::getOptionI18n('title_prefix');
+    $suffix = aTools::getOptionI18n('title_suffix');
+    $this->getResponse()->setTitle($prefix . $this->aBlogPost->Page->getTitle() . $suffix, false);
     
     return $this->pageTemplate;
   }

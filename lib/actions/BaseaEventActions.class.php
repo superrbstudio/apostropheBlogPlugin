@@ -47,6 +47,12 @@ abstract class BaseaEventActions extends BaseaBlogActions
     $this->forward404Unless($this->aEvent['status'] == 'published' || $this->getUser()->isAuthenticated());
 		$this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aEvent));
+    // Thanks to Giles Smith for catching that we had no titles on our blog post permalink pages!
+    // Too much Chrome will do that to you (:
+    // Title is pre-escaped as valid HTML
+    $prefix = aTools::getOptionI18n('title_prefix');
+    $suffix = aTools::getOptionI18n('title_suffix');
+    $this->getResponse()->setTitle($prefix . $this->aEvent->Page->getTitle() . $suffix, false);
 		$this->calendar = $this->buildCalendar($request);			
 		return $this->pageTemplate;
   }
