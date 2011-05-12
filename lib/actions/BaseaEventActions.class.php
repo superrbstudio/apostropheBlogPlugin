@@ -186,14 +186,14 @@ EOM
 		$date = $request->getParameter('year', date('Y')).'-'.$request->getParameter('month', date('m')).'-'.$request->getParameter('month', date('d'));
 		$monthRequest = clone $request;
 		$monthRequest->getParameterHolder()->remove('day');
-		$query = $this->buildQuery($monthRequest);
-		$aEvents = $query->execute();
+		$query = $this->buildQuery($monthRequest, array('blogItemsOnly' => true));
+		$aEvents = $query->execute(array(), Doctrine::HYDRATE_ARRAY);
 
 		$calendar['events'] = new sfEventCalendar('month', $date);
 		
 		foreach ($aEvents as $aEvent)
 		{
-			$calendar['events']->addEvent($aEvent->getStartDate(), array('event' => $aEvent));
+			$calendar['events']->addEvent($aEvent['start_date'], array('event' => $aEvent));
 		}
 		
 		$calendar['month'] = date('F', strtotime($date));

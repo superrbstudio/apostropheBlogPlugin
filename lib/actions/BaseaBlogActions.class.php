@@ -37,24 +37,38 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->info = aBlogToolkit::filterForEngine($this->getFilterForEngineParams());
   }
 
-  protected function buildQuery($request)
+  /**
+   * $request is the web request, for historical bc reasons. $options can currently
+   * contain 'blogItemsOnly' => true to avoid returning the associated pages, useful
+   * when we are just making a calendar with no titles etc.
+   */
+  protected function buildQuery($request, $options = array())
   {
     // We already know what page ids are relevant, now we're fetching author
     // information. There's another method implicitly called later to populate
     // all of the blog content for the posts
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a');
+    $blogItemsOnly = isset($options['blogItemsOnly']) && $options['blogItemsOnly'];
     if (count($this->info['pageIds']))
     {
       // We have page ids, so we need a join to figure out which blog items we want.
       // Doctrine doesn't have a withIn mechanism that takes a nice clean array, but we
       // know these are clean IDs 
       $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $this->info['pageIds']) . ')');
+      $q->leftJoin($this->modelClass.'.Categories c');
       // Oops: there is NO ordering with an IN clause alone, you must make that explicit
+      if ($blogItemsOnly)
+      {
+        $q->select($q->getRootAlias() . '.*');
+      }
       aDoctrine::orderByList($q, $this->info['pageIds'], 'p');
       // When you call aDoctrine::orderByList you must have an explicit select clause of your own as the
       // default 'select everything' behavior of Doctrine goes away as soon as that method calls addSelect
-      $q->addSelect($q->getRootAlias() . '.*, a.*, p.*');
+      if (!$blogItemsOnly)
+      {
+        $q->addSelect($q->getRootAlias() . '.*, a.*, p.*, c.*');
+      }
     }
     else
     {
