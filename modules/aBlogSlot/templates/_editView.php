@@ -15,7 +15,7 @@
 	  	<div class="a-form-field">
 					<label for="<?php echo $form['count']->renderId() ?>" class="a-form-field-label"><?php echo a_('Number of Posts to Display') ?></label>
 	      	<?php echo $form['count']->render() ?>
-					<div class="a-form-help collapsed"><?php echo $form['count']->renderHelp() ?></div>
+					<div class="a-help"><?php echo $form['count']->renderHelp() ?></div>
 	  	</div>
 	  	<div class="a-form-error"><?php echo $form['count']->renderError() ?></div>
 	  </div>
@@ -23,7 +23,7 @@
 	  <div class="a-form-row categories">
 	    <div class="a-form-field">
 	      	<label class="a-multiple-select-label" for="<?php echo $form['categories_list']->renderId() ?>"><?php echo a_('Categorized')?></label><?php echo $form['categories_list']->render() ?>
-	    		<div class="a-form-help collapsed"><?php echo $form['categories_list']->renderHelp() ?></div>
+	    		<div class="a-help"><?php echo $form['categories_list']->renderHelp() ?></div>
 			</div>
 	  	<div class="a-form-error"><?php echo $form['categories_list']->renderError() ?></div>
 	  </div>
@@ -38,7 +38,7 @@
 	      <?php endif ?>
 	      <?php a_js_call('pkInlineTaggableWidget(?, ?)', '#' . $form['tags_list']->renderId(), $options) ?>
 	  	</div>
-			<div class="a-form-help collapsed"><?php echo $form['tags_list']->renderHelp() ?></div>
+			<div class="a-help"><?php echo $form['tags_list']->renderHelp() ?></div>
 	  	<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
 	  </div>
 	</div>

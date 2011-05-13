@@ -15,7 +15,7 @@ This slot is deprecated as of Apostrophe 1.5
 	<?php echo $form['search']->renderLabel(__('Search by Title', array(), 'apostrophe')) ?>
 	<div class="a-form-field">
 		<?php echo $form['search']->render(array('class' => 'a-blogsingle-input', )) ?>
-		<div class="a-form-help tooltip"><?php echo $form['search']->renderHelp() ?></div>
+		<div class="a-help"><?php echo $form['search']->renderHelp() ?></div>
 	</div>
 	<div class="a-form-error"><?php echo $form['search']->renderError() ?></div>
 </div>
