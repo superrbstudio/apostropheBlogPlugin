@@ -476,9 +476,12 @@ class aBlogToolkit {
       // For posts "today and forward" is not a relevant concept (and a separate clause
       // already makes sure we don't see unpublished stuff). For events we'll override
       // the start date below
+      
+      // For compatibility with the blog importer make sure we accept 0000-00-00 as a
+      // publication date
       $startYear = '0000';
-      $startMonth = '01';
-      $startDay = '01';
+      $startMonth = '00';
+      $startDay = '00';
       $endYear = '9999';
       $endMonth = '12';
       $endDay = '31';

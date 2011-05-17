@@ -21,14 +21,20 @@ class aBlogImporter extends aImporter
 
   public function import($type = 'posts')
   {
-    foreach($this->$type->post as $post)
+    if($type == 'posts') {
+      $singular = 'post';
+    }
+    else
+    {
+      $singular = 'event';
+    }
+    foreach($this->$type->$singular as $post)
     {
       if($type == 'posts') {
         $this->insertPost($post);
       } else {
         $this->insertEvent($post);
       }
-      
       $blog_id = $this->sql->lastInsertId();
       $categories = $post->categories;
       $categoryIds = array();
@@ -58,8 +64,9 @@ class aBlogImporter extends aImporter
       $post->Page->addAttribute('slug', $slug);
       $post->Page->addAttribute('title', $post->title);
 
-      $page = $this->parsePage($post->Page);
-      
+      // In 1.5 virtual pages associated with engines should have 'engine' set to the appropriate engine.
+      // Also published_at must match
+      $page = $this->parsePage($post->Page, null, array('engine' => ($type === 'posts') ? 'aBlog' : 'aEvent', 'published_at' => (string) $post['published_at']));
       $this->sql->query("UPDATE a_blog_item SET page_id=:page_id where id=:id", array('page_id' => $page['id'], 'id' => $blog_id));
 
       // Sync tags and categories to the associated page, enabling search
@@ -132,6 +139,7 @@ class aBlogImporter extends aImporter
   
   public function insertPost($post)
   {
+    $slug = $this->slugify(isset($post['slug']) ? $post['slug'] : $post->title);
     $s = "INSERT INTO a_blog_item (title, author_id, slug_saved, status, allow_comments, template, published_at, type, slug )";
     $s.= "VALUES (:title, :author_id, :slug_saved, :status, :allow_comments, :template, :published_at, :type, :slug)";
     $params = array(
@@ -143,15 +151,16 @@ class aBlogImporter extends aImporter
       "template" => "singleColumnTemplate",
       "published_at" => $post['published_at'],
       "type" => "post",
-      "slug" => $post['slug']
+      "slug" => $slug
     );
     $this->sql->query($s, $params);
   }
 
   public function insertEvent($event)
   {
+    $slug = $this->slugify(isset($event['slug']) ? $event['slug'] : $event->title);
     $s = "INSERT INTO a_blog_item (title, author_id, slug_saved, status, allow_comments, template, published_at, start_date, start_time, end_date, end_time, type, slug )";
-    $s.= "VALUES (:title, author_id, :slug_saved, :status, :allow_comments, :template, :published_at, :start_date, :start_time, :end_date, :end_time, :type, :slug)";
+    $s.= "VALUES (:title, :author_id, :slug_saved, :status, :allow_comments, :template, :published_at, :start_date, :start_time, :end_date, :end_time, :location, :type, :slug)";
     $params = array(
       "title" => $event->title,
       "author_id" => $this->author_id,
@@ -160,14 +169,37 @@ class aBlogImporter extends aImporter
       "allow_comments" => false,
       "template" => "singleColumnTemplate",
       "published_at" => $event['published_at'],
+      "location" => $event->location,
       "start_date" => date('Y-m-d', strtotime($event['start_date'])),
       "start_time" => date('h:i', strtotime($event['start_date'])),
       "end_date" => date('Y-m-d', strtotime($event['end_date'])),
       "end_time" => date('h:i', strtotime($event['end_date'])),
       "type" => "event",
-      "slug" => $event['slug']
+      "slug" => $slug
     );
     $this->sql->query($s, $params);
   }
-
+  
+  /**
+   * Generate a unique, safe slug
+   */
+  public function slugify($slug)
+  {
+    $slug = aTools::slugify($slug);
+    while (count($this->sql->query('select id from a_blog_item where slug = :slug', array('slug' => $slug))))
+    {
+      if (preg_match('/^(.*)-(\d+)$/', $slug, $matches))
+      {
+        $rest = $matches[1];
+        $ordinal = $matches[2];
+        $ordinal++;
+        $slug = $rest . "-" . $ordinal;
+      }
+      else
+      {
+        $slug .= "-1";
+      }
+    }
+    return $slug;
+  }
 }

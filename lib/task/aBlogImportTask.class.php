@@ -11,7 +11,7 @@
  * @subpackage Tasks
  * @author     Dan Ordille <dan@punkave.com>
  */
-class aImportBlogTask extends sfBaseTask
+class aBlogImportTask extends sfBaseTask
 {
 
   protected function configure()
@@ -32,7 +32,10 @@ Usage:
 
 php symfony apostrophe:import-blog
 
-See the Wiki for documentation of the XML format required.
+Separate files should be specified with the --events and --posts options.
+Most actual blogs only have posts.
+
+See trac.apostrophe.org for documentation of the XML format required.
 EOF;
   }
 
