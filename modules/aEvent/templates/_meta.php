@@ -15,7 +15,9 @@
 	  <?php // it is less useful if all of your locations are 'room 150', etc. with no further ?>
 	  <?php // information. Naturally full addresses work best ?>
     <li class="post-location">
-			<?php echo aString::firstLine($aEvent['location']) ?>
+			<span class="post-location-name">
+				<?php echo aString::firstLine($aEvent['location']) ?>
+			</span>
   		<?php if (sfConfig::get('app_events_google_maps', true)): ?>
 				<?php echo a_button(a_('Google Maps'), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('no-bg', 'alt', 'icon', 'a-google-maps')) ?>
 		  <?php endif ?>
