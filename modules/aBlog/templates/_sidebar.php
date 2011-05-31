@@ -121,10 +121,10 @@
   <?php // Everything not date-related. A date-restricted RSS feed is a bit of a contradiction ?>
   <?php $filtered = aUrl::addParams($filterUrl, array('feed' => 'rss', 'year' => '', 'month' => '', 'day' => '')) ?>
   <?php if ($full === $filtered): ?>
-    <li><?php echo a_button(a_('RSS Feed'), url_for($full), array('icon','a-rss-feed', 'no-bg', 'alt')) ?></li>
+    <li><?php echo a_button(a_('RSS Feed'), url_for($full), array('icon','a-rss-feed', 'no-bg','color')) ?></li>
   <?php else: ?>
-    <li><?php echo a_button(a_('Full Feed'), url_for($full), array('icon','a-rss-feed','no-bg', 'alt')) ?></li>
-    <li><?php echo a_button(a_('Filtered Feed'), url_for($filtered), array('icon','a-rss-feed','no-bg', 'alt')) ?></li>
+    <li><?php echo a_button(a_('Full Feed'), url_for($full), array('icon','a-rss-feed','no-bg', 'color')) ?></li>
+    <li><?php echo a_button(a_('Filtered Feed'), url_for($filtered), array('icon','a-rss-feed','no-bg', 'color')) ?></li>
   <?php endif ?>
 	</ul>
 <?php endif ?>
