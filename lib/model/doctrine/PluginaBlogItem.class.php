@@ -38,7 +38,15 @@ abstract class PluginaBlogItem extends BaseaBlogItem
       return false;
     }
   }
-
+  
+  /**
+   * Suitable in tasks and other environments where you don't have a user
+   */
+  public function deleteWithoutPermissionsCheck(Doctrine_Connection $conn = null)
+  {
+    return parent::delete($conn);
+  }
+  
   public function postDelete($event)
   {
     $this->Page->delete();
