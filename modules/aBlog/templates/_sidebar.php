@@ -12,7 +12,7 @@
 	$adminModule = isset($adminModule) ? $sf_data->getRaw('adminModule') : null;
   $calendar = isset($calendar) ? $sf_data->getRaw('calendar') : null;
   $tag = (!is_null($sf_params->get('tag'))) ? $sf_params->get('tag') : null;
-	$selected = array('icon','a-selected'); // Class names for selected filters
+	$selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters
 ?>
 
 <?php // url_for is the LAST step after other addParams calls play with what we want to include. Don't do it now ?>
@@ -49,8 +49,7 @@
 <div class='a-subnav-section range'>
   <h4><?php echo a_('Browse by') ?></h4>
   <div class="a-filter-options blog clearfix">
-    <div class="a-filter-option">
-    	
+    <div class="a-filter-option">  	
 			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
 			<?php echo a_button('Day', url_for($url . '?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
 		</div>
@@ -121,10 +120,10 @@
   <?php // Everything not date-related. A date-restricted RSS feed is a bit of a contradiction ?>
   <?php $filtered = aUrl::addParams($filterUrl, array('feed' => 'rss', 'year' => '', 'month' => '', 'day' => '')) ?>
   <?php if ($full === $filtered): ?>
-    <li><?php echo a_button(a_('RSS Feed'), url_for($full), array('icon','a-rss-feed', 'no-bg','color')) ?></li>
+    <li><?php echo a_button(a_('RSS Feed'), url_for($full), array('a-link','icon','a-rss-feed', 'no-bg','color')) ?></li>
   <?php else: ?>
-    <li><?php echo a_button(a_('Full Feed'), url_for($full), array('icon','a-rss-feed','no-bg', 'color')) ?></li>
-    <li><?php echo a_button(a_('Filtered Feed'), url_for($filtered), array('icon','a-rss-feed','no-bg', 'color')) ?></li>
+    <li><?php echo a_button(a_('Full Feed'), url_for($full), array('a-link','icon','a-rss-feed','no-bg', 'color')) ?></li>
+    <li><?php echo a_button(a_('Filtered Feed'), url_for($filtered), array('a-link','icon','a-rss-feed','no-bg', 'color')) ?></li>
   <?php endif ?>
 	</ul>
 <?php endif ?>
