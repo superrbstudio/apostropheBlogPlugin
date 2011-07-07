@@ -9,6 +9,6 @@
 	</li>
 	<?php slot('disqus_needed', 1) ?>
 	<?php  if (sfConfig::get('app_aBlog_disqus_enabled')): ?>
-	<li><a class="disqus-comment-count" href="<?php echo url_for('a_blog_post', $a_blog_post) ?>#disqus_thread">0</a></li>   
+	<li><a class="disqus-comment-count" data-disqus-identifier="<?php echo htmlspecialchars(aBlogItemTable::getDisqusIdentifier($a_blog_post)) ?>" href="<?php echo url_for('a_blog_post', $a_blog_post) ?>#disqus_thread">0</a></li>   
 	<?php endif ?>
 </ul>
