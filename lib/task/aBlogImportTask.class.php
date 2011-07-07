@@ -18,9 +18,11 @@ class aBlogImportTask extends sfBaseTask
   {
     $this->addOptions(array(
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_REQUIRED, 'The application', 'frontend'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       new sfCommandOption('events', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of events', null),
-      new sfCommandOption('posts', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of posts', null)
+      new sfCommandOption('posts', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of posts', null),
+      new sfCommandOption('authors', null, sfCommandOption::PARAMETER_REQUIRED, 'XML author username mapping', null)
       // add your own options here
     ));
 
@@ -34,6 +36,19 @@ php symfony apostrophe:import-blog
 
 Separate files should be specified with the --events and --posts options.
 Most actual blogs only have posts.
+
+If your xml file specifies a disqus_thread_identifier attribute for a post
+element, Apostrophe will point to that existing disqus thread rather than
+creating a new thread identifier for the post. To use that feature you 
+must install the apostropheImportersPlugin in your project and run
+apostrophe:migrate to add the disqus_thread_identifier column. This is
+only worth the trouble if you have existing disqus threads for your
+imported blog posts.
+
+You can specify an authors file which maps old usernames to new usernames.
+The task first looks for a match in the authors file (if any), then for a match
+among the usernames on the new site, and as a last resort assigns the
+article's authorship to the "admin" user.
 
 See trac.apostrophe.org for documentation of the XML format required.
 EOF;

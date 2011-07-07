@@ -3,7 +3,7 @@
 	var disqus_shortname = "<?php echo(sfConfig::get('app_aBlog_disqus_shortname')) ?>";
 	(function () {
 	  var s = document.createElement('script'); s.async = true;
-	  s.src = "http://disqus.com/"+disqus_shortname+"/count.js";
+	  s.src = "http://" + disqus_shortname + ".disqus.com/count.js";
 	  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
 	}());
 	</script>

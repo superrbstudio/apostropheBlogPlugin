@@ -2,9 +2,10 @@
 
 class aBlogImporter extends aImporter
 {
-  protected $author_id;
+  protected $authorMap;
+  protected $defaultAuthorId;
 
-  public function  initialize($params)
+  public function initialize($params)
   {
     $this->sql->query('DELETE FROM a_blog_item');
     if (isset($params['posts']))
@@ -15,8 +16,15 @@ class aBlogImporter extends aImporter
     {
       $this->events = simplexml_load_file($params['events']);
     }
-    $author_row = current($this->sql->query('SELECT * FROM sf_guard_user WHERE username="admin"'));
-    $this->author_id = $author_row['id'];
+    if (isset($params['authors']))
+    {
+      $authorMapXml = simplexml_load_file($params['authors']);
+      foreach ($authorMapXml->mapping as $mapping)
+      {
+        $this->authorMap[(string) $mapping['from']] = (string) $mapping['to'];
+      }
+    }
+    $this->defaultAuthorId = $this->sql->queryOneScalar('SELECT id FROM sf_guard_user WHERE username="admin"');
   }
 
   public function import($type = 'posts')
@@ -136,15 +144,33 @@ class aBlogImporter extends aImporter
     $this->sql->query($s, $params);
     return $tag_id;
   }
-  
+
   public function insertPost($post)
   {
     $slug = $this->slugify(isset($post['slug']) ? $post['slug'] : $post->title);
-    $s = "INSERT INTO a_blog_item (title, author_id, slug_saved, status, allow_comments, template, published_at, type, slug )";
-    $s.= "VALUES (:title, :author_id, :slug_saved, :status, :allow_comments, :template, :published_at, :type, :slug)";
+
+    // Posts belong to the admin if a valid username is not provided.
+    // Check the author map if there is one
+    $author_id = $this->defaultAuthorId;
+    if (isset($post->author))
+    {
+      if (isset($this->authorMap[(string) $post->author]))
+      {
+        $real_author_id = $this->sql->queryOneScalar('select id from sf_guard_user where username = :username', array('username' => (string) $this->authorMap[(string) $post->author]));
+      }
+      else
+      {
+        $real_author_id = $this->sql->queryOneScalar('select id from sf_guard_user where username = :username', array('username' => (string) $post->username));
+      }
+    }
+    if (isset($real_author_id) && strlen($real_author_id))
+    {
+      $author_id = $real_author_id;
+    }
+    
     $params = array(
       "title" => $post->title,
-      "author_id" => $this->author_id,
+      "author_id" => $author_id,
       "slug_saved" => true,
       "status" => 'published',
       "allow_comments" => false,
@@ -153,7 +179,19 @@ class aBlogImporter extends aImporter
       "type" => "post",
       "slug" => $slug
     );
-    $this->sql->query($s, $params);
+    if (isset($post['disqus_thread_identifier']))
+    {
+      if (!class_exists('apostropheImportersPluginConfiguration'))
+      {
+        echo("WARNING: apostropheImportersPlugin not installed, cannot migrate disqus threads\n");
+      }
+      else
+      {
+        $params['disqus_thread_identifier'] = $post['disqus_thread_identifier'];
+      }
+    }
+    $this->sql->insert('a_blog_item', $params);
+    $blog_id = $this->sql->lastInsertId();
   }
 
   public function insertEvent($event)
