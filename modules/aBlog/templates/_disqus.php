@@ -10,11 +10,7 @@
 	  <?php // from a Wordpress import etc. Older versions do not and we shouldn't break older ?>
 	  <?php // overrides of those templates. The prefix app.yml option only makes sense when we ?>
 	  <?php // are not using a legacy identifier imported from another system ?>
-	  <?php if (isset($post) && class_exists('apostropheImportersPluginConfiguration') && (!is_null($post['disqus_thread_identifier']))): ?>
-	    var disqus_identifier = <?php echo json_encode($post['disqus_thread_identifier']) ?>;
-    <?php else: ?>
-	    var disqus_identifier = <?php echo json_encode(sfConfig::get('app_a_disqus_identifierPrefix', '') . $id) ?>;
-    <?php endif ?>
+    var disqus_identifier = <?php echo json_encode(aBlogItemTable::getDisqusIdentifier(isset($post) ? $post : null, $id)) ?>;
 	  (function() {
 	   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
 	   dsq.src = "http://<?php echo $disqus_shortname ?>.disqus.com/embed.js";

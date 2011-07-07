@@ -3,6 +3,21 @@
  */
 class PluginaBlogItemTable extends Doctrine_Table
 {
+  /**
+   * One of $post and $id must not be null
+   */
+  public static function getDisqusIdentifier($post, $id = null)
+  {
+    if ($post)
+    {
+      if (class_exists('apostropheImportersPluginConfiguration') && (!is_null($post['disqus_thread_identifier'])))
+      {
+        return $post['disqus_thread_identifier'];
+      }
+      $id = $post['id'];
+    }
+    return sfConfig::get('app_a_disqus_identifierPrefix', '') . $id;
+  }
 
   public static function getInstance()
   {
