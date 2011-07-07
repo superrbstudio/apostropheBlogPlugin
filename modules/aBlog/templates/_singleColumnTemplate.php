@@ -33,4 +33,3 @@
 	<?php endif ?>
 
 </div>
-<?php slot('disqus_needed', 1) ?>
