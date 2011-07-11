@@ -16,7 +16,7 @@
 <?php if (count($aBlogPosts)): ?>
 	<?php foreach ($aBlogPosts as $aBlogPost): ?>
 		<?php $options['slideshowOptions']['idSuffix'] = 'aBlogSlot-'.$permid.'-'.$slot.'-'.$aBlogPost->getId(); ?>	
-		<?php include_partial('aBlogSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost)) ?>
+		<?php include_partial('aBlogSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost, 'pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
 	<?php endforeach ?>
 <?php else: ?>
 	<h4><?php echo a_('There are no blog posts that match the criteria you have specified.') ?></h4>

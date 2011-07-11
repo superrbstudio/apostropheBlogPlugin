@@ -15,5 +15,5 @@ This slot is deprecated as of Apostrophe 1.5
 
 <?php if ($aBlogItem): ?>
 	<?php $options['slideshowOptions']['idSuffix'] = 'aBlogSingleSlot-'.$permid.'-'.$slot.'-'.$aBlogItem->getId(); ?>	
-  <?php include_partial('aBlogSingleSlot/post', array('aBlogItem' => $aBlogItem, 'options' => $options)) ?>
+  <?php include_partial('aBlogSingleSlot/post', array('aBlogItem' => $aBlogItem, 'options' => $options, 'pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
 <?php endif ?>
