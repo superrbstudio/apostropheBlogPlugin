@@ -509,10 +509,12 @@ class aBlogToolkit {
     // We often filter posts (not events) by a range of publication dates
     if (isset($options['byPublishedAt']) && $options['byPublishedAt'])
     {
+      // Include time portion - published_at is a full timestamp
+      
       $q .= "and p.published_at <= :p_end_date ";
-      $params['p_end_date'] = "$endYear-$endMonth-$endDay";
+      $params['p_end_date'] = "$endYear-$endMonth-$endDay 23:59:59";
       $q .= "and p.published_at >= :p_start_date ";
-      $params['p_start_date'] = "$startYear-$startMonth-$startDay";
+      $params['p_start_date'] = "$startYear-$startMonth-$startDay 00:00:00";
     }
 
     // In no case do we show unpublished material
