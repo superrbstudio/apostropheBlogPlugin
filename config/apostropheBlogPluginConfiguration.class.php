@@ -29,6 +29,7 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
         'listenToCommandPostCommandEvent'));
       $this->dispatcher->connect('a.get_categorizables', array($this, 'listenToGetCategorizables'));
       $this->dispatcher->connect('a.get_count_by_category', array($this, 'listenToGetCountByCategory'));
+      $this->dispatcher->connect('a.merge_category', array($this, 'listenToMergeCategory'));
       
       self::$registered = true;
     }
@@ -57,6 +58,10 @@ class apostropheBlogPluginConfiguration extends sfPluginConfiguration
     return $results;
   }
 
+  public function listenToMergeCategory($event)
+  {
+    Doctrine::getTable('aBlogItemToCategory')->mergeCategory($event['old_id'], $event['new_id']);
+  }
   
   static public function getGlobalButtons()
   {

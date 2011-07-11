@@ -16,4 +16,9 @@ class PluginaBlogItemToCategoryTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('PluginaBlogItemToCategory');
     }
+    
+    public function mergeCategory($old_id, $new_id)
+    {
+      Doctrine::getTable('aCategory')->mergeCategory($old_id, $new_id, 'aBlogItemToCategory', 'category_id', true, 'blog_item_id');
+    }
 }
