@@ -12,7 +12,7 @@
   <div class="a-form-row">
     <ul class="a-ui a-controls">
       <li><?php echo a_anchor_submit_button(a_('Create'), array('a-show-busy')) ?></li>
-      <li><?php echo a_js_button(a_('Cancel'), array('a-cancel','icon','a-options-cancel')) ?></li>
+      <li><?php echo a_js_button(a_('Cancel'), array('icon', 'a-cancel','a-options-cancel', 'alt')) ?></li>
     </ul>
   </div>
 </form>

@@ -6,7 +6,7 @@
 	<input type="text" name="title" class="a-title" value="<?php echo ($a_blog_item->title == 'untitled')? '':$a_blog_item->title ?>" />
   <ul class="a-ui a-controls blog-title">
     <li><?php echo a_anchor_submit_button(a_('Save'), array('a-save', 'big')) ?></li>
-    <li><a href="#" class="a-btn icon a-cancel no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
+    <li><a href="#" class="a-btn icon a-cancel alt no-label big"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
   </ul>
 </form>
 
@@ -18,7 +18,7 @@
 		<input type="text" name="slug" class="a-slug" value="<?php echo a_entities($a_blog_item->slug) ?>">
 	  <ul class="a-ui a-controls blog-slug">
 	    <li><?php echo a_anchor_submit_button(a_('Save'), array('a-save', 'mini')) ?></li>
-	    <li><a href="#" class="a-btn icon a-cancel no-label mini"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
+	    <li><a href="#" class="a-btn icon a-cancel alt no-label mini"><span class="icon"></span><?php echo a_('Cancel') ?></a></li>
 	  </ul>
 	</div>
 </form>
