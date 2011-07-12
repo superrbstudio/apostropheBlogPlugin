@@ -38,7 +38,7 @@
 
 
 <?php // Author & Editors Section ?>
-<hr />
+<hr class="a-hr" />
 <div class="author section a-form-row">
 
 	<?php // Blog Post Author ?>
@@ -76,7 +76,7 @@
 
 	<?php // Blog Post Templates ?>
 	<?php if(isset($form['template'])): ?>
-  	<hr />
+  	<hr class="a-hr" />
   	<div class="template section">
   		<h4><?php echo a_('Template') ?></h4>
   		<div class="a-form-row">
@@ -89,7 +89,7 @@
 
 	<?php // Blog Post Comments ?>
 	<?php if(isset($form['allow_comments'])): ?>
-  	<hr />
+  	<hr class="a-hr" />
   	<div class="comments section">
   		<h4><a href="#" class="a-sidebar-link allow_comments_toggle <?php echo ($a_blog_post['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
   		<div class="allow_comments option">
@@ -100,7 +100,7 @@
 	<?php endif ?>
 	
 	<?php // Blog Post Categories ?>
-	<hr />
+	<hr class="a-hr" />
 	<div class="categories section a-form-row" id="categories-section">
 		<h4><?php echo a_('Categories') ?></h4>
 		<?php echo $form['categories_list']->render() ?>
@@ -114,7 +114,7 @@
 	</div>
 
 	<?php // Blog Post Tags ?>
-	<hr />
+	<hr class="a-hr" />
 	<div class="tags section a-form-row">
 	  <h4><?php echo a_('Tags') ?></h4>
 		<div>
@@ -124,7 +124,7 @@
 		</div>
 	</div>
 
-	<hr />
+	<hr class="a-hr" />
 	<div class="delete preview section a-form-row">
 		<?php $engine = $a_blog_post->findBestEngine(); ?>
 	  <?php aRouteTools::pushTargetEnginePage($engine) ?>

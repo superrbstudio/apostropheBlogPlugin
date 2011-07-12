@@ -42,7 +42,7 @@
 	  	<div class="a-form-error"><?php echo $form['tags_list']->renderError() ?></div>
 	  </div>
 	</div>
-	<hr />
+	<hr class="a-hr" />
 	<div class="a-form-row by-type title">
 	  <?php $w = $form['title_or_tag'] ?>
 	  <input type="radio" id="<?php echo $w->renderId() ?>-title" name="<?php echo $w->renderName() ?>" value="title" <?php echo ($w->getValue() === "title") ? 'checked' : '' ?> /> 
