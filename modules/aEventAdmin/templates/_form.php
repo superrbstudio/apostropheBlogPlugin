@@ -106,7 +106,7 @@
 	<div class="post-editors">
 
 		<?php if (!count($a_event->Editors)): ?>
-		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle"><?php echo a_('allow others to edit this post') ?></a>
+		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle a-sidebar-link"><?php echo a_('allow others to edit this post') ?></a>
 	  	<div class="post-editors-options option" id="editors-section">
 		<?php else: ?>
 			<hr/>
@@ -137,7 +137,7 @@
 	<?php if(isset($form['allow_comments'])): ?>
 	<hr />
 	<div class="comments section">
-		<h4><a href="#" class="allow_comments_toggle <?php echo ($a_event['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
+		<h4><a href="#" class="a-sidebar-link allow_comments_toggle <?php echo ($a_event['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
 		<div class="allow_comments option">
 			<?php echo $form['allow_comments']->render() ?>
 			<?php echo $form['allow_comments']->renderError() ?>
