@@ -56,7 +56,8 @@ generator:
           unpublish:
             label: Unpublish
 
+      # editors list is not sensibly filtered and is not particularly useful
       filter:
-        fields:   [ author_id, editors_list, categories_list, status, _tags_list ]
-        display:  [ author_id, editors_list, categories_list, status, _tags_list ]
+        fields:   [ author_id, categories_list, status, _tags_list ]
+        display:  [ author_id, categories_list, status, _tags_list ]
         
