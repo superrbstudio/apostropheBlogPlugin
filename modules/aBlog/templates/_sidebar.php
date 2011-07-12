@@ -28,7 +28,8 @@
 <?php endif ?>
 
 <div class="a-subnav-section search">
-  <div class="a-search a-search-sidebar blog">
+
+  <div class="a-ui a-search a-search-sidebar blog">
     <form action="<?php echo url_for(aUrl::addParams($filterUrl, array('q' => ''))) ?>" method="get">
   		<div class="a-form-row"> <?php // div is for page validation ?>
   			<label for="a-search-blog-field" style="display:none;">Search</label><?php // label for accessibility ?>
@@ -37,6 +38,7 @@
   		</div>
     </form>
   </div>
+
 </div>
 
 <?php if (isset($calendar) && $calendar): ?>
