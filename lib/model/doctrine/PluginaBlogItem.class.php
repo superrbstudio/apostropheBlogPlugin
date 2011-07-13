@@ -266,6 +266,11 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     return $title;
   }
+  
+  public function getFeedTitle()
+  {
+    return html_entity_decode($this->getTitle(), ENT_COMPAT, 'UTF-8');
+  }
 
   public function setTitle($value)
   {

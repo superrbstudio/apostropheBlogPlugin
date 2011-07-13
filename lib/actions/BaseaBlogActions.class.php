@@ -219,7 +219,7 @@ abstract class BaseaBlogActions extends aEngineActions
         'authorEmail' => sfConfig::get('app_aBlog_feed_author_email'),
         'authorName'  => sfConfig::get('app_aBlog_feed_author_name'),
         'routeName'   => '@a_blog_post',
-        'methods'     => array('description' => 'getFeedText')
+        'methods'     => array('description' => 'getFeedText', 'title' => 'getFeedTitle')
       )
     );
 
