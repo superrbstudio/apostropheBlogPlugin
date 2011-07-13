@@ -56,6 +56,7 @@ EOF;
 
   protected function execute($args = array(), $options = array())
   {
+    aTaskTools::signinAsTaskUser($this->configuration, $options['connection']);
     $databaseManager = new sfDatabaseManager($this->configuration);
     $connection = $databaseManager->getDatabase($options['connection'])->getDoctrineConnection();
 
