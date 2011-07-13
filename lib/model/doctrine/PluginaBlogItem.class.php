@@ -209,6 +209,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $title;
   }
 
+  /**
+   * RSS feed plugin expects text, not entities
+   */
+  public function getFeedTitle()
+  {
+    return html_entity_decode($this->getTitle(), ENT_COMPAT, 'UTF-8');
+  }
+
   public function setTitle($value)
   {
     $this->_set('title', htmlentities($value, ENT_COMPAT, 'UTF-8'));
@@ -231,7 +239,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
      */
     
     sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
-    return get_partial($this->engine . '/' . $this->template . '_rss', array(get_class($this) => $this));
+    $text = get_partial($this->engine . '/' . $this->template . '_rss', array(get_class($this) => $this));
+    return $text;
   }
 
   /**
@@ -485,4 +494,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return $this->bestEngine;
   }
   
+  public function getPubdate()
+  {
+    return is_null($this->published_at) ? null : aDate::normalize($this->published_at);
+  }
 }

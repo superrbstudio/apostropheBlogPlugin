@@ -22,7 +22,12 @@ abstract class BaseaEventActions extends BaseaBlogActions
 
 	public function executeIndex(sfWebRequest $request)
 	{
-		parent::executeIndex($request);	
+		$result = parent::executeIndex($request);	
+		if ($result === sfView::NONE)
+		{
+		  // We don't need the calendar for the feed
+		  return $result;
+		}
 		if (sfConfig::get('app_aEvents_display_calendar'))
 		{
 			$this->calendar = $this->buildCalendar($request);			
@@ -31,6 +36,8 @@ abstract class BaseaEventActions extends BaseaBlogActions
 		{
 			$this->calendar = false;
 		}
+		// Without this we can't switch to the feed template
+		return $result;
 	}
   
   public function executeShow(sfWebRequest $request)
