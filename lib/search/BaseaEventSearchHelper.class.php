@@ -18,16 +18,22 @@ class BaseaEventSearchHelper
     $event = aEventTable::getInstance()->find($id);
     if (!$event)
     {
-      return $args;
+      return false;
     }
-    $args['stored']['start_date'] = $event->start_date;
-    $args['stored']['start_time'] = $event->start_time;
-    $args['stored']['end_date'] = $event->end_date;
-    $args['stored']['end_time'] = $event->end_time;
+
+    $this->storeArguments($args, $event);
+
     return $args;
   }
   public function getPartial()
   {
     return 'aEvent/searchResult';
+  }
+  public function storeArguments(&$args, $event)
+  {
+    $args['stored']['start_date'] = $event->start_date;
+    $args['stored']['start_time'] = $event->start_time;
+    $args['stored']['end_date'] = $event->end_date;
+    $args['stored']['end_time'] = $event->end_time;
   }
 }
