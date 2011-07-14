@@ -77,7 +77,19 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
     {
       if (isset($this->values['categories_list']) && count($this->values['categories_list']) > 0)
       {
-        $q->andWhereIn('c.id', $this->values['categories_list']);
+        // This doesn't cut it because we wind up not knowing about the
+        // other categories of each post, which breaks our "link to best page 
+        // for this post" algorithm
+        // $q->andWhereIn('c.id', $this->values['categories_list']);
+        // This would be nice but Doctrine croaks parsing it
+        // $q->andWhere($this->modelClass . '.id IN (SELECT iblog.id FROM ' . $this->modelClass . ' iblog INNER JOIN iblog.Categories ic WITH ic.id IN ?)', array($this->values['categories_list']));
+        
+        // Let's cheat and use aMysql to pull the blog item IDs that have the relevant categories in a lightweight way,
+        // then do a whereIn clause. It's not ideal, but it works well in practice
+        $sql = new aMysql();
+        $blogItemsForCategories = $sql->queryScalar('SELECT i.id FROM a_blog_item i INNER JOIN a_blog_item_to_category ic ON i.id = ic.blog_item_id AND ic.category_id IN :category_ids', array('category_ids' => $this->values['categories_list']));
+        // So we use this after all, but we'll fetch all the categories for the posts in a second pass, sigh
+        $q->andWhereIn($this->modelClass . '.id', $blogItemsForCategories); 
       }
       if (isset($this->values['tags_list']) && strlen($this->values['tags_list']) > 0)
       {
