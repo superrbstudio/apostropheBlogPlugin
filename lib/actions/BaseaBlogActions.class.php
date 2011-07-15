@@ -18,7 +18,8 @@ abstract class BaseaBlogActions extends aEngineActions
   public function getFilterForEngineParams()
   {
     $request = $this->getRequest();
-    return array(
+    
+    $options = array(
       'q' => $request->getParameter('q'),      
       'categoryIds' => aArray::getIds($this->page->Categories),
       'categorySlug' => $request->getParameter('cat'),
@@ -29,6 +30,15 @@ abstract class BaseaBlogActions extends aEngineActions
       'month' => $request->getParameter('month'),
       'day' => $request->getParameter('day'),
       'byPublishedAt' => true);
+    // For the show action we don't want to limit the filters
+    // to posts for the same day, it's only in the URL for show
+    if ($request->getParameter('action') === 'show')
+    {
+      unset($options['year']);
+      unset($options['month']);
+      unset($options['day']);
+    }
+    return $options;
   }
   
   public function preExecute()
@@ -124,7 +134,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $prefix = aTools::getOptionI18n('title_prefix');
     $suffix = aTools::getOptionI18n('title_suffix');
     $this->getResponse()->setTitle($prefix . $this->aBlogPost->Page->getTitle() . $suffix, false);
-    
+		
     return $this->pageTemplate;
   }
 
