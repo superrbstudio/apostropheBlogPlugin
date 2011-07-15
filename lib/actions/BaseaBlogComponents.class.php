@@ -20,6 +20,7 @@ abstract class BaseaBlogComponents extends sfComponents
   public function executeSidebar()
   {
     $this->categories = $this->info['categoriesInfo'];
+    $this->authors = $this->info['authors'];
     $this->tagsByPopularity = $this->info['tagsByPopularity'];
     $this->tagsByName = $this->info['tagsByName'];
     // What is this for?

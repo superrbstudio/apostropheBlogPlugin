@@ -10,7 +10,7 @@
 
 	<?php $filters = array() ?>
 	<?php $date = $sf_params->get('day') . ' ' . (($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '') . ' ' . $sf_params->get('year') ?>
-	<?php $filterUrl = aUrl::addParams($url, array('year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'cat' => $sf_params->get('cat'), 'tag' => $sf_params->get('tag'))) ?>
+	<?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
 
 	<?php if ($sf_params->get('year') > 0): ?>
 	  <?php $filters[] = a_('for %date%', array('%date%' => a_remove_filter_button($date, $filterUrl, array('year', 'month', 'day')))) ?>
@@ -30,6 +30,15 @@
 	<?php if (strlen($sf_params->get('tag'))): ?>
 	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->get('tag'), $filterUrl, 'tag'))) ?>
 	<?php endif ?>
+
+  <?php if (strlen($sf_params->get('author'))): ?>
+    <?php // Pulling the author object here is a little redundant but we don't want to change the signature of ?>
+    <?php // the partials too much in order to pass in information ?>
+    <?php $author = Doctrine::getTable('sfGuardUser')->findOneByUsername($sf_params->get('author')) ?>
+    <?php if ($author): ?>
+	    <?php $filters[] = a_('<span>by the author</span> %author%', array('%author%' => a_remove_filter_button($author->getName() ? $author->getName() : $author, $filterUrl, 'author'))) ?>
+	  <?php endif ?>
+  <?php endif ?>
 
   <h3 class="a-blog-filters browser">
 	<?php if (count($filters)): ?>

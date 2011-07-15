@@ -310,6 +310,7 @@ class aBlogToolkit {
     
     // array(
     //   'q' => 'gromit',
+    //   'author' => 'username',
     //   'categoryIds' => array(1, 3, 5), 
     //   'categorySlug' => 'cheese', 
     //   'tag' => 'wensleydale', 
@@ -325,7 +326,8 @@ class aBlogToolkit {
     // array(
     //   'categoriesInfo' => array('slug' => 'cheese', 'name' => 'Cheese'),
     //   'tagNames' => array('wensleydale'),
-    //   'pageIds' => array(10, 15, 20, 25)
+    //   'pageIds' => array(10, 15, 20, 25),
+    //   'authors' => array('jsmith', 'bdoyle')
 
     $alphaSort = isset($options['alphaSort']) && $options['alphaSort'];
     if (isset($options['q']) && (strlen($options['q'])))
@@ -399,11 +401,15 @@ class aBlogToolkit {
       $params['culture'] = $culture;
     }
 
-    // Merge in categories. A left join unless we are restricted to certain categories
+    // Merge in categories. A left join unless we are firmly restricted to a list of categories
+    // (engine page), in which case it never makes sense to list others. Don't do that
+    // for hasCategorySlug, which just means a filter is active (this is a fix)
 
     $hasCategoryIds = (isset($options['categoryIds']) && count($options['categoryIds']));
     $hasCategorySlug = (isset($options['categorySlug']) && strlen($options['categorySlug']));
-    $restrictedByCategory = $hasCategoryIds || $hasCategorySlug;
+    // We handle a category slug separately as a WHERE condition for the queries on
+    // things other than categories, at the end
+    $restrictedByCategory = $hasCategoryIds;
 
     if ($restrictedByCategory)
     {
@@ -415,8 +421,9 @@ class aBlogToolkit {
     }
     $q .= $cjoin . ' a_page_to_category ptc on ptc.page_id = p.id ' . $cjoin . ' a_category c on ptc.category_id = c.id ';
 
-    // The engine page is locked down to these categories. If none are specified it is not
-    // locked down by category
+    // The engine page is firmly locked down to these categories. If none are specified it is not
+    // locked down by category, if we're filtering by a category at the moment we'll handle that
+    // with a where condition at the end but still list other categories as filter choices
 
     if ($hasCategoryIds)
     {
@@ -426,15 +433,12 @@ class aBlogToolkit {
 
     // Bring in tags...
     $hasTag = isset($options['tag']) && strlen($options['tag']);
-    if ($hasTag)
-    {
-      $q .= 'inner join ';
-    }
-    else
-    {
-      $q .= 'left join ';
-    }
-    $q .= 'tagging ti on ti.taggable_id = p.id and ti.taggable_model = "aPage" left join tag t on ti.tag_id = t.id ';
+    
+    // Fix: don't ever do an inner join here, that prevents us from getting a full
+    // list of tags meeting the other criteria, we use a where condition at the end
+    // in the queries for things other than tags
+    
+    $q .= 'left join tagging ti on ti.taggable_id = p.id and ti.taggable_model = "aPage" left join tag t on ti.tag_id = t.id ';
 
     // Get ready to filter posts or events chronologically
 
@@ -502,8 +506,20 @@ class aBlogToolkit {
       $q .= "and bi.end_date >= :start_date ";
       $params['start_date'] = "$startYear-$startMonth-$startDay";
     }
+    
+    $hasAuthor = (isset($options['author']) && strlen($options['author']));
+    // If we're filtering events by date range then the join with the blog item has
+    // already been added and we don't have to do it again to get author information
+    if (!$events)
+    {
+      $q .= 'left join a_blog_item bi on bi.page_id = p.id ';
+    }
+    // Now join with sf_guard_user so we can get usernames & full names and also 
+    // limit to a specific username where desired (we do that with a where clause
+    // at the end so we can exempt the query for authors from it easily)
+    $q .= 'left join sf_guard_user a on bi.author_id = a.id ';
 
-    // Criteria for the pages themselves
+    // Criteria for the pages themselves (only pages for the right engine)
     $q .= 'where p.slug like :slug_pattern ';
 
     // We often filter posts (not events) by a range of publication dates
@@ -555,6 +571,7 @@ class aBlogToolkit {
     $c_q = $q;
     $t_q = $q;
     $p_q = $q;
+    $a_q = $q;
     
     // We are filtering by this specific category
     if ($hasCategorySlug)
@@ -562,8 +579,9 @@ class aBlogToolkit {
       // Limit tags and pages by this specific category, but don't limit
       // categories by it, otherwise we can't present a choice of categories
       // meeting the other criteria
-      $t_q .= "and c.slug = :category_slug ";
       $p_q .= "and c.slug = :category_slug ";
+      $t_q .= "and c.slug = :category_slug ";
+      $a_q .= "and c.slug = :category_slug ";
       $params['category_slug'] = $options['categorySlug'];
     }
     
@@ -574,18 +592,40 @@ class aBlogToolkit {
       // meeting the other criteria
       $p_q .= 'and t.name = :tag_name ';
       $c_q .= 'and t.name = :tag_name ';
+      $a_q .= 'and t.name = :tag_name ';
       $params['tag_name'] = $options['tag'];
+    }
+    
+    if ($hasAuthor)
+    {
+      $p_q .= 'and a.username = :username ';
+      $c_q .= 'and a.username = :username ';
+      $t_q .= 'and a.username = :username ';
+      $params['username'] = $options['author'];
     }
     
     // In the cases where we are looking for categories or tags, be sure to
     // discard the null rows from the LEFT JOINs. This is simpler than 
     // determining when to switch them to INNER JOINs
     
+    // Hydrate real Doctrine objects for authors. It ensures we can stringify them consistently,
+    // and the number of authors tends to have reasonable constraints
+
+    $authorsInfo = $mysql->query('select distinct a.username, a.id, a.first_name, a.last_name ' . $a_q . ' and a.id is not null order by a.last_name asc, a.first_name asc', $params);
+    $authors = array();
+    foreach ($authorsInfo as $authorInfo)
+    {
+      $author = new sfGuardUser();
+      $author->fromArray($authorInfo);
+      $authors[] = $author;
+    }
+    
     $result = array(
       'categoriesInfo' => $mysql->query('select distinct c.slug, c.name ' . $c_q . 'and c.slug is not null order by c.name', $params),
       'tagsByName' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t.name', $params),
       'tagsByPopularity' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t_count desc limit 10', $params),
-      'pageIds' => $mysql->queryScalar('select distinct p.id ' . $p_q . ' order by ' . $pagesOrderBy, $params));
+      'pageIds' => $mysql->queryScalar('select distinct p.id ' . $p_q . ' order by ' . $pagesOrderBy, $params),
+      'authors' => $authors);
     return $result;
   }
   

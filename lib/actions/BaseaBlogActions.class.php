@@ -22,6 +22,7 @@ abstract class BaseaBlogActions extends aEngineActions
       'q' => $request->getParameter('q'),      
       'categoryIds' => aArray::getIds($this->page->Categories),
       'categorySlug' => $request->getParameter('cat'),
+      'author' => $request->getParameter('author'),
       'tag' => $request->getParameter('tag'),
       'slugStem' => $this->slugStem,
       'year' => $request->getParameter('year'),
@@ -45,7 +46,7 @@ abstract class BaseaBlogActions extends aEngineActions
   protected function buildQuery($request, $options = array())
   {
     // We already know what page ids are relevant, now we're fetching author
-    // information. There's another method implicitly called later to populate
+    // information etc. per post. There's another method implicitly called later to populate
     // all of the blog content for the posts
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a');

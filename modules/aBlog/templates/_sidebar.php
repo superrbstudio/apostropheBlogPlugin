@@ -1,6 +1,7 @@
 <?php
   // Compatible with sf_escaping_strategy: true
   $categories = isset($categories) ? $sf_data->getRaw('categories') : null;
+  $authors = isset($authors) ? $sf_data->getRaw('authors') : null;
   $n = isset($n) ? $sf_data->getRaw('n') : null;
   $noFeed = isset($noFeed) ? $sf_data->getRaw('noFeed') : null;
   $params = isset($params) ? $sf_data->getRaw('params') : null;
@@ -16,7 +17,7 @@
 ?>
 
 <?php // url_for is the LAST step after other addParams calls play with what we want to include. Don't do it now ?>
-<?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'))) ?>
+<?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
 
 <?php if (aBlogItemTable::userCanPost()): ?>
 	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
@@ -113,6 +114,20 @@
 	</ul>
 	
 </div>
+<?php endif ?>
+
+<?php if (count($authors) > 1): ?>
+  <div class="a-subnav-section authors">
+    <h3 class="filter-label<?php echo ($sf_params->get('author')) ? ' open' : '' ?>"><?php echo a_('Authors') ?></h3>
+    <div class="a-filter-options blog clearfix<?php echo ($sf_params->get('author')) ? ' open' : '' ?>">
+  	  <?php foreach ($authors as $author): ?>
+  			<?php $selected_author = ($author['username'] === $sf_params->get('author')) ? $selected : array() ?>
+  	    <div class="a-filter-option"> 	
+  				<?php echo a_button($author->getName() ? $author->getName() : $author, url_for(aUrl::addParams($filterUrl, array('author' => ($sf_params->get('author') === $author['username']) ? '' : $author['username']))), array_merge(array('a-link'),$selected_author)) ?>
+  			</div>
+  	  <?php endforeach ?>
+    </div>	
+  </div>
 <?php endif ?>
 
 <?php if(!isset($noFeed)): ?>
