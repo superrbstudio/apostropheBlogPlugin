@@ -116,9 +116,11 @@
 </div>
 <?php endif ?>
 
+
 <?php if (count($authors) > 1): ?>
+<hr class="a-hr" />
   <div class="a-subnav-section authors">
-    <h3 class="filter-label<?php echo ($sf_params->get('author')) ? ' open' : '' ?>"><?php echo a_('Authors') ?></h3>
+    <h4 class="filter-label<?php echo ($sf_params->get('author')) ? ' open' : '' ?>"><?php echo a_('Authors') ?></h4>
     <div class="a-filter-options blog clearfix<?php echo ($sf_params->get('author')) ? ' open' : '' ?>">
   	  <?php foreach ($authors as $author): ?>
   			<?php $selected_author = ($author['username'] === $sf_params->get('author')) ? $selected : array() ?>
