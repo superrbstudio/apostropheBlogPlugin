@@ -98,6 +98,11 @@ a_blog_year:
   requirements: { year: '\d{4}' }
   class: aRoute
 
+a_blog_author:
+  url: /author/:username
+  param: { module: aBlog, action: index }
+  class: aRoute
+  
 # Please do not put the tag back in the URL
 a_blog_cat_tag:
   url:   /category/:cat

@@ -7,5 +7,9 @@
 <span class="a-blog-item-meta-label"><?php echo __('Posted By:', array(), 'apostrophe') ?></span>
 <?php if ($a_blog_post->getAuthor()): ?>
   <?php $author = $a_blog_post->getAuthor() ?>
-	<?php echo link_to($author->getName() ? $author->getName() : $author, url_for(aUrl::addParams($filterUrl, array('author' => $author['username']))), array('a-link')) ?>
+  <?php if (sfConfig::get('app_aBlog_link_author', false)): ?>
+    <?php echo link_to($author->getName() ? $author->getName() : $author, '@a_blog_author?' . http_build_query(array('username' => $author->username)), array('class' => 'a-link')) ?>
+	<?php else: ?>
+	  <?php echo $author->getName() ? $author->getName() : $author ?>
+	<?php endif ?>
 <?php endif ?>
