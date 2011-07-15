@@ -99,7 +99,7 @@ a_blog_year:
   class: aRoute
 
 a_blog_author:
-  url: /author/:username
+  url: /author/:author
   param: { module: aBlog, action: index }
   class: aRoute
   
