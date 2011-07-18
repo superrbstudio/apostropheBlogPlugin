@@ -517,7 +517,7 @@ class aBlogToolkit {
     // Now join with sf_guard_user so we can get usernames & full names and also 
     // limit to a specific username where desired (we do that with a where clause
     // at the end so we can exempt the query for authors from it easily)
-    $q .= 'left join sf_guard_user a on bi.author_id = a.id ';
+    $q .= 'left join sf_guard_user au on bi.author_id = au.id ';
 
     // Criteria for the pages themselves (only pages for the right engine)
     $q .= 'where p.slug like :slug_pattern ';
@@ -598,9 +598,9 @@ class aBlogToolkit {
     
     if ($hasAuthor)
     {
-      $p_q .= 'and a.username = :username ';
-      $c_q .= 'and a.username = :username ';
-      $t_q .= 'and a.username = :username ';
+      $p_q .= 'and au.username = :username ';
+      $c_q .= 'and au.username = :username ';
+      $t_q .= 'and au.username = :username ';
       $params['username'] = $options['author'];
     }
     
@@ -611,7 +611,7 @@ class aBlogToolkit {
     // Hydrate real Doctrine objects for authors. It ensures we can stringify them consistently,
     // and the number of authors tends to have reasonable constraints
 
-    $authorsInfo = $mysql->query('select distinct a.username, a.id, a.first_name, a.last_name ' . $a_q . ' and a.id is not null order by a.last_name asc, a.first_name asc', $params);
+    $authorsInfo = $mysql->query('select distinct au.username, au.id, au.first_name, au.last_name ' . $a_q . ' and au.id is not null order by au.last_name asc, au.first_name asc', $params);
     $authors = array();
     foreach ($authorsInfo as $authorInfo)
     {
