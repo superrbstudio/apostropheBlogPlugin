@@ -155,30 +155,30 @@ abstract class BaseaBlogActions extends aEngineActions
     if ($this->getRequestParameter('day'))
     {
       $next = strtotime('tomorrow', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       $prev = strtotime('yesterday', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       $this->dateRange = 'day';
     }
     else if ($this->getRequestParameter('month'))
     {
       $next = strtotime('next month', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       $prev = strtotime('last month', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       $this->dateRange = 'month';
     }
     else
     {
       $next = strtotime('next year', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['next'] = array('year' => date('Y', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       $prev = strtotime('last year', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
       if ($this->getRequestParameter('year'))
       {
@@ -188,10 +188,10 @@ abstract class BaseaBlogActions extends aEngineActions
 
     // set our parameters for building links that set the date ranges and
     // keep other filters alive as well
-    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
-    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
-    $this->params['year'] = array('year' => date('Y', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
-    $this->params['nodate'] = array('cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'));
+    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+    $this->params['year'] = array('year' => date('Y', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+    $this->params['nodate'] = array('cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
 
     $this->addFilterParams('cat');
     $this->addFilterParams('tag');
