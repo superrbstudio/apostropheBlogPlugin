@@ -17,7 +17,14 @@
 ?>
 
 <?php // url_for is the LAST step after other addParams calls play with what we want to include. Don't do it now ?>
-<?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+
+<?php // Do not jam year month and day into non-date filters when departing from an individual post ?>
+<?php if ($sf_params->get('action') === 'show'): ?>
+  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+<?php else: ?>
+  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+<?php endif ?>
+
 
 <?php if (aBlogItemTable::userCanPost()): ?>
 	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
