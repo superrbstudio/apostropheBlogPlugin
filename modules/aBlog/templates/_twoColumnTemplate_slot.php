@@ -11,8 +11,10 @@
 
 <h3 class="a-blog-item-title"><?php echo link_to($aBlogPost['title'], 'a_blog_post', $aBlogPost) ?></h3>
 
-	<?php include_partial('aBlog/meta', array('a_blog_post' => $a_blog_post)) ?>
-
+	<?php if ($options['aBlogMeta']): ?>
+		<?php include_partial('aBlog/meta', array('a_blog_post' => $a_blog_post)) ?>
+	<?php endif ?>
+	
 	<?php if($options['maxImages'] && $aBlogPost->hasMedia()): ?>
 		<div class="a-blog-item-media">
 		<?php include_component('aSlideshowSlot', 'slideshow', array(

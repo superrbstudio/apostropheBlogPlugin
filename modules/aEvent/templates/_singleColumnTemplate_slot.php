@@ -6,8 +6,10 @@
 
 <h3 class="a-blog-item-title"><?php echo link_to($aEvent['title'], 'a_event_post', $aEvent) ?></h3>
 
-<?php include_partial('aEvent/meta', array('aEvent' => $aEvent)) ?>
-
+	<?php if ($options['aBlogMeta']): ?>
+		<?php include_partial('aEvent/meta', array('aEvent' => $aEvent)) ?>
+	<?php endif ?>
+	
 <?php if($options['maxImages'] && $aEvent->hasMedia()): ?>		
 	<div class="a-blog-item-media">
 		<?php include_component('aSlideshowSlot', 'slideshow', array(
