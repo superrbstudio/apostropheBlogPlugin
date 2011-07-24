@@ -10,7 +10,7 @@ class PluginaBlogItemTable extends Doctrine_Table
   {
     if ($post)
     {
-      if (class_exists('apostropheImportersPluginConfiguration') && (!is_null($post['disqus_thread_identifier'])))
+      if (class_exists('apostropheImportersPluginConfiguration') && (strlen($post['disqus_thread_identifier'])))
       {
         return $post['disqus_thread_identifier'];
       }
