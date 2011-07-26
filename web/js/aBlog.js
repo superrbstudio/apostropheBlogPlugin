@@ -63,7 +63,6 @@ function aBlogEnableNewForm()
 	var newForm = $('.a-blog-admin-new-form');
 	newForm.submit(function() {
 		var form = $(this);
-		apostrophe.updating('.a-blog-admin-new-ajax');
 		$.post(form.attr('action'), $(this).serialize(), function(data) {
 			$(document).append(data);	
 		});
