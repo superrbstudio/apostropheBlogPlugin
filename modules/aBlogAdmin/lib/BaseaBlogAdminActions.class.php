@@ -69,8 +69,9 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
     if (!$request->isXmlHttpRequest())
     {
-      $this->setTemplate('edit');
+      return $this->redirect($this->generateUrl('a_blog_admin_edit', $this->a_blog_post));
     }
+    $this->getTagInfo();
   }
   
   public function executeUpdateTitle(sfWebRequest $request)
@@ -156,12 +157,17 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     // Separate forms for separately saved fields
     $this->form = new aBlogPostForm($this->a_blog_post);
 
-		// Retrieve the tags currently assigned to the blog post for the inlineTaggableWidget
+    $this->getTagInfo();
+
+    aBlogItemTable::populatePages(array($this->a_blog_post));
+  }
+  
+  protected function getTagInfo()
+  {
+    // Retrieve the tags currently assigned to the blog post for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();
 		// Retrieve the 10 most popular tags for the inlineTaggableWidget
     $this->popularTags = TagTable::getPopulars(null, array('model' => 'aBlogPost', 'sort_by_popularity' => true), false, 10);
-
-    aBlogItemTable::populatePages(array($this->a_blog_post));
   }
 
   protected function buildQuery()

@@ -95,8 +95,9 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     }
     if (!$request->isXmlHttpRequest())
     {
-      $this->setTemplate('edit');
+      return $this->redirect($this->generateUrl('a_event_admin_edit', $this->a_event));
     }
+    $this->getTagInfo();
   }
   
   protected function setAEventForUser()
@@ -141,12 +142,17 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $this->setAEventForUser();
     $this->forward404Unless($this->a_event);
     $this->form = new aEventForm($this->a_event);
+
+    aBlogItemTable::populatePages(array($this->a_event));
+    $this->getTagInfo();
+  }
+
+  protected function getTagInfo()
+  {
 		// Retrieve the tags currently assigned to the event for the inlineTaggableWidget
 		$this->existingTags = $this->form->getObject()->getTags();
 		// Retrieve the 10 most popular tags for the inlineTaggableWidget
     $this->popularTags = TagTable::getAllTagNameWithCount(null, array('model' => 'aEvent', 'sort_by_popularity' => true), false, 10);
-
-    aBlogItemTable::populatePages(array($this->a_event));
   }
 
   protected function buildQuery()
