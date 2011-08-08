@@ -2,7 +2,7 @@
 <?php // og-meta is meta information for Facebook that gets read when something is shared with Add This (or anything else)  ?>
 <meta property="og:title" content="<?php echo $aEvent->getTitle() ?>"/>
 <meta property="og:type" content="article"/>
-<meta property="og:url" content="<?php echo url_for('a_event', $aEvent, true) ?>"/>
+<meta property="og:url" content="<?php echo url_for('a_blog_post', $aBlogPost, true) ?>"/>
 <?php $items = $aEvent->getMediaForArea('blog-body', 'image', 1) ?>
 <?php if (count($items)): ?>
 	<?php foreach ($items as $item): ?>

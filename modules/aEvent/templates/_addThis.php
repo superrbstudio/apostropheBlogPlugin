@@ -2,7 +2,7 @@
 	<!-- AddThis Button BEGIN -->
 	<div class="addthis_toolbox addthis_default_style">
 		<a href="http://addthis.com/bookmark.php?v=250&amp;username=<?php echo $addthis_username ?>" class="addthis_button_compact"
-			addthis:url="<?php echo url_for('a_event', $aEvent, true) ?>"
+			addthis:url="<?php echo url_for('a_event_post', $aEvent, true) ?>"
 			addthis:title="<?php echo $aEvent['title'] ?>">Share</a>
 		<span class="addthis_separator">|</span>
 		<a class="addthis_button_facebook"></a>
