@@ -80,8 +80,17 @@ class aBlogToolkit {
     {
       $ajax = true;
       $q = $request->getParameter('term');
-      // Wildcarding is better for autocomplete
-      $q .= '*';
+      // Wildcarding is great for autocomplete, but only if the last word is not too short.
+      // If the last word is under 3 characters Zend will flunk the whole thing!
+      if (preg_match('/(\w+)$/', $q, $matches) && strlen($matches[1]) > 2)
+      {
+        error_log("Appending");
+        $q .= '*';
+      }
+      else
+      {
+        error_log("Not appending");
+      }
     }
     else
     {
