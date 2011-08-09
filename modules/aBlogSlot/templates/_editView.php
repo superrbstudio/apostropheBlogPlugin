@@ -9,11 +9,11 @@
 <div class="a-blog-edit-wrapper clearfix">
 	<div class="a-form-row by-type meta">
 	  <?php $w = $form['title_or_tag'] ?>
-	  <input type="radio" id="<?php echo $w->renderId() ?>-tag" name="<?php echo $w->renderName() ?>" value="tags" <?php echo ($w->getValue() === "tags") ? 'checked' : '' ?> />
+	  <input class="blog-slot-radio-button" type="radio" id="<?php echo $w->renderId() ?>-tag" name="<?php echo $w->renderName() ?>" value="tags" <?php echo ($w->getValue() === "tags") ? 'checked' : '' ?> />
 		<h4><label for="<?php echo $w->renderId() ?>-tag"><?php echo a_('By Category and Tag') ?></label></h4>
 	  <div class="a-form-row count">
 	  	<div class="a-form-field">
-					<label for="<?php echo $form['count']->renderId() ?>" class="a-form-field-label"><?php echo a_('Number of Posts to Display') ?></label>
+					<label for="<?php echo $form['count']->renderId() ?>" class="a-form-field-label"><?php echo a_('Number of Posts') ?></label>
 	      	<?php echo $form['count']->render() ?>
 					<div class="a-help"><?php echo $form['count']->renderHelp() ?></div>
 	  	</div>
@@ -22,8 +22,10 @@
 
 	  <div class="a-form-row categories">
 	    <div class="a-form-field">
-	      	<label class="a-multiple-select-label" for="<?php echo $form['categories_list']->renderId() ?>"><?php echo a_('Categorized')?></label><?php echo $form['categories_list']->render() ?>
+	      	<label class="a-multiple-select-label" for="<?php echo $form['categories_list']->renderId() ?>"><?php echo a_('Select Categories')?></label><?php echo $form['categories_list']->render() ?>
+<?php /* ?> 
 	    		<div class="a-help"><?php echo $form['categories_list']->renderHelp() ?></div>
+<?php //*/ ?>
 			</div>
 	  	<div class="a-form-error"><?php echo $form['categories_list']->renderError() ?></div>
 	  </div>
@@ -45,7 +47,7 @@
 	<hr />
 	<div class="a-form-row by-type title">
 	  <?php $w = $form['title_or_tag'] ?>
-	  <input type="radio" id="<?php echo $w->renderId() ?>-title" name="<?php echo $w->renderName() ?>" value="title" <?php echo ($w->getValue() === "title") ? 'checked' : '' ?> />
+	  <input class="blog-slot-radio-button" type="radio" id="<?php echo $w->renderId() ?>-title" name="<?php echo $w->renderName() ?>" value="title" <?php echo ($w->getValue() === "title") ? 'checked' : '' ?> />
 		<h4><label for="<?php echo $w->renderId() ?>-title"><?php echo a_('By Title') ?></label></h4>
 	  <div class="a-form-row blog-posts">
 	    <?php echo $form['blog_posts']->render() ?>

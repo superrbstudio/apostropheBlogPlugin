@@ -197,6 +197,10 @@ function aBlogConstructor()
 			editStates.live('click', function(){
 			 	editState = slotEditForm.find('.a-form-row.by-type input[type="radio"]:checked').val();
 				slotEditForm.removeClass('editState-title').removeClass('editState-tags').addClass('editState-'+editState);
+				if (editState === 'title') 
+				{
+					slotEditForm.find('.a-form-row.title .ui-autocomplete-input').focus();
+				}
 		});
 	}
 	
