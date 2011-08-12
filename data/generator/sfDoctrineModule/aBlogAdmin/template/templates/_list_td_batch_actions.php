@@ -1,5 +1,4 @@
 <td class="a-admin-batch-actions first">
-  [?php if ((!method_exists($<?php echo $this->getSingularName() ?>, 'userHasPrivilege')) || $<?php echo $this->getSingularName() ?>->userHasPrivilege('edit')): ?]
+  <?php // Privilege checks here are redundant because we always filter by the posts we can edit. Thanks to Lasse Munk ?>
   <input type="checkbox" name="ids[]" value="[?php echo $<?php echo $this->getSingularName() ?>->getPrimaryKey() ?]" class="a-admin-batch-checkbox a-checkbox" />
-  [?php endif; ?]
 </td>

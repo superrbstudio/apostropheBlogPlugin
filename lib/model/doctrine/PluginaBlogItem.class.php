@@ -247,7 +247,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     }
     else
     {
-      $titleSlot = $this->Page->getSlot('title');
+      $titleSlot = $this->Page ? $this->Page->getSlot('title') : null;
     }
     if ($titleSlot)
     {

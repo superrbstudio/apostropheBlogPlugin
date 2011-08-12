@@ -180,7 +180,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       {
         $aCategory = new aCategory();
         $aCategory['name'] = $value;
-      }
+      } 
       $aCategory->save();
       $link[] = $aCategory['id'];
     }

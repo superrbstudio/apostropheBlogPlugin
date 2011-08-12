@@ -65,13 +65,25 @@ class PluginaBlogItemTable extends Doctrine_Table
       }
     }
 
-    $rootAlias = $q->getRootAlias();
-    $q->leftJoin($rootAlias.'.Editors e');
-    $q->leftJoin($rootAlias.'.Categories c');
-    $q->leftJoin('c.Users u');
-    $q->leftJoin('c.Groups g');
-    $q->leftJoin('g.Users gu');
-    $q->andWhere('author_id = ? OR e.id = ? OR u.id = ? OR gu.id = ?', array($user_id, $user_id, $user_id, $user_id));
+    // Avoid a performance hit by fetching the ids we're allowed to edit and building
+    // a whereIn clause rather than permanently joining to lots and lots of information.
+    // This also avoids problems that occur when we discard information about categories
+    // we don't control that were added by other people 
+    
+    // Thanks to Lasse Munk
+    
+    $item_ids = $this->createQuery('b')
+      ->select('b.id')
+      ->leftJoin('b.Editors e')
+      ->leftJoin('b.Categories c')
+      ->leftJoin('c.Users u')
+      ->leftJoin('c.Groups g')
+      ->leftJoin('g.Users gu')
+      ->andWhere('author_id = ? OR e.id = ? OR u.id = ? OR gu.id = ?', array($user_id, $user_id, $user_id, $user_id))
+      ->groupBy('b.id')
+      ->execute(array(), Doctrine_Core::HYDRATE_SINGLE_SCALAR);
+    
+    $q->andWhereIn('id', $item_ids);
   }
 
   public function addPublished(Doctrine_Query $q)
