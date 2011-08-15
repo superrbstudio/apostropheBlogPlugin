@@ -506,10 +506,18 @@ class aBlogToolkit {
     {
       list($startYear, $startMonth, $startDay) = preg_split('/-/', date('Y-m-d'));
     }
+    
+    // Insist that the virtual page still be the one associated with
+    // the blog item. Otherwise we could be counting orphans as well.
+    // Orphans ideally wouldn't exist, but things happen. At one point
+    // I considered making this method a more universal thing beyond the blog
+    // plugin, which is why I was initially reluctant to mandate this inner join, 
+    // but we wind up needing it for date ranges too etc.
+    $q .= ' inner join a_blog_item bi on bi.page_id = p.id ';
+    
     if ($events)
     {
       // The event's start and end dates are part of the blog item table
-      $q .= ' inner join a_blog_item bi on bi.page_id = p.id ';
       $q .= "and bi.start_date <= :end_date ";
       $params['end_date'] = "$endYear-$endMonth-$endDay";
       $q .= "and bi.end_date >= :start_date ";
@@ -517,12 +525,6 @@ class aBlogToolkit {
     }
     
     $hasAuthor = (isset($options['author']) && strlen($options['author']));
-    // If we're filtering events by date range then the join with the blog item has
-    // already been added and we don't have to do it again to get author information
-    if (!$events)
-    {
-      $q .= 'left join a_blog_item bi on bi.page_id = p.id ';
-    }
     // Now join with sf_guard_user so we can get usernames & full names and also 
     // limit to a specific username where desired (we do that with a where clause
     // at the end so we can exempt the query for authors from it easily)
