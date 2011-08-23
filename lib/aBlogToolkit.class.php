@@ -577,6 +577,33 @@ class aBlogToolkit {
       $pagesOrderBy = 'p.published_at desc';
     }
 
+    // Filter this event and add entries to the array to add more clauses to the WHERE clause of the
+    // query. They will automatically be joined with AND to the standard clauses
+    
+    // The blog item's alias is bi. The page's alias
+    // is p. The category's alias is c. The tag's alias
+    // is t. This is MySQL, not Doctrine
+    
+    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addWhereClauses', array()), array());
+    foreach ($event->getReturnValue() as $clause)
+    {
+      $q .= 'AND (' . $clause .')';
+    }
+    
+    // Filte this event and add entries to the array to add more ORDER BY clauses to the WHERE clause of the
+    // query. They will automatically be prepended to the standard clauses, separated by commas
+
+    // The blog item's alias is bi. The page's alias
+    // is p. The category's alias is c. The tag's alias
+    // is t. This is MySQL, not Doctrine
+
+    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addOrderByClauses', array()), array());
+    $imploded = implode(', ', $event->getReturnValue());
+    if (strlen($imploded))
+    {
+      $pagesOrderBy = $imploded . ', ' . $pagesOrderBy;
+    }
+
     // Separate queries, but quite fast because we're not bogged down in Doctrineland
     
     $c_q = $q;
@@ -614,7 +641,7 @@ class aBlogToolkit {
       $t_q .= 'and au.username = :username ';
       $params['username'] = $options['author'];
     }
-    
+        
     // In the cases where we are looking for categories or tags, be sure to
     // discard the null rows from the LEFT JOINs. This is simpler than 
     // determining when to switch them to INNER JOINs
