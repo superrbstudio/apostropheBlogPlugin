@@ -584,10 +584,13 @@ class aBlogToolkit {
     // is p. The category's alias is c. The tag's alias
     // is t. This is MySQL, not Doctrine
     
-    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addWhereClauses', array()), array());
+    // The 'events' flag is available to your listener in the parameters of the event.
+    // If true the query is being built for events rather than posts
+    
+    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addWhereClauses', array('events' => $events)), array());
     foreach ($event->getReturnValue() as $clause)
     {
-      $q .= 'AND (' . $clause .')';
+      $q .= 'AND (' . $clause .') ';
     }
     
     // Filte this event and add entries to the array to add more ORDER BY clauses to the WHERE clause of the
@@ -596,9 +599,12 @@ class aBlogToolkit {
     // The blog item's alias is bi. The page's alias
     // is p. The category's alias is c. The tag's alias
     // is t. This is MySQL, not Doctrine
+    
+    // The 'events' flag is available to your listener in the parameters of the event.
+    // If true the query is being built for events rather than posts
 
-    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addOrderByClauses', array()), array());
-    $imploded = implode(', ', $event->getReturnValue());
+    $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addOrderByClauses', array('events' => $events)), array());
+    $imploded = implode(', ', $event->getReturnValue()) . ' ';
     if (strlen($imploded))
     {
       $pagesOrderBy = $imploded . ', ' . $pagesOrderBy;

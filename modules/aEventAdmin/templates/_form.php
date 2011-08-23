@@ -170,6 +170,9 @@
 		</div>
 	</div>
 
+	<?php // This is the place to add fields to this form without overriding the whole thing ?>
+	<?php include_partial('aEventAdmin/formAfter', array('a_event' => $a_event, 'form' => $form)) ?>
+
 	<hr class="a-hr" />
 	<div class="delete preview section a-form-row">
 		<?php $engine = $a_event->findBestEngine(); ?>
@@ -180,7 +183,7 @@
 		  <?php echo link_to('<span class="icon"></span>'.a_('Delete'), 'a_event_admin_delete', $a_event, array('class' => 'a-btn icon a-delete alt lite a-align-right', 'method' => 'delete', 'confirm' => a_('Are you sure you want to delete this event?'), )) ?>
 	  <?php endif ?>
 	</div>
-
-</form>
+	
+<?php // This is NOT the right place to close the form tag ?>
 
 <?php a_js_call('aBlogEnableForm(?)', array('update-labels' => $updateLabels, 'reset-url' => url_for('@a_event_admin_update?' . http_build_query(array('id' => $a_event->id, 'slug' => $a_event->slug))), 'editors-choose-label' => a_('Choose Editors'), 'categories-choose-label' => a_('Choose Categories'), 'categories-add' => $sf_user->hasCredential('admin'), 'categories-add-label' => a_('+ New Category'), 'popularTags' => $popularTags, 'existingTags' => $existingTags, 'template-change-warning' => a_('You are changing templates. Be sure to save any changes to the content at right before saving this change.'))) ?>
