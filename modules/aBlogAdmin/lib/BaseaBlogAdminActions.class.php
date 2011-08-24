@@ -33,6 +33,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->a_blog_post = new aBlogPost();
       $this->a_blog_post->Author = $this->getUser()->getGuardUser();
       $this->a_blog_post->setTitle($this->form->getValue('title'));
+      $event = new sfEvent($this->a_blog_post, 'a.postAdded', array());
+      $this->dispatcher->notify($event);
       $this->a_blog_post->save();
       $this->postUrl = $this->generateUrl('a_blog_admin_edit', $this->a_blog_post);
       return 'Success';

@@ -45,6 +45,10 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 			$this->a_event->start_time = date('H:i:s', $now);
 			$this->a_event->end_time = date('H:i:s', $later);
       $this->a_event->save();
+      
+      $event = new sfEvent($this->a_event, 'a.eventAdded', array());
+      $this->dispatcher->notify($event);
+      
       $this->getUser()->setFlash('new_post', true);
       $this->eventUrl = $this->generateUrl('a_event_admin_edit', $this->a_event);
       return 'Success';
