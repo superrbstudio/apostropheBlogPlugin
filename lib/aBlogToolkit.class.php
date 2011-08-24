@@ -604,8 +604,9 @@ class aBlogToolkit {
     // If true the query is being built for events rather than posts
 
     $event = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.addOrderByClauses', array('events' => $events)), array());
-    $imploded = implode(', ', $event->getReturnValue()) . ' ';
-    if (strlen($imploded))
+    $clauses = $event->getReturnValue();
+    $imploded = implode(', ', $clauses) . ' ';
+    if (count($clauses))
     {
       $pagesOrderBy = $imploded . ', ' . $pagesOrderBy;
     }
