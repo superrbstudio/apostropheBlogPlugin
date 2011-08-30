@@ -60,6 +60,8 @@ aBlogItem:
       local: page_id
       foreign: id
       onDelete: CASCADE
+      foreignAlias: BlogItem
+      foreignType: one
     Categories:
       foreignAlias: BlogItems
       class: aCategory

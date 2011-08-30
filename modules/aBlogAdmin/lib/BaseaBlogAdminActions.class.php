@@ -217,8 +217,12 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     $this->redirect('@a_blog_admin');
   }
 
+  /**
+   * Autocomplete of title in 'term'. Outputs jquery autocomplete compatible list of posts
+   */
+
   public function executeSearch(sfWebRequest $request)
   {
-    return aBlogToolkit::searchBody($this, '@a_blog_redirect', 'aBlogPost', null, $request);
+    return aBlogToolkit::searchBody($this, '@a_blog_search_redirect', 'aBlogPost', null, $request);
   }   
 }

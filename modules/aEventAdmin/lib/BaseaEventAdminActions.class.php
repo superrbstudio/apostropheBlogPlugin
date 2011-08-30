@@ -72,9 +72,12 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
     $this->setLayout(false);
   }
   
+  /**
+   * Autocomplete of title in 'term'. Outputs jquery autocomplete compatible list of events
+   */
   public function executeSearch(sfWebRequest $request)
   {
-    return aBlogToolkit::searchBody($this, '@a_event_redirect', 'aEvent', null, $request);
+    return aBlogToolkit::searchBody($this, '@a_event_search_redirect', 'aEvent', null, $request);
   }   
   
   public function executeUpdate(sfWebRequest $request)

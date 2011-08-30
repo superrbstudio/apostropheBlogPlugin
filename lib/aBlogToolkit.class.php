@@ -61,16 +61,49 @@ class aBlogToolkit {
     return aTools::slugify($s);
   }
   
-  // Used by blog admin, event admin, blog engine and event engine
-  
-  // If $categories is not null it should be an array of category objects; search results
-  // must match at least one of the categories. However if there are NO categories in the array,
-  // all results are accepted
-  
-  // Pass a 'term' argument rather than a 'q' argument for a nice jquery.autocomplete friendly AJAX array
-  // with 'label' and 'value'
+  // Formerly used in many places, this method is now used solely to implement
+  // typeahead for blog post and event titles in blog and event slots. The categories
+  // parameter is never used. In cases where a search service is installed we now
+  // trust these assumptions and provide a simple implementation of AJAX typeahead.
+  // In cases where the old Zend Lucene search implementation is still in effect we
+  // default to the old implementation for maximum backwards compatibility.
+
   static public function searchBody($action, $slugMatch, $modelClass, $categories, sfWebRequest $request)
   {
+    if (aTools::$searchService)
+    {
+      $q = $request->getParameter('term');
+      // TODO: utf8 here when supported 
+      $wildcard = false;
+      if (function_exists('mb_strtolen'))
+      {
+        $wildcard = preg_match('/\p{L}+$/u', $q, $matches);
+      }
+      else
+      {
+        $wildcard = preg_match('/(\w+)$/', $q, $matches);
+      }
+      if ($wildcard)
+      {
+        // Wildcard at end of final word if it's not too short. If it's too short Zend reacts by returning nothing
+        // for the entire query, ouch
+        $q .= '*';
+      }
+        
+      $query = Doctrine::getTable('aPage')->createQuery('p')->select('p.*, bi.*')->andWhere('p.slug LIKE ?', $slugMatch . '%')->innerJoin('p.BlogItem bi');
+      aTools::$searchService->addSearchToQuery($query, $q);
+      $matches = $query->fetchArray();
+      $action->results = array();
+      foreach ($matches as $match)
+      {
+        $info = aTools::$searchService->getInfoForResult($match);
+        // Titles are stored as entity-escaped HTML text, so decode to meet
+        // the expectations of autocomplete
+        $action->results[] = array('label' => html_entity_decode($info['title_stored'], ENT_COMPAT, 'UTF-8'), 'value' => $match['BlogItem']['id']);
+      }
+      return 'Autocomplete';
+    }
+    
     $now = date('YmdHis');
     
     // create the array of pages matching the query
@@ -339,6 +372,12 @@ class aBlogToolkit {
     //   'authors' => array('jsmith', 'bdoyle')
 
     $alphaSort = isset($options['alphaSort']) && $options['alphaSort'];
+    
+    if (isset($options['slugStem']))
+    {
+      $params['slug_pattern'] = $options['slugStem'] . '%';
+    }
+    
     if (isset($options['q']) && (strlen($options['q'])))
     {
       $q = $options['q'];
@@ -349,47 +388,59 @@ class aBlogToolkit {
       {
         $q = $replacements[$key];
       }
-      if (isset($options['slugStem']))
+      // Prefilter the search results to blog posts only, deal with publication date and view privs.
+      // This is a lot easier with search services
+      if (aTools::$searchService)
       {
-        $q = "($q) AND slug:" . $options['slugStem'];
+        $query = Doctrine::getTable('aPage')->createQuery('p')->select('p.id')->andWhere('p.slug LIKE ?', $params['slug_pattern']);
+        aTools::$searchService->addSearchToQuery($query, $q);
+        $values = $query->fetchArray();
+        $pageIds = array();
+        foreach ($values as $value)
+        {
+          $pageIds[] = $value['id'];
+        }
+      }
+      else
+      {
+        if (isset($options['slugStem']))
+        {
+          $q = "($q) AND slug:" . $options['slugStem'];
+        }
+        try
+        {
+          $values = aZendSearch::searchLuceneWithValues(Doctrine::getTable('aPage'), $q, aTools::getUserCulture());
+        } catch (Exception $e)
+        {
+          // Lucene search error. TODO: display it nicely if they are always safe things to display. For now: just don't crash
+          $values = array();
+        }
+        $now = date('YmdHis');
+        $pageIds = array();
+        foreach ($values as $value)
+        {
+          // Regardless of the above if it ain't published yet we can't see it.
+          // We filter on that in the Doctrine query too but take advantage of
+          // this chance to preempt a little work
+          if ($value->published_at > $now)
+          {
+            continue;
+          }
+          // 1.5: the names under which we store columns in Zend Lucene have changed to
+          // avoid conflict with also indexing them
+          $info = unserialize($value->info_stored);
+
+          if (!aPageTable::checkPrivilege('view', $info))
+          {
+            continue;
+          }
+          $pageIds[] = $info['id'];
+        }
       }
 
-      try
-      {
-        $values = aZendSearch::searchLuceneWithValues(Doctrine::getTable('aPage'), $q, aTools::getUserCulture());
-      } catch (Exception $e)
-      {
-        // Lucene search error. TODO: display it nicely if they are always safe things to display. For now: just don't crash
-        $values = array();
-      }
-      $now = date('YmdHis');
-      $pageIds = array();
-      foreach ($values as $value)
-      {
-        // Regardless of the above if it ain't published yet we can't see it.
-        // We filter on that in the Doctrine query too but take advantage of
-        // this chance to preempt a little work
-        if ($value->published_at > $now)
-        {
-          continue;
-        }
-        // 1.5: the names under which we store columns in Zend Lucene have changed to
-        // avoid conflict with also indexing them
-        $info = unserialize($value->info_stored);
-        
-        if (!aPageTable::checkPrivilege('view', $info))
-        {
-          continue;
-        }
-        $pageIds[] = $info['id'];
-      }
     }
 
     $mysql = new aMysql();
-    if (isset($options['slugStem']))
-    {
-      $params['slug_pattern'] = $options['slugStem'] . '%';
-    }
 
     // Select the relevant virtual pages for this engine
     $q = 'from a_page p ';
