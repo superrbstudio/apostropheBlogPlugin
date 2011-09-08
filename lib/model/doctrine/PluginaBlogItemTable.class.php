@@ -301,5 +301,27 @@ class PluginaBlogItemTable extends Doctrine_Table
 
     return $query;
   }
-
+  
+  /**
+   * Get everyone who is a potential blog author. Refactored here for easy overriding
+   */
+  public function queryForAuthors()
+  {
+    // The candidates to edit pages are candidates to author blogs
+    $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
+    $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);
+    
+    $q = Doctrine::getTable('sfGuardUser')->createQuery('u');
+    // Blog author candidates include blog editor candidates, plus admins - if they aren't listed here they
+    // wind up losing authorship to the first person in the dropdown due to the validator!
+    if ($candidateGroup && $sufficientGroup)
+    {
+      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
+    }
+    else
+    {
+      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
+    }
+    return $q;
+  }
 }

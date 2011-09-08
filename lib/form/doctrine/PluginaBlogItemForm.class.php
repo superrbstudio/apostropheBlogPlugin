@@ -62,20 +62,12 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['allow_comments']);
     }
 
-    // The candidates to edit pages are candidates to author blogs
-    $candidateGroup = sfConfig::get('app_a_edit_candidate_group', false);
-    $sufficientGroup = sfConfig::get('app_a_edit_sufficient_group', false);
-
     if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
     {
-      $q = Doctrine::getTable('sfGuardUser')->createQuery();
+      $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
 
       $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
 
-      if ($candidateGroup)
-      {
-        $q->innerJoin('sfGuardUser.Groups g')->addWhere('g.name = ?', array($candidateGroup));
-      }
       $this->setWidget('editors_list',
         new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
       $this->setValidator('editors_list',
@@ -88,16 +80,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     if($user->hasCredential('admin'))
     {
-      // Blog author candidates include blog editor candidates, plus admins - if they aren't listed here they
-      // wind up losing authorship to the first person in the dropdown due to the validator!
-      if ($candidateGroup && $sufficientGroup)
-      {
-        $q = Doctrine::getTable('sfGuardUser')->createQuery('u')->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
-      }
-      else
-      {
-        $q = Doctrine::getTable('sfGuardUser')->createQuery('u')->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
-      }
+      $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
       $this->setWidget('author_id',
         new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
       $this->setValidator('author_id',
