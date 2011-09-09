@@ -17,15 +17,10 @@
 
 <div class="a-blog-item-content">
 
-	<?php a_area('blog-body', array(
-	  'edit' => $edit, 'toolbar' => 'basic', 'slug' => $a_blog_post->Page->slug,
-	  'allowed_types' => array('aRichText', 'aSlideshow', 'aVideo', 'aPDF'),
-	  'type_options' => array(
-	    'aRichText' => array('tool' => 'Main'),   
-	    'aSlideshow' => array("width" => 480, 'flexHeight' => true, 'constraints' => array('minimum-width' => 480)),
-			'aVideo' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'), 
-			'aPDF' => array('width' => 480, 'flexHeight' => true, 'resizeType' => 's'),
-	))) ?>
+  <?php // Standard slot choices, minus aBlog and aEvent. Pass in the options to edit the right virtual page ?>
+  <?php // Events cannot have blog slots and vice versa, otherwise they could recursively point to each other ?>
+  
+  <?php include_component('a', 'standardArea', array('name' => 'blog-body', 'edit' => $edit, 'toolbar' => 'main', 'slug' => $a_blog_post->Page->slug, 'width' => 480, 'minusSlots' => array('aBlog', 'aEvent'))) ?>
 
 	<?php if (!$admin): ?>
 		<?php include_partial('aBlog/tags', array('aBlogItem' => $a_blog_post)) ?>
