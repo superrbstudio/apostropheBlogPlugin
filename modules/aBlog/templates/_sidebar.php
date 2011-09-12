@@ -75,7 +75,6 @@
 </div>
 <?php endif ?>
 
-<?php if(count($categories) > 1): ?>
 <hr class="a-hr" />
 <div class="a-subnav-section categories">
   <h4><?php echo a_('Categories') ?></h4>
@@ -89,7 +88,6 @@
 	  <?php endforeach ?>
   </div>	
 </div>
-<?php endif ?>
 
 <?php if(count($tagsByName)): ?>
 <hr class="a-hr" />
