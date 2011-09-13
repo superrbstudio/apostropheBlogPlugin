@@ -66,7 +66,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
 
-      $q->addWhere('sfGuardUser.id != ?', $user->getGuardUser()->getId());
+      $q->addWhere('u.id <> ?', $user->getGuardUser()->getId());
 
       $this->setWidget('editors_list',
         new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
