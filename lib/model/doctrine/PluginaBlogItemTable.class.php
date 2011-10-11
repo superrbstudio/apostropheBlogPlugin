@@ -64,7 +64,6 @@ class PluginaBlogItemTable extends Doctrine_Table
         return;
       }
     }
-
     // Avoid a performance hit by fetching the ids we're allowed to edit and building
     // a whereIn clause rather than permanently joining to lots and lots of information.
     // This also avoids problems that occur when we discard information about categories
@@ -82,8 +81,15 @@ class PluginaBlogItemTable extends Doctrine_Table
       ->andWhere('author_id = ? OR e.id = ? OR u.id = ? OR gu.id = ?', array($user_id, $user_id, $user_id, $user_id))
       ->groupBy('b.id')
       ->execute(array(), Doctrine_Core::HYDRATE_SINGLE_SCALAR);
-    
-    $q->andWhereIn('id', $item_ids);
+    // Careful: an empty WHERE IN clause matches everything
+    if (!count($item_ids))
+    {
+      $q->andWhere('false <> false');
+    }
+    else
+    {
+      $q->andWhereIn('id', $item_ids);
+    }
   }
 
   public function addPublished(Doctrine_Query $q)
