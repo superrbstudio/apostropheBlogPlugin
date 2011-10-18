@@ -53,7 +53,7 @@ function aBlogPublishBtn(status, slug_url)
 		aBlogTitleMessage('.published-item'); // We are editing an existing post that is published;
 	};
 
-	publishButton.unbind('click').click(function(){
+	publishButton.unbind('click.aBlogPublishBtn').bind('click.aBlogPublishBtn', function(){
 		$(this).blur();
 
 		if (status == 'draft')
@@ -139,9 +139,9 @@ function aBlogItemTitle(slug_url)
 	    event.preventDefault();
 			save();
 		}
-		tInput.unbind('blur.save').bind('blur.save',function(){
-			save();
-		});
+		// tInput.unbind('blur.save').bind('blur.save',function(){
+		// 	save();
+		// });
 	});
 
 	titlePlaceholder.mousedown(function()
@@ -215,9 +215,9 @@ function aBlogItemPermalink(slug_url)
 		    event.preventDefault();
 				save();
 			}
-			pInput.unbind('blur.save').bind('blur.save',function(){
-				save();
-			});
+			// pInput.unbind('blur.save').bind('blur.save',function(){
+			// 	save();
+			// });
 		});
 	});
 
