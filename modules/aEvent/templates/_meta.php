@@ -15,12 +15,13 @@
 	  <?php // it is less useful if all of your locations are 'room 150', etc. with no further ?>
 	  <?php // information. Naturally full addresses work best ?>
     <li class="post-location">
-			<span class="post-location-name">
-				<?php echo aString::firstLine($aEvent['location']) ?>
-			</span>
-  		<?php if (sfConfig::get('app_events_google_maps', true)): ?>
-				<?php echo a_button(a_('Google Maps'), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('no-bg', 'alt', 'icon', 'a-google-maps')) ?>
-		  <?php endif ?>
+      <?php if (sfConfig::get('app_events_google_maps', true)): ?>
+        <?php echo link_to(aString::firstLine($aEvent['location']), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('class' => 'a-link', )) ?>
+		  <?php else: ?>
+        <span class="post-location-name">
+          <?php echo aString::firstLine($aEvent['location']) ?>
+        </span>
+      <?php endif ?>
 		</li>
 	<?php endif ?>
 
@@ -28,12 +29,12 @@
  	<li class="post-author">
 		<span class="a-blog-item-meta-label"><?php echo __('Posted By:', array(), 'apostrophe') ?></span>
 		<?php echo ($aEvent->getAuthor()->getName()) ? $aEvent->getAuthor()->getName() : $aEvent->getAuthor()  ?>
-	</li>   			
-	<?php //*/ ?>
-	
-	<li class="post-extra">
-		<?php include_partial('aEvent/addToGoogleCalendar', array('aEvent' => $aEvent)) ?> 
-		<?php include_partial('aEvent/addToIcal', array('aEvent' => $aEvent)) ?>  
 	</li>
-	
+	<?php //*/ ?>
+
+	<li class="post-extra">
+		<?php include_partial('aEvent/addToGoogleCalendar', array('aEvent' => $aEvent)) ?>
+		<?php include_partial('aEvent/addToIcal', array('aEvent' => $aEvent)) ?>
+	</li>
+
 </ul>
