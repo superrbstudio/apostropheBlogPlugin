@@ -143,14 +143,20 @@ class aBlogEvents
       }
       
       // permissions regime for blogs
-      $blogAdmin = new sfGuardPermission();
-      $blogAdmin->setName('blog_admin');
-      $blogAdmin->setDescription('Blog administration');
-      $blogAdmin->save();
-      $blogAuthor = new sfGuardPermission();
-      $blogAuthor->setName('blog_author');
-      $blogAuthor->setDescription('Blog post authoring');
-      $blogAuthor->save();
+      if (!Doctrine::getTable('sfGuardPermission')->findOneByName('blog_admin'))
+      {
+        $blogAdmin = new sfGuardPermission();
+        $blogAdmin->setName('blog_admin');
+        $blogAdmin->setDescription('Blog administration');
+        $blogAdmin->save();
+      }
+      if (!Doctrine::getTable('sfGuardPermission')->findOneByName('blog_author'))
+      {
+        $blogAuthor = new sfGuardPermission();
+        $blogAuthor->setName('blog_author');
+        $blogAuthor->setDescription('Blog post authoring');
+        $blogAuthor->save();
+      }
       
       // Grant the expected access to the admin and editor groups if they are there
       $adminGroup = Doctrine::getTable('sfGuardGroup')->findOneByName('admin');
