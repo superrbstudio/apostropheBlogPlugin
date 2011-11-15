@@ -117,12 +117,7 @@ class aBlogToolkit {
       // If the last word is under 3 characters Zend will flunk the whole thing!
       if (preg_match('/(\w+)$/', $q, $matches) && strlen($matches[1]) > 2)
       {
-        error_log("Appending");
         $q .= '*';
-      }
-      else
-      {
-        error_log("Not appending");
       }
     }
     else
