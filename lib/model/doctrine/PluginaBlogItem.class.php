@@ -559,7 +559,8 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function findBestEngine()
   {
-    return Doctrine::getTable('aPage')->findOneBy('slug', $this->getEngineSlug());
+    $page = Doctrine::getTable('aPage')->findOneBy('slug', $this->getEngineSlug());
+    return $page;
   }
 
   public function getEngineSlug()
