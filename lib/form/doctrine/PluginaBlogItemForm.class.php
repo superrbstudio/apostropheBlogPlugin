@@ -61,8 +61,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       unset($this['allow_comments']);
     }
-
-    if( $user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() )
+    if((!sfConfig::get('app_a_simple_permissions')) && ($user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() ))
     {
       $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
 
