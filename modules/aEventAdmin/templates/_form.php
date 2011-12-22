@@ -119,9 +119,10 @@
 
       </div>
     </div>
-  </div>
   <?php endif ?>
-
+  
+</div>
+  
 	<?php // Blog Post Templates ?>
 	<?php if(isset($form['template'])): ?>
 	<hr class="a-hr" />
