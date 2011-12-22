@@ -98,39 +98,39 @@
 				<?php echo $form['author_id']->renderError() ?>
 				</div>
 			<?php else: ?>: <span><?php echo $a_event->Author ?></span></h4><?php endif ?>
-
 	</div>
+</div>
 
 	<?php // Blog Post Editors ?>
   <?php if(isset($form['editors_list'])): ?>
-	<div class="post-editors">
+  	<div class="post-editors">
 
-		<?php if (!count($a_event->Editors)): ?>
-		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle a-sidebar-link"><?php echo a_('allow others to edit this post') ?></a>
-	  	<div class="post-editors-options option" id="editors-section">
-		<?php else: ?>
-			<hr/>
-	  	<div class="post-editors-options option show-editors" id="editors-section">
-		<?php endif ?>
+  		<?php if (!count($a_event->Editors)): ?>
+  		  <a href="#" onclick="return false;" class="post-editors-toggle a-sidebar-toggle a-sidebar-link"><?php echo a_('allow others to edit this post') ?></a>
+  	  	<div class="post-editors-options option" id="editors-section">
+  		<?php else: ?>
+  			<hr/>
+  	  	<div class="post-editors-options option show-editors" id="editors-section">
+  		<?php endif ?>
 
-	    <h4><?php echo a_('Editors') ?></h4>
-	    <?php echo $form['editors_list']->render()?>
-	    <?php echo $form['editors_list']->renderError() ?>
+  	    <h4><?php echo a_('Editors') ?></h4>
+  	    <?php echo $form['editors_list']->render()?>
+  	    <?php echo $form['editors_list']->renderError() ?>
 
       </div>
     </div>
   <?php endif ?>
   
-</div>
-  
-	<?php // Blog Post Templates ?>
+	<?php // Event Templates ?>
 	<?php if(isset($form['template'])): ?>
-	<hr class="a-hr" />
-	<div class="template section">
-		<h4><?php echo a_('Template') ?></h4>
-		<?php echo $form['template']->render() ?>
-		<?php echo $form['template']->renderError() ?>
-	</div>
+  	<hr class="a-hr" />
+  	<div class="template section">
+  		<h4><?php echo a_('Template') ?></h4>
+  		<div class="a-form-row">
+    		<?php echo $form['template']->render() ?>
+  		</div>
+  		<?php echo $form['template']->renderError() ?>
+  	</div>
 	<?php endif ?>
 
 
