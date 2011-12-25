@@ -30,4 +30,4 @@
   </div>
 </div>
 
-[?php a_js_call('aBlog.enhanceBlogAdmin()') ?]
+[?php a_js_call('apostrophe.enhanceAdmin()') ?]
