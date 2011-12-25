@@ -172,7 +172,7 @@ function aBlogConstructor()
 		function(){
 			$(this).toggleClass('over');		
 		});	
-	}
+	};
 	
 	this.slotEditView = function(options)
 	{
@@ -202,8 +202,38 @@ function aBlogConstructor()
 					slotEditForm.find('.a-form-row.title .ui-autocomplete-input').focus();
 				}
 		});
-	}
+	};
+	
+	
+	/**
+	 enhanceBlogAdmin -- Setup enhanced interface elements for blog admin
+	*/
+	this.enhanceBlogAdmin = function(options)
+	{
+	  // Sortable Label Buttons
+  	var sortLabel = $("a.a-sort-label").parent().parent();
+  	sortLabel.unbind('click.sortLabel').bind('click.sortLabel', function() {
+  		var thisSortLabel = $(this).find('a.a-sort-label');
+  		thisSortLabel.focus();
+      $(this).addClass('show-filters').find(".filternav").show();
+      $(this).parent().hover(function() {
+      }, function() {
+  			thisSortLabel.blur();
+  			$(this).find('ul').removeClass('show-filters');
+        $(this).find(".filternav").fadeOut();
+      });
+      return false;
+    });
+    
+    // Batch Checkbox Toggle
+    $('#a-admin-list-batch-checkbox-toggle').unbind('click.batchToggle').bind('click.batchToggle', function(){
+			$('.a-admin-batch-checkbox').each( function() {
+				$(this)[0].checked = !$(this)[0].checked;
+			});
+			return false;
+		});
+	};
 	
 }
 
-window.aBlog = new aBlogConstructor();
+window.aBlog = new aBlogConstructor;

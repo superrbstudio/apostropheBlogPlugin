@@ -33,10 +33,4 @@
 
 </div>
 
-<script type="text/javascript">
-//<![CDATA[
-	$(document).ready(function() {
-		$('a.selected').prepend('<span class="close"></span>');
-	});
-//]]>	
-</script>
+<?php a_js_call("$('a.selected').prepend('<span class=\"close\"></span>')") ?>
