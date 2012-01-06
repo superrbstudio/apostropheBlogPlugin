@@ -11,7 +11,7 @@
 	<div class="a-ui a-subnav-wrapper blog clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'), 'newLabel' => a_('New Post'), 'newModule' => 'aBlogAdmin', 'newComponent' => 'newPost')) ?>
-	  </div> 
+	  </div>
 	</div>
 <?php end_slot() ?>
 
@@ -21,10 +21,10 @@
 		<?php ($page) ? $slots = $page->getArea('blog-heading') : $slots = array() ?>
 		<?php if (count($slots) || $page->userHasPrivilege('edit')): ?>
 		  <?php a_area('blog-heading', array(
-				'areaLabel' => a_('Add Blog Heading'), 
+				'areaLabel' => a_('Add Blog Heading'),
 				'allowed_types' => array(
-					'aRichText', 
-					'aSlideshow', 
+					'aRichText',
+					'aSlideshow',
 					'aSmartSlideshow'
 				),
 				'type_options' => array(
@@ -32,17 +32,17 @@
 						'width' => 720,
 						'height' => 280,
 						'resizeType' => 'c',
-						'flexHeight' => false,  
-						'constraints' => array('minimum-width' => 720, 'minimum-height' => 280),   
-					), 
+						'flexHeight' => false,
+						'constraints' => array('minimum-width' => 720, 'minimum-height' => 280),
+					),
 					'aSmartSlideshow' => array(
 						'width' => 720,
 						'height' => 280,
 						'resizeType' => 'c',
-						'flexHeight' => false,  
-						'constraints' => array('minimum-width' => 720, 'minimum-height' => 280),   
+						'flexHeight' => false,
+						'constraints' => array('minimum-width' => 720, 'minimum-height' => 280),
 					),
-				), 
+				),
 			)) ?>
 		<?php endif ?>
   	<?php include_partial('aBlog/filters', array('type' => a_('post'), 'typePlural' => a_('posts'),  'url' => 'aBlog/index', 'count' => $pager->count(), 'params' => $params)) ?>
@@ -53,12 +53,18 @@
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
+
+    <?php if (sfConfig::get('app_aBlog_excerpts_show')): ?>
+    <?php include_partial('aBlog/excerptTemplate', array('a_blog_post' => $a_blog_post, 'edit' => false)) ?>
+    <?php else: ?>
   	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
+    <?php endif ?>
   	<hr class="a-hr" />
+
   <?php endforeach ?>
 
   <?php if ($pager->haveToPaginate()): ?>
   	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
 	<?php endif ?>
-		  
+
 </div>

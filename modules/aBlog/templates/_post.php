@@ -13,8 +13,8 @@
 			</li>
 		</ul>
 	<?php endif ?>
-	
-	<?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post, 'edit' => false)) ?>
+
+  <?php include_partial('aBlog/'.$a_blog_post->getTemplate(), array('a_blog_post' => $a_blog_post, 'edit' => false)) ?>
 
 </div>
 
