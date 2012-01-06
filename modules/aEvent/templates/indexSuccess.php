@@ -11,12 +11,12 @@
 	<div class="a-ui a-subnav-wrapper blog clearfix">
 		<div class="a-subnav-inner">
 	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'url' => 'aEvent/index', 'searchLabel' => a_('Search Events'), 'newLabel' => a_('New Event'), 'newModule' => 'aEventAdmin', 'newComponent' => 'newEvent', 'calendar' => $calendar)) ?>
-	  </div> 
+	  </div>
 	</div>
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main clearfix">
-  
+
 	<div class="a-ui a-blog-heading">
 		<?php ($page) ? $slots = $page->getArea('blog-heading') : $slots = array() ?>
 		<?php if (count($slots) || $page->userHasPrivilege('edit')): ?>
@@ -30,8 +30,14 @@
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_event): ?>
-  	<?php echo include_partial('aEvent/post', array('a_event' => $a_event)) ?>
-  	<hr class="a-hr" />
+
+    <?php if (sfConfig::get('app_aEvents_excerpts_show')): ?>
+    <?php include_partial('aEvent/excerptTemplate', array('a_event' => $a_event, 'edit' => false)) ?>
+    <?php else: ?>
+    <?php echo include_partial('aEvent/post', array('a_event' => $a_event)) ?>
+    <?php endif ?>
+    <hr class="a-hr" />
+
   <?php endforeach ?>
 
   <?php if ($pager->haveToPaginate()): ?>
