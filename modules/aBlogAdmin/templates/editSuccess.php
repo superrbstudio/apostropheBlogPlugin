@@ -14,7 +14,7 @@
 <?php slot('a-subnav') ?>
   <div class="a-ui a-subnav-wrapper a-admin-sidebar">
 		<div class="a-subnav-inner">
-	    <div id="a-ui a-admin-blog-post-form">
+	    <div class="a-admin-blog-post-form">
 	      <form method="post" action="<?php echo url_for('a_blog_admin_update', $a_blog_post) ?>" id="a-admin-form" class="a-ui blog">
           <?php include_partial('aBlogAdmin/form', array('form' => $form, 'a_blog_post' => $a_blog_post, 'popularTags' => $popularTags, 'existingTags' => $existingTags)) ?>
         </form>

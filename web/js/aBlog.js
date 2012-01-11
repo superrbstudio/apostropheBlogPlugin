@@ -72,9 +72,10 @@ function aBlogEnableNewForm()
 
 function aBlogEnableForm(options)
 {
-	var changed = false;
 	var savedState = null;
 	var form = $('#a-admin-form');
+	form.data('changed', false);
+  
 	apostrophe.formUpdates({ selector: '#a-admin-form', update: 'a-admin-form' });
 	// Due to the way our markup is structured this is a better place for the little
 	// 'updating' message
@@ -104,13 +105,33 @@ function aBlogEnableForm(options)
 		{
 			find('.a-save-blog-main .label').text(options['update-labels'][s]);
 		}
+		if (!init)
+		{
+  		form.data('changed', true);
+		}
 		init = false;
 	});
 	status.change();
 
+  // On various fields, including the progressively enhanced fields whose PE code has been upgraded
+  // to send change events, just monitor change() and set the changed flag so it can be checked
+  // by onbeforeunload
+  
+  form.find('#a_blog_item_location,#a_blog_item_all_day,#a_blog_item_start_date_month,#a_blog_item_start_date_day,#a_blog_item_start_date_year,#a_blog_item_start_time_hour,#a_blog_item_start_time_minute,#a_blog_item_end_date_month,#a_blog_item_end_date_day,#a_blog_item_end_date_year,#a_blog_item_end_time_hour,#a_blog_item_end_time_minute,#a_blog_item_published_at_hour,#a_blog_item_published_at_minute,#a_blog_item_author_id,#a-blog-post-tags-input').change(function() {
+    form.data('changed', true);
+  });
+
+  // Listen to keystrokes in the location field. In Chrome at least, text fields don't get a 
+  // change() event when you type in them and then click a link elsewhere on the page that leaves
+  // the page, so we need something else
+  form.find('#a_blog_item_location').keyup(function() {
+    form.data('changed', true);
+  });
+  
 	find('.template.section select').change(function() {
 		alert(options['template-change-warning']);
-		// Let the form submit as a full refresh
+		// Let the form submit as a full refresh. Don't complain of unsaved changes when we're about to save changes
+		$(form).data('changed', false);
 		$(form).unbind('submit.aFormUpdates');
 	});
 	
@@ -120,9 +141,13 @@ function aBlogEnableForm(options)
 		return false;
 	});
 	
-	var p = { 'choose-one': options['editors-choose-label'] };
+	var p = { 'choose-one': options['editors-choose-label'], 'onChange': function() {
+	  form.data('changed', true);
+	} };
 	aMultipleSelect('#editors-section', p);
-	p = { 'choose-one': options['categories-choose-label'] };
+	p = { 'choose-one': options['categories-choose-label'], 'onChange': function() {
+	  form.data('changed', true);
+	} };
 	if (options['categories-add'])
 	{
 		p['add'] = options['categories-add-label'];
