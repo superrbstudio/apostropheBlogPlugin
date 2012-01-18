@@ -19,5 +19,7 @@
 		<?php include_partial('aBlogSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost, 'pageid' => $page->id, 'name' => $name, 'permid' => $permid, 'slot' => $slot, 'page' => $page)) ?>
 	<?php endforeach ?>
 <?php else: ?>
-	<h4><?php echo a_('There are no blog posts that match the criteria you have specified.') ?></h4>
+  <?php if ($sf_user->isAuthenticated()): ?>
+	  <h4><?php echo a_('There are no blog posts that match the criteria you have specified.') ?></h4>    
+  <?php endif ?>
 <?php endif ?>

@@ -22,5 +22,7 @@
 		<?php include_partial('aEventSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost)) ?>
 	<?php endforeach ?>
 <?php else: ?>
-	<h4><?php echo a_('There are no events that match the criteria you have specified.') ?></h4>
+  <?php if ($sf_user->isAuthenticated()): ?>
+	  <h4><?php echo a_('There are no events that match the criteria you have specified.') ?></h4>    
+  <?php endif ?>
 <?php endif ?>
