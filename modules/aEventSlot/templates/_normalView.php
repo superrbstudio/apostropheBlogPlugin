@@ -22,7 +22,7 @@
 		<?php include_partial('aEventSingleSlot/post', array('options' => $options, 'aBlogItem' => $aBlogPost)) ?>
 	<?php endforeach ?>
 <?php else: ?>
-  <?php if ($sf_user->isAuthenticated()): ?>
+  <?php if (aTools::isPotentialEditor()): ?>
 	  <h4><?php echo a_('There are no events that match the criteria you have specified.') ?></h4>    
   <?php endif ?>
 <?php endif ?>
