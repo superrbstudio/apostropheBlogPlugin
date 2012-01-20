@@ -16,7 +16,8 @@
 <?php endif ?>
 <?php // Allows styling based on whether there is media in the post, ?>
 <?php // the blog template, and the subtemplate ?>
-<div id="a-blog-item-<?php echo $name ?>-<?php echo $permid ?>-<?php echo $aBlogItem->getId() ?>" class="a-blog-item post<?php echo ($aBlogItem->hasMedia())? ' has-media':''; ?> <?php echo $template ?> <?php echo $subtemplate ?>">
+<?php $catClass = ""; foreach ($aBlogItem->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
+<div id="a-blog-item-<?php echo $name ?>-<?php echo $permid ?>-<?php echo $aBlogItem->getId() ?>" class="a-blog-item post<?php echo ($aBlogItem->hasMedia())? ' has-media':''; ?> <?php echo $template ?> <?php echo $subtemplate ?> <?php echo $catClass ?>">
 <?php // TODO: passing a variable as both underscore and intercap is silly clean this up make the partials consistent but look out for overrides ?>
 <?php include_partial('aBlog/'.$template.$suffix, array('aBlogPost' => $aBlogItem, 'a_blog_post' => $aBlogItem, 'edit' => false, 'options' => $options)) ?>
 </div>
