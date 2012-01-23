@@ -13,7 +13,8 @@
     var disqus_identifier = <?php echo json_encode(aBlogItemTable::getDisqusIdentifier(isset($post) ? $post : null, $id)) ?>;
 	  (function() {
 	   var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	   dsq.src = "http://<?php echo $disqus_shortname ?>.disqus.com/embed.js";
+	   var protocol = "<?php echo $sf_request->isSecure() ? 'https' : 'http' ?>";
+	   dsq.src = protocol + "://<?php echo $disqus_shortname ?>.disqus.com/embed.js";
 	   (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 	  })();
 	<?php if (sfConfig::get('app_aBlog_disqus_developer', true)): ?>
