@@ -49,7 +49,7 @@
 	</div>
 
   <?php if ($pager->haveToPaginate()): ?>
-  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
+  	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerContainerClass' => 'a-pager-navigation-container-first',  'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
   <?php endif ?>
 
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
