@@ -1,5 +1,5 @@
 <?php
-// If the app.yml setting of "excerpt" is set to true, this template will be used for every post on
+// If app_aBlog_excerpts_show is true, this template will be used for every post on
 // the index page of the blog
  ?>
 

@@ -77,7 +77,7 @@
 
 <hr class="a-hr" />
 <div class="a-subnav-section categories">
-  <h4><?php echo a_('Categories') ?></h4>
+  <h4><?php echo a_(sfConfig::get('app_aBlog_categories_label', 'Categories')) ?></h4>
   <div class="a-filter-options blog clearfix">
 	  <?php foreach ($categories as $category): ?>
 	    <div class="a-filter-option">

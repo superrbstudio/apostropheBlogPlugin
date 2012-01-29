@@ -23,7 +23,7 @@
 	<?php if (strlen($sf_params->get('cat'))): ?>
 	  <?php $category = Doctrine::getTable('aCategory')->findOneBySlug($sf_params->get('cat')) ?>
 	  <?php if ($category): ?>
-	    <?php $filters[] = a_('in the category %category%', array('%category%' => a_remove_filter_button($category->name, $filterUrl, 'cat'))) ?>
+	    <?php $filters[] = a_(sfConfig::get('app_aBlog_category_filter_label', 'in the category %category%'), array('%category%' => a_remove_filter_button($category->name, $filterUrl, 'cat'))) ?>
 	  <?php endif ?>
 	<?php endif ?>
 
