@@ -22,7 +22,7 @@
 
  <div class="a-blog-item-excerpt-container">
 	<div class="a-blog-item-excerpt">
-		<?php echo $aEvent->getTextForArea('blog-body', $options['excerptLength']) ?>
+		<?php echo aHtml::entities($aEvent->getTextForArea('blog-body', $options['excerptLength'])) ?>
 	</div>
 	<div class="a-blog-read-more">
 		<?php echo link_to('Read More', 'a_event_post', $aEvent, array('class' => 'a-blog-more')) ?>
