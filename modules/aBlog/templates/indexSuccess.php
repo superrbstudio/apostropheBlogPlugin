@@ -55,7 +55,7 @@
   <?php foreach ($pager->getResults() as $a_blog_post): ?>
 
     <?php if (sfConfig::get('app_aBlog_excerpts_show')): ?>
-    <?php include_partial('aBlog/excerptTemplate', array('a_blog_post' => $a_blog_post, 'edit' => false)) ?>
+    <?php include_partial('aBlog/excerptTemplate', array('a_blog_post' => $a_blog_post, 'edit' => false )) ?>
     <?php else: ?>
   	<?php echo include_partial('aBlog/post', array('a_blog_post' => $a_blog_post)) ?>
     <?php endif ?>

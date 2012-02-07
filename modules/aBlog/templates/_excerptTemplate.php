@@ -9,6 +9,7 @@
   $edit = isset($edit) ? $sf_data->getRaw('edit') : null;
   $admin = ($sf_params->get('module') == 'aBlogAdmin') ? true : false;
   $excerptLength = (sfConfig::get('app_aBlog_excerpts_length')) ? sfConfig::get('app_aBlog_excerpts_length') : 30;
+  $options = isset($options) ? $sf_data->getRaw('options') : null;
 ?>
 
 <?php $catClass = ""; foreach ($a_blog_post->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
@@ -22,6 +23,16 @@
       <?php endif ?>
     </h3>
     <?php include_partial('aBlog/meta', array('a_blog_post' => $a_blog_post)) ?>
+  <?php endif ?>
+
+  <?php if ($a_blog_post->hasMedia()): ?>
+    <div class="a-blog-item-media">
+    <?php include_component('aSlideshowSlot', 'slideshow', array(
+      'items' => $a_blog_post->getMediaForArea('blog-body', 'image', 1),
+      'id' => 'a-slideshow-blogitem-'.$a_blog_post['id'],
+      'options' => array('width' => sfConfig::get('app_aBlog_media_width', 480))
+      )) ?>
+    </div>
   <?php endif ?>
 
   <div class="a-blog-item-content">
