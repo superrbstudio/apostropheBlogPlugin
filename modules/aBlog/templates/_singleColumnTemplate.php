@@ -20,7 +20,7 @@
   <?php // Standard slot choices, minus aBlog and aEvent. Pass in the options to edit the right virtual page ?>
   <?php // Events cannot have blog slots and vice versa, otherwise they could recursively point to each other ?>
   
-  <?php include_component('a', 'standardArea', array('name' => 'blog-body', 'edit' => $edit, 'toolbar' => 'main', 'slug' => $a_blog_post->Page->slug, 'width' => 480, 'minusSlots' => array('aBlog', 'aEvent'))) ?>
+  <?php include_component('a', 'standardArea', array('name' => 'blog-body', 'edit' => $edit, 'toolbar' => 'main', 'slug' => $a_blog_post->Page->slug, 'width' => sfConfig::get('app_aBlog_media_width', 480), 'minusSlots' => array('aBlog', 'aEvent'))) ?>
 
 	<?php if (!$admin): ?>
 		<?php include_partial('aBlog/tags', array('aBlogItem' => $a_blog_post)) ?>
