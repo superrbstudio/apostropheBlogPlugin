@@ -372,6 +372,15 @@ class aBlogToolkit {
     {
       $params['slug_pattern'] = $options['slugStem'] . '%';
     }
+
+    if (!isset($options['popular_tags_limit']))
+    {
+      $params['popular_tags_limit'] = sfConfig::get('app_aBlog_popular_tags_limit', 10);
+    }
+    else
+    {
+      $params['popular_tags_limit'] = $options['popular_tags_limit'];
+    }
     
     if (isset($options['q']) && (strlen($options['q'])))
     {
@@ -713,10 +722,20 @@ class aBlogToolkit {
     
     $result = array(
       'categoriesInfo' => $mysql->query('select distinct c.slug, c.name ' . $c_q . 'and c.slug is not null order by c.name', $params),
-      'tagsByName' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t.name', $params),
-      'tagsByPopularity' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t_count desc limit 10', $params),
+      'tagsByPopularity' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t_count desc limit :popular_tags_limit', $params),
       'pageIds' => $mysql->queryScalar('select distinct p.id ' . $p_q . ' order by ' . $pagesOrderBy, $params),
       'authors' => $authors);
+    // Can be very expensive if there are too many
+    if (sfConfig::get('app_aBlog_tags_by_name', true))
+    {
+      $result['tagsByName'] = $mysql->query('select t.name, count(distinct p.id) as t_count ' . $t_q . 'and t.name is not null group by t.name order by t.name', $params);
+    }
+    else
+    {
+      // A failsafe for code that isn't checking the new flag. If we set this to an empty array
+      // we get no tag browser at all in typical overrides of the blog sidebar, which is not a feature
+      $result['tagsByName'] = $result['tagsByPopularity'];
+    }
     return $result;
   }
   
