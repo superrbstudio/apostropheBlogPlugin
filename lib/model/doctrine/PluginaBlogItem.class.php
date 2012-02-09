@@ -328,7 +328,10 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   {
     if (is_null($options))
     {
-      $options = array('append_ellipsis' => true);
+      // getText returns actual plaintext, not entity-escaped text, so we
+      // should specify an actual ellipsis instead of the &hellip; entity
+      // escape sequence.
+      $options = array('append_ellipsis' => true, 'ellipsis' => '…');
     }
     $text = '';
     foreach($areas as $area)
