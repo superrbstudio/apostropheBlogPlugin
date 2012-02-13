@@ -168,6 +168,39 @@ function aBlogEnableForm(options)
 	{
 		toggleAllDay($(this));
 	}
+  $('#a_blog_item_start_date_jquery_control').bind('aDateUpdated', function() {
+    // If the user changes the start date and it is now after the end date,
+    // reset the end date to the current date
+    var startDate = $(this).val();
+    var components = startDate.split('/');
+    var startCompare;
+    if (components.length === 3)
+    {
+      startCompare = pad(components[0]) + '/' + pad(components[1]) + '/' + pad(components[2]);
+    }
+    var end = $('#a_blog_item_end_date_jquery_control');
+    var endDate = end.val();
+    var components = endDate.split('/');
+    var endCompare;
+    if (components.length === 3)
+    {
+      endCompare = pad(components[0]) + '/' + pad(components[1]) + '/' + pad(components[2]);
+    }
+    if (startCompare && (endCompare < startCompare))
+    {
+      end.val(startDate);
+      a_blog_item_end_date_update_linked(startDate);
+    }
+    function pad(n)
+    {
+      var s = n + '';
+      if (s.length < 2)
+      {
+        s = '0' + s;
+      }
+      return s;
+    }
+  });
 }
 
 function aBlogGetPostStatus()
