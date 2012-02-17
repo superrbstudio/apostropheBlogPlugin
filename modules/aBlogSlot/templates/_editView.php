@@ -1,4 +1,4 @@
-<?php use_helper('a') ?>
+categories_list_exclude<?php use_helper('a') ?>
 <?php
   // Compatible with sf_escaping_strategy: true
   $form = isset($form) ? $sf_data->getRaw('form') : null;
