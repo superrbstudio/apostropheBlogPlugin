@@ -19,7 +19,7 @@
     <?php include_partial('aEvent/meta', array('aEvent' => $a_event)) ?>
   <?php endif ?>
   <div class="a-blog-item-content">
-    <?php echo aHtml::simplify($a_event->getRichTextForArea('blog-body', $excerptLength), array('allowedTags' => 'a, em, strong'))  ?>
+    <?php echo aHtml::simplify($a_event->getRichTextForArea('blog-body', $excerptLength), array('allowedTags' => '<a><em><strong>'))  ?>
 
     <?php if (aHtml::limitWords($a_event->getRichTextForArea('blog-body'), $excerptLength) !== $a_event->getRichTextForArea('blog-body')): ?>
       <div class="a-blog-read-more">
