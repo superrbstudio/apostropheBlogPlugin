@@ -190,6 +190,23 @@ function aBlogEnableForm(options)
     {
       end.val(startDate);
       a_blog_item_end_date_update_linked(startDate);
+      // Push the end time to one hour after the start time on the new day.
+      // If the start hour was 11pm push the end time to 11:59pm - it's not perfect but
+      // it's consistent and simple to maintain
+      if (!$('#a_blog_item_all_day').attr('checked'))
+      {
+        if ($('#a_blog_item_start_time_hour').val() == 23)
+        {
+          $('#a_blog_item_end_time_hour').val(23);
+          $('#a_blog_item_end_time_minute').val(59);
+        }
+        else
+        {
+  	      $('#a_blog_item_end_time_hour').val(parseInt($('#a_blog_item_start_time_hour').val()) + 1);
+  	      $('#a_blog_item_end_time_minute').val($('#a_blog_item_start_time_minute').val());
+        }
+        $('#a_blog_item_end_time_hour').trigger('updatePicker');
+      }
     }
     function pad(n)
     {
