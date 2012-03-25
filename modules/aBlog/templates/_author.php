@@ -8,8 +8,8 @@
 <?php if ($a_blog_post->getAuthor()): ?>
   <?php $author = $a_blog_post->getAuthor() ?>
   <?php if (sfConfig::get('app_aBlog_link_author', false)): ?>
-    <?php echo link_to($author->getName() ? $author->getName() : $author, '@a_blog_author?' . http_build_query(array('author' => $author->username)), array('class' => 'a-link')) ?>
+    <?php echo link_to($author->getName() ? aHtml::entities($author->getName()) : aHtml::entities($author), '@a_blog_author?' . http_build_query(array('author' => $author->username)), array('class' => 'a-link')) ?>
 	<?php else: ?>
-	  <?php echo $author->getName() ? $author->getName() : $author ?>
+	  <?php echo $author->getName() ? aHtml::entities($author->getName()) : aHtml::entities($author) ?>
 	<?php endif ?>
 <?php endif ?>
