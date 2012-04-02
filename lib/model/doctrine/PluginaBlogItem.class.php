@@ -402,18 +402,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   /**
-   * Returns media for a given area attached to this items page.
-   * @param string $area
-   * @param string $type Kind of media to select from (image, video, pdf)
-   * @param int $limit
-   * @return Array aMediaItem
-   */
-  public function getMediaForArea($area, $type = 'image', $limit = 5)
-  {
-    return $this->getMediaForAreas(array($area), $type, $limit);
-  }
-
-  /**
    * Checks if this item hasMedia
    * @param string $type Kind of media to select from (image, video, pdf)
    * @return bool
@@ -431,6 +419,18 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   /**
+   * Returns media for a given area attached to this items page.
+   * @param string $area
+   * @param string $type Kind of media to select from (image, video, pdf)
+   * @param int $limit
+   * @return Array aMediaItem
+   */
+  public function getMediaForArea($area, $type = 'image', $limit = 5)
+  {
+    return $this->getMediaForAreas(array($area), $type, $limit);
+  }
+
+  /**
    * Given an array of areas this function returns the mediaItems in those areas.
    * @param  aArea $areas
    * @param  $type Set the type of media to return (image, video, pdf, etc...)
@@ -439,23 +439,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    */
   public function getMediaForAreas($areas, $type = 'image', $limit = 5)
   {
-    $aMediaItems = array();
-    foreach($areas as $area)
-    {
-      foreach($this->Page->getArea($area) as $slot)
-      {
-        foreach($slot->getOrderedMediaItems() as $aMediaItem)
-        {
-          if(is_null($type) || $aMediaItem['type'] == $type)
-          {
-            $limit = $limit - 1;
-            $aMediaItems[] = $aMediaItem;
-            if($limit == 0) return $aMediaItems;
-          }
-        }
-      }
-    }
-    return $aMediaItems;
+    return $this->Page->getMediaForAreas($areas, $type, $limit);
   }
 
   /**
