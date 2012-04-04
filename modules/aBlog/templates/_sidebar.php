@@ -14,17 +14,15 @@
   $calendar = isset($calendar) ? $sf_data->getRaw('calendar') : null;
   $tag = (!is_null($sf_params->get('tag'))) ? $sf_params->get('tag') : null;
 	$selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters
+  $layoutOptions = isset($layoutOptions) ? $sf_data->getRaw('layoutOptions') : null;
 ?>
 
-<?php // url_for is the LAST step after other addParams calls play with what we want to include. Don't do it now ?>
+<?php // This partial sets up the sidebar as a series of Symfony slots, then ?>
+<?php // includes aBlog/sidebarLayout which outputs them. You can override that partial ?>
+<?php // to alter the sequence and impose your own elements without losing out on ?>
+<?php // bug fixes we make later (although you'll have to watch for entirely new slots). ?>
 
-<?php // Do not jam year month and day into non-date filters when departing from an individual post ?>
-<?php if ($sf_params->get('action') === 'show'): ?>
-  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
-<?php else: ?>
-  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
-<?php endif ?>
-
+<?php slot('a_blog_sidebar_new_post') ?>
 
 <?php if (aBlogItemTable::userCanPost()): ?>
 	<div class="a-ui clearfix a-subnav-section a-sidebar-button-wrapper">
@@ -34,6 +32,17 @@
     </div>
 	</div>
 <?php endif ?>
+
+<?php end_slot('a_blog_sidebar_new_post') ?>
+
+<?php // Do not jam year month and day into non-date filters when departing from an individual post ?>
+<?php if ($sf_params->get('action') === 'show'): ?>
+  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+<?php else: ?>
+  <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+<?php endif ?>
+
+<?php slot('a_blog_sidebar_search') ?>
 
 <div class="a-subnav-section search">
 
@@ -48,6 +57,10 @@
   </div>
 
 </div>
+
+<?php end_slot('a_blog_sidebar_search') ?>
+
+<?php slot('a_blog_sidebar_dates') ?>
 
 <?php if (isset($calendar) && $calendar): ?>
 <hr class="a-hr" />
@@ -75,6 +88,10 @@
 </div>
 <?php endif ?>
 
+<?php end_slot('a_blog_sidebar_dates') ?>
+
+<?php slot('a_blog_sidebar_categories') ?>
+
 <hr class="a-hr" />
 <div class="a-subnav-section categories">
   <h4><?php echo a_(sfConfig::get('app_aBlog_categories_label', 'Categories')) ?></h4>
@@ -88,6 +105,10 @@
 	  <?php endforeach ?>
   </div>	
 </div>
+
+<?php end_slot('a_blog_sidebar_categories') ?>
+
+<?php slot('a_blog_sidebar_tags') ?>
 
 <?php if(count($tagsByName)): ?>
 <hr class="a-hr" />
@@ -121,6 +142,9 @@
 </div>
 <?php endif ?>
 
+<?php end_slot('a_blog_sidebar_tags') ?>
+
+<?php slot('a_blog_sidebar_authors') ?>
 
 <?php if (count($authors) > 1): ?>
 <hr class="a-hr" />
@@ -137,6 +161,10 @@
   </div>
 <?php endif ?>
 
+<?php end_slot('a_blog_sidebar_authors') ?>
+
+<?php slot('a_blog_sidebar_feeds') ?>
+
 <?php if(!isset($noFeed)): ?>
 	<hr class="a-hr" />
 	<ul class="a-ui a-controls stacked">
@@ -152,5 +180,9 @@
 	</ul>
 <?php endif ?>
 
+<?php end_slot('a_blog_sidebar_feeds') ?>
+
 <?php a_js_call('aBlog.sidebarEnhancements(?)', array()) ?>
 <?php a_js_call('apostrophe.selfLabel(?)', array('selector' => '#a-search-blog-field', 'title' => $searchLabel, 'focus' => false )) ?>
+
+<?php include_partial('aBlog/sidebarLayout', array('options' => $layoutOptions)) ?>

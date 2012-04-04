@@ -13,7 +13,7 @@
 ?>
 
 <?php $catClass = ""; foreach ($a_blog_post->getCategories() as $category): ?><?php $catClass .= " category-".aTools::slugify($category); ?><?php endforeach ?>
-<div class="a-blog-item post <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?> clearfix">
+<div class="a-blog-item post a-blog-excerpt <?php echo $a_blog_post->getTemplate() ?><?php echo ($catClass != '')? $catClass:'' ?> clearfix">
 
   <?php if (!$admin): ?>
     <h3 class="a-blog-item-title">
@@ -30,7 +30,7 @@
     <?php include_component('aSlideshowSlot', 'slideshow', array(
       'items' => $a_blog_post->getMediaForArea('blog-body', 'image', 1),
       'id' => 'a-slideshow-blogitem-'.$a_blog_post['id'],
-      'options' => array('width' => sfConfig::get('app_aBlog_media_width', 480))
+      'options' => array('width' => sfConfig::get('app_aBlog_media_excerpt_width', sfConfig::get('app_aBlog_media_width', 480)))
       )) ?>
     </div>
   <?php endif ?>
