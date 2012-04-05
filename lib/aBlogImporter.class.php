@@ -7,14 +7,23 @@ class aBlogImporter extends aImporter
 
   public function initialize($params)
   {
-    $this->sql->query('DELETE FROM a_blog_item');
+    // Default is to purge, for bc, but there should at least be a way to not do that ):
+    $clear = isset($options['clear']) ? $options['clear'] : true;
     if (isset($params['posts']))
     {
       $this->posts = simplexml_load_file($params['posts']);
+      if ($clear)
+      {
+        $this->sql->query('DELETE FROM a_blog_item WHERE TYPE = "post"');
+      }
     }
     if (isset($params['events']))
     {
       $this->events = simplexml_load_file($params['events']);
+      if ($clear)
+      {
+        $this->sql->query('DELETE FROM a_blog_item WHERE TYPE = "event"');
+      }
     }
     if (isset($params['authors']))
     {

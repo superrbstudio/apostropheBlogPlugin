@@ -22,6 +22,7 @@ class aBlogImportTask extends sfBaseTask
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
       new sfCommandOption('events', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of events', null),
       new sfCommandOption('posts', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of posts', null),
+      new sfCommandOption('clear', null, sfCommandOption::PARAMETER_NONE, 'Remove existing posts and/or events', null),
       new sfCommandOption('authors', null, sfCommandOption::PARAMETER_REQUIRED, 'XML author username mapping', null)
       // add your own options here
     ));

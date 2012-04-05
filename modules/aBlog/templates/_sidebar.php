@@ -15,6 +15,9 @@
   $tag = (!is_null($sf_params->get('tag'))) ? $sf_params->get('tag') : null;
 	$selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters
   $layoutOptions = isset($layoutOptions) ? $sf_data->getRaw('layoutOptions') : null;
+  // Handy flags to shut these features off; eliminates some common override cases
+  $showDates = isset($showDates) ? $sf_data->getRaw('showDates') : true;
+  $showCategories = isset($showCategories) ? $sf_data->getRaw('showCategories') : true;
 ?>
 
 <?php // This partial sets up the sidebar as a series of Symfony slots, then ?>
@@ -62,51 +65,53 @@
 
 <?php slot('a_blog_sidebar_dates') ?>
 
-<?php if (isset($calendar) && $calendar): ?>
-<hr class="a-hr" />
-<?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
-<?php endif ?>
-
-<?php if (!$calendar): ?>
-<hr class="a-hr" />
-<div class='a-subnav-section range'>
-  <h4><?php echo a_('Browse by') ?></h4>
-  <div class="a-filter-options blog clearfix">
-    <div class="a-filter-option">  	
-			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
-			<?php echo a_button('Day', url_for($url . '?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
-		</div>
-    <div class="a-filter-option">
-			<?php $selected_month = ($dateRange == 'month') ? $selected : array() ?>
-			<?php echo a_button('Month', url_for($url . '?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('a-link'),$selected_month)) ?>
-		</div>
-    <div class="a-filter-option">
-			<?php $selected_year = ($dateRange == 'year') ? $selected : array() ?>
-			<?php echo a_button('Year', url_for($url . '?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('a-link'),$selected_year)) ?>
-		</div>
-  </div>
-</div>
+<?php if ($showDates): ?>
+  <?php if (isset($calendar) && $calendar): ?>
+    <hr class="a-hr" />
+    <?php include_partial('aEvent/calendar', array('calendar' => $calendar)) ?>
+  <?php else: ?>
+    <hr class="a-hr" />
+    <div class='a-subnav-section range'>
+      <h4><?php echo a_('Browse by') ?></h4>
+      <div class="a-filter-options blog clearfix">
+        <div class="a-filter-option">  	
+    			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
+    			<?php echo a_button('Day', url_for($url . '?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
+    		</div>
+        <div class="a-filter-option">
+    			<?php $selected_month = ($dateRange == 'month') ? $selected : array() ?>
+    			<?php echo a_button('Month', url_for($url . '?'.http_build_query(($dateRange == 'month') ? $params['nodate'] : $params['month'])), array_merge(array('a-link'),$selected_month)) ?>
+    		</div>
+        <div class="a-filter-option">
+    			<?php $selected_year = ($dateRange == 'year') ? $selected : array() ?>
+    			<?php echo a_button('Year', url_for($url . '?'.http_build_query(($dateRange == 'year') ? $params['nodate'] : $params['year'])), array_merge(array('a-link'),$selected_year)) ?>
+    		</div>
+      </div>
+    </div>
+  <?php endif ?>
 <?php endif ?>
 
 <?php end_slot('a_blog_sidebar_dates') ?>
 
-<?php slot('a_blog_sidebar_categories') ?>
+<?php if ($showCategories): ?>
+  <?php slot('a_blog_sidebar_categories') ?>
 
-<hr class="a-hr" />
-<div class="a-subnav-section categories">
+  <hr class="a-hr" />
+  <div class="a-subnav-section categories">
   <h4><?php echo a_(sfConfig::get('app_aBlog_categories_label', 'Categories')) ?></h4>
   <div class="a-filter-options blog clearfix">
-	  <?php foreach ($categories as $category): ?>
-	    <div class="a-filter-option">
+    <?php foreach ($categories as $category): ?>
+      <div class="a-filter-option">
       	
-				<?php $selected_category = ($category['slug'] === $sf_params->get('cat')) ? $selected : array() ?>
-				<?php echo a_button($category['name'], url_for(aUrl::addParams($filterUrl, array('cat' => ($sf_params->get('cat') === $category['slug']) ? '' : $category['slug']))), array_merge(array('a-link'),$selected_category)) ?>
-			</div>
-	  <?php endforeach ?>
+  			<?php $selected_category = ($category['slug'] === $sf_params->get('cat')) ? $selected : array() ?>
+  			<?php echo a_button($category['name'], url_for(aUrl::addParams($filterUrl, array('cat' => ($sf_params->get('cat') === $category['slug']) ? '' : $category['slug']))), array_merge(array('a-link'),$selected_category)) ?>
+  		</div>
+    <?php endforeach ?>
   </div>	
-</div>
+  </div>
 
-<?php end_slot('a_blog_sidebar_categories') ?>
+  <?php end_slot('a_blog_sidebar_categories') ?>
+<?php endif ?>
 
 <?php slot('a_blog_sidebar_tags') ?>
 
