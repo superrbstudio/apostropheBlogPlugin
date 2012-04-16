@@ -79,11 +79,21 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
   {
     return aBlogToolkit::searchBody($this, '@a_event_search_redirect', 'aEvent', null, $request);
   }   
-  
+
+  protected function eventFormFor($object)
+  {
+    $form = new aEventForm($object);
+    $event = new sfEvent(null, 'a.filterBlogItemForm');
+    $this->dispatcher->filter($event, $form);
+    $form = $event->getReturnValue();
+    return $form;
+  }  
+
   public function executeUpdate(sfWebRequest $request)
   {
     $this->setAEventForUser();
-    $this->form = new aEventForm($this->a_event);
+    $this->form = $this->eventFormFor($this->a_event);
+
     if ($request->getMethod() === 'POST')
     {
       $this->form->bind($request->getParameter($this->form->getName()));
@@ -97,7 +107,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
-        $this->form = new aEventForm($this->a_event);
+        $this->form = $this->eventFormFor($this->a_event);
       }
     }
     if (!$request->isXmlHttpRequest())
@@ -146,9 +156,11 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 
   public function executeEdit(sfWebRequest $request)
   {
+    error_log('executeEdit');
     $this->setAEventForUser();
     $this->forward404Unless($this->a_event);
-    $this->form = new aEventForm($this->a_event);
+    $this->form = $this->eventFormFor($this->a_event);
+    error_log("I totally filtered that thing");
 
     aBlogItemTable::populatePages(array($this->a_event));
     $this->getTagInfo();

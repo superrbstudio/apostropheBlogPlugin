@@ -216,20 +216,23 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
   public function updatePublication($values)
   {
     $object = $this->getObject();
-    if ($values['publication'] === 'schedule')
+    if (isset($values['publication']))
     {
-      $object->status = 'published';
-      // published_at comes from corresponding field naturally
-    }
-    elseif ($values['publication'] === 'publish')
-    {
-      $object->status = 'published';
-      // Override field, publish now
-      $object->published_at = aDate::mysql();
-    }
-    elseif ($values['publication'] === 'draft')
-    {
-      $object->status = 'draft';
+      if ($values['publication'] === 'schedule')
+      {
+        $object->status = 'published';
+        // published_at comes from corresponding field naturally
+      }
+      elseif ($values['publication'] === 'publish')
+      {
+        $object->status = 'published';
+        // Override field, publish now
+        $object->published_at = aDate::mysql();
+      }
+      elseif ($values['publication'] === 'draft')
+      {
+        $object->status = 'draft';
+      }
     }
   }
   

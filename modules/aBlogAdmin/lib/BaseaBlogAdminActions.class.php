@@ -52,7 +52,8 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   public function executeUpdate(sfWebRequest $request)
   {
     $this->setABlogPostForUser();
-    $this->form = new aBlogPostForm($this->a_blog_post);
+    $this->form = $this->eventFormFor($this->a_blog_post);
+
     if ($request->getMethod() === 'POST')
     {
       $this->form->bind($request->getParameter($this->form->getName()));
@@ -66,7 +67,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
         
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
-        $this->form = new aBlogPostForm($this->a_blog_post);
+        $this->form = $this->eventFormFor($this->a_blog_post);
       }
     }
     if (!$request->isXmlHttpRequest())
@@ -143,6 +144,15 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     aBlogItemTable::populatePages($this->pager->getResults());
   }
 
+  protected function eventFormFor($object)
+  {
+    $form = new aBlogPostForm($object);
+    $event = new sfEvent(null, 'a.filterBlogItemForm');
+    $this->dispatcher->filter($event, $form);
+    $form = $event->getReturnValue();
+    return $form;
+  }  
+
   public function executeEdit(sfWebRequest $request)
   {
 		$this->getResponse()->addJavascript('/sfDoctrineActAsTaggablePlugin/js/pkTagahead.js','last');
@@ -157,7 +167,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
     }
     $this->forward404Unless($this->a_blog_post);
     // Separate forms for separately saved fields
-    $this->form = new aBlogPostForm($this->a_blog_post);
+    $this->form = $this->eventFormFor($this->a_blog_post);
 
     $this->getTagInfo();
 
