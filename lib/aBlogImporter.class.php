@@ -8,7 +8,7 @@ class aBlogImporter extends aImporter
   public function initialize($params)
   {
     // Default is to purge, for bc, but there should at least be a way to not do that ):
-    $clear = isset($options['clear']) ? $options['clear'] : true;
+    $clear = isset($params['clear']) ? $params['clear'] : true;
     if (isset($params['posts']))
     {
       $this->posts = simplexml_load_file($params['posts']);
