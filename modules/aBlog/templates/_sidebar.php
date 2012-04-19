@@ -13,12 +13,19 @@
 	$adminModule = isset($adminModule) ? $sf_data->getRaw('adminModule') : null;
   $calendar = isset($calendar) ? $sf_data->getRaw('calendar') : null;
   $tag = (!is_null($sf_params->get('tag'))) ? $sf_params->get('tag') : null;
-	$selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters
   $layoutOptions = isset($layoutOptions) ? $sf_data->getRaw('layoutOptions') : null;
   // Handy flags to shut these features off; eliminates some common override cases
   $showDates = isset($showDates) ? $sf_data->getRaw('showDates') : true;
   $showCategories = isset($showCategories) ? $sf_data->getRaw('showCategories') : true;
 ?>
+
+<?php $selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters ?>
+
+<?php // Categories in the subnav are redundant when there is only one possible on this page. ?>
+<?php // If I've missed something and this has to be reverted, FM will need an override ?>
+<?php if (count($categories) === 1): ?>
+  <?php $showCategories = false ?>
+<?php endif ?>
 
 <?php // This partial sets up the sidebar as a series of Symfony slots, then ?>
 <?php // includes aBlog/sidebarLayout which outputs them. You can override that partial ?>
@@ -101,9 +108,10 @@
   <h4><?php echo a_(sfConfig::get('app_aBlog_categories_label', 'Categories')) ?></h4>
   <div class="a-filter-options blog clearfix">
     <?php foreach ($categories as $category): ?>
-      <div class="a-filter-option">
-      	
-  			<?php $selected_category = ($category['slug'] === $sf_params->get('cat')) ? $selected : array() ?>
+      <?php $isSelected = ($category['slug'] === $sf_params->get('cat')) ?>
+      <?php // Sometimes it is helpful to have this on the div ?>
+      <div class="a-filter-option <?php echo $isSelected ? 'a-filter-current' : '' ?>">
+  			<?php $selected_category = $isSelected ? $selected : array() ?>
   			<?php echo a_button($category['name'], url_for(aUrl::addParams($filterUrl, array('cat' => ($sf_params->get('cat') === $category['slug']) ? '' : $category['slug']))), array_merge(array('a-link'),$selected_category)) ?>
   		</div>
     <?php endforeach ?>

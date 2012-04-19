@@ -33,7 +33,15 @@ class aBlogImporter extends aImporter
         $this->authorMap[(string) $mapping['from']] = (string) $mapping['to'];
       }
     }
-    $this->defaultAuthorId = $this->sql->queryOneScalar('SELECT id FROM sf_guard_user WHERE username="admin"');
+    if (isset($params['defaultUsername']))
+    {
+      $defaultUsername = $params['defaultUsername'];
+    }
+    else
+    {
+      $defaultUsername = 'admin';
+    }
+    $this->defaultAuthorId = $this->sql->queryOneScalar('SELECT id FROM sf_guard_user WHERE username=:username', array('username' => $defaultUsername));
   }
 
   public function import($type = 'posts')
@@ -158,7 +166,7 @@ class aBlogImporter extends aImporter
   {
     $slug = $this->slugify(isset($post['slug']) ? $post['slug'] : $post->title);
 
-    // Posts belong to the admin if a valid username is not provided.
+    // Posts belong to the defaultUsername if a valid username is not matched.
     // Check the author map if there is one
     $author_id = $this->defaultAuthorId;
     if (isset($post->author))
