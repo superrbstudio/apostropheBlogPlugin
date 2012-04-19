@@ -116,7 +116,10 @@ class aBlogEvents
           $info['category_id'] = $oldIdToNewId[$info['blog_category_id']];
           if (isset($validItemIds[$info['page_id']]))
           {
-            $migrate->query('INSERT INTO a_page_to_category (page_id, category_id) VALUES (:page_id, :category_id)', $info);
+            if (isset($info['page_id']))
+            {
+              $migrate->query('INSERT INTO a_page_to_category (page_id, category_id) VALUES (:page_id, :category_id)', $info);
+            }
           }
         }
       }
@@ -185,7 +188,10 @@ class aBlogEvents
     $blogToCategories = $migrate->query("SELECT * FROM a_blog_item_to_category");
     foreach ($blogToCategories as $toCategory)
     {
-      $migrate->query("INSERT INTO a_page_to_category (category_id, page_id) VALUES (:category_id, :page_id) ON DUPLICATE KEY UPDATE category_id = category_id", array('category_id' => $toCategory['category_id'], 'page_id' => $blogPagesById[$toCategory['blog_item_id']]));
+      if (isset($blogPagesById[$toCategory['blog_item_id']]))
+      {
+        $migrate->query("INSERT INTO a_page_to_category (category_id, page_id) VALUES (:category_id, :page_id) ON DUPLICATE KEY UPDATE category_id = category_id", array('category_id' => $toCategory['category_id'], 'page_id' => $blogPagesById[$toCategory['blog_item_id']]));
+      }
     }
         
     // Older versions did not have taggings on the virtual page
