@@ -50,7 +50,9 @@
 
     <?php if (!$admin): ?>
       <?php include_partial('aBlog/tags', array('aBlogItem' => $a_blog_post)) ?>
-      <?php include_partial('aBlog/addThis', array('aBlogItem' => $a_blog_post)) ?>
+      <?php if (sfConfig::get('app_aBlog_addThisInExcerpts', true)): ?>
+        <?php include_partial('aBlog/addThis', array('aBlogItem' => $a_blog_post)) ?>
+      <?php endif ?>
     <?php endif ?>
 
   </div>
