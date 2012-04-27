@@ -88,10 +88,20 @@ abstract class BaseaBlogActions extends aEngineActions
     return $q;
   }
 
+  public function getMaxPerPage()
+  {
+    return $this->getUser()->getAttribute('max_per_page', $this->getDefaultMaxPerPage(), 'apostropheBlog_prefs');
+  }
+
+  public function getDefaultMaxPerPage()
+  {
+    return sfConfig::get('app_aBlog_max_per_page', 20);
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     $this->buildParams();
-    $this->max_per_page = $this->getUser()->getAttribute('max_per_page', sfConfig::get('app_aBlog_max_per_page', 20), 'apostropheBlog_prefs');
+    $this->max_per_page = $this->getMaxPerPage();
     $pager = new sfDoctrinePager($this->modelClass);
     $pager->setMaxPerPage($this->max_per_page);
     $pager->setQuery($this->buildQuery($request));
@@ -114,7 +124,7 @@ abstract class BaseaBlogActions extends aEngineActions
       $this->getFeed();
       return sfView::NONE;
     }
-		
+    
     return $this->pageTemplate;
   }
 
@@ -125,7 +135,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $this->aBlogPost = $this->getRoute()->getObject();
     $this->forward404Unless($this->aBlogPost);
     $this->forward404Unless($this->aBlogPost['status'] == 'published' || $this->getUser()->isAuthenticated());
-		$this->preview = $this->getRequestParameter('preview');
+    $this->preview = $this->getRequestParameter('preview');
     aBlogItemTable::populatePages(array($this->aBlogPost));
 
     // Thanks to Giles Smith for catching that we had no titles on our blog post permalink pages!
@@ -134,7 +144,7 @@ abstract class BaseaBlogActions extends aEngineActions
     $prefix = aTools::getOptionI18n('title_prefix');
     $suffix = aTools::getOptionI18n('title_suffix');
     $this->getResponse()->setTitle($prefix . $this->aBlogPost->Page->getTitle() . $suffix, false);
-		
+    
     return $this->pageTemplate;
   }
 
