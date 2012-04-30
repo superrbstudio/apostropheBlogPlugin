@@ -13,9 +13,9 @@
 <meta property="og:url" content="<?php echo url_for('a_blog_post', $aBlogPost, true) ?>"/>
 <?php $items = $aBlogPost->getMediaForArea('blog-body', 'image', 1) ?>
 <?php if (count($items)): ?>
-	<?php foreach ($items as $item): ?>
-<meta property="og:image" content="<?php echo $item->getImgSrcUrl(400, false, 's', 'jpg', true) ?>"/>	
-	<?php endforeach ?>
+  <?php foreach ($items as $item): ?>
+<meta property="og:image" content="<?php echo $item->getImgSrcUrl(400, false, 's', 'jpg', true) ?>"/> 
+  <?php endforeach ?>
 <?php endif ?>
 <meta property="og:site_name" content="<?php echo sfContext::getInstance()->getResponse()->getTitle(); ?>"/>
 <meta property="og:description" content="<?php echo $aBlogPost->getTextForArea('blog-body', 25) ?>"/>
@@ -24,17 +24,18 @@
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
 <?php slot('a-subnav') ?>
-	<div class="a-ui a-subnav-wrapper blog clearfix">
-		<div class="a-subnav-inner">
-	    <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'reset' => true, 'noFeed' => true, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'), 'newLabel' => a_('New Post'), 'newModule' => 'aBlogAdmin', 'newComponent' => 'newPost')) ?>
-	  </div> 
-	</div>
+  <div class="a-ui a-subnav-wrapper blog clearfix">
+    <div class="a-subnav-inner">
+      <?php include_component('aBlog', 'sidebar', array('params' => $params, 'dateRange' => $dateRange, 'info' => $info, 'reset' => true, 'noFeed' => true, 'url' => 'aBlog/index', 'searchLabel' => a_('Search Posts'), 'newLabel' => a_('New Post'), 'newModule' => 'aBlogAdmin', 'newComponent' => 'newPost')) ?>
+    </div> 
+  </div>
 <?php end_slot() ?>
 
 <div id="a-blog-main" class="a-blog-main clearfix">
-	<?php echo include_partial('aBlog/post', array('a_blog_post' => $aBlogPost, 'preview' => $preview)) ?>
+  <?php echo include_partial('aBlog/post', array('a_blog_post' => $aBlogPost, 'preview' => $preview)) ?>
 
-	<?php  if (sfConfig::get('app_aBlog_disqus_enabled', true)): ?>
-		<?php include_partial('aBlog/disqus', array('id' => $aBlogPost->getId(), 'post' => $aBlogPost )) ?>
-	<?php endif ?>
+  <?php  if (sfConfig::get('app_aBlog_disqus_enabled', true) && 
+      ((!sfConfig::get('app_aBlog_allow_comments_individually')) || $aBlogPost->getAllowComments())): ?>
+    <?php include_partial('aBlog/disqus', array('id' => $aBlogPost->getId(), 'post' => $aBlogPost )) ?>
+  <?php endif ?>
 </div>

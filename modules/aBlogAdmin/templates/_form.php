@@ -89,14 +89,11 @@
 
 
   <?php // Blog Post Comments ?>
-  <?php if(isset($form['allow_comments'])): ?>
+  <?php if (isset($form['allow_comments'])): ?>
     <hr class="a-hr" />
     <div class="comments section">
-      <h4><a href="#" class="a-sidebar-link allow_comments_toggle <?php echo ($a_blog_post['allow_comments'])? 'enabled' : 'disabled' ?>"><span class="enabled" title="<?php echo a_('Click to disable comments') ?>"><?php echo a_('Comments are enabled') ?></span><span class="disabled" title="<?php echo a_('Click to enable comments') ?>"><?php echo a_('Comments are disabled') ?></span></a></h4>
-      <div class="allow_comments option">
-        <?php echo $form['allow_comments']->render() ?>
-        <?php echo $form['allow_comments']->renderError() ?>
-      </div>
+      <?php // I used cite because, unfortunately, span has been styled in this context. -Tom ?>
+      <h4><cite class="a-allow-comments-label"><?php echo a_('Allow Comments') ?></cite><?php echo $form['allow_comments']->render() ?></h4>
     </div>
   <?php endif ?>
   

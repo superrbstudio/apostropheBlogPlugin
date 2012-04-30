@@ -52,16 +52,18 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     $this->setValidator('template',
       new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip($templateChoices))));
 
-    if(count($templateChoices) <= 1)
+    if (count($templateChoices) <= 1)
     {
       unset($this['template']);
     }
 
-    if(!sfConfig::get('app_aBlog_comments', false))
+    if ((!sfConfig::get('app_aBlog_disqus_enabled', false)) || 
+      (!sfConfig::get('app_aBlog_allow_comments_individually')))
     {
       unset($this['allow_comments']);
     }
-    if((!sfConfig::get('app_a_simple_permissions')) && ($user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() ))
+
+    if ((!sfConfig::get('app_a_simple_permissions')) && ($user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() ))
     {
       $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
 

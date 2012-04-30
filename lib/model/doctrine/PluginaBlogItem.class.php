@@ -20,6 +20,14 @@ abstract class PluginaBlogItem extends BaseaBlogItem
    * Doctrine_Record overrides
    */
 
+  public function construct()
+  {
+    if ($this->isNew() && sfConfig::get('app_aBlog_allow_comments_individually', false))
+    {
+      $this->setAllowComments(sfConfig::get('app_aBlog_allow_comments_initially', true));
+    }
+  }
+
   /**
    * Deletes a blog item after checking if the user has permission to perform
    * the delete.
