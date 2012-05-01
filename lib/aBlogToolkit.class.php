@@ -618,7 +618,13 @@ class aBlogToolkit {
       }
     }
 
-    if ($alphaSort)
+    // Order search engine results correctly
+    if (isset($pageIds) && count($pageIds))
+    {
+      $orderByIds = $pageIds;
+      $pagesOrderBy = 'FIELD(p.id,' . implode(',', $pageIds) . ')';
+    }
+    elseif ($alphaSort)
     {
       $pagesOrderBy = 's.value asc';
     }
