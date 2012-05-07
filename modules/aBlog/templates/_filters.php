@@ -42,6 +42,7 @@
 
   <h3 class="a-blog-filters browser">
 	<?php if (count($filters)): ?>
+		<?php slot('a-blog-has-filters', true) ?>
 		<?php // Pluralize $type ?>
 		<?php $type = ($count != 1) ? $typePlural : $type  ?>
 		<?php echo a_('You are viewing %count% %type% %filters%', array('%count%' => $count, '%type%' => $type, '%filters%' => implode(' ', $filters))) ?>

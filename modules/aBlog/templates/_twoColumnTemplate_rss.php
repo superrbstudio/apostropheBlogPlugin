@@ -4,5 +4,5 @@
 ?>
 <?php // No redundant title and date info. cnn.com doesn't do it either. ?>
 <?php foreach($aBlogPost->Page->getArea('blog-body') as $slot): ?>
-<?php echo $slot->getText() ?>
+<?php echo $slot->getBasicHtml() ?>
 <?php endforeach ?>
