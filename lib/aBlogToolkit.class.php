@@ -557,7 +557,9 @@ class aBlogToolkit {
 
     $events = isset($options['byEventDateRange']) && $options['byEventDateRange'];
 
-    if ($events && ($startYear === '0000'))
+    // When dates are relevant and no start date is specified, force today to be the start date
+    // unless a search is present. Search often implies an interest in the past
+    if ($events && ($startYear === '0000') && ((!isset($options['q'])) || (!strlen($options['q']))))
     {
       list($startYear, $startMonth, $startDay) = preg_split('/-/', date('Y-m-d'));
     }
