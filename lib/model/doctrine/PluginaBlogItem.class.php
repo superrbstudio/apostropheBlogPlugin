@@ -305,6 +305,28 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     return get_partial($this->engine . '/' . $this->template . '_rss', array(get_class($this) => $this));
   }
 
+  public function getThumbnailMarkup()
+  {
+    $result = '';
+    $images = $this->Page->getMediaForArea('blog-body', 'image', 1);
+    $image = reset($images);
+    if ($image)
+    {
+      $styles = htmlspecialchars(sfConfig::get('app_aBlog_feedThumbnailStyles', 'display: block; clear: left; float: left; width: 100px'));
+      $width = sfConfig::get('app_aBlog_feedThumbnailWidth', 100);
+      $height = sfConfig::get('app_aBlog_feedThumbnailHeight', false);
+      $crop = sfConfig::get('app_aBlog_feedThumbnailCrop', 's');
+      $url = $image->getImgSrcUrl($width, $height, $crop);
+      $result .= <<<EOM
+    <img style="$styles" 
+      src="$url"
+    />
+EOM
+;
+     }
+     return $result;
+  }
+
   /**
    * Gets the text for the areas in this item
    * @param int $limit
