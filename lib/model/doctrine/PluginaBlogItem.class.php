@@ -312,7 +312,7 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     $image = reset($images);
     if ($image)
     {
-      $styles = htmlspecialchars(sfConfig::get('app_aBlog_feedThumbnailStyles', 'display: block; clear: left; float: left; width: 100px'));
+      $styles = htmlspecialchars(sfConfig::get('app_aBlog_feedThumbnailStyles', 'display: block; clear: left; float: left; width: 100px; margin: 10px;'));
       $width = sfConfig::get('app_aBlog_feedThumbnailWidth', 100);
       $height = sfConfig::get('app_aBlog_feedThumbnailHeight', false);
       $crop = sfConfig::get('app_aBlog_feedThumbnailCrop', 's');
