@@ -22,9 +22,8 @@
 		<a href="http://addthis.com/bookmark.php?v=250&amp;<?php echo $keyword ?>=<?php echo $addthis_identifier ?>" class="addthis_button_compact">Share</a>
 		<span class="addthis_separator">|</span>
 		<a class="addthis_button_facebook"></a>
-		<a class="addthis_button_myspace"></a>
+    <a class="addthis_button_twitter"></a>
 		<a class="addthis_button_google"></a>
-		<a class="addthis_button_twitter"></a>
 	</div>
 	<!-- AddThis Button END -->
 	<?php use_javascript('http://s7.addthis.com/js/250/addthis_widget.js#' . $keyword . '=' . $addthis_identifier) ?>
