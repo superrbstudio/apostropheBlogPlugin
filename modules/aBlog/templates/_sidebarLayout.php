@@ -11,4 +11,8 @@
 <?php include_slot('a_blog_sidebar_categories') ?>
 <?php include_slot('a_blog_sidebar_tags') ?>
 <?php include_slot('a_blog_sidebar_authors') ?>
+
+<?php // This will harmlessly do nothing if you don't happen to have the entities plugin in your project ?>
+<?php include_slot('a_blog_sidebar_entities') ?>
+
 <?php include_slot('a_blog_sidebar_feeds') ?>
