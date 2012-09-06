@@ -11,6 +11,9 @@
 	<?php $filters = array() ?>
 	<?php $date = $sf_params->get('day') . ' ' . (($sf_params->get('month')) ? date('F', strtotime(date('Y').'-'.$sf_params->get('month').'-01')) : '') . ' ' . $sf_params->get('year') ?>
 	<?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
+  <?php foreach ($params['extraFilterCriteria'] as $efc): ?>
+    <?php $filterUrl = aUrl::addParams($filterUrl, array($efc['urlParameter'] => $sf_params->get($efc['urlParameter']))) ?>
+  <?php endforeach ?>
 
 	<?php if ($sf_params->get('year') > 0): ?>
 	  <?php $filters[] = a_('for %date%', array('%date%' => a_remove_filter_button($date, $filterUrl, array('year', 'month', 'day')))) ?>
@@ -40,6 +43,16 @@
 	  <?php endif ?>
   <?php endif ?>
 
+  <?php if (isset($params['extraFilterCriteria'])): ?>
+    <?php foreach ($params['extraFilterCriteria'] as $efc): ?>
+      <?php $p = $efc['urlParameter'] ?>
+      <?php if (strlen($sf_params->get($p))): ?>
+        <?php $v = $sf_params->get($p) ?>
+        <?php $filters[] = a_($efc['labelTemplate'], array('%value%' => a_remove_filter_button($efc['labelValueCallback'] ? call_user_func($efc['labelValueCallback'], $v) : $v, $filterUrl, $p))) ?>
+      <?php endif ?>
+    <?php endforeach ?>
+  <?php endif ?>
+
   <h3 class="a-blog-filters browser">
 	<?php if (count($filters)): ?>
 		<?php slot('a-blog-has-filters', true) ?>
@@ -50,7 +63,7 @@
 		<?php if ($count): ?>
 			<?php echo a_('You are viewing all %type%', array('%type%' => $typePlural)) ?>
 		<?php else: ?>
-			<?php echo a_('There are no %type%', array('%type%' => $typePlural)) ?>			
+			<?php echo a_('There are no %type%', array('%type%' => $typePlural)) ?>
 		<?php endif ?>
 	<?php endif ?>
 	</h3>

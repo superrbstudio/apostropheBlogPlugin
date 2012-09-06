@@ -17,6 +17,7 @@
   // Handy flags to shut these features off; eliminates some common override cases
   $showDates = isset($showDates) ? $sf_data->getRaw('showDates') : true;
   $showCategories = isset($showCategories) ? $sf_data->getRaw('showCategories') : true;
+  $info = isset($info) ? $sf_data->getRaw('info') : array();
 ?>
 
 <?php $selected = array('icon','a-selected','alt','icon-right'); // Class names for selected filters ?>
@@ -52,6 +53,10 @@
   <?php $filterUrl = aUrl::addParams($url, array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author'))) ?>
 <?php endif ?>
 
+<?php foreach ($params['extraFilterCriteria'] as $efc): ?>
+  <?php $filterUrl = aUrl::addParams($filterUrl, array($efc['urlParameter'] => $sf_params->get($efc['urlParameter']))) ?>
+<?php endforeach ?>
+
 <?php slot('a_blog_sidebar_search') ?>
 
 <div class="a-subnav-section search">
@@ -81,7 +86,7 @@
     <div class='a-subnav-section range'>
       <h4><?php echo a_('Browse by') ?></h4>
       <div class="a-filter-options blog clearfix">
-        <div class="a-filter-option">  	
+        <div class="a-filter-option">
     			<?php $selected_day = ($dateRange == 'day') ? $selected : array() ?>
     			<?php echo a_button('Day', url_for($url . '?'.http_build_query(($dateRange == 'day') ? $params['nodate'] : $params['day'])), array_merge(array('a-link'),$selected_day)) ?>
     		</div>
@@ -115,7 +120,7 @@
   			<?php echo a_button($category['name'], url_for(aUrl::addParams($filterUrl, array('cat' => ($sf_params->get('cat') === $category['slug']) ? '' : $category['slug']))), array_merge(array('a-link'),$selected_category)) ?>
   		</div>
     <?php endforeach ?>
-  </div>	
+  </div>
   </div>
 
   <?php end_slot('a_blog_sidebar_categories') ?>
@@ -125,16 +130,16 @@
 
 <?php if(count($tagsByName)): ?>
 <hr class="a-hr" />
-<div class="a-subnav-section tags">  
+<div class="a-subnav-section tags">
 
 	<?php if (isset($tag)): ?>
 	<div class="a-tag-sidebar-selected-tag clearfix">
-		<h4 class="a-tag-sidebar-title selected-tag"><?php echo a_('Selected Tag') ?></h4>  
+		<h4 class="a-tag-sidebar-title selected-tag"><?php echo a_('Selected Tag') ?></h4>
 		<?php echo a_button($tag, url_for(aUrl::addParams($filterUrl, array('tag' => ''))), array('a-link','icon','a-selected')) ?>
 	</div>
-	<?php endif ?>  
-  
-	<h4 class="a-tag-sidebar-title popular"><?php echo a_('Popular Tags') ?></h4>  			
+	<?php endif ?>
+
+	<h4 class="a-tag-sidebar-title popular"><?php echo a_('Popular Tags') ?></h4>
 	<ul class="a-ui a-tag-sidebar-list popular">
 		<?php $n=1; foreach ($tagsByPopularity as $tagInfo): ?>
 		  <li <?php echo ($n == count($tagsByPopularity) ? 'class="last"':'') ?>>
@@ -151,7 +156,7 @@
 			</li>
 		<?php $n++; endforeach ?>
 	</ul>
-	
+
 </div>
 <?php endif ?>
 
@@ -161,20 +166,43 @@
 
 <?php if (count($authors) > 1): ?>
 <hr class="a-hr" />
-  <div class="a-subnav-section authors">
-    <h4 class="filter-label<?php echo ($sf_params->get('author')) ? ' open' : '' ?>"><?php echo a_('Authors') ?></h4>
-    <div class="a-filter-options blog clearfix<?php echo ($sf_params->get('author')) ? ' open' : '' ?>">
-  	  <?php foreach ($authors as $author): ?>
-  			<?php $selected_author = ($author['username'] === $sf_params->get('author')) ? $selected : array() ?>
-  	    <div class="a-filter-option"> 	
-  				<?php echo a_button($author->getName() ? $author->getName() : $author, url_for(aUrl::addParams($filterUrl, array('author' => ($sf_params->get('author') === $author['username']) ? '' : $author['username']))), array_merge(array('a-link'),$selected_author)) ?>
-  			</div>
-  	  <?php endforeach ?>
-    </div>	
+<div class="a-subnav-section authors">
+  <h4 class="filter-label<?php echo ($sf_params->get('author')) ? ' open' : '' ?>"><?php echo a_('Authors') ?></h4>
+  <div class="a-filter-options blog clearfix<?php echo ($sf_params->get('author')) ? ' open' : '' ?>">
+	  <?php foreach ($authors as $author): ?>
+			<?php $selected_author = ($author['username'] === $sf_params->get('author')) ? $selected : array() ?>
+	    <div class="a-filter-option">
+				<?php echo a_button($author->getName() ? $author->getName() : $author, url_for(aUrl::addParams($filterUrl, array('author' => ($sf_params->get('author') === $author['username']) ? '' : $author['username']))), array_merge(array('a-link'),$selected_author)) ?>
+			</div>
+	  <?php endforeach ?>
   </div>
+</div>
 <?php endif ?>
 
 <?php end_slot('a_blog_sidebar_authors') ?>
+
+<?php // Add sections in the sidebar for custom filter criteria ?>
+<?php if (isset($params['extraFilterCriteria'])): ?>
+  <?php foreach ($params['extraFilterCriteria'] as $efc): ?>
+    <?php slot('a_blog_sidebar_' . $efc['arrayKey']) ?>
+      <?php $items = array() ?>
+      <?php foreach ($info[$efc['arrayKey']] as $row): ?>
+        <?php if ($sf_params->get($efc['urlParameter']) == $row[$efc['urlColumn']]): ?>
+          <?php // Take it out ?>
+          <?php $row['filterUrl'] = aUrl::addParams($filterUrl, array($efc['urlParameter'] => '')) ?>
+        <?php else: ?>
+          <?php $row['filterUrl'] = aUrl::addParams($filterUrl, array($efc['urlParameter'] => $row[$efc['urlColumn']])) ?>
+        <?php endif ?>
+        <?php $items[] = $row ?>
+      <?php endforeach ?>
+      <?php if (isset($efc['sidebarComponent'])): ?>
+        <?php include_component($efc['sidebarComponent'][0], $efc['sidebarComponent'][1], array('items' => $items)) ?>
+      <?php else: ?>
+        <?php include_partial($efc['sidebarPartial'], array('items' => $items)) ?>
+      <?php endif ?>
+    <?php end_slot() ?>
+  <?php endforeach ?>
+<?php endif ?>
 
 <?php slot('a_blog_sidebar_feeds') ?>
 

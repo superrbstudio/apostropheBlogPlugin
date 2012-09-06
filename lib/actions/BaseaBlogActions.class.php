@@ -18,9 +18,9 @@ abstract class BaseaBlogActions extends aEngineActions
   public function getFilterForEngineParams()
   {
     $request = $this->getRequest();
-    
+
     $options = array(
-      'q' => $request->getParameter('q'),      
+      'q' => $request->getParameter('q'),
       'categoryIds' => aArray::getIds($this->page->Categories),
       'categorySlug' => $request->getParameter('cat'),
       'author' => $request->getParameter('author'),
@@ -38,9 +38,13 @@ abstract class BaseaBlogActions extends aEngineActions
       unset($options['month']);
       unset($options['day']);
     }
+
+    // The request is now available to this event so it can parse more options from it
+    $options = sfContext::getInstance()->getEventDispatcher()->filter(new sfEvent(null, 'aBlog.filterForEngineParams', array('request' => $request)), $options)->getReturnValue();
+
     return $options;
   }
-  
+
   public function preExecute()
   {
     parent::preExecute();
@@ -65,7 +69,7 @@ abstract class BaseaBlogActions extends aEngineActions
     {
       // We have page ids, so we need a join to figure out which blog items we want.
       // Doctrine doesn't have a withIn mechanism that takes a nice clean array, but we
-      // know these are clean IDs 
+      // know these are clean IDs
       $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $this->info['pageIds']) . ')');
       $q->leftJoin($this->modelClass.'.Categories c');
       // Oops: there is NO ordering with an IN clause alone, you must make that explicit
@@ -124,7 +128,7 @@ abstract class BaseaBlogActions extends aEngineActions
       $this->getFeed();
       return sfView::NONE;
     }
-    
+
     return $this->pageTemplate;
   }
 
@@ -144,9 +148,13 @@ abstract class BaseaBlogActions extends aEngineActions
     $prefix = aTools::getOptionI18n('title_prefix');
     $suffix = aTools::getOptionI18n('title_suffix');
     $this->getResponse()->setTitle($prefix . $this->aBlogPost->Page->getTitle() . $suffix, false);
-    
+
     return $this->pageTemplate;
   }
+
+  /**
+   * Date-related filter parameters
+   */
 
   public function buildParams()
   {
@@ -165,30 +173,30 @@ abstract class BaseaBlogActions extends aEngineActions
     if ($this->getRequestParameter('day'))
     {
       $next = strtotime('tomorrow', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'day' => date('d', $next));
 
       $prev = strtotime('yesterday', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'day' => date('d', $prev));
 
       $this->dateRange = 'day';
     }
     else if ($this->getRequestParameter('month'))
     {
       $next = strtotime('next month', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['next'] = array('year' => date('Y', $next), 'month' => date('m', $next));
 
       $prev = strtotime('last month', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['prev'] = array('year' => date('Y', $prev), 'month' => date('m', $prev));
 
       $this->dateRange = 'month';
     }
     else
     {
       $next = strtotime('next year', $date);
-      $this->params['next'] = array('year' => date('Y', $next), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['next'] = array('year' => date('Y', $next));
 
       $prev = strtotime('last year', $date);
-      $this->params['prev'] = array('year' => date('Y', $prev), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+      $this->params['prev'] = array('year' => date('Y', $prev));
 
       if ($this->getRequestParameter('year'))
       {
@@ -198,14 +206,28 @@ abstract class BaseaBlogActions extends aEngineActions
 
     // set our parameters for building links that set the date ranges and
     // keep other filters alive as well
-    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
-    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
-    $this->params['year'] = array('year' => date('Y', $date), 'cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
-    $this->params['nodate'] = array('cat' => $request->getParameter('cat'), 'tag' => $request->getParameter('tag'), 'q' => $request->getParameter('q'), 'author' => $request->getParameter('author'));
+    $this->params['day'] = array('year' => date('Y', $date), 'month' => date('m', $date), 'day' => date('d', $date));
+    $this->params['month'] = array('year' => date('Y', $date), 'month' => date('m', $date));
+    $this->params['year'] = array('year' => date('Y', $date));
+    $this->params['nodate'] = array();
 
+    // Now add all of the non-date-based parameters to each key in params
     $this->addFilterParams('cat');
     $this->addFilterParams('tag');
+    $this->addFilterParams('author');
     $this->addFilterParams('q');
+    foreach ($this->info['extraFilterCriteria'] as $extraFilterCriterion)
+    {
+      $this->addFilterParams($extraFilterCriterion['urlParameter']);
+    }
+    // For backwards compatibility with overrides of indexSuccess, we have to
+    // make this available via $this->params in order for it to reach _filters.php
+    $this->params['extraFilterCriteria'] = $this->info['extraFilterCriteria'];
+
+    // Listeners must add their custom criteria for every key in the passed array,
+    // like the addFilterParams method does
+    $this->params = sfContext::getInstance()->getEventDispatcher()->filter(
+      new sfEvent(null, 'aBlog.filterParams'), $this->params)->getReturnValue();
   }
 
   public function addFilterParams($name)
