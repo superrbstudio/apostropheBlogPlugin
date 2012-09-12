@@ -27,7 +27,7 @@
       			<?php echo link_to($cat->name, aUrl::addParams((($type == 'post') ? 'aBlog' : 'aEvent' ).'/index', $args)) ?>
             <?php aRouteTools::popTargetEngine($aBlogItem->Page->engine) ?>
           <?php else: ?>
-            <span><?php echo $cat->name ?></span>
+            <span class="a-unlinked-category"><?php echo $cat->name ?></span>
           <?php endif ?>
           <?php echo (($i < count($aBlogItem->getCategories())) ? ', ' : '') ?>
     		<?php $i++; endforeach ?>
