@@ -56,9 +56,9 @@ class aBlogImporter extends aImporter
     foreach($this->$type->$singular as $post)
     {
       if($type == 'posts') {
-        $this->insertPost($post);
+        $this->insertPost($post, 'post');
       } else {
-        $this->insertEvent($post);
+        $this->insertPost($post, 'event');
       }
       $blog_id = $this->sql->lastInsertId();
       $categories = $post->categories;
@@ -90,8 +90,9 @@ class aBlogImporter extends aImporter
       $post->Page->addAttribute('title', $post->title);
 
       // In 1.5 virtual pages associated with engines should have 'engine' set to the appropriate engine.
-      // Also published_at must match
-      $page = $this->parsePage($post->Page, null, array('engine' => ($type === 'posts') ? 'aBlog' : 'aEvent', 'published_at' => (string) $post['published_at']));
+      // Also published_at must be set for both the page and the post
+
+      $page = $this->parsePage($post->Page, null, array('engine' => ($type === 'posts') ? 'aBlog' : 'aEvent', 'published_at' => $this->parseDateTime($post['published_at'])));
       $this->sql->query("UPDATE a_blog_item SET page_id=:page_id where id=:id", array('page_id' => $page['id'], 'id' => $blog_id));
 
       // Sync tags and categories to the associated page, enabling search
@@ -107,6 +108,13 @@ class aBlogImporter extends aImporter
     }
   }
   
+  // Parse alternative datestamp formats generously, 
+  // get them MySQL ready 
+  public function parseDateTime($when)
+  {
+    return date('Y-m-d H:i', strtotime($when));
+  }
+
   public function addCategory($name, $blog_id, $type = 'posts')
   {
     $category = current($this->sql->query("SELECT * FROM a_category where name = :name", array('name' => $name)));
@@ -162,7 +170,12 @@ class aBlogImporter extends aImporter
     return $tag_id;
   }
 
-  public function insertPost($post)
+  /**
+   * Now handles both posts and events. This is much better than
+   * trying to maintain two code forks. As per usual, events
+   * get neglected that way.
+   */
+  public function insertPost($post, $type)
   {
     $slug = $this->slugify(isset($post['slug']) ? $post['slug'] : $post->title);
 
@@ -186,16 +199,26 @@ class aBlogImporter extends aImporter
     }
     
     $params = array(
-      "title" => $post->title,
+      "title" => (string) $post->title,
       "author_id" => $author_id,
       "slug_saved" => true,
       "status" => 'published',
       "allow_comments" => false,
       "template" => "singleColumnTemplate",
-      "published_at" => $post['published_at'],
-      "type" => "post",
+      "published_at" => $this->parseDateTime($post['published_at']),
+      "type" => $type,
       "slug" => $slug
     );
+    if ($type === 'event')
+    {
+      $params = array_merge($params, array(
+        "location" => (string) $post->location,
+        "start_date" => date('Y-m-d', strtotime($post['start_date'])),
+        "start_time" => date('H:i', strtotime($post['start_date'])),
+        "end_date" => date('Y-m-d', strtotime($post['end_date'])),
+        "end_time" => date('H:i', strtotime($post['end_date']))
+      ));
+    }
     if (isset($post['disqus_thread_identifier']))
     {
       if (!class_exists('apostropheImportersPluginConfiguration'))
@@ -209,30 +232,6 @@ class aBlogImporter extends aImporter
     }
     $this->sql->insert('a_blog_item', $params);
     $blog_id = $this->sql->lastInsertId();
-  }
-
-  public function insertEvent($event)
-  {
-    $slug = $this->slugify(isset($event['slug']) ? $event['slug'] : $event->title);
-    $s = "INSERT INTO a_blog_item (title, author_id, slug_saved, status, allow_comments, template, published_at, start_date, start_time, end_date, end_time, type, slug )";
-    $s.= "VALUES (:title, :author_id, :slug_saved, :status, :allow_comments, :template, :published_at, :start_date, :start_time, :end_date, :end_time, :location, :type, :slug)";
-    $params = array(
-      "title" => $event->title,
-      "author_id" => $this->author_id,
-      "slug_saved" => true,
-      "status" => 'published',
-      "allow_comments" => false,
-      "template" => "singleColumnTemplate",
-      "published_at" => $event['published_at'],
-      "location" => $event->location,
-      "start_date" => date('Y-m-d', strtotime($event['start_date'])),
-      "start_time" => date('h:i', strtotime($event['start_date'])),
-      "end_date" => date('Y-m-d', strtotime($event['end_date'])),
-      "end_time" => date('h:i', strtotime($event['end_date'])),
-      "type" => "event",
-      "slug" => $slug
-    );
-    $this->sql->query($s, $params);
   }
   
   /**
