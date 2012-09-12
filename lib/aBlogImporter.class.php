@@ -209,6 +209,12 @@ class aBlogImporter extends aImporter
       "type" => $type,
       "slug" => $slug
     );
+
+    if (sfConfig::get('app_aBlog_allow_comments_individually'))
+    {
+      $params['allow_comments'] = sfConfig::get('app_aBlog_allow_comments_initially') ? 1 : 0;
+    }
+
     if ($type === 'event')
     {
       $params = array_merge($params, array(
