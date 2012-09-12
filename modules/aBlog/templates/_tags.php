@@ -4,19 +4,34 @@
 	$type = $aBlogItem->getType();
 ?>
 
-<?php // What if we're currently on an engine page that doesn't display this category? ?>
-<?php // Don't enable this until we have reasonable behavior in that situation. Right now ?>
-<?php // you would see nothing. Something like pushing a better engine page is needed but only ?>
-<?php // when the current one absolutely will not do. Remember that we might not be on an engine ?>
-<?php // page right now at all ?>
-<?php if (0): ?>
+<?php if (sfConfig::get('app_aBlog_showCategoriesForPosts')): ?>
+  <?php // At long last we can safely link to the categories for a blog post ?>
+  <?php // or event. This code checks whether each category has an acceptable ?>
+  <?php // engine page before linking ?>
   <?php if ((count($aBlogItem->getCategories()) != 0)): ?>
-  <div class="a-blog-item-tags tags">
-  	<span class="a-blog-item-tags-label">Categories:</span>
-  		<?php $i=1; foreach ($aBlogItem->getCategories() as $cat): ?>
-  			<?php echo link_to($cat->name, aUrl::addParams((($type == 'post') ? 'aBlog' : 'aEvent' ).'/index', array('cat' => $cat->slug))) ?><?php echo (($i < count($aBlogItem->getCategories())) ? ', ':'')?>
-  		<?php $i++; endforeach ?>
-  </div>
+    <div class="a-blog-item-tags tags">
+    	<span class="a-blog-item-tags-label">Categories:</span>
+    		<?php $i=1; foreach ($aBlogItem->getCategories() as $cat): ?>
+          <?php list($engineSlug, $engineCategories) = aEngineTools::getBestEngineForCategories($aBlogItem->getTable(), array($cat->name), array('mustMatch' => true)) ?>
+          <?php if ($engineSlug): ?>
+            <?php error_log(json_encode($engineCategories)) ?>
+            <?php aRouteTools::pushTargetEngineSlug($engineSlug, $aBlogItem->Page->engine) ?>
+            <?php // If the engine page we're linking to has only one ?>
+            <?php // explicit category, we can avoid a redundant parameter ?>
+            <?php // in the URL ?>
+            <?php if (count($engineCategories) !== 1): ?>
+              <?php $args = array('cat' => $cat->slug) ?>
+            <?php else: ?>
+              <?php $args = array() ?>
+            <?php endif ?>
+      			<?php echo link_to($cat->name, aUrl::addParams((($type == 'post') ? 'aBlog' : 'aEvent' ).'/index', $args)) ?>
+            <?php aRouteTools::popTargetEngine($aBlogItem->Page->engine) ?>
+          <?php else: ?>
+            <span><?php echo $cat->name ?></span>
+          <?php endif ?>
+          <?php echo (($i < count($aBlogItem->getCategories())) ? ', ' : '') ?>
+    		<?php $i++; endforeach ?>
+    </div>
   <?php endif ?>
 <?php endif ?>
 
