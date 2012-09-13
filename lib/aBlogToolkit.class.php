@@ -575,15 +575,6 @@ class aBlogToolkit {
     // but we wind up needing it for date ranges too etc.
     $q .= ' inner join a_blog_item bi on bi.page_id = p.id ';
 
-    // Add extra left joins for custom criteria - after bi, so that they are 
-    // allowed to involve it
-
-    foreach ($extraFilterCriteria as $extraFilterCriterion)
-    {
-      $q .= $extraFilterCriterion['leftJoin'] . ' ';
-    }
-
-
     if ($events)
     {
       // The event's start and end dates are part of the blog item table
@@ -591,6 +582,14 @@ class aBlogToolkit {
       $params['end_date'] = "$endYear-$endMonth-$endDay";
       $q .= "and bi.end_date >= :start_date ";
       $params['start_date'] = "$startYear-$startMonth-$startDay";
+    }
+
+    // Add extra left joins for custom criteria - after bi, so that they are 
+    // allowed to involve it
+
+    foreach ($extraFilterCriteria as $extraFilterCriterion)
+    {
+      $q .= $extraFilterCriterion['leftJoin'] . ' ';
     }
 
     $hasAuthor = (isset($options['author']) && strlen($options['author']));

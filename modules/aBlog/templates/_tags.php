@@ -4,6 +4,8 @@
 	$type = $aBlogItem->getType();
 ?>
 
+<?php include_partial('aBlog/beforeTags', array('aBlogItem' => $aBlogItem)) ?>
+
 <?php if (sfConfig::get('app_aBlog_showCategoriesForPosts')): ?>
   <?php // At long last we can safely link to the categories for a blog post ?>
   <?php // or event. This code checks whether each category has an acceptable ?>
@@ -14,7 +16,6 @@
     		<?php $i=1; foreach ($aBlogItem->getCategories() as $cat): ?>
           <?php list($engineSlug, $engineCategories) = aEngineTools::getBestEngineForCategories($aBlogItem->getTable(), array($cat->name), array('mustMatch' => true)) ?>
           <?php if ($engineSlug): ?>
-            <?php error_log(json_encode($engineCategories)) ?>
             <?php aRouteTools::pushTargetEngineSlug($engineSlug, $aBlogItem->Page->engine) ?>
             <?php // If the engine page we're linking to has only one ?>
             <?php // explicit category, we can avoid a redundant parameter ?>
@@ -43,3 +44,5 @@
 		<?php $i++; endforeach ?>
 </div>
 <?php endif ?>
+
+<?php include_partial('aBlog/afterTags', array('aBlogItem' => $aBlogItem)) ?>
