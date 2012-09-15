@@ -12,8 +12,8 @@ class aEventSlotForm extends BaseForm
   {
     // ADD YOUR FIELDS HERE
     $this->widgetSchema['count'] = new sfWidgetFormInput(array(), array('size' => 2));
-    $this->validatorSchema['count'] = new sfValidatorNumber(array('min' => 1, 'max' => 10));
-		$this->widgetSchema->setHelp('count', '<span class="a-help-arrow"></span> Set the number of events to display – 10 max.');
+    $this->validatorSchema['count'] = new sfValidatorNumber(array('min' => $min = sfConfig::get('app_aBlog_slot_minimum_events', 1), 'max' => $max = sfConfig::get('app_aBlog_slot_maximum_events', 20)));
+    $this->widgetSchema->setHelp('count', '<span class="a-help-arrow"></span> Set the number of events to display (between ' . $min . ' and ' . $max . ')');
     if(!$this->hasDefault('count'))
 		{
       $this->setDefault('count', 3);
