@@ -328,6 +328,7 @@ class PluginaBlogItemTable extends Doctrine_Table
     {
       $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"');
     }
+    $q->orderBy('u.last_name asc, u.first_name asc, u.username asc');
     return $q;
   }
 }
