@@ -45,7 +45,8 @@
   <?php // Blog Post Author ?>
   <div class="post-author">
       <h4><?php echo a_('Author') ?>
-      <?php if ($sf_user->hasCredential('admin')): ?>
+      <?php // Permissions check is at the form class level ?>
+      <?php if (isset($form['author_id'])): ?>
         </h4>
         <div class="author_id option">
         <?php echo $form['author_id']->render() ?>

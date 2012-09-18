@@ -79,7 +79,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       unset($this['editors_list']);
     }
 
-    if($user->hasCredential('admin'))
+    if ($user->hasCredential('admin') || (sfConfig::get('app_aBlog_editors_can_change_author')))
     {
       $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
       $this->setWidget('author_id',
