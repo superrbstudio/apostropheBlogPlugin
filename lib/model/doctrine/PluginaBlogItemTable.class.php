@@ -322,7 +322,7 @@ class PluginaBlogItemTable extends Doctrine_Table
     // wind up losing authorship to the first person in the dropdown due to the validator!
     if ($candidateGroup && $sufficientGroup)
     {
-      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup));
+      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin" OR gp.name = ?')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array(sfConfig::get('app_a_group_editor_permission', 'editor'), $candidateGroup, $sufficientGroup));
     }
     else
     {
