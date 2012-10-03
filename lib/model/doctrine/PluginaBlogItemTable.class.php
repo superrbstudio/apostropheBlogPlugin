@@ -16,7 +16,9 @@ class PluginaBlogItemTable extends Doctrine_Table
       }
       $id = $post['id'];
     }
-    return sfConfig::get('app_a_disqus_identifierPrefix', '') . $id;
+    // New option is grouped with the rest of the disqus options,
+    // but provide bc with the old one
+    return sfConfig::get('app_aBlog_disqus_identifierPrefix', sfConfig::get('app_a_disqus_identifierPrefix', '')) . $id;
   }
 
   public static function getInstance()
