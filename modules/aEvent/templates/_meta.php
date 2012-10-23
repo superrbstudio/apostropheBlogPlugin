@@ -16,7 +16,7 @@
 	  <?php // information. Naturally full addresses work best ?>
     <li class="post-location">
       <?php if (sfConfig::get('app_aEvents_google_maps', true)): ?>
-        <?php echo link_to(aString::firstLine($aEvent['location']), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('class' => 'a-link', )) ?>
+        <?php echo link_to(aString::firstNonemptyLine($aEvent['location']), url_for('http://maps.google.com/maps?' . http_build_query(array('q' => preg_replace('/\s+/', ' ', $aEvent['location'])))), array('class' => 'a-link', )) ?>
 		  <?php else: ?>
         <span class="post-location-name">
           <?php echo aString::firstLine($aEvent['location']) ?>
