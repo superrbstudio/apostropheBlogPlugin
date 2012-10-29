@@ -25,7 +25,8 @@ class aBlogImportTask extends sfBaseTask
       new sfCommandOption('clear', null, sfCommandOption::PARAMETER_NONE, 'Remove existing posts and/or events', null),
       new sfCommandOption('authors', null, sfCommandOption::PARAMETER_REQUIRED, 'XML author username mapping', null),
       new sfCommandOption('defaultUsername', null, sfCommandOption::PARAMETER_REQUIRED, 'Default author of posts', 'admin'),
-      new sfCommandOption('tag-to-entity', null, sfCommandOption::PARAMETER_NONE, 'Link to existing entities instead if tag name matches', null)
+      new sfCommandOption('tag-to-entity', null, sfCommandOption::PARAMETER_NONE, 'Link to existing entities instead if tag name matches', null),
+      new sfCommandOption('skip-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Skip confirmation prompt', null)
       // add your own options here
     ));
 
@@ -72,9 +73,12 @@ EOF;
     {
       die("You must specify at least one of the posts and events options with a path to the xml file.\n");
     }
-    if (!$this->askConfirmation("Importing the same content twice will result in duplicate content, are you sure? [y/N]", 'QUESTION_LARGE', false))
+    if (!$options['skip-confirmation'])
     {
-      die("Import CANCELLED.  No changes made.\n");
+      if (!$this->askConfirmation("Importing the same content twice will result in duplicate content, are you sure? [y/N]", 'QUESTION_LARGE', false))
+      {
+        die("Import CANCELLED.  No changes made.\n");
+      }
     }
     $rootDir = $this->configuration->getRootDir();
 
