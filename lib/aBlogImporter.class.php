@@ -4,6 +4,7 @@ class aBlogImporter extends aImporter
 {
   protected $authorMap;
   protected $defaultAuthorId;
+  protected $tagToEntity = false;
 
   public function initialize($params)
   {
@@ -41,6 +42,7 @@ class aBlogImporter extends aImporter
     {
       $defaultUsername = 'admin';
     }
+    $this->tagToEntity = $params['tag-to-entity'];
     $this->defaultAuthorId = $this->sql->queryOneScalar('SELECT id FROM sf_guard_user WHERE username=:username', array('username' => $defaultUsername));
   }
 
@@ -76,7 +78,10 @@ class aBlogImporter extends aImporter
         foreach($tags->tag as $tag)
         {
           $name = $tag->__toString();
-          $tagIds[] = $this->addTag($name, $blog_id, $type);
+          if (!$this->convertTagToEntity($name, $blog_id))
+          {
+            $tagIds[] = $this->addTag($name, $blog_id, $type);
+          }
         }
       }
       
@@ -144,6 +149,22 @@ class aBlogImporter extends aImporter
     return $category_id;
   }
   
+  public function convertTagToEntity($name, $blog_id)
+  {
+    if (!$this->tagToEntity)
+    {
+      return false;
+    }
+    $entity = current($this->sql->query("SELECT * FROM a_entity where name = :name", array('name' => $name)));
+    if (!$entity)
+    {
+      return false;
+    }
+    $s = 'INSERT INTO a_entity_to_blog_item (entity_id, blog_item_id) VALUES (:entity_id, :blog_item_id) ON DUPLICATE KEY UPDATE entity_id = entity_id';
+    $params = array('entity_id' => $entity['id'], 'blog_item_id' => $blog_id);
+    $this->sql->query($s, $params);
+  }
+
   public function addTag($name, $blog_id, $type = 'posts')
   {
     $tag = current($this->sql->query("SELECT * FROM tag where name = :name", array('name' => $name)));

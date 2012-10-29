@@ -24,7 +24,8 @@ class aBlogImportTask extends sfBaseTask
       new sfCommandOption('posts', null, sfCommandOption::PARAMETER_REQUIRED, 'XML of posts', null),
       new sfCommandOption('clear', null, sfCommandOption::PARAMETER_NONE, 'Remove existing posts and/or events', null),
       new sfCommandOption('authors', null, sfCommandOption::PARAMETER_REQUIRED, 'XML author username mapping', null),
-      new sfCommandOption('defaultUsername', null, sfCommandOption::PARAMETER_REQUIRED, 'Default author of posts', 'admin')
+      new sfCommandOption('defaultUsername', null, sfCommandOption::PARAMETER_REQUIRED, 'Default author of posts', 'admin'),
+      new sfCommandOption('tag-to-entity', null, sfCommandOption::PARAMETER_NONE, 'Link to existing entities instead if tag name matches', null)
       // add your own options here
     ));
 
@@ -51,6 +52,11 @@ You can specify an authors file which maps old usernames to new usernames.
 The task first looks for a match in the authors file (if any), then for a match
 among the usernames on the new site, and as a last resort assigns the
 article's authorship to the "admin" user.
+
+If the --tag-to-entity option is present, tags associated with 
+articles and events are first compared to the names of entities,
+and linked to those entities instead if they exist. Otherwise a
+tag is applied in the normal way. Requires apostropheEntitiesPlugin.
 
 See trac.apostrophe.org for documentation of the XML format required.
 EOF;
