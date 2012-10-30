@@ -211,7 +211,7 @@ class aBlogImporter extends aImporter
       }
       else
       {
-        $real_author_id = $this->sql->queryOneScalar('select id from sf_guard_user where username = :username', array('username' => (string) $post->username));
+        $real_author_id = $this->sql->queryOneScalar('select id from sf_guard_user where username = :username', array('username' => (string) $post->author));
       }
     }
     if (isset($real_author_id) && strlen($real_author_id))
