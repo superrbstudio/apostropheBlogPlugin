@@ -51,6 +51,7 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
+    error_log('executeUpdate');
     $this->setABlogPostForUser();
     $this->form = $this->eventFormFor($this->a_blog_post);
 
@@ -59,11 +60,18 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->form->bind($request->getParameter($this->form->getName()));
       if ($this->form->isValid())
       {
+        // Buffer up all search update requests caused by the two save 
+        // operations to prevent a major performance hit
+        $this->form->getObject()->getPage()->blockSearchUpdates();
+        
         $this->a_blog_post = $this->form->save();
         
         // We do this here to avoid some nasty race conditions that crop up when
-        // we try to push things to the page inside the Doctrine form transaction
+        // we try to push things to the page inside the Doctrine form 
+        // transaction
         $this->a_blog_post->updatePageTagsAndCategories();
+
+        $this->form->getObject()->getPage()->flushSearchUpdates();
         
         // Recreate the form to get rid of bound values for the publication field,
         // so we can see the new setting
