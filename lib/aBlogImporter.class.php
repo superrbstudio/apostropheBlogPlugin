@@ -235,11 +235,14 @@ class aBlogImporter extends aImporter
     {
       $params['allow_comments'] = sfConfig::get('app_aBlog_allow_comments_initially') ? 1 : 0;
     }
-
+    // On custom sites blog posts may also have locations
+    if (isset($post->location) && strlen($post->location))
+    {
+      $params['location'] = $post->location;
+    }
     if ($type === 'event')
     {
       $params = array_merge($params, array(
-        "location" => (string) $post->location,
         "start_date" => date('Y-m-d', strtotime($post['start_date'])),
         "start_time" => date('H:i', strtotime($post['start_date'])),
         "end_date" => date('Y-m-d', strtotime($post['end_date'])),
