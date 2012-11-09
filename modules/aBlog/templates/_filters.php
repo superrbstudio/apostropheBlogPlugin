@@ -31,7 +31,9 @@
 	<?php endif ?>
 
 	<?php if (strlen($sf_params->get('tag'))): ?>
-	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->get('tag'), $filterUrl, 'tag'))) ?>
+    <?php // Pass the tag raw as a_remove_filter_button handles the ?>
+    <?php // escaping, avoid double escaping ?>
+	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->getRaw('tag'), $filterUrl, 'tag'))) ?>
 	<?php endif ?>
 
   <?php if (strlen($sf_params->get('author'))): ?>
