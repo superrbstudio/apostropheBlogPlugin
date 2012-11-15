@@ -8,8 +8,8 @@
 
 <?php use_helper("a") ?>
 
-<?php $saveLabels = array('nochange' => a_('Update'), 'draft' => a_('Save'), 'publish' => a_('Publish'), 'schedule' => a_('Update')) ?>
-<?php $saveLabel = isset($form['publication']) ? $saveLabels[$form['publication']->getValue()]: a_('Save') ?>
+<?php $saveLabels = array('nochange' => a_('Update'), 'pending review' => a_('Update'), 'draft' => a_('Save'), 'publish' => a_('Publish'), 'schedule' => a_('Update')) ?>
+<?php $saveLabel = isset($form['publication']) ? $saveLabels[$form['publication']->getValue()]: a_('Update') ?>
 <?php // One tiny difference: if we move from something else *TO* schedule, label it 'Schedule' ?>
 <?php $updateLabels = array('nochange' => a_('Update'), 'draft' => a_('Save'), 'publish' => a_('Publish'), 'schedule' => a_('Schedule')) ?>
 <?php // Invoked by include_partial in the initial load of the form partial and also directly on AJAX updates of this section ?>
@@ -147,19 +147,21 @@
   </div>
   <?php endif ?>
   
-  <?php // Blog Post Categories ?>
-  <hr class="a-hr" />
-  <div class="categories section a-form-row" id="categories-section">
-    <h4><?php echo a_('Categories') ?></h4>
-    <?php echo $form['categories_list']->render() ?>
-    <?php $adminCategories = $form->getAdminCategories() ?>
-    <?php if (count($adminCategories)): ?>
-      <div class="a-form-row">
-        <?php echo 'Set by admin: ' . implode(',', $form->getAdminCategories()) ?>
-      </div>
-    <?php endif ?>
-    <?php echo $form['categories_list']->renderError() ?>
-  </div>
+  <?php if (isset($form['categories_list'])): ?>
+    <?php // Blog Post Categories ?>
+    <hr class="a-hr" />
+    <div class="categories section a-form-row" id="categories-section">
+      <h4><?php echo a_('Categories') ?></h4>
+      <?php echo $form['categories_list']->render() ?>
+      <?php $adminCategories = $form->getAdminCategories() ?>
+      <?php if (count($adminCategories)): ?>
+        <div class="a-form-row">
+          <?php echo 'Set by admin: ' . implode(',', $form->getAdminCategories()) ?>
+        </div>
+      <?php endif ?>
+      <?php echo $form['categories_list']->renderError() ?>
+    </div>
+  <?php endif ?>
 
   <?php // Blog Post Tags ?>
   <hr class="a-hr" />

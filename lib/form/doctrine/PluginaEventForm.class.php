@@ -17,51 +17,60 @@ abstract class PluginaEventForm extends BaseaEventForm
   {
     parent::setup();
 
-    $this->setWidget('start_date', new aWidgetFormJQueryDate(
-			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
-		);
+    aEventForm::addDateAndTimeFields($this);
 
-    $this->setValidator('start_date', new sfValidatorDate(
-      array(
-        'required' => true,
-      )));
-
-    $this->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
-    $this->setValidator('start_time', new sfValidatorTime(array('required' => false)));
-
-    $this->setWidget('end_date', new aWidgetFormJQueryDate(
-			array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
-		);
-
-    $this->setValidator('end_date', new sfValidatorDate(
-      array(
-        'required' => true,
-      )));
-
-    $this->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
-    $this->setValidator('end_time', new sfValidatorTime(array('required' => false)));
+    $start = strtotime(aDate::mysql($this->getObject()->start_date));
+    $end = strtotime(aDate::mysql($this->getObject()->end_date));
+    if (is_null($this->getObject()->start_time) && is_null($this->getObject()->end_time))
+    {
+      $this->getWidgetSchema()->setDefault('all_day', true);
+    }
 
     $this->setWidget('location', new sfWidgetFormTextarea());
     $this->setValidator('location', new sfValidatorString(array('required' => false)));
-
-    $this->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
-    $this->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
-
-		$this->setWidget('all_day', new sfWidgetFormInputCheckbox(array('label' => 'All Day')));
-		$this->setValidator('all_day', new sfValidatorBoolean());
-
-		$start = strtotime(aDate::mysql($this->object->start_date));
-		$end = strtotime(aDate::mysql($this->object->end_date));
-    if (is_null($this->object->start_time) && is_null($this->object->end_time))
-		{
-			$this->getWidgetSchema()->setDefault('all_day', true);
-		}
 
     $this->widgetSchema->setNameFormat('a_blog_item[%s]');
     
     $this->validatorSchema->setPostValidator(
       new sfValidatorCallback(array('callback' => array($this, 'validateEndDate')))
     );
+  }
+
+  /**
+   * Factored out for easy reuse as a mixin for other forms that
+   * are similar
+   */
+  static public function addDateAndTimeFields($form)
+  {
+    $form->setWidget('start_date', new aWidgetFormJQueryDate(
+      array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
+    );
+
+    $form->setValidator('start_date', new sfValidatorDate(
+      array(
+        'required' => true,
+      )));
+
+    $form->setWidget('start_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
+    $form->setValidator('start_time', new sfValidatorTime(array('required' => false)));
+
+    $form->setWidget('end_date', new aWidgetFormJQueryDate(
+      array('image' => '/apostrophePlugin/images/a-icon-datepicker.png'))
+    );
+
+    $form->setValidator('end_date', new sfValidatorDate(
+      array(
+        'required' => true,
+      )));
+
+    $form->setWidget('end_time', new aWidgetFormJQueryTime(array(), array('twenty-four-hour' => false, 'minutes-increment' => 30)));
+    $form->setValidator('end_time', new sfValidatorTime(array('required' => false)));
+
+    $form->getWidgetSchema()->setDefault('start_date', date('Y/m/d'));
+    $form->getWidgetSchema()->setDefault('end_date', date('Y/m/d'));
+
+    $form->setWidget('all_day', new sfWidgetFormInputCheckbox(array('label' => 'All Day')));
+    $form->setValidator('all_day', new sfValidatorBoolean());
   }
   
   public function validateEndDate($validator, $values)
