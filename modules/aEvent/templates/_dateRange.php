@@ -8,6 +8,9 @@
 <?php
   // Compatible with sf_escaping_strategy: true
   $aEvent = isset($aEvent) ? $sf_data->getRaw('aEvent') : null;
+  // Allows arrays to be passed in. We can't use the [] syntax
+  // because Zend search results don't support it (ah legacy code)
+  $aEvent = is_array($aEvent) ? ((object) $aEvent) : $aEvent;
 ?>
 
 <?php // The -> syntax is compatible with both Doctrine objects and ?>
