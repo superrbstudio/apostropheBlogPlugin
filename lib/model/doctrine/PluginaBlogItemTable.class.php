@@ -324,13 +324,31 @@ class PluginaBlogItemTable extends Doctrine_Table
     // wind up losing authorship to the first person in the dropdown due to the validator!
     if ($candidateGroup && $sufficientGroup)
     {
-      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin" OR gp.name = ?')->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"', array(sfConfig::get('app_a_group_editor_permission', 'editor'), $candidateGroup, $sufficientGroup));
+      $groupEditorPermission = sfConfig::get('app_a_group_editor_permission', 'editor');
+      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin" OR gp.name = ?', $groupEditorPermission)->addWhere('(g.name IN (?, ?)) OR (u.is_super_admin IS TRUE) OR (gp.name = "cms_admin" OR gp.name = ?) OR p.name = "cms_admin"', array($candidateGroup, $sufficientGroup, $groupEditorPermission));
     }
     else
     {
-      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin"')->addWhere('(u.is_super_admin IS TRUE) OR gp.name = "cms_admin" OR p.name = "cms_admin"');
+      $groupEditorPermission = sfConfig::get('app_a_group_editor_permission', 'editor');
+      $q->leftJoin('u.Permissions p WITH p.name = "cms_admin"')->leftJoin('u.Groups g')->leftJoin('g.Permissions gp WITH gp.name = "cms_admin" OR gp.name = ?', $groupEditorPermission)->addWhere('(u.is_super_admin IS TRUE) OR (gp.name = "cms_admin" OR gp.name = ?) OR p.name = "cms_admin"', $groupEditorPermission);
     }
     $q->orderBy('u.last_name asc, u.first_name asc, u.username asc');
     return $q;
+  }
+
+  /**
+   * Accepts a blog item, including an array-hydrated blog item,
+   * and returns a complete Symfony URL to link to it nicely
+   * on an appropriate engine page
+   */
+  public function getSymfonyUrl($aBlogItem)
+  {
+    $route = '@a_blog_post';
+    if ($aBlogItem['type'] === 'event')
+    {
+      $route = '@a_event_post';
+    }
+    list($year, $month, $day) = explode('-', date('Y-m-d', aDate::normalize($aBlogItem['published_at'])));
+    return $route . '?' . http_build_query(array('year' => $year, 'month' => $month, 'day' => $day, 'slug' => $aBlogItem['slug']));
   }
 }

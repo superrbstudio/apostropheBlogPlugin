@@ -168,30 +168,36 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       $aCategory->save();
       $link[] = $aCategory['id'];
     }
-    if(!is_array($this->values['categories_list']))
+    if (isset($this['categories_list']))
     {
-      $this->values['categories_list'] = array();
-    }
-    $reserved = $this->getAdminCategories();
-    foreach ($reserved as $category)
-    {
-      if (!in_array($category->id, $this->values['categories_list']))
+      if(!is_array($this->values['categories_list']))
       {
-        $this->values['categories_list'][] = $category->id;
+        $this->values['categories_list'] = array();
       }
-    }
-    foreach ($link as $id)
-    {
-      if (!in_array($id, $this->values['categories_list']))
+      $reserved = $this->getAdminCategories();
+      foreach ($reserved as $category)
       {
-        $this->values['categories_list'][] = $id;
+        if (!in_array($category->id, $this->values['categories_list']))
+        {
+          $this->values['categories_list'][] = $category->id;
+        }
+      }
+      foreach ($link as $id)
+      {
+        if (!in_array($id, $this->values['categories_list']))
+        {
+          $this->values['categories_list'][] = $id;
+        }
       }
     }
   }
 
   protected function doSave($con = null)
   {
-    $this->updateCategoriesList(isset($this->values['categories_list_add']) ? $this->values['categories_list_add'] : array());
+    if (isset($this['categories_list']))
+    {
+      $this->updateCategoriesList(isset($this->values['categories_list_add']) ? $this->values['categories_list_add'] : array());
+    }
     parent::doSave($con);
   }
   
@@ -227,6 +233,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       }
       elseif ($values['publication'] === 'publish')
       {
+        error_log('set published');
         $object->status = 'published';
         // Override field, publish now
         $object->published_at = aDate::mysql();
@@ -234,6 +241,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       elseif ($values['publication'] === 'draft')
       {
         $object->status = 'draft';
+      }
+      elseif ($values['publication'] === 'pending review')
+      {
+        $object->status = 'pending review';
       }
     }
   }
@@ -264,6 +275,14 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     {
       $choices = array('schedule' => 'Scheduled', 'publish' => 'Publish', 'draft' => 'Draft');
       $default = 'schedule';
+    } elseif (($o->status === 'pending review'))
+    {
+      $choices = array('nochange' => 'Pending Review',
+        'publish' => 'Published',
+        'draft' => 'Draft',
+        'schedule' => 'Schedule'
+      );
+      $default = 'pending review';
     }
     $this->setWidget('publication', new sfWidgetFormChoice(array('choices' => $choices, 'default' => $default)));
     $this->setValidator('publication', new sfValidatorChoice(array('choices' => array_keys($choices))));
