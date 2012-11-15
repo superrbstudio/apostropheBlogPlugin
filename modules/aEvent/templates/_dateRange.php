@@ -14,21 +14,21 @@
 <?php // Zend Lucene results, I pass both to this partial. Please don't ?>
 <?php // change to the [] syntax ?>
 
-<?php if (isset($aEvent->start_date) && isset($aEvent->start_time) && isset($aEvent->end_date) && isset($aEvent->end_time)): ?>
-    <?php if (strlen($aEvent->start_date)): ?>
+<?php if (isset($aEvent->start_date)): ?>
+  <?php if (strlen($aEvent->start_date)): ?>
     <span class="a-blog-item-start-day"><?php echo format_date($aEvent->start_date, 'D') ?></span>
-    <?php endif ?>
-    <?php // Use strlen rather than is_null to cope with legacy data ?>
-    <?php if (strlen($aEvent->start_time)): ?>
+  <?php endif ?>
+  <?php // Use strlen rather than is_null to cope with legacy data ?>
+  <?php if (strlen($aEvent->start_time)): ?>
     <span class="a-blog-item-start-time"><?php echo (sfConfig::get('app_a_pretty_english_dates')) ? str_replace(' ', '', format_date($aEvent->start_time, 't')) : format_date($aEvent->start_time, 't') ?></span>
-    <?php endif ?>
-    <?php if (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time)): ?>
+  <?php endif ?>
+  <?php if (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time)): ?>
     <span class="a-blog-item-meta-separator"><?php echo '&ndash;' ?></span>
-    <?php endif ?>
-    <?php if ($aEvent->start_date !== $aEvent->end_date): ?>
+  <?php endif ?>
+  <?php if ($aEvent->start_date !== $aEvent->end_date): ?>
     <span class="a-blog-item-end-day"><?php echo format_date($aEvent->end_date, 'D') ?></span>
-    <?php endif ?>
-    <?php if (strlen($aEvent->end_time) && (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time))): ?>
+  <?php endif ?>
+  <?php if (strlen($aEvent->end_time) && (($aEvent->start_date !== $aEvent->end_date) || ($aEvent->start_time !== $aEvent->end_time))): ?>
     <span class="a-blog-item-end-time"><?php echo (sfConfig::get('app_a_pretty_english_dates')) ? str_replace(' ', '', format_date($aEvent->end_time, 't')) : format_date($aEvent->end_time, 't') ?></span>
-    <?php endif ?>
+  <?php endif ?>
 <?php endif ?>
