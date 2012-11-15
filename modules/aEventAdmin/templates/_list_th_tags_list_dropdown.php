@@ -13,5 +13,5 @@
 <span<?php echo ($n == 0)? ' class="first"':'' ?><?php echo ($n == count($choices))? ' class="last"':'' ?>>
   <b><?php echo $letter ?></b>
 <?php endif ?>
-<?php echo link_to($choice, '@a_event_admin_addFilter?name=tags_list&value='.$id, 'post=true') ?>
+<?php echo link_to($choice, 'a_event_admin_addFilter', array('name' => 'tags_list', 'value' => $id), array('post' => true)) ?>
 <?php $n++; endforeach ?>
