@@ -244,10 +244,20 @@ class aBlogImporter extends aImporter
     {
       $params = array_merge($params, array(
         "start_date" => date('Y-m-d', strtotime($post['start_date'])),
-        "start_time" => date('H:i', strtotime($post['start_date'])),
         "end_date" => date('Y-m-d', strtotime($post['end_date'])),
-        "end_time" => date('H:i', strtotime($post['end_date']))
       ));
+      if (isset($post['all_day']) && (((string) $post['all_day']) === 'true'))
+      {
+        $params = array_merge($params, array('start_time' => null, 'end_time' => null));
+      }
+      else
+      {
+        // Not an all day event, consider time of day
+        $params = array_merge($params, array(
+          "end_time" => date('H:i', strtotime($post['end_date'])),
+          "start_time" => date('H:i', strtotime($post['start_date'])),
+        ));
+      }
     }
     if (isset($post['disqus_thread_identifier']))
     {
