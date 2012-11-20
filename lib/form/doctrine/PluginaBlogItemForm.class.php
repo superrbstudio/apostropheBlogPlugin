@@ -65,14 +65,13 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     if ((!sfConfig::get('app_a_simple_permissions')) && ($user->hasCredential('admin') || $user->getGuardUser()->getId() == $this->getObject()->getAuthorId() ))
     {
-      $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
-
-      $q->addWhere('u.id <> ?', $user->getGuardUser()->getId());
+      $choices = $this->getAuthorChoices();
+      unset($choices[$user->getGuardUser()->getId()]);
 
       $this->setWidget('editors_list',
-        new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q)));
+        new sfWidgetFormChoice(array('multiple' => true, 'choices' => $choices)));
       $this->setValidator('editors_list',
-        new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+        new sfValidatorChoice(array('multiple' => true, 'choices' => array_keys($choices), 'required' => false)));
     }
     else
     {
@@ -81,11 +80,11 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
 
     if ($user->hasCredential('admin') || (sfConfig::get('app_aBlog_editors_can_change_author')))
     {
-      $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
+      $choices = $this->getAuthorChoices();
       $this->setWidget('author_id',
-        new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q)));
+        new sfWidgetFormChoice(array('choices' => $choices)));
       $this->setValidator('author_id',
-        new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'query' => $q, 'required' => false)));
+        new sfValidatorChoice(array('choices' => array_keys($choices), 'required' => false)));
     }
     else
     {
@@ -110,6 +109,28 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     );
     
     $this->configurePublication();
+  }
+
+  protected $authorChoices;
+
+  // Very large performance win with large numbers of users:
+  // build the list of potential authors via array hydration
+  // and the new aTools::getUniqueName method, which can be
+  // overridden as needed
+   
+  public function getAuthorChoices()
+  {
+    if ($this->authorChoices) 
+    {
+      return $this->authorChoices;
+    }
+    $q = Doctrine::getTable('aBlogItem')->queryForAuthors();
+    $authors = $q->fetchArray();
+    $choices = array();
+    foreach ($authors as $author) {
+      $choices[$author['id']] = aTools::getUniqueName($author);
+    }
+    return $choices;
   }
 
   public function postValidator($validator, $values)
