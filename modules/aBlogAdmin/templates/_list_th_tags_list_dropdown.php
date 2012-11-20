@@ -7,6 +7,7 @@
 <?php $choices = $filters['tags_list']->getWidget()->getChoices() ?>
 <?php $n = 0; ?>
 <?php foreach($choices as $id => $choice): ?>
+<?php   if (!strlen($choice)) continue; ?>
 <?php   if(strtoupper($choice[0]) == $letter): ?>,<?php   else: ?>
 <?php     if(strtoupper($choice[0]) != 'A'): ?></span><?php endif ?>
 <?php   $letter = strtoupper($choice[0]) ?>

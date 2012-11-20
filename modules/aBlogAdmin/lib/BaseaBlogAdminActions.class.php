@@ -35,7 +35,9 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
       $this->a_blog_post->setTitle($this->form->getValue('title'));
       $event = new sfEvent($this->a_blog_post, 'a.postAdded', array());
       $this->dispatcher->notify($event);
+      $this->a_blog_post->Page->blockSearchUpdates();
       $this->a_blog_post->save();
+      $this->a_blog_post->Page->flushSearchUpdates();
       $this->postUrl = $this->generateUrl('a_blog_admin_edit', $this->a_blog_post);
       return 'Success';
     }
@@ -51,7 +53,6 @@ abstract class BaseaBlogAdminActions extends autoABlogAdminActions
   
   public function executeUpdate(sfWebRequest $request)
   {
-    error_log('executeUpdate');
     $this->setABlogPostForUser();
     $this->form = $this->eventFormFor($this->a_blog_post);
 
