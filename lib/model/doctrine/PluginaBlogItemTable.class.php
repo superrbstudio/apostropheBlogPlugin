@@ -352,6 +352,55 @@ class PluginaBlogItemTable extends Doctrine_Table
     return $route . '?' . http_build_query(array('year' => $year, 'month' => $month, 'day' => $day, 'slug' => $aBlogItem['slug']));
   }
 
+  /**
+   * Get current default template based on configuration
+   * or hardcoded defaults if no configuration. See also
+   * getTemplateChoices() and getTemplateInfos()
+   */
+  public function getDefaultTemplate()
+  {
+    $templates = $this->getTemplateInfos();
+    $template = null;
+    foreach ($templates as $key => $template)
+    {
+      $template = $key;
+      break;
+    }
+    return $template;
+  }
+
+  /**
+   * Get allowed template choices as an associative array ready
+   * for a form choice widget
+   */
+
+  public function getTemplateChoices()
+  {
+    $templates = $this->getTemplateInfos();
+    $templateChoices = array();
+    foreach ($templates as $key => $template)
+    {
+      $templateChoices[$key] = $template['name'];
+    }
+    return $templateChoices;
+  }
+
+  /**
+   * Get template information. You probably want getTemplateChoices()
+   * This cannot be named getTemplates because that is already
+   * significant in Doctrine_Table
+   */
+  public function getTemplateInfos()
+  {
+    $engine = ($this->_options['name'] === 'aBlogPost') ? 'aBlog' : 'aEvent';
+    $templates = sfConfig::get('app_' . $engine . '_templates', $this->getTemplateDefaults());
+    return $templates;
+  }
+
+  /**
+   * Hardcoded defaults. You probably want
+   * getDefaultTemplate or getTemplateInfos() or getTemplateChoices()
+   */
   public function getTemplateDefaults()
   {
     return array(

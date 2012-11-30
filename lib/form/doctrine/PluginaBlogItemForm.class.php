@@ -40,12 +40,7 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
         new sfValidatorPass(array('required' => false)));
     }
 
-    $templates = sfConfig::get('app_'.$this->engine.'_templates', $this->getObject()->getTemplateDefaults());
-    $templateChoices = array();
-	  foreach ($templates as $key => $template)
-	  {
-	    $templateChoices[$key] = $template['name'];
-	  }
+    $templateChoices = $this->getObject()->getTable()->getTemplateChoices();
 
     $this->setWidget('template',
       new sfWidgetFormChoice(array('multiple' => false, 'choices' => $templateChoices)));

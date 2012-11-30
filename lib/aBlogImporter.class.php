@@ -222,13 +222,7 @@ class aBlogImporter extends aImporter
     $engine = ($type === 'post') ? 'aBlog' : 'aEvent';
     $class = ($type === 'post') ? 'aBlogPost' : 'aEvent';
     $table = Doctrine::getTable($class);
-    $templates = sfConfig::get('app_' . $engine . '_templates', $table->getTemplateDefaults());
-    $template = null;
-    foreach ($templates as $key => $template)
-    {
-      $template = $key;
-      break;
-    }
+    $template = $table->getDefaultTemplate();
     if (!$template) 
     {
       echo("Can't determine default template, did you disable all blog or event templates in app.yml?\n");
