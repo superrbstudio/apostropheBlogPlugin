@@ -44,6 +44,7 @@ abstract class BaseaEventAdminActions extends autoAEventAdminActions
 			$this->a_event->end_date = date('Y-m-d', $later);
 			$this->a_event->start_time = date('H:i:s', $now);
 			$this->a_event->end_time = date('H:i:s', $later);
+      $this->a_event->setTemplate($this->a_event->getTable()->getDefaultTemplate());
       $this->a_event->save();
       
       $event = new sfEvent($this->a_event, 'a.eventAdded', array());

@@ -26,8 +26,6 @@ abstract class PluginaBlogItem extends BaseaBlogItem
     {
       $this->setAllowComments(sfConfig::get('app_aBlog_allow_comments_initially', true));
     }
-    $default = $this->getTable()->getDefaultTemplate();
-    $this->setTemplate($this->getTable()->getDefaultTemplate());
   }
 
   /**

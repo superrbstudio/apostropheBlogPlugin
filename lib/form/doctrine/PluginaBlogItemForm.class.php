@@ -41,11 +41,10 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
     }
 
     $templateChoices = $this->getObject()->getTable()->getTemplateChoices();
-
     $this->setWidget('template',
       new sfWidgetFormChoice(array('multiple' => false, 'choices' => $templateChoices)));
     $this->setValidator('template',
-      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_flip($templateChoices))));
+      new sfValidatorChoice(array('required' => true, 'multiple' => false, 'choices' => array_keys($templateChoices))));
 
     if (count($templateChoices) <= 1)
     {
@@ -249,7 +248,6 @@ abstract class PluginaBlogItemForm extends BaseaBlogItemForm
       }
       elseif ($values['publication'] === 'publish')
       {
-        error_log('set published');
         $object->status = 'published';
         // Override field, publish now
         $object->published_at = aDate::mysql();
