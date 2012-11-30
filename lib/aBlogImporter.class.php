@@ -218,14 +218,30 @@ class aBlogImporter extends aImporter
     {
       $author_id = $real_author_id;
     }
-    
+   
+    $engine = ($type === 'post') ? 'aBlog' : 'aEvent';
+    $class = ($type === 'post') ? 'aBlogPost' : 'aEvent';
+    $table = Doctrine::getTable($class);
+    $templates = sfConfig::get('app_' . $engine . '_templates', $table->getTemplateDefaults());
+    $template = null;
+    foreach ($templates as $key => $template)
+    {
+      $template = $key;
+      break;
+    }
+    if (!$template) 
+    {
+      echo("Can't determine default template, did you disable all blog or event templates in app.yml?\n");
+      exit(1);
+    }
+
     $params = array(
       "title" => (string) $post->title,
       "author_id" => $author_id,
       "slug_saved" => true,
       "status" => 'published',
       "allow_comments" => false,
-      "template" => "singleColumnTemplate",
+      "template" => $template,
       "published_at" => $this->parseDateTime($post['published_at']),
       "type" => $type,
       "slug" => $slug

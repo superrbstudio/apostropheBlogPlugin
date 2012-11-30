@@ -490,12 +490,7 @@ EOM
 
   public function getTemplateDefaults()
   {
-    return array(
-      'singleColumnTemplate' => array(
-        'name' => 'Single Column',
-        'areas' => array('blog-body')
-      )
-    );
+    return $this->getTable()->getTemplateDefaults();
   }
 
   /**

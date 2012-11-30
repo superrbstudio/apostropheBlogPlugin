@@ -33,4 +33,18 @@ class PluginaBlogPostTable extends aBlogItemTable
     }
     return $results;
   }
+
+  public function getTemplateDefaults()
+  {
+    return array(
+      'singleColumnTemplate' => array(
+        'name' => 'Single Column',
+        'areas' => array('blog-body')
+      ),
+      'twoColumnTemplate' => array(
+        'name' => 'Two Column',
+        'areas' => array('blog-body', 'blog-sidebar')
+      )
+    );
+  }
 }

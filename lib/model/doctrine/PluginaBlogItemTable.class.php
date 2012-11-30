@@ -351,4 +351,14 @@ class PluginaBlogItemTable extends Doctrine_Table
     list($year, $month, $day) = explode('-', date('Y-m-d', aDate::normalize($aBlogItem['published_at'])));
     return $route . '?' . http_build_query(array('year' => $year, 'month' => $month, 'day' => $day, 'slug' => $aBlogItem['slug']));
   }
+
+  public function getTemplateDefaults()
+  {
+    return array(
+      'singleColumnTemplate' => array(
+        'name' => 'Single Column',
+        'areas' => array('blog-body')
+      )
+    );
+  }
 }
