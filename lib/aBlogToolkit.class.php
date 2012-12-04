@@ -804,4 +804,72 @@ class aBlogToolkit {
     }
     return true;
   }
+
+  /**
+   * Add a typeahead multiple select widget for blog posts.
+   * You need to also make an a_js_call as appropriate:
+   *
+   * a_js_call('aMultipleSelect(?, ?)', '.a-admin-form-field-blog_posts', array('autocomplete' => a_url('aBlogAdmin', 'search')))
+   *
+   * If $name is not an existing relation on the object, make sure
+   * you implement getBlogItemIds($model, $name) on your form class
+   * to fetch the ids of the blog items already associated with that
+   * object for the given model class and form field name.
+   */
+
+  static public function addBlogItemsWidget($form, $model, $name)
+  {
+    // We'll progressively enhance this with autocomplete so no data is needed here...
+    // except that we do need choices matching the previously saved values, otherwise
+    // the Symfony widget has no idea how to render them
+    
+    // On the rendering pass we fetch the post titles already selected.
+    // On the validation pass there will be no defaults, so we won't have to,
+    // and shouldn't do a bad whereIn query that matches everything etc.
+
+    if (isset($form[$name]))
+    {
+      // Relation already exists on model    
+      $ids = $form->getDefault($name);
+    }
+    else
+    {
+      // Look for custom method, otherwise filter by model
+      // on the BlogItems relation
+      if (method_exists($form, 'getBlogItemIds'))
+      {
+        $ids = $form->getBlogItemIds($model, $name);
+      }
+      else
+      {
+        $blogItems = $form->getObject()->getBlogItems();
+        $ids = array();
+        foreach ($blogItems as $item)
+        {
+          if (is_a($item, $model))
+          {
+            $ids[] = $item['id'];
+          }
+        }
+      }
+    }
+    $choices = array();
+    if (count($ids))
+    {
+      $q = Doctrine::getTable($model)->createQuery('p')->select('p.*')->whereIn('p.id', $ids);
+      aDoctrine::orderByList($q, $ids);
+      $items = $q->execute();
+      // Crucial to get the latest versions of titles and avoid expensive single queries
+      aBlogItemTable::populatePages($items);
+      foreach ($items as $item)
+      {
+        $choices[$item->id] = $item->getTitle();
+      }
+    }
+    $form->setWidget($name, new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
+    $form->getWidgetSchema()->setHelp($name, 'Type part of the title and select a suggestion.');
+    $form->setDefault($name, $ids);
+    // TODO: really should be specific to posts, requires adding a custom query
+    $form->setValidator($name, new sfValidatorDoctrineChoice(array('model' => $model, 'multiple' => true, 'required' => false)));
+  }
 }

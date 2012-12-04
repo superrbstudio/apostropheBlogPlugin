@@ -49,9 +49,8 @@ class aEventSlotForm extends BaseForm
         $choices[$item->id] = $item->getTitle();
       }
     }
-    $this->setWidget('blog_posts', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
-    // TODO: really should be specific to events, requires adding a custom query
-    $this->validatorSchema['blog_posts'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
+
+    aBlogToolkit::addBlogItemsWidget($this, 'aEvent', 'blog_posts');
     
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));
@@ -69,5 +68,13 @@ class aEventSlotForm extends BaseForm
     
     // You don't have to use our form formatter, but it makes things nice
     $this->widgetSchema->setFormFormatterName('aAdmin');
+  }
+
+  /**
+   * Support method for aBlogToolkit::addBlogItemsWidget
+   */ 
+  public function getBlogItemIds($model, $name)
+  {
+    return $this->getDefault('blog_posts');
   }
 }

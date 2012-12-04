@@ -53,4 +53,4 @@
 	</div>
 </div>
 
-<?php a_js_call('aBlog.slotEditView(?)', array('formName' => $form->getName(), 'autocompleteUrl' => url_for("aEventAdmin/search"), 'class' => 'events', 'selfLabelSelector' => '#'.$w->renderId().'-title',  'debug' => false)) ?>
+<?php a_js_call('aBlog.slotEditView(?)', array('formName' => $form->getName(), 'autocompleteUrl' => a_url('aEventAdmin', 'search'), 'class' => 'events', 'selfLabelSelector' => '#'.$w->renderId().'-title',  'debug' => false)) ?>

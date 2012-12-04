@@ -27,31 +27,8 @@ class aBlogSlotForm extends BaseForm
     }
     $this->setValidator('title_or_tag', new sfValidatorChoice(array('choices' => array_keys($choices))));
     
-    // We'll progressively enhance this with autocomplete so no data is needed here...
-    // except that we do need choices matching the previously saved values, otherwise
-    // the Symfony widget has no idea how to render them
-    
-    // On the rendering pass we fetch the post titles already selected.
-    // On the validation pass there will be no defaults, so we won't have to,
-    // and shouldn't do a bad whereIn query that matches everything etc.
-    
-    $ids = $this->getDefault('blog_posts');
-    $choices = array();
-    if (count($ids))
-    {
-      $q = Doctrine::getTable('aBlogItem')->createQuery('p')->select('p.*')->whereIn('p.id', $ids);
-      aDoctrine::orderByList($q, $ids);
-      $items = $q->execute();
-      // Crucial to get the latest versions of titles and avoid expensive single queries
-      aBlogItemTable::populatePages($items);
-      foreach ($items as $item)
-      {
-        $choices[$item->id] = $item->getTitle();
-      }
-    }
-    $this->setWidget('blog_posts', new sfWidgetFormChoice(array('multiple' => true, 'expanded' => false, 'choices' => $choices)));
-    // TODO: really should be specific to posts, requires adding a custom query
-    $this->validatorSchema['blog_posts'] = new sfValidatorDoctrineChoice(array('model' => 'aBlogItem', 'multiple' => true, 'required' => false));
+    aBlogToolkit::addBlogItemsWidget($this, 'aBlogPost', 'blog_posts');
+
     $this->widgetSchema['categories_list'] =
       new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'aCategory'));
     $this->validatorSchema['categories_list'] =
@@ -68,5 +45,13 @@ class aBlogSlotForm extends BaseForm
     
     // You don't have to use our form formatter, but it makes things nice
     $this->widgetSchema->setFormFormatterName('aAdmin');
+  }
+
+  /**
+   * Support method for aBlogToolkit::addBlogItemsWidget
+   */
+  public function getBlogItemIds($model, $name)
+  {
+    return $this->getDefault('blog_posts');
   }
 }

@@ -55,4 +55,4 @@
 	</div>
 </div>
 
-<?php a_js_call('aBlog.slotEditView(?)', array('formName' => $form->getName(), 'autocompleteUrl' => url_for("aBlogAdmin/search"), 'class' => 'blog-posts', 'selfLabelSelector' => '#'.$w->renderId().'-title', 'debug' => false)) ?>
+<?php a_js_call('aBlog.slotEditView(?)', array('formName' => $form->getName(), 'autocompleteUrl' => a_url('aBlogAdmin', 'search'), 'class' => 'blog-posts', 'selfLabelSelector' => '#'.$w->renderId().'-title', 'debug' => false)) ?>
