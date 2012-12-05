@@ -44,6 +44,7 @@ class aBlogImporter extends aImporter
     }
     $this->tagToEntity = $params['tag-to-entity'];
     $this->defaultAuthorId = $this->sql->queryOneScalar('SELECT id FROM sf_guard_user WHERE username=:username', array('username' => $defaultUsername));
+    $this->imagesDir = $params['imagesDir'];
   }
 
   public function import($type = 'posts')

@@ -26,7 +26,8 @@ class aBlogImportTask extends sfBaseTask
       new sfCommandOption('authors', null, sfCommandOption::PARAMETER_REQUIRED, 'XML author username mapping', null),
       new sfCommandOption('defaultUsername', null, sfCommandOption::PARAMETER_REQUIRED, 'Default author of posts', 'admin'),
       new sfCommandOption('tag-to-entity', null, sfCommandOption::PARAMETER_NONE, 'Link to existing entities instead if tag name matches', null),
-      new sfCommandOption('skip-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Skip confirmation prompt', null)
+      new sfCommandOption('skip-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Skip confirmation prompt', null),
+      new sfCommandOption('imagesDir', null, sfCommandOption::PARAMETER_REQUIRED, 'Directory path or URL prefix to resolve image URLs beginning with / (http://example.com)', null)
       // add your own options here
     ));
 
