@@ -842,6 +842,10 @@ class aBlogToolkit {
       }
       else
       {
+        // ACHTUNG! This can have a severe performance impact because
+        // Doctrine will decide to save the blog items when
+        // you save the form. Much better to implement a more
+        // efficient getBlogItemIds() method for your needs
         $blogItems = $form->getObject()->getBlogItems();
         $ids = array();
         foreach ($blogItems as $item)
