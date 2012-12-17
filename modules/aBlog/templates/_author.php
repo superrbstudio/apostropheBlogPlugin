@@ -5,7 +5,7 @@
 ?>
 
 <span class="a-blog-item-meta-label"><?php echo a_(sfConfig::get('app_aBlog_author_label', 'Posted By:')) ?></span>
-<?php if ($a_blog_post->getAuthor()): ?>
+<?php if ($a_blog_post->getAuthorId()): ?>
   <?php $author = $a_blog_post->getAuthor() ?>
   <?php if (sfConfig::get('app_aBlog_link_author', false)): ?>
     <?php echo link_to($author->getName() ? aHtml::entities($author->getName()) : aHtml::entities($author), '@a_blog_author?' . http_build_query(array('author' => $author->username)), array('class' => 'a-link')) ?>
