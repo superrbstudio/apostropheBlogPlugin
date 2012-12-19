@@ -461,9 +461,9 @@ EOM
    * @param int $limit
    * @return Array aMediaItem
    */
-  public function getMediaForArea($area, $type = 'image', $limit = 5)
+  public function getMediaForArea($area, $type = 'image', $limit = 5, $options = array())
   {
-    return $this->getMediaForAreas(array($area), $type, $limit);
+    return $this->getMediaForAreas(array($area), $type, $limit, $options);
   }
 
   /**
@@ -473,9 +473,9 @@ EOM
    * @param  $limit Limit the number of mediaItems returned
    * @return array aMediaItems
    */
-  public function getMediaForAreas($areas, $type = 'image', $limit = 5)
+  public function getMediaForAreas($areas, $type = 'image', $limit = 5, $options = array())
   {
-    return $this->Page->getMediaForAreas($areas, $type, $limit);
+    return $this->Page->getMediaForAreas($areas, $type, $limit, $options);
   }
 
   /**
