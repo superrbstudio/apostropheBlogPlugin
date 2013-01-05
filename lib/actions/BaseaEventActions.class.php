@@ -190,7 +190,7 @@ EOM
 		$aEvents = $query->execute(array(), Doctrine::HYDRATE_ARRAY);
 
 		$calendar['events'] = new sfEventCalendar('month', $date);
-		
+
 		foreach ($aEvents as $aEvent)
 		{
 			$calendar['events']->addEvent($aEvent['start_date'], array('event' => $aEvent));

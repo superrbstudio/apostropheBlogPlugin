@@ -4,6 +4,7 @@
   $dateRange = isset($dateRange) ? $sf_data->getRaw('dateRange') : null;
   $pager = isset($pager) ? $sf_data->getRaw('pager') : null;
   $params = isset($params) ? $sf_data->getRaw('params') : null;
+  $results = isset($results) ? $sf_data->getRaw('results') : null;
 ?>
 <?php slot('body_class') ?>a-blog <?php echo $sf_params->get('module'); ?> <?php echo $sf_params->get('action') ?><?php end_slot() ?>
 
@@ -52,7 +53,7 @@
   	<?php include_partial('aBlog/pager', array('max_per_page' => $max_per_page, 'pager' => $pager, 'pagerContainerClass' => 'a-pager-navigation-container-first',  'pagerUrl' => url_for('aBlog/index?' . http_build_query($params['pagination'])))) ?>
   <?php endif ?>
 
-  <?php foreach ($pager->getResults() as $a_blog_post): ?>
+  <?php foreach ($results as $a_blog_post): ?>
 
     <?php if (sfConfig::get('app_aBlog_excerpts_show')): ?>
     <?php include_partial('aBlog/excerptTemplate', array('a_blog_post' => $a_blog_post, 'edit' => false )) ?>

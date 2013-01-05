@@ -53,31 +53,35 @@ abstract class BaseaBlogActions extends aEngineActions
   }
 
   /**
-   * $request is the web request, for historical bc reasons. $options can currently
+   * $request is the web request, for historical bc reasons. $options can 
    * contain 'blogItemsOnly' => true to avoid returning the associated pages, useful
-   * when we are just making a calendar with no titles etc.
+   * when we are just making a calendar with no titles etc. Also 'pageIds' => array()
+   * to request specific page IDs rather than those in $this->info['pageIds']
+   * (used by the new app_aBlog_arrayPager performance tweak).
    */
   protected function buildQuery($request, $options = array())
   {
-    // We already know what page ids are relevant, now we're fetching author
-    // information etc. per post. There's another method implicitly called later to populate
-    // all of the blog content for the posts
+    // We already know what page ids are relevant, now we're fetching the blog items
+    // themselves as well as author information etc. and bringing it all into
+    // Doctrine land. There's another method implicitly called later to populate
+    // all of the Apostrophe content for the posts
     $q = Doctrine::getTable($this->modelClass)->createQuery()
       ->leftJoin($this->modelClass.'.Author a');
     $blogItemsOnly = isset($options['blogItemsOnly']) && $options['blogItemsOnly'];
-    if (count($this->info['pageIds']))
+    $pageIds = isset($options['pageIds']) ? $options['pageIds'] : $this->info['pageIds'];
+    if (count($pageIds))
     {
       // We have page ids, so we need a join to figure out which blog items we want.
       // Doctrine doesn't have a withIn mechanism that takes a nice clean array, but we
       // know these are clean IDs
-      $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $this->info['pageIds']) . ')');
+      $q->innerJoin($this->modelClass.'.Page p WITH p.id IN (' . implode(',', $pageIds) . ')');
       $q->leftJoin($this->modelClass.'.Categories c');
       // Oops: there is NO ordering with an IN clause alone, you must make that explicit
       if ($blogItemsOnly)
       {
         $q->select($q->getRootAlias() . '.*');
       }
-      aDoctrine::orderByList($q, $this->info['pageIds'], 'p');
+      aDoctrine::orderByList($q, $pageIds, 'p');
       // When you call aDoctrine::orderByList you must have an explicit select clause of your own as the
       // default 'select everything' behavior of Doctrine goes away as soon as that method calls addSelect
       if (!$blogItemsOnly)
@@ -90,6 +94,12 @@ abstract class BaseaBlogActions extends aEngineActions
       $q->where('0 <> 0');
     }
     return $q;
+  }
+
+  protected function getBlogItemsForPageIds($pageIds)
+  {
+    $query = $this->buildQuery($this->getRequest(), array('pageIds' => $pageIds));
+    return $query->execute();
   }
 
   public function getMaxPerPage()
@@ -106,15 +116,44 @@ abstract class BaseaBlogActions extends aEngineActions
   {
     $this->buildParams();
     $this->max_per_page = $this->getMaxPerPage();
-    $pager = new sfDoctrinePager($this->modelClass);
-    $pager->setMaxPerPage($this->max_per_page);
-    $pager->setQuery($this->buildQuery($request));
-    $pager->setPage($this->getRequestParameter('page', 1));
-    $pager->init();
 
-    $this->pager = $pager;
+    // Dramatically faster with a large database of blog posts. Leverages the
+    // knowledge that we already have an array of page ids, we're not adding any
+    // new criteria to the query (just populating more joins that don't 
+    // change the result), and sending huge arrays of page IDs back and
+    // forth to MySQL is a slow operation. Configured via app.yml to avoid
+    // breaking old templates that expect to call getResults() directly and
+    // would be unpleasantly surprised to get back IDs. Instead you should
+    // use the $results template variable. Make sure you get the raw version
 
-    aBlogItemTable::populatePages($pager->getResults());
+    if (sfConfig::get('app_aBlog_arrayPager'))
+    {
+      $pager = new aArrayPager();
+      $pager->setMaxPerPage($this->max_per_page);
+      $pager->setResultArray($this->info['pageIds']);
+      $pager->setPage($this->getRequestParameter('page', 1));
+      $pager->init();
+
+      $this->pager = $pager;
+      $pageIds = $pager->getResults();
+      $this->results = $this->getBlogItemsForPageIds($pageIds);
+    }
+    else
+    {
+      $pager = new sfDoctrinePager($this->modelClass);
+      $pager->setMaxPerPage($this->max_per_page);
+      $pager->setQuery($this->buildQuery($request));
+      $pager->setPage($this->getRequestParameter('page', 1));
+      $pager->init();
+
+      $this->pager = $pager;
+
+      $this->results = $pager->getResults();
+    }
+
+    // $start = microtime(true);
+    aBlogItemTable::populatePages($this->results);
+    // error_log('populatePages: ' . sprintf('%.2f', microtime(true) - $start));
 
     if($request->hasParameter('year') || $request->hasParameter('month') || $request->hasParameter('day') || $request->hasParameter('cat') || $request->hasParameter('tag'))
     {

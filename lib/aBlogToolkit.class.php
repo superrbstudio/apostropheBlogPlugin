@@ -755,7 +755,7 @@ class aBlogToolkit {
     // Hydrate real Doctrine objects for authors. It ensures we can stringify them consistently,
     // and the number of authors tends to have reasonable constraints
 
-    $authorsInfo = $mysql->query('select distinct au.username, au.id, au.first_name, au.last_name ' . $queries['authors'] . ' and au.id is not null order by au.last_name asc, au.first_name asc', $params);
+    $authorsInfo = aBlogToolkit::query($mysql, 'select distinct au.username, au.id, au.first_name, au.last_name ' . $queries['authors'] . ' and au.id is not null order by au.last_name asc, au.first_name asc', $params);
     $authors = array();
     foreach ($authorsInfo as $authorInfo)
     {
@@ -765,23 +765,39 @@ class aBlogToolkit {
     }
 
     $result = array(
-      'categoriesInfo' => $mysql->query('select distinct c.slug, c.name ' . $queries['categories'] . 'and c.slug is not null order by c.name', $params),
-      'tagsByPopularity' => $mysql->query('select t.name, count(distinct p.id) as t_count ' . $queries['tags'] . 'and t.name is not null group by t.name order by t_count desc limit :popular_tags_limit', $params),
-      'pageIds' => $mysql->queryScalar('select distinct p.id ' . $queries['page_ids'] . ' order by ' . $pagesOrderBy, $params),
+      'categoriesInfo' => aBlogToolkit::query($mysql, 'select distinct c.slug, c.name ' . $queries['categories'] . 'and c.slug is not null order by c.name', $params),
+      // group by id is faster than group by name, select t.id is even faster still
+      // (see fixup below to get the names)
+      'tagsByPopularity' => aBlogToolkit::query($mysql, 'select t.id, count(distinct p.id) as t_count ' . $queries['tags'] . 'and t.name is not null group by t.id order by t_count desc limit :popular_tags_limit', $params),
+      'pageIds' => aBlogToolkit::queryScalar($mysql, 'select distinct p.id ' . $queries['page_ids'] . ' order by ' . $pagesOrderBy, $params),
       'authors' => $authors,
       // Supply the extra filter criteria metadata so we can build filters programmatically
       'extraFilterCriteria' => $extraFilterCriteria);
 
+    // Fix up tagsByPopularity to include names
+    // $start = microtime(true);
+    if (count($result['tagsByPopularity']))
+    {
+      $idsAndNames = aBlogToolkit::query($mysql, 'select t.id, t.name from tag t where t.id in :ids', array('ids' => aArray::getIds($result['tagsByPopularity'])));
+      $infosById = aArray::listToHashById($idsAndNames);
+      foreach ($result['tagsByPopularity'] as &$tagInfo)
+      {
+        $tagInfo['name'] = $infosById[$tagInfo['id']]['name'];
+      }
+    }
+    // error_log("Tag fixup: " . sprintf('%.02f', (microtime(true) - $start)));
+
     foreach ($extraFilterCriteria as $extraFilterCriterion)
     {
       $key = $extraFilterCriterion['arrayKey'];
-      $result[$key] = $mysql->query(str_replace('%QUERY%', $queries[$key], $extraFilterCriterion['selectTemplate']), $params);
+      $result[$key] = aBlogToolkit::query($mysql, str_replace('%QUERY%', $queries[$key], $extraFilterCriterion['selectTemplate']), $params);
     }
 
     // Can be very expensive if there are too many
     if (sfConfig::get('app_aBlog_tags_by_name', true))
     {
-      $result['tagsByName'] = $mysql->query('select t.name, count(distinct p.id) as t_count ' . $queries['tags'] . ' and t.name is not null group by t.name order by t.name', $params);
+      // group by id is faster than group by name
+      $result['tagsByName'] = aBlogToolkit::query($mysql, 'select t.id, t.name, count(distinct p.id) as t_count ' . $queries['tags'] . ' and t.name is not null group by t.id order by t.name', $params);
     }
     else
     {
@@ -789,6 +805,22 @@ class aBlogToolkit {
       // we get no tag browser at all in typical overrides of the blog sidebar, which is not a feature
       $result['tagsByName'] = $result['tagsByPopularity'];
     }
+    return $result;
+  }
+
+  static protected function query($mysql, $s, $values = array())
+  {
+    // $start = microtime(true);
+    $result = $mysql->query($s, $values);
+    // error_log("$s: " . sprintf('%.2f', microtime(true) - $start));
+    return $result;
+  }
+
+  static protected function queryScalar($mysql, $s, $values = array())
+  {
+    // $start = microtime(true);
+    $result = $mysql->queryScalar($s, $values);
+    // error_log("$s: " . sprintf('%.2f', microtime(true) - $start));
     return $result;
   }
 
