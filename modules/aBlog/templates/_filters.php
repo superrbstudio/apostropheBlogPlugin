@@ -4,6 +4,9 @@
 <?php $params = $sf_data->getRaw('params') ?>
 <?php $count = $sf_data->getRaw('count') ?>
 
+<?php // We need this so that tags don't get double-escaped etc. ?>
+<?php $sf_params = $sf_data->getRaw('sf_params') ?>
+
 <div class="a-ui a-blog-browser">
 
   <?php include_partial('aBlog/datePrevAndNext', array('params' => $params, 'url' => $url)) ?>
@@ -31,9 +34,7 @@
 	<?php endif ?>
 
 	<?php if (strlen($sf_params->get('tag'))): ?>
-    <?php // Pass the tag raw as a_remove_filter_button handles the ?>
-    <?php // escaping, avoid double escaping ?>
-	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->getRaw('tag'), $filterUrl, 'tag'))) ?>
+	  <?php $filters[] = a_('with the tag %tag%', array('%tag%' => a_remove_filter_button($sf_params->get('tag'), $filterUrl, 'tag'))) ?>
 	<?php endif ?>
 
   <?php if (strlen($sf_params->get('author'))): ?>
