@@ -46,6 +46,7 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
     $this->options['aBlogMeta'] = $this->getOption('aBlogMeta', true);
     $this->options['excerptLength'] = $this->getOption('excerptLength', 50);
     $this->options['maxImages'] = $this->getOption('maxImages', 1);
+    $this->options['video'] = $this->getOption('video', false);
 
     $this->aBlogPosts = $q->execute();
     aBlogItemTable::populatePages($this->aBlogPosts);
