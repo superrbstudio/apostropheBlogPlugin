@@ -4,7 +4,4 @@
 ?>
 <?php include_partial('aEvent/dateRange', array('aEvent' => $aEvent)) ?>
 <br/><br/>
-<?php foreach($aEvent->Page->getArea('blog-body') as $slot): ?>
-<?php // getBasicHtml has basic formatting, which RSS does allow ?>
-<?php echo $slot->getBasicHtml() ?>
-<?php endforeach ?>
+<?php echo $aBlogPost->getRichTextForAreas('blog-body', sfConfig::get('app_aEvents_feedExcerpts') ? sfConfig::get('app_aEvent_feedExcerptLength', 30) : null) ?>
