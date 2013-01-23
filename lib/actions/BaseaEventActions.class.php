@@ -146,7 +146,7 @@ EOM
         'link'        => '@a_event',
         'authorEmail' => sfConfig::get('app_aEvent_feed_author_email'),
         'authorName'  => sfConfig::get('app_aEvent_feed_author_name'),
-        'routeName'   => '@a_event',
+        'routeName'   => '@a_event_post',
         'methods'     => array('description' => 'getFeedText')
       )
     );
