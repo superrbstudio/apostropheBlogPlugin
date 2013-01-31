@@ -4,4 +4,4 @@
 ?>
 <?php include_partial('aEvent/dateRange', array('aEvent' => $aEvent)) ?>
 <br/><br/>
-<?php echo $aBlogPost->getRichTextForAreas('blog-body', sfConfig::get('app_aEvents_feedExcerpts') ? sfConfig::get('app_aEvent_feedExcerptLength', 30) : null) ?>
+<?php echo $aEvent->getRichTextForAreas('blog-body', sfConfig::get('app_aEvents_feedExcerpts') ? sfConfig::get('app_aEvent_feedExcerptLength', 30) : null) ?>
