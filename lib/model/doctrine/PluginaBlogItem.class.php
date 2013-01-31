@@ -228,6 +228,24 @@ abstract class PluginaBlogItem extends BaseaBlogItem
   }
 
   /**
+   * Convenient way to test whether a post has a specific category.
+   * Takes the slug, not the name.
+   */
+
+  public function hasCategorySlug($slug)
+  {
+    $categories = $this->getCategories();
+    foreach ($categories as $category)
+    {
+      if ($category['slug'] === $slug)
+      {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /**
    * These date methods are used in the routing of the permalink
    */
   public function getYear()
