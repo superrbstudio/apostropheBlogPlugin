@@ -4,6 +4,8 @@
 	$filterUrl = aUrl::addParams($page->getUrl(), array('tag' => $sf_params->get('tag'), 'cat' => $sf_params->get('cat'), 'year' => $sf_params->get('year'), 'month' => $sf_params->get('month'), 'day' => $sf_params->get('day'), 'q' => $sf_params->get('q'), 'author' => $sf_params->get('author')));
 ?>
 
+<?php use_helper('a') ?>
+
 <span class="a-blog-item-meta-label"><?php echo a_(sfConfig::get('app_aBlog_author_label', 'Posted By:')) ?></span>
 <?php if ($a_blog_post->getAuthorId()): ?>
   <?php $author = $a_blog_post->getAuthor() ?>
