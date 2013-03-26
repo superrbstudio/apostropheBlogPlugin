@@ -288,7 +288,10 @@ abstract class BaseaBlogActions extends aEngineActions
   public function getFeed()
   {
     $title = sfConfig::get('app_aBlog_feed_title', $this->page->getTitle());
-
+    if(!isset($this->results))
+    {
+      $this->results = $this->pager->getResults();
+    }
     $this->feed = sfFeedPeer::createFromObjects(
       $this->results,
       array(
