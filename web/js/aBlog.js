@@ -297,7 +297,35 @@ function aBlogConstructor()
         }
     });
   };
-  
+
+  // Autocomplete tag filter for the admin, an optional alternative
+  // to the dropdown menu for sites with many, many tags.
+
+  this.tagAutocomplete = function(tags) {
+    // Don't fight with the old school dropdown, just replace it.
+    var oldTagsButton = $('th.a-column-tags_list');
+    var tagsWrapper = $('th.a-blog-tag-autocomplete-wrapper');
+    tagsWrapper.detach();
+    oldTagsButton.replaceWith(tagsWrapper);
+    $("#a-blog-tag-autocomplete").autocomplete({
+      source: function(req, response) {
+        var re = $.ui.autocomplete.escapeRegex(req.term);
+        var result = $.grep(tags, function(tag) {
+            return tag.substr(0, req.term.length) === req.term;
+        });
+        return response(result);
+      },
+      select: function(event, ui) {
+        var tag = ui.item.value;
+        // It's a bit ridiculous, but we want to use a standard Symfony
+        // link helper with the post option, so hotwire it
+        var $link = $('#a-blog-tag-autocomplete-link a');
+        $link.attr('href', $link.attr('href').replace('DUMMY', encodeURIComponent(tag)));
+        $link.click();
+        return false;
+      }
+    });
+  };
 }
 
-window.aBlog = new aBlogConstructor;
+window.aBlog = new aBlogConstructor();
