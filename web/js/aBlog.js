@@ -311,7 +311,7 @@ function aBlogConstructor()
       source: function(req, response) {
         var re = $.ui.autocomplete.escapeRegex(req.term);
         var result = $.grep(tags, function(tag) {
-            return tag.substr(0, req.term.length) === req.term;
+            return tag.substr(0, req.term.length).toLowerCase() === req.term.toLowerCase();
         });
         return response(result);
       },
