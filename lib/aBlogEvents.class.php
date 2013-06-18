@@ -259,7 +259,10 @@ class aBlogEvents
       }
       foreach ($oldCategoryUsers as $oldCategoryUser)
       {
-        $migrate->query('INSERT INTO a_category_user (category_id, user_id) VALUES (:category_id, :user_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryUser['blog_category_id']], 'user_id' => $oldCategoryUser['user_id']));
+        if ($oldToNew[$oldCategoryUser['blog_category_id']] && $oldCategoryUser['user_id'])
+        {
+          $migrate->query('INSERT INTO a_category_user (category_id, user_id) VALUES (:category_id, :user_id) ON DUPLICATE KEY UPDATE category_id = category_id', array('category_id' => $oldToNew[$oldCategoryUser['blog_category_id']], 'user_id' => $oldCategoryUser['user_id']));
+        }
       }
     }
     if ($migrate->tableExists('a_blog_category_group'))
