@@ -36,7 +36,7 @@ abstract class BaseaBlogSlotComponents extends aSlotComponents
   public function executeNormalView()
   {
     $this->setup();
-    $this->values = $this->slot->getArrayValue();
+    if (!$this->values) { $this->values = $this->slot->getArrayValue(); }
     $q = $this->getQuery();
 
 		$this->options['slideshowOptions']['width']	= ((isset($this->options['slideshowOptions']['width']))? $this->options['slideshowOptions']['width']:100);
