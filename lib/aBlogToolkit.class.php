@@ -584,12 +584,24 @@ class aBlogToolkit {
       $params['start_date'] = "$startYear-$startMonth-$startDay";
     }
 
-    // Add extra left joins for custom criteria - after bi, so that they are 
-    // allowed to involve it
+    // Add extra left or inner joins for custom criteria - after bi, so that
+    // they are allowed to involve it. You usually want a left join so that
+    // alternative choices can be presented
 
     foreach ($extraFilterCriteria as $extraFilterCriterion)
     {
-      $q .= $extraFilterCriterion['leftJoin'] . ' ';
+      // Left joins are used both to populate alternate choices and,
+      // when the filter is actually active, to limit results via a WHERE
+      // clause.
+      if (isset($extraFilterCriterion['leftJoin']))
+      {
+        $q .= $extraFilterCriterion['leftJoin'] . ' ';
+        // Inner joins are permissible only when alternate choices are
+        // not needed, and are applied only when the filter key is present.
+      } elseif (isset($extraFilterCriterion['innerJoin']) && (isset($options[$extraFilterCriterion['filterKey']]) && $options[$extraFilterCriterion['filterKey']]))
+      {
+        $q .= $extraFilterCriterion['innerJoin'] . ' ';
+      }
     }
 
     $hasAuthor = (isset($options['author']) && strlen($options['author']));
@@ -691,7 +703,10 @@ class aBlogToolkit {
 
     foreach ($extraFilterCriteria as $extraFilterCriterion)
     {
-      $queries[$extraFilterCriterion['arrayKey']] = $q;
+      if (isset($extraFilterCriterion['arrayKey']))
+      {
+        $queries[$extraFilterCriterion['arrayKey']] = $q;
+      }
     }
 
     // We are filtering by this specific category
@@ -739,9 +754,12 @@ class aBlogToolkit {
       {
         foreach ($queries as $key => &$q)
         {
-          if ($key !== $efc['arrayKey'])
+          if ((!isset($efc['arrayKey'])) || ($key !== $efc['arrayKey']))
           {
-            $q .= 'AND ' . $efc['filterWhere'] . ' ';
+            if (isset($efc['filterWhere']))
+            {
+              $q .= 'AND ' . $efc['filterWhere'] . ' ';
+            }
           }
         }
         $params[$filterKey] = $options[$filterKey];
@@ -789,8 +807,11 @@ class aBlogToolkit {
 
     foreach ($extraFilterCriteria as $extraFilterCriterion)
     {
-      $key = $extraFilterCriterion['arrayKey'];
-      $result[$key] = aBlogToolkit::query($mysql, str_replace('%QUERY%', $queries[$key], $extraFilterCriterion['selectTemplate']), $params);
+      if (isset($extraFilterCriterion['arrayKey']))
+      {
+        $key = $extraFilterCriterion['arrayKey'];
+        $result[$key] = aBlogToolkit::query($mysql, str_replace('%QUERY%', $queries[$key], $extraFilterCriterion['selectTemplate']), $params);
+      }
     }
 
     // Can be very expensive if there are too many
