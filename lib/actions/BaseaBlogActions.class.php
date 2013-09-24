@@ -292,17 +292,21 @@ abstract class BaseaBlogActions extends aEngineActions
     {
       $this->results = $this->pager->getResults();
     }
+    $feedParameters = array(
+      'format'      => 'rss',
+      'title'       => $title,
+      'link'        => '@a_blog',
+      'authorEmail' => sfConfig::get('app_aBlog_feed_author_email'),
+      'authorName'  => sfConfig::get('app_aBlog_feed_author_name'),
+      'methods'     => array('description' => 'getFeedText', 'title' => 'getFeedTitle'),
+      'routeName' => '@a_blog_post'
+    );
+    $event = new sfEvent(null, 'aBlog.filterFeedParameters');
+    $this->dispatcher->filter($event, $feedParameters);
+    $feedParameters = $event->getReturnValue();
     $this->feed = sfFeedPeer::createFromObjects(
       $this->results,
-      array(
-        'format'      => 'rss',
-        'title'       => $title,
-        'link'        => '@a_blog',
-        'authorEmail' => sfConfig::get('app_aBlog_feed_author_email'),
-        'authorName'  => sfConfig::get('app_aBlog_feed_author_name'),
-        'routeName'   => '@a_blog_post',
-        'methods'     => array('description' => 'getFeedText', 'title' => 'getFeedTitle')
-      )
+      $feedParameters
     );
 
     $this->getResponse()->setContent($this->feed->asXml());
