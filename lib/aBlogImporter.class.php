@@ -92,8 +92,8 @@ class aBlogImporter extends aImporter
         $slug = '@a_event_search_redirect?id='.$blog_id;
       }
       
-      $post->Page->addAttribute('slug', $slug);
-      $post->Page->addAttribute('title', $post->title);
+      $post->Page->addAttribute('slug', aString::limitCharacters($slug, 255));
+      $post->Page->addAttribute('title', aString::limitCharacters($post->title, 255));
 
       // In 1.5 virtual pages associated with engines should have 'engine' set to the appropriate engine.
       // Also published_at must be set for both the page and the post
@@ -200,7 +200,8 @@ class aBlogImporter extends aImporter
   public function insertPost($post, $type)
   {
     $slug = $this->slugify(isset($post['slug']) ? $post['slug'] : $post->title);
-
+    // Don't crash on overlong slugs in recent PDO/MySQL
+    $slug = aString::limitCharacters($slug, 255);
     // Posts belong to the defaultUsername if a valid username is not matched.
     // Check the author map if there is one
     $author_id = $this->defaultAuthorId;
@@ -230,14 +231,19 @@ class aBlogImporter extends aImporter
       exit(1);
     }
 
+    $created_at = isset($post['created_at']) ? $post['created_at'] : $post['published_at'];
+    $updated_at = isset($post['updated_at']) ? $post['updated_at'] : $post['published_at'];
     $params = array(
-      "title" => (string) $post->title,
+      // Recent PDO/MySQL will flunk overlong fields, don't crash
+      "title" => aString::limitCharacters((string) $post->title, 255),
       "author_id" => $author_id,
       "slug_saved" => true,
       "status" => 'published',
       "allow_comments" => false,
       "template" => $template,
       "published_at" => $this->parseDateTime($post['published_at']),
+      "created_at" => $this->parseDateTime($created_at),
+      "updated_at" => $this->parseDateTime($updated_at),
       "type" => $type,
       "slug" => $slug
     );
